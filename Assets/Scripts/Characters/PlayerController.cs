@@ -95,6 +95,15 @@ public class PlayerController : MonoBehaviour
                 _isTurning = true;
             }
         }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (!_isTurning)
+            {
+                TransformUtil.RotateBack(transform, _tweens, onCompletedAction: () => _isTurning = false);
+
+                _isTurning = true;
+            }
+        }
         else
         {
             Idle();
@@ -112,6 +121,21 @@ public class PlayerController : MonoBehaviour
         _rigidbody.velocity = _speedMultiplier * _speed * transform.forward;
 
         playerAnimator.SetFloat("Speed", _speed);
+
+        FaceToMouseCursor();
+    }
+
+    private void FaceToMouseCursor()
+    {
+        // Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // float angle = Vector3.Angle(mousePosition, transform.position);
+
+        // transform.eulerAngles = new Vector3(0, angle, 0);
+
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit);
+
+        transform.LookAt(hit.point);
     }
 
     private void WalkFoward()
