@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
 
     private float _speed;
 
+    private int _attackAnimation;
+
+    private Tween _waitForEndAttackAnimationTween;
+
 
 
 
@@ -106,7 +110,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Idle();
+            // Idle();
 
             if (_speed > 0)
             {
@@ -123,6 +127,16 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetFloat("Speed", _speed);
 
         FaceToMouseCursor();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Attack();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        _waitForEndAttackAnimationTween.Stop();
     }
 
     private void FaceToMouseCursor()
@@ -166,6 +180,37 @@ public class PlayerController : MonoBehaviour
         if (playerAnimator.GetInteger("State") == 0) return;
 
         playerAnimator.SetInteger("State", 0);
+    }
+
+    private void Attack()
+    {
+        // if (playerAnimator.GetInteger("State") == 1) return;
+
+        if (playerAnimator.GetInteger("State") != 1)
+        {
+            playerAnimator.SetInteger("State", 1);
+        }
+
+        playerAnimator.SetInteger("AttackAnimation", _attackAnimation);
+
+        if (_waitForEndAttackAnimationTween.isAlive)
+        {
+            _waitForEndAttackAnimationTween.Stop();
+        }
+
+        _waitForEndAttackAnimationTween = Tween.Delay(1.5f).OnComplete(() => SetState(0));
+
+        _attackAnimation++;
+
+        if (_attackAnimation > 2)
+        {
+            _attackAnimation = 0;
+        }
+    }
+
+    private void SetState(int state)
+    {
+        playerAnimator.SetInteger("State", state);
     }
 
     private IEnumerator WaitFor(float amount, Action onCompletedAction)
