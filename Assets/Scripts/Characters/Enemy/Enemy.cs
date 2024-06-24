@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private GameObject fx;
 
+    [SerializeField] private PlayerRuntime playerRuntime;
+
     private void Update()
     {
         FindPlayer();
@@ -15,8 +17,10 @@ public class Enemy : MonoBehaviour
     {
         foreach (ContactPoint contact in collision.contacts)
         {
-            fx.transform.position = contact.point;
-            fx.SetActive(true);
+            // fx.transform.position = contact.point;
+            // fx.SetActive(true);
+
+            gameObject.SetActive(false);
 
             break;
         }
@@ -26,6 +30,6 @@ public class Enemy : MonoBehaviour
     {
         transform.LookAt(player);
 
-        transform.position = Vector3.Lerp(transform.position, player.position, 0.002f);
+        transform.position = Vector3.Lerp(transform.position, playerRuntime.player.position, 0.002f);
     }
 }

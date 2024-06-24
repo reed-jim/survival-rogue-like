@@ -13,10 +13,16 @@ public class PlayerController : MonoBehaviour
     [Header("ANIMATOR")]
     [SerializeField] private Animator playerAnimator;
 
+    [Header("TRAIL")]
+    [SerializeField] private GameObject swordTrail;
+
     [Header("CUSTOMIZE")]
     [SerializeField] private float force;
     [SerializeField] private float deltaSpeed;
     [SerializeField] private float _speedMultiplier;
+
+    [Header("SCRIPTABLE OBJECT")]
+    [SerializeField] private PlayerRuntime playerRuntime;
 
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
@@ -59,6 +65,10 @@ public class PlayerController : MonoBehaviour
         _tweens = new List<Tween>();
 
         _rigidbody = GetComponent<Rigidbody>();
+
+        playerRuntime.player = transform;
+
+        swordTrail.SetActive(false);
     }
 
     private void Update()
@@ -199,6 +209,13 @@ public class PlayerController : MonoBehaviour
         }
 
         _waitForEndAttackAnimationTween = Tween.Delay(1.5f).OnComplete(() => SetState(0));
+
+        if (_attackAnimation == 0)
+        {
+            swordTrail.SetActive(true);
+
+            _tweens.Add(Tween.Delay(1f).OnComplete(() => swordTrail.SetActive(false)));
+        }
 
         _attackAnimation++;
 
