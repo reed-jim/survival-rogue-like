@@ -160,6 +160,8 @@ public class PlayerController : MonoBehaviour
         Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit);
 
         transform.LookAt(hit.point);
+
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
 
     private void WalkFoward()

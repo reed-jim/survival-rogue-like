@@ -28,12 +28,12 @@ public class EnemySpawnManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(10);
-
             enemies[_currentEnemyIndex].transform.position = GetRandomPosition();
             enemies[_currentEnemyIndex].SetActive(true);
 
             _currentEnemyIndex++;
+
+            yield return new WaitForSeconds(10);
         }
     }
 
@@ -42,6 +42,7 @@ public class EnemySpawnManager : MonoBehaviour
         Vector3 position = new Vector3();
 
         position.x = Random.Range(5, 12);
+        position.y = 0.6f;
         position.z = Random.Range(5, 12);
 
         return position;

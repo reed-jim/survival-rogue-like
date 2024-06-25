@@ -15,12 +15,15 @@ public class MeshColliderUpdater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        if (time >= 0.05f)
-        {
-            time = 0;
-            UpdateCollider();
-        }
+        UpdateCollider();
+
+        // time += Time.deltaTime;
+
+        // if (time >= 0.02f)
+        // {
+        //     time = 0;
+        //     UpdateCollider();
+        // }
     }
 
     SkinnedMeshRenderer meshRenderer;
