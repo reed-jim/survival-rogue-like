@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [Header("ANIMATOR")]
     [SerializeField] private Animator playerAnimator;
 
+    [Header("COLLIDER")]
+    [SerializeField] private Collider swordCollider;
+
     [Header("TRAIL")]
     [SerializeField] private GameObject swordTrail;
 
@@ -28,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private List<Tween> _tweens;
     private Coroutine _waitCoroutine;
     private bool _isTurning;
-
+    private float _initialPositionY;
     private float _speed;
 
     private int _attackAnimation;
@@ -69,6 +72,10 @@ public class PlayerController : MonoBehaviour
         playerRuntime.player = transform;
 
         swordTrail.SetActive(false);
+
+        swordCollider.enabled = false;
+
+        _initialPositionY = transform.position.y;
     }
 
     private void Update()
@@ -162,6 +169,8 @@ public class PlayerController : MonoBehaviour
         transform.LookAt(hit.point);
 
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+
+        transform.position = new Vector3(transform.position.x, _initialPositionY, transform.position.z);
     }
 
     private void WalkFoward()
@@ -210,7 +219,12 @@ public class PlayerController : MonoBehaviour
             _waitForEndAttackAnimationTween.Stop();
         }
 
-        _waitForEndAttackAnimationTween = Tween.Delay(1.5f).OnComplete(() => SetState(0));
+        _waitForEndAttackAnimationTween = Tween.Delay(1.5f).OnComplete(() =>
+        {
+            SetState(0);
+
+            swordCollider.enabled = false;
+        });
 
         if (_attackAnimation == 0)
         {
@@ -225,6 +239,8 @@ public class PlayerController : MonoBehaviour
         {
             _attackAnimation = 0;
         }
+
+        swordCollider.enabled = true;
     }
 
     private void SetState(int state)

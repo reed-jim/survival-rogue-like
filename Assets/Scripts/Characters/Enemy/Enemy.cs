@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (_isIgnorePhysic)
+        if (_isIgnorePhysic || _stat.HP <= 0)
         {
             return;
         }
@@ -59,6 +59,14 @@ public class Enemy : MonoBehaviour
         //     break;
         // }
 
+        if (collision.collider.tag == "Sword")
+        {
+            OnHit();
+        }
+    }
+
+    private void OnHit()
+    {
         float prevHP = _stat.HP;
 
         _stat.MinusHP(0.35f);
@@ -67,16 +75,15 @@ public class Enemy : MonoBehaviour
 
         if (_stat.HP <= 0)
         {
-            _tweens.Add(Tween.Scale(transform, 0, duration: 0.3f).OnComplete(() =>
+            _tweens.Add(Tween.Scale(transform, 0, duration: 1f).OnComplete(() =>
             {
                 gameObject.SetActive(false);
             }));
         }
-
-        _tweens.Add(Tween.Scale(transform, 1.1f, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f).OnComplete(() =>
+        else
         {
-            // _isIgnorePhysic = false;
-        }));
+            _tweens.Add(Tween.Scale(transform, 1.1f, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f));
+        }
 
         _tweens.Add(Tween.Delay(1).OnComplete(() => _isIgnorePhysic = false));
 
