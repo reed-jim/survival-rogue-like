@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [Header("ANIMATOR")]
     [SerializeField] private Animator playerAnimator;
 
+    [Header("ANIMATION DURATION")]
+    [SerializeField] private AnimationClip attackAnimation;
+
     [Header("COLLIDER")]
     [SerializeField] private Collider swordCollider;
 
@@ -23,6 +26,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float force;
     [SerializeField] private float deltaSpeed;
     [SerializeField] private float _speedMultiplier;
+
+    [SerializeField] private float delayTimeAttackHit;
+
+    [SerializeField] private float rotateTimeMultiplier;
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private PlayerRuntime playerRuntime;
@@ -39,6 +46,7 @@ public class PlayerController : MonoBehaviour
     private Tween _waitForEndAttackAnimationTween;
 
 
+    private bool _isAllowRotating = true;
 
 
     // [SerializeField] private AnimancerComponent _Animancer;
@@ -98,33 +106,33 @@ public class PlayerController : MonoBehaviour
         {
             WalkFoward();
         }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (!_isTurning)
-            {
-                TransformUtil.RotateRight(transform, _tweens, onCompletedAction: () => _isTurning = false);
+        // else if (Input.GetKeyDown(KeyCode.D))
+        // {
+        //     if (!_isTurning)
+        //     {
+        //         TransformUtil.RotateRight(transform, _tweens, onCompletedAction: () => _isTurning = false);
 
-                _isTurning = true;
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (!_isTurning)
-            {
-                TransformUtil.RotateLeft(transform, _tweens, onCompletedAction: () => _isTurning = false);
+        //         _isTurning = true;
+        //     }
+        // }
+        // else if (Input.GetKeyDown(KeyCode.A))
+        // {
+        //     if (!_isTurning)
+        //     {
+        //         TransformUtil.RotateLeft(transform, _tweens, onCompletedAction: () => _isTurning = false);
 
-                _isTurning = true;
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (!_isTurning)
-            {
-                TransformUtil.RotateBack(transform, _tweens, onCompletedAction: () => _isTurning = false);
+        //         _isTurning = true;
+        //     }
+        // }
+        // else if (Input.GetKeyDown(KeyCode.S))
+        // {
+        //     if (!_isTurning)
+        //     {
+        //         TransformUtil.RotateBack(transform, _tweens, onCompletedAction: () => _isTurning = false);
 
-                _isTurning = true;
-            }
-        }
+        //         _isTurning = true;
+        //     }
+        // }
         else
         {
             // Idle();
@@ -158,11 +166,18 @@ public class PlayerController : MonoBehaviour
 
     private void FaceToMouseCursor()
     {
+        if (_isAllowRotating == false)
+        {
+            return;
+        }
+
         // Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         // float angle = Vector3.Angle(mousePosition, transform.position);
 
         // transform.eulerAngles = new Vector3(0, angle, 0);
+
+        Vector3 initialEulerAngles = transform.eulerAngles;
 
         Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit);
 
@@ -170,7 +185,18 @@ public class PlayerController : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
+        // SMOOTH
+        Vector3 endEulerAngles = transform.eulerAngles;
+
+        transform.eulerAngles = initialEulerAngles;
+
+        float duration = Math.Abs(rotateTimeMultiplier * (endEulerAngles.y - initialEulerAngles.y));
+
+        _tweens.Add(Tween.EulerAngles(transform, initialEulerAngles, endEulerAngles, duration: duration).OnComplete(() => _isAllowRotating = true));
+
         transform.position = new Vector3(transform.position.x, _initialPositionY, transform.position.z);
+
+        _isAllowRotating = false;
     }
 
     private void WalkFoward()
@@ -219,11 +245,15 @@ public class PlayerController : MonoBehaviour
             _waitForEndAttackAnimationTween.Stop();
         }
 
-        _waitForEndAttackAnimationTween = Tween.Delay(1.5f).OnComplete(() =>
+        _waitForEndAttackAnimationTween = Tween.Delay(attackAnimation.length).OnComplete(() =>
         {
             SetState(0);
 
             swordCollider.enabled = false;
+
+            // wait for transition attack --> idle
+            _tweens.Add(Tween.Delay(0.3f).OnComplete(() => _isAllowRotating = true));
+
         });
 
         if (_attackAnimation == 0)
@@ -233,14 +263,17 @@ public class PlayerController : MonoBehaviour
             _tweens.Add(Tween.Delay(1f).OnComplete(() => swordTrail.SetActive(false)));
         }
 
-        _attackAnimation++;
+        // uncomment this to use multi attack animation
+        // _attackAnimation++;
 
-        if (_attackAnimation > 2)
-        {
-            _attackAnimation = 0;
-        }
+        // if (_attackAnimation > 2)
+        // {
+        //     _attackAnimation = 0;
+        // }
 
-        swordCollider.enabled = true;
+        _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() => swordCollider.enabled = true));
+
+        _isAllowRotating = false;
     }
 
     private void SetState(int state)
