@@ -33,6 +33,11 @@ public class EnemySpawnManager : MonoBehaviour
 
             _currentEnemyIndex++;
 
+            if (_currentEnemyIndex >= enemies.Length)
+            {
+                _currentEnemyIndex = 0;
+            }
+
             yield return new WaitForSeconds(10);
         }
     }

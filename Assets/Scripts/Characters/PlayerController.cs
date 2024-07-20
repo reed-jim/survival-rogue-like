@@ -188,11 +188,45 @@ public class PlayerController : MonoBehaviour
         // SMOOTH
         Vector3 endEulerAngles = transform.eulerAngles;
 
+        // if (initialEulerAngles.y >= 180)
+        // {
+        //     initialEulerAngles = new Vector3(0, initialEulerAngles.y - 360, 0);
+        // }
+
+        if (endEulerAngles.y < 0)
+        {
+            endEulerAngles = new Vector3(0, endEulerAngles.y + 360, 0);
+        }
+
         transform.eulerAngles = initialEulerAngles;
+
+        float deltaEulerAngle = Math.Abs(endEulerAngles.y - initialEulerAngles.y);
+
+        if (deltaEulerAngle < 5)
+        {
+            return;
+        }
 
         float duration = Math.Abs(rotateTimeMultiplier * (endEulerAngles.y - initialEulerAngles.y));
 
-        _tweens.Add(Tween.EulerAngles(transform, initialEulerAngles, endEulerAngles, duration: duration).OnComplete(() => _isAllowRotating = true));
+        // if (endEulerAngles.y > 180 && initialEulerAngles.y < 180)
+        // {
+        //     Tween tween = Tween.EulerAngles(transform, initialEulerAngles, Vector3.zero, duration: duration / 2, ease: Ease.Linear).OnComplete(() =>
+        //     {
+        //         _tweens.Add(Tween.EulerAngles(transform, new Vector3(0, 360, 0), endEulerAngles, duration: duration / 2, ease: Ease.Linear).OnComplete(() =>
+        //         {
+        //             _isAllowRotating = true;
+        //         }));
+        //     });
+
+        //     _tweens.Add(tween);
+        // }
+        // else
+        // {
+        //     _tweens.Add(Tween.EulerAngles(transform, initialEulerAngles, endEulerAngles, duration: duration, ease: Ease.Linear).OnComplete(() => _isAllowRotating = true));
+        // }
+
+        StartCoroutine(SmoothRotateY(transform, initialEulerAngles.y, endEulerAngles.y));
 
         transform.position = new Vector3(transform.position.x, _initialPositionY, transform.position.z);
 
@@ -299,5 +333,69 @@ public class PlayerController : MonoBehaviour
         onCompletedAction?.Invoke();
 
         _waitCoroutine = null;
+    }
+
+    private IEnumerator SmoothRotateY(Transform target, float startAngle, float endAngle)
+    {
+        float requiredAngleRotated = 0;
+        float angleRotated = 0;
+
+        bool isClockWise = endAngle - startAngle > 0 ? true : false;
+        bool isMoveAlongSmallerArc = false;
+
+        requiredAngleRotated = Mathf.Abs(endAngle - startAngle);
+
+        if (startAngle < 180 && endAngle > 180)
+        {
+            isMoveAlongSmallerArc = true;
+
+            if (startAngle + (360 - endAngle) < requiredAngleRotated)
+            {
+                isClockWise = !isClockWise;
+
+                requiredAngleRotated = startAngle + (360 - endAngle);
+            }
+        }
+
+        if (startAngle > 180 && endAngle < 180)
+        {
+            isMoveAlongSmallerArc = true;
+
+            if (endAngle + (360 - startAngle) < requiredAngleRotated)
+            {
+                isClockWise = !isClockWise;
+
+                requiredAngleRotated = endAngle + (360 - startAngle);
+            }
+        }
+
+        _isAllowRotating = false;
+
+        while (angleRotated < requiredAngleRotated)
+        {
+            float convertedCurrentAngle = target.eulerAngles.y;
+
+            if (convertedCurrentAngle < 0)
+            {
+                convertedCurrentAngle += 360;
+            }
+
+            if (isClockWise)
+            {
+                target.eulerAngles += new Vector3(0, 2, 0);
+
+                angleRotated += 2;
+            }
+            else
+            {
+                target.eulerAngles -= new Vector3(0, 2, 0);
+
+                angleRotated += 2;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        _isAllowRotating = true;
     }
 }

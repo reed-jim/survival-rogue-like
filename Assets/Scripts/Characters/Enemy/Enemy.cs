@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using Unity.VisualScripting;
 using System.Collections.Generic;
 using PrimeTween;
 using System;
@@ -23,11 +21,13 @@ public class Enemy : MonoBehaviour
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
     private bool _isIgnorePhysic;
+    private Material _dissolveMaterial;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float speedMultiplier;
 
     public static event Action hitEvent;
+    public static event Action<Vector3> playHitFxEvent;
 
     private void Awake()
     {
@@ -36,6 +36,8 @@ public class Enemy : MonoBehaviour
         _rigidBody = GetComponent<Rigidbody>();
         _stat = GetComponent<EnemyStat>();
         _characterUI = GetComponent<CharacterUI>();
+
+        _dissolveMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
     }
 
     private void Update()
@@ -49,23 +51,23 @@ public class Enemy : MonoBehaviour
         {
             return;
         }
-        // foreach (ContactPoint contact in collision.contacts)
-        // {
-        //     // fx.transform.position = contact.point;
-        //     // fx.SetActive(true);
 
-        //     gameObject.SetActive(false);
+        Vector3 hitPosition = new Vector3();
 
-        //     break;
-        // }
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            hitPosition = contact.point;
+
+            break;
+        }
 
         if (collision.collider.tag == "Sword")
         {
-            OnHit();
+            OnHit(hitPosition);
         }
     }
 
-    private void OnHit()
+    private void OnHit(Vector3 hitPosition)
     {
         float prevHP = _stat.HP;
 
@@ -75,10 +77,14 @@ public class Enemy : MonoBehaviour
 
         if (_stat.HP <= 0)
         {
-            _tweens.Add(Tween.Scale(transform, 0, duration: 1f).OnComplete(() =>
-            {
-                gameObject.SetActive(false);
-            }));
+            Dissolve();
+
+            _characterUI.HideHpBar();
+
+            // _tweens.Add(Tween.Scale(transform, 0, duration: 1f).OnComplete(() =>
+            // {
+            //     gameObject.SetActive(false);
+            // }));
         }
         else
         {
@@ -90,6 +96,7 @@ public class Enemy : MonoBehaviour
         _isIgnorePhysic = true;
 
         hitEvent?.Invoke();
+        playHitFxEvent?.Invoke(hitPosition);
     }
 
     // private void OnTriggerEnter(Collider other)
@@ -105,6 +112,16 @@ public class Enemy : MonoBehaviour
     //         gameObject.SetActive(false);
     //     }
     // }
+
+    private void Dissolve()
+    {
+        _tweens.Add(Tween.Custom(3, 0, duration: 1f, onValueChange: value => _dissolveMaterial.SetFloat("_CutoffHeight", value)).OnComplete(() =>
+        {
+            gameObject.SetActive(false);
+
+            _dissolveMaterial.SetFloat("_CutoffHeight", 3);
+        }));
+    }
 
     private void FindPlayer()
     {
