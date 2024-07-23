@@ -8,6 +8,9 @@ public class EnemySpawnManager : MonoBehaviour
 
     [SerializeField] private GameObject[] enemies;
 
+    [Header("PLAYER")]
+    [SerializeField] private Transform player;
+
     [Header("MANAGEMENT")]
     private int _currentEnemyIndex;
 
@@ -46,9 +49,11 @@ public class EnemySpawnManager : MonoBehaviour
     {
         Vector3 position = new Vector3();
 
-        position.x = Random.Range(5, 12);
+        int[] allDirections = new int[] { 1, -1 };
+
+        position.x = player.transform.position.x + allDirections[Random.Range(0, 1)] * Random.Range(10, 15);
         position.y = 0.6f;
-        position.z = Random.Range(5, 12);
+        position.z = player.transform.position.y + allDirections[Random.Range(0, 1)] * Random.Range(10, 15);
 
         return position;
     }

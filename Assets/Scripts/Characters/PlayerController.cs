@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     [Header("TRAIL")]
     [SerializeField] private GameObject swordTrail;
 
+    [Header("FX")]
+    [SerializeField] private ParticleSystem swordSlash;
+
     [Header("CUSTOMIZE")]
     [SerializeField] private float force;
     [SerializeField] private float deltaSpeed;
@@ -38,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private List<Tween> _tweens;
     private Coroutine _waitCoroutine;
     private bool _isTurning;
+    private bool _isAttacking;
     private float _initialPositionY;
     private float _speed;
 
@@ -84,6 +88,8 @@ public class PlayerController : MonoBehaviour
         swordCollider.enabled = false;
 
         _initialPositionY = transform.position.y;
+
+        swordSlash.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -104,7 +110,10 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            WalkFoward();
+            if (_isAttacking == false)
+            {
+                WalkFoward();
+            }
         }
         // else if (Input.GetKeyDown(KeyCode.D))
         // {
@@ -265,6 +274,14 @@ public class PlayerController : MonoBehaviour
 
     private void Attack()
     {
+        if (_isAttacking)
+        {
+            return;
+        }
+        else
+        {
+            _isAttacking = true;
+        }
         // if (playerAnimator.GetInteger("State") == 1) return;
 
         if (playerAnimator.GetInteger("State") != 1)
@@ -273,6 +290,8 @@ public class PlayerController : MonoBehaviour
         }
 
         playerAnimator.SetInteger("AttackAnimation", _attackAnimation);
+
+        PlaySwordSlash();
 
         if (_waitForEndAttackAnimationTween.isAlive)
         {
@@ -283,16 +302,19 @@ public class PlayerController : MonoBehaviour
         {
             SetState(0);
 
-            swordCollider.enabled = false;
+            // swordCollider.enabled = false;
 
             // wait for transition attack --> idle
-            _tweens.Add(Tween.Delay(0.3f).OnComplete(() => _isAllowRotating = true));
-
+            _tweens.Add(Tween.Delay(0.3f).OnComplete(() =>
+            {
+                _isAllowRotating = true;
+                _isAttacking = false;
+            }));
         });
 
         if (_attackAnimation == 0)
         {
-            swordTrail.SetActive(true);
+            // swordTrail.SetActive(true);
 
             _tweens.Add(Tween.Delay(1f).OnComplete(() => swordTrail.SetActive(false)));
         }
@@ -305,7 +327,12 @@ public class PlayerController : MonoBehaviour
         //     _attackAnimation = 0;
         // }
 
-        _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() => swordCollider.enabled = true));
+        _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
+        {
+            swordCollider.enabled = true;
+
+            _tweens.Add(Tween.Delay(0.05f).OnComplete(() => swordCollider.enabled = false));
+        }));
 
         _isAllowRotating = false;
     }
@@ -373,29 +400,29 @@ public class PlayerController : MonoBehaviour
 
         while (angleRotated < requiredAngleRotated)
         {
-            float convertedCurrentAngle = target.eulerAngles.y;
-
-            if (convertedCurrentAngle < 0)
-            {
-                convertedCurrentAngle += 360;
-            }
-
             if (isClockWise)
             {
-                target.eulerAngles += new Vector3(0, 2, 0);
+                target.eulerAngles += new Vector3(0, 3, 0);
 
-                angleRotated += 2;
+                angleRotated += 3;
             }
             else
             {
-                target.eulerAngles -= new Vector3(0, 2, 0);
+                target.eulerAngles -= new Vector3(0, 3, 0);
 
-                angleRotated += 2;
+                angleRotated += 3;
             }
 
             yield return new WaitForFixedUpdate();
         }
 
         _isAllowRotating = true;
+    }
+
+    private void PlaySwordSlash()
+    {
+        // swordSlash.transform.position = transform.position + new Vector3(0, 1f, 1.5f);
+        swordSlash.gameObject.SetActive(true);
+        swordSlash.Play();
     }
 }

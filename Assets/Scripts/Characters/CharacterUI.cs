@@ -34,9 +34,9 @@ public class CharacterUI : MonoBehaviour
 
     }
 
-    public void SetHP(float prevValue, float value)
+    public void SetHP(float prevValue, float value, float maxHp)
     {
-        _tweens.Add(Tween.Custom(prevValue, value, duration: 0.3f, onValueChange: newVal => hpBar.value = newVal));
+        _tweens.Add(Tween.Custom(prevValue / maxHp, value / maxHp, duration: 0.3f, onValueChange: newVal => hpBar.value = newVal));
     }
 
     public void HideHpBar()

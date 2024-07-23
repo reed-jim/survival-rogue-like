@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class EnemyStat : MonoBehaviour
 {
-    private float _hp = 1;
+    private float _hp = 100;
+
+    public int Level = 1;
 
     public float HP
     {
@@ -12,7 +14,8 @@ public class EnemyStat : MonoBehaviour
         set => _hp = value;
     }
 
-    public void MinusHP(float value) {
+    public void MinusHP(float value)
+    {
         _hp -= value;
     }
 }

@@ -13,31 +13,40 @@ public class Enemy : MonoBehaviour
     private Rigidbody _rigidBody;
 
     [Header("STAT")]
-    private EnemyStat _stat;
+    [SerializeField] private EnemyStat stat;
 
     [Header("UI")]
     private CharacterUI _characterUI;
+
+    [Header("SCRIPTABLE OBJECT")]
+    [SerializeField] private PlayerStat playerStat;
+
+    [Header("CUSTOMIZE")]
+    [SerializeField] private float speedMultiplier;
+    [SerializeField] private Vector3 offsetToPlayer;
 
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
     private bool _isIgnorePhysic;
     private Material _dissolveMaterial;
 
-    [Header("CUSTOMIZE")]
-    [SerializeField] private float speedMultiplier;
-
     public static event Action hitEvent;
     public static event Action<Vector3> playHitFxEvent;
+    public static event Action<int> enemyDieEvent;
 
     private void Awake()
     {
         _tweens = new List<Tween>();
 
         _rigidBody = GetComponent<Rigidbody>();
-        _stat = GetComponent<EnemyStat>();
         _characterUI = GetComponent<CharacterUI>();
 
         _dissolveMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
+    }
+
+    private void Start()
+    {
+        player = playerRuntime.player;
     }
 
     private void Update()
@@ -47,7 +56,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (_isIgnorePhysic || _stat.HP <= 0)
+        if (_isIgnorePhysic || stat.HP <= 0)
         {
             return;
         }
@@ -69,22 +78,19 @@ public class Enemy : MonoBehaviour
 
     private void OnHit(Vector3 hitPosition)
     {
-        float prevHP = _stat.HP;
+        float prevHP = stat.HP;
 
-        _stat.MinusHP(0.35f);
+        stat.MinusHP(playerStat.Damage);
 
-        _characterUI.SetHP(prevHP, _stat.HP);
+        _characterUI.SetHP(prevHP, stat.HP, maxHp: 100);
 
-        if (_stat.HP <= 0)
+        if (stat.HP <= 0)
         {
             Dissolve();
 
             _characterUI.HideHpBar();
 
-            // _tweens.Add(Tween.Scale(transform, 0, duration: 1f).OnComplete(() =>
-            // {
-            //     gameObject.SetActive(false);
-            // }));
+            enemyDieEvent?.Invoke(stat.Level);
         }
         else
         {
@@ -125,9 +131,21 @@ public class Enemy : MonoBehaviour
 
     private void FindPlayer()
     {
+        _rigidBody.velocity = Vector3.zero;
+
+        if (Mathf.Abs(transform.position.x - player.position.x) < offsetToPlayer.x)
+        {
+            return;
+        }
+
+        if (Mathf.Abs(transform.position.z - player.position.z) < offsetToPlayer.z)
+        {
+            return;
+        }
+
         transform.LookAt(player);
 
-        _rigidBody.velocity = speedMultiplier * (playerRuntime.player.position - transform.position).normalized;
+        _rigidBody.velocity = speedMultiplier * (player.position - transform.position).normalized;
 
         // transform.position = Vector3.Lerp(transform.position, playerRuntime.player.position + new Vector3(0, 0, 1), 0.002f);
     }
