@@ -7,8 +7,6 @@ public class GameplayUIManager : MonoBehaviour
 {
     [SerializeField] private Slider expProgressBar;
 
-    [SerializeField] private PlayerStat playerStat;
-
     private void Awake()
     {
         StatManager.updateExpProgressBarEvent += UpdateExpProgressBar;
@@ -21,8 +19,8 @@ public class GameplayUIManager : MonoBehaviour
         PlayerStat.updateExpProgressBarEvent -= UpdateExpProgressBar;
     }
 
-    private void UpdateExpProgressBar(float currentExp)
+    private void UpdateExpProgressBar(float currentExp, float maxExp)
     {
-        expProgressBar.value = currentExp / playerStat.GetRequiredExpForNextLevel();
+        expProgressBar.value = currentExp / maxExp;
     }
 }

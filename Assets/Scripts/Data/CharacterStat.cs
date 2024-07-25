@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/CharacterStat")]
-public class CharacterStat : ScriptableObject
+// [CreateAssetMenu(menuName = "ScriptableObjects/CharacterStat")]
+[System.Serializable]
+public class CharacterStat
 {
     [SerializeField] private int level;
     [SerializeField] private float hp;

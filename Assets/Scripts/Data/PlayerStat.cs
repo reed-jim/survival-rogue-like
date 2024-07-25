@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/PlayerStat")]
+// [CreateAssetMenu(menuName = "ScriptableObjects/PlayerStat")]
+[System.Serializable]
 public class PlayerStat : CharacterStat
 {
-    public static event Action<float> updateExpProgressBarEvent;
+    public static event Action<float, float> updateExpProgressBarEvent;
 
     [SerializeField] private float exp;
 
@@ -12,6 +13,13 @@ public class PlayerStat : CharacterStat
     {
         get => exp;
         set => exp = value;
+    }
+
+    private void Awake()
+    {
+        PlayerStat stat = DataUtility.Load<PlayerStat>(new PlayerStat());
+
+        Debug.Log(stat.exp);
     }
 
     public void EarnExp(float earnedExp)
@@ -25,8 +33,10 @@ public class PlayerStat : CharacterStat
 
             exp = 0;
 
-            updateExpProgressBarEvent?.Invoke(exp);
+            // updateExpProgressBarEvent?.Invoke(exp, );
         }
+
+        DataUtility.Save(this);
     }
 
     public float GetExpFromKillEnemy(int enemyLevel)

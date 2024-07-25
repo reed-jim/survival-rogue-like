@@ -30,23 +30,42 @@ public class Enemy : MonoBehaviour
     private bool _isIgnorePhysic;
     private Material _dissolveMaterial;
 
+    private int _index;
+
     public static event Action hitEvent;
     public static event Action<Vector3> playHitFxEvent;
+    public static event Action<EnemyStat> enemySpawnedEvent;
+    public static event Action<int> enemyHitEvent;
     public static event Action<int> enemyDieEvent;
 
     private void Awake()
     {
         _tweens = new List<Tween>();
 
+        StatManager.updateEnemyUIEvent += UpdateUI;
+        EnemySpawnManager.setEnemyIndexEvent += SetIndex;
+
         _rigidBody = GetComponent<Rigidbody>();
         _characterUI = GetComponent<CharacterUI>();
 
         _dissolveMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
+
+        stat = new EnemyStat();
+
+        _index = transform.GetSiblingIndex();
     }
 
     private void Start()
     {
         player = playerRuntime.player;
+
+        enemySpawnedEvent?.Invoke(stat);
+    }
+
+    private void OnDestroy()
+    {
+        StatManager.updateEnemyUIEvent -= UpdateUI;
+        EnemySpawnManager.setEnemyIndexEvent -= SetIndex;
     }
 
     private void Update()
@@ -76,13 +95,20 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void SetIndex(int index)
+    {
+        // _index = index;
+    }
+
     private void OnHit(Vector3 hitPosition)
     {
-        float prevHP = stat.HP;
+        // float prevHP = stat.HP;
 
-        stat.MinusHP(playerStat.Damage);
+        enemyHitEvent?.Invoke(_index);
 
-        _characterUI.SetHP(prevHP, stat.HP, maxHp: 100);
+        // stat.MinusHP(playerStat.Damage);
+
+        // _characterUI.SetHP(prevHP, stat.HP, maxHp: 100);
 
         if (stat.HP <= 0)
         {
@@ -105,19 +131,13 @@ public class Enemy : MonoBehaviour
         playHitFxEvent?.Invoke(hitPosition);
     }
 
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     float prevHP = _stat.HP;
-
-    //     _stat.MinusHP(0.35f);
-
-    //     _characterUI.SetHP(prevHP, _stat.HP);
-
-    //     if (_stat.HP <= 0)
-    //     {
-    //         gameObject.SetActive(false);
-    //     }
-    // }
+    private void UpdateUI(int enemyIndex, float prevHP)
+    {
+        if (enemyIndex == _index)
+        {
+            _characterUI.SetHP(prevHP, stat.HP, maxHp: 100);
+        }
+    }
 
     private void Dissolve()
     {

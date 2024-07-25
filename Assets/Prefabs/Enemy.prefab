@@ -309,7 +309,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4216728482336811426}
   - component: {fileID: 8078178173280809820}
-  - component: {fileID: 5457757499004410999}
   - component: {fileID: 1993283354918468892}
   - component: {fileID: 6383682426968870845}
   m_Layer: 0
@@ -351,23 +350,13 @@ MonoBehaviour:
   player: {fileID: 0}
   fx: {fileID: 0}
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
-  stat: {fileID: 5457757499004410999}
-  playerStat: {fileID: 11400000, guid: 96f06bcb5f3f0a94780b8f59af4d5e04, type: 2}
-  speedMultiplier: 0.8
+  playerStat:
+    level: 0
+    hp: 0
+    damage: 0
+    exp: 0
+  speedMultiplier: 2
   offsetToPlayer: {x: 2, y: 0, z: 2}
---- !u!114 &5457757499004410999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4394783793093992327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32bf1ba7f3eaa6946866f27eda00fcc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Level: 1
 --- !u!114 &1993283354918468892
 MonoBehaviour:
   m_ObjectHideFlags: 0

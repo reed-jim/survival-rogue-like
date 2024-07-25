@@ -173,6 +173,11 @@ public class PlayerController : MonoBehaviour
         _waitForEndAttackAnimationTween.Stop();
     }
 
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.DrawSphere(transform.position, 10);
+    // }
+
     private void FaceToMouseCursor()
     {
         if (_isAllowRotating == false)
@@ -335,6 +340,17 @@ public class PlayerController : MonoBehaviour
         }));
 
         _isAllowRotating = false;
+    }
+
+
+    private void Shoot()
+    {
+        RaycastHit hit;
+
+        if (Physics.SphereCast(transform.position, 10, transform.forward, out hit))
+        {
+
+        }
     }
 
     private void SetState(int state)
