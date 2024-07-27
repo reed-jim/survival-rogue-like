@@ -5,18 +5,22 @@ using UnityEngine;
 public class FxManager : MonoBehaviour
 {
     [SerializeField] private ParticleSystem[] hitFXs;
+    [SerializeField] private ParticleSystem[] bulletHitFXs;
 
     [Header("CUSTOMIZE")]
     private int _currentHitFXIndex;
+    private int _currentBulletHitFXIndex;
 
     private void Awake()
     {
         Enemy.playHitFxEvent += PlayHitFX;
+        Enemy.playBulletHitFxEvent += PlayHitFX;
     }
 
     private void OnDestroy()
     {
         Enemy.playHitFxEvent -= PlayHitFX;
+        Enemy.playBulletHitFxEvent -= PlayHitFX;
     }
 
     private void PlayHitFX(Vector3 hitPosition)
@@ -30,6 +34,20 @@ public class FxManager : MonoBehaviour
         if (_currentHitFXIndex >= hitFXs.Length)
         {
             _currentHitFXIndex = 0;
+        }
+    }
+
+    private void PlayBulletHitFX(Vector3 hitPosition)
+    {
+        bulletHitFXs[_currentBulletHitFXIndex].transform.position = hitPosition;
+        bulletHitFXs[_currentBulletHitFXIndex].gameObject.SetActive(true);
+        bulletHitFXs[_currentBulletHitFXIndex].Play();
+
+        _currentBulletHitFXIndex++;
+
+        if (_currentBulletHitFXIndex >= bulletHitFXs.Length)
+        {
+            _currentBulletHitFXIndex = 0;
         }
     }
 }

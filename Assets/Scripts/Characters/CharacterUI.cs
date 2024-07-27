@@ -39,8 +39,22 @@ public class CharacterUI : MonoBehaviour
         _tweens.Add(Tween.Custom(prevValue / maxHp, value / maxHp, duration: 0.3f, onValueChange: newVal => hpBar.value = newVal));
     }
 
+    public void ShowHpBar()
+    {
+        if (_hpBarRT != null)
+        {
+            _hpBarRT.gameObject.SetActive(true);
+        }
+    }
+
     public void HideHpBar()
     {
-        _tweens.Add(Tween.ScaleX(_hpBarRT, 0, duration: scaleDownDuration));
+        _tweens.Add(
+            Tween.ScaleX(_hpBarRT, 0, duration: scaleDownDuration).OnComplete(() =>
+            {
+                _hpBarRT.localScale = Vector3.one;
+                _hpBarRT.gameObject.SetActive(false);
+            })
+        );
     }
 }

@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private PlayerRuntime playerRuntime;
+    [SerializeField] private PlayerStatObserver playerStatObserver;
 
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
@@ -51,6 +52,8 @@ public class PlayerController : MonoBehaviour
 
 
     private bool _isAllowRotating = true;
+
+    public PlayerShooterController playerShooterController;
 
 
     // [SerializeField] private AnimancerComponent _Animancer;
@@ -90,6 +93,8 @@ public class PlayerController : MonoBehaviour
         _initialPositionY = transform.position.y;
 
         swordSlash.gameObject.SetActive(false);
+
+        StartCoroutine(Shooting());
     }
 
     private void Update()
@@ -343,13 +348,23 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void Shoot()
+    private IEnumerator Shooting()
     {
-        RaycastHit hit;
-
-        if (Physics.SphereCast(transform.position, 10, transform.forward, out hit))
+        while (true)
         {
+            RaycastHit hit;
 
+            if (Physics.SphereCast(transform.position, 4, transform.forward, out hit))
+            {
+                if (hit.transform.tag == Constants.ENEMY_TAG)
+                {
+                    // Debug.LogError(hit.transform.position);
+
+                    playerShooterController.Shoot(hit.transform, transform);
+                }
+            }
+
+            yield return new WaitForSeconds(playerStatObserver.PlayerStat.ReloadTime);
         }
     }
 

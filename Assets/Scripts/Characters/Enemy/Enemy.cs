@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour
 
     public static event Action hitEvent;
     public static event Action<Vector3> playHitFxEvent;
+    public static event Action<Vector3> playBulletHitFxEvent;
     public static event Action<EnemyStat> enemySpawnedEvent;
     public static event Action<int> enemyHitEvent;
     public static event Action<int> enemyDieEvent;
@@ -53,6 +54,11 @@ public class Enemy : MonoBehaviour
         stat = new EnemyStat();
 
         _index = transform.GetSiblingIndex();
+    }
+
+    private void OnEnable()
+    {
+        _characterUI.ShowHpBar();
     }
 
     private void Start()
@@ -93,6 +99,13 @@ public class Enemy : MonoBehaviour
         {
             OnHit(hitPosition);
         }
+
+        if (collision.collider.tag == Constants.PLAYER_BULLET_TAG)
+        {
+            OnBulletHit(hitPosition);
+
+            collision.gameObject.SetActive(false);
+        }
     }
 
     private void SetIndex(int index)
@@ -129,6 +142,31 @@ public class Enemy : MonoBehaviour
 
         hitEvent?.Invoke();
         playHitFxEvent?.Invoke(hitPosition);
+    }
+
+    private void OnBulletHit(Vector3 hitPosition)
+    {
+        enemyHitEvent?.Invoke(_index);
+
+        if (stat.HP <= 0)
+        {
+            Dissolve();
+
+            _characterUI.HideHpBar();
+
+            enemyDieEvent?.Invoke(stat.Level);
+        }
+        else
+        {
+            _tweens.Add(Tween.Scale(transform, 1.1f, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f));
+        }
+
+        _tweens.Add(Tween.Delay(1).OnComplete(() => _isIgnorePhysic = false));
+
+        _isIgnorePhysic = true;
+
+        hitEvent?.Invoke();
+        playBulletHitFxEvent?.Invoke(hitPosition);
     }
 
     private void UpdateUI(int enemyIndex, float prevHP)

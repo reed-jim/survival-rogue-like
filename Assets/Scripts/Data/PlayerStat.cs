@@ -9,11 +9,20 @@ public class PlayerStat : CharacterStat
 
     [SerializeField] private float exp;
 
+    [SerializeField] private float reloadTime = 2;
+
     public float EXP
     {
         get => exp;
         set => exp = value;
     }
+
+    public float ReloadTime
+    {
+        get => reloadTime;
+        set => reloadTime = value;
+    }
+
 
     private void Awake()
     {

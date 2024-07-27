@@ -7,6 +7,9 @@ public class StatManager : MonoBehaviour
 {
     [SerializeField] private PlayerStat playerStat;
 
+    [Header("SCRIPTABLE OBJECT")]
+    [SerializeField] private PlayerStatObserver playerStatObserver;
+
     private List<EnemyStat> _enemyStats;
 
     public static event Action<float, float> updateExpProgressBarEvent;
@@ -20,6 +23,8 @@ public class StatManager : MonoBehaviour
         Enemy.enemyDieEvent += EarnPlayerExpKillingEnemy;
 
         playerStat = DataUtility.Load(new PlayerStat());
+
+        playerStatObserver.PlayerStat = playerStat;
 
         _enemyStats = new List<EnemyStat>();
     }

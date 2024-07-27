@@ -25,6 +25,7 @@ public class EnemySpawnManager : MonoBehaviour
         for (int i = 0; i < enemies.Length; i++)
         {
             enemies[i] = Instantiate(enemyPrefab, enemyContainer);
+            enemies[i].name = $"Enemy {i}";
             enemies[i].SetActive(false);
         }
 
