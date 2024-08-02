@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     public static event Action<EnemyStat> enemySpawnedEvent;
     public static event Action<int> enemyHitEvent;
     public static event Action<int> enemyDieEvent;
+    public static event Action<float> playerGotHitEvent;
 
     private void Awake()
     {
@@ -51,7 +52,11 @@ public class Enemy : MonoBehaviour
 
         _dissolveMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
 
-        stat = new EnemyStat();
+        stat = new EnemyStat()
+        {
+            HP = 100,
+            Damage = 10
+        };
 
         _index = transform.GetSiblingIndex();
     }
@@ -106,6 +111,13 @@ public class Enemy : MonoBehaviour
 
             collision.gameObject.SetActive(false);
         }
+
+        if (collision.collider.tag == Constants.PLAYER_TAG)
+        {
+            playerGotHitEvent?.Invoke(stat.Damage);
+
+            Die();
+        }
     }
 
     private void SetIndex(int index)
@@ -125,11 +137,7 @@ public class Enemy : MonoBehaviour
 
         if (stat.HP <= 0)
         {
-            Dissolve();
-
-            _characterUI.HideHpBar();
-
-            enemyDieEvent?.Invoke(stat.Level);
+            Die();
         }
         else
         {
@@ -206,5 +214,14 @@ public class Enemy : MonoBehaviour
         _rigidBody.velocity = speedMultiplier * (player.position - transform.position).normalized;
 
         // transform.position = Vector3.Lerp(transform.position, playerRuntime.player.position + new Vector3(0, 0, 1), 0.002f);
+    }
+
+    private void Die()
+    {
+        Dissolve();
+
+        _characterUI.HideHpBar();
+
+        enemyDieEvent?.Invoke(stat.Level);
     }
 }

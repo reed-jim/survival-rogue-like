@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-// [CreateAssetMenu(menuName = "ScriptableObjects/PlayerStat")]
 [System.Serializable]
 public class PlayerStat : CharacterStat
 {
@@ -27,8 +26,6 @@ public class PlayerStat : CharacterStat
     private void Awake()
     {
         PlayerStat stat = DataUtility.Load<PlayerStat>(new PlayerStat());
-
-        Debug.Log(stat.exp);
     }
 
     public void EarnExp(float earnedExp)
@@ -46,6 +43,11 @@ public class PlayerStat : CharacterStat
         }
 
         DataUtility.Save(this);
+    }
+
+    public float GetMaxHp()
+    {
+        return 100;
     }
 
     public float GetExpFromKillEnemy(int enemyLevel)

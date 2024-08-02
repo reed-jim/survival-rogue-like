@@ -12,6 +12,7 @@ public class StatManager : MonoBehaviour
 
     private List<EnemyStat> _enemyStats;
 
+    public static event Action<float, float> updatePlayerHpBarEvent;
     public static event Action<float, float> updateExpProgressBarEvent;
 
     public static event Action<int, float> updateEnemyUIEvent;
@@ -21,8 +22,15 @@ public class StatManager : MonoBehaviour
         Enemy.enemySpawnedEvent += OnEnemySpawned;
         Enemy.enemyHitEvent += OnEnemyHit;
         Enemy.enemyDieEvent += EarnPlayerExpKillingEnemy;
+        Enemy.playerGotHitEvent += OnPlayerHit;
 
-        playerStat = DataUtility.Load(new PlayerStat());
+        PlayerStat starterPlayerStat = new PlayerStat()
+        {
+            HP = 100,
+            Damage = 15
+        };
+
+        playerStat = DataUtility.Load(defaultValue: starterPlayerStat);
 
         playerStatObserver.PlayerStat = playerStat;
 
@@ -34,6 +42,7 @@ public class StatManager : MonoBehaviour
         Enemy.enemySpawnedEvent -= OnEnemySpawned;
         Enemy.enemyHitEvent -= OnEnemyHit;
         Enemy.enemyDieEvent -= EarnPlayerExpKillingEnemy;
+        Enemy.playerGotHitEvent -= OnPlayerHit;
     }
 
     private void OnEnemySpawned(EnemyStat enemyStat)
@@ -46,6 +55,13 @@ public class StatManager : MonoBehaviour
         _enemyStats[enemyIndex].MinusHP(playerStat.Damage);
 
         updateEnemyUIEvent?.Invoke(enemyIndex, _enemyStats[enemyIndex].HP);
+    }
+
+    private void OnPlayerHit(float damage)
+    {
+        playerStat.MinusHP(damage);
+
+        updatePlayerHpBarEvent?.Invoke(playerStat.HP, playerStat.GetMaxHp());
     }
 
     private void EarnPlayerExpKillingEnemy(int enemyLevel)

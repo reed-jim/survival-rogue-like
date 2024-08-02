@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// [CreateAssetMenu(menuName = "ScriptableObjects/CharacterStat")]
 [System.Serializable]
 public class CharacterStat
 {
