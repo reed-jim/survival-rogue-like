@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
 
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
+    private Tween _hitEffectTween;
     private bool _isIgnorePhysic;
     private Material _dissolveMaterial;
 
@@ -141,12 +142,17 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            _tweens.Add(Tween.Scale(transform, 1.1f, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f));
+            if (_hitEffectTween.isAlive)
+            {
+                _hitEffectTween.Stop();
+            }
+
+            _hitEffectTween = Tween.Scale(transform, 1.1f, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f);
         }
 
-        _tweens.Add(Tween.Delay(1).OnComplete(() => _isIgnorePhysic = false));
+        // _tweens.Add(Tween.Delay(1).OnComplete(() => _isIgnorePhysic = false));
 
-        _isIgnorePhysic = true;
+        // _isIgnorePhysic = true;
 
         hitEvent?.Invoke();
         playHitFxEvent?.Invoke(hitPosition);
@@ -166,12 +172,17 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            _tweens.Add(Tween.Scale(transform, 1.1f, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f));
+            if (_hitEffectTween.isAlive)
+            {
+                _hitEffectTween.Stop();
+            }
+
+            _hitEffectTween = Tween.Scale(transform, 1.1f, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f);
         }
 
-        _tweens.Add(Tween.Delay(1).OnComplete(() => _isIgnorePhysic = false));
+        // _tweens.Add(Tween.Delay(1).OnComplete(() => _isIgnorePhysic = false));
 
-        _isIgnorePhysic = true;
+        // _isIgnorePhysic = true;
 
         hitEvent?.Invoke();
         playBulletHitFxEvent?.Invoke(hitPosition);

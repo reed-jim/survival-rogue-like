@@ -30,15 +30,40 @@ public class PlayerShooterController : MonoBehaviour
         }
     }
 
-    public void Shoot(Transform target, Transform player)
+    public void Shoot(Vector3 targetPosition, Transform player)
     {
-        Vector3 direction = (target.transform.position - player.position).normalized;
+        Vector3 direction = (targetPosition - player.position).normalized;
 
         direction.y = 0;
 
         // Debug.Log(target.name + "/" + target.position + "/" + direction);
 
         bullets[_currentEnemyIndex].transform.position = player.position + player.forward + new Vector3(0, 1, 0);
+        bullets[_currentEnemyIndex].SetActive(true);
+
+        bulletRigidBodies[_currentEnemyIndex].velocity = Vector3.zero;
+
+        bulletRigidBodies[_currentEnemyIndex].AddForce(forceMultiplier * direction, ForceMode.Force);
+
+        _currentEnemyIndex++;
+
+        if (_currentEnemyIndex >= bullets.Length)
+        {
+            _currentEnemyIndex = 0;
+        }
+    }
+
+    public void Shoot(Transform target, Transform player)
+    {
+        Vector3 bulletStartPoint = player.position + player.forward + new Vector3(0, 1, 0);
+
+        Vector3 direction = (target.position - bulletStartPoint).normalized;
+
+        direction.y = 0;
+
+        // Debug.LogError(target.name + "/" + target.position + "/" + direction);
+
+        bullets[_currentEnemyIndex].transform.position = bulletStartPoint;
         bullets[_currentEnemyIndex].SetActive(true);
 
         bulletRigidBodies[_currentEnemyIndex].velocity = Vector3.zero;

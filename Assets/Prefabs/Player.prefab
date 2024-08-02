@@ -647,7 +647,7 @@ GameObject:
   - component: {fileID: 7668899161313464029}
   - component: {fileID: 3428519543694660632}
   - component: {fileID: 2500231220872822305}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5927,7 +5927,10 @@ MonoBehaviour:
   deltaSpeed: 0.003
   _speedMultiplier: 3.5
   delayTimeAttackHit: 0.6
-  rotateTimeMultiplier: 0.003
+  rotateTimeMultiplier: 0.001
+  layerMaskCheckRangedAttack:
+    serializedVersion: 2
+    m_Bits: 4294967295
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
   playerStatObserver: {fileID: 11400000, guid: e6562857a6e455c4d8b886cab4a28687, type: 2}
   playerShooterController: {fileID: 0}
@@ -6159,7 +6162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 127891066605092282}
   - component: {fileID: 1765815315449542677}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7001,7 +7004,7 @@ GameObject:
   - component: {fileID: 2790855982963890804}
   - component: {fileID: 2124589344028475585}
   - component: {fileID: 451870397192463037}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background slash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12758,7 +12761,7 @@ GameObject:
   - component: {fileID: 5912851787899015433}
   - component: {fileID: 3870151377462450590}
   - component: {fileID: 7480574118690736684}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13021,6 +13024,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sword Slash
+      objectReference: {fileID: 0}
+    - target: {fileID: 6710139492206580332, guid: 95b8d3d65b5d7f1409c4ed1723887826,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6710139492206580332, guid: 95b8d3d65b5d7f1409c4ed1723887826,
         type: 3}

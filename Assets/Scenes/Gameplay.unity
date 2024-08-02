@@ -3614,11 +3614,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7874759328731780075, guid: 9147244e3a13dbc4f841ba5e0180bb5c,
         type: 3}
-      propertyPath: rotateTimeMultiplier
-      value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 7874759328731780075, guid: 9147244e3a13dbc4f841ba5e0180bb5c,
-        type: 3}
       propertyPath: playerShooterController
       value: 
       objectReference: {fileID: 1231552030}

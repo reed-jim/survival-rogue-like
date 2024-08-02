@@ -8,7 +8,7 @@ public class PlayerStat : CharacterStat
 
     [SerializeField] private float exp;
 
-    [SerializeField] private float reloadTime = 2;
+    [SerializeField] private float reloadTime = 1;
 
     public float EXP
     {

@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float rotateTimeMultiplier;
 
+    [Header("CUSTOMIZE - RANGED ATTACK")]
+    [SerializeField] private LayerMask layerMaskCheckRangedAttack;
+
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private PlayerRuntime playerRuntime;
     [SerializeField] private PlayerStatObserver playerStatObserver;
@@ -352,15 +355,32 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            RaycastHit hit;
+            // RaycastHit hit;
 
-            if (Physics.SphereCast(transform.position, 4, transform.forward, out hit))
+            // if (Physics.SphereCast(transform.position, 4, transform.forward, out hit))
+            // {
+            //     Debug.Log(hit);
+            //     if (hit.transform.tag == Constants.ENEMY_TAG)
+            //     {
+            //         // Debug.LogError(hit.transform.position);
+
+            //         playerShooterController.Shoot(hit.transform, transform);
+            //     }
+            // }
+
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 6, layerMaskCheckRangedAttack);
+
+            foreach (var hitCollider in hitColliders)
             {
-                if (hit.transform.tag == Constants.ENEMY_TAG)
+                if (hitCollider.transform.tag == Constants.ENEMY_TAG)
                 {
-                    // Debug.LogError(hit.transform.position);
+                    Vector3 hitPoint = Physics.ClosestPoint(transform.position, hitCollider, hitCollider.transform.position, hitCollider.transform.rotation);
 
-                    playerShooterController.Shoot(hit.transform, transform);
+                    // Debug.Log(hitCollider.transform.parent.name + " / " + hitCollider.transform.parent.position);
+
+                    playerShooterController.Shoot(hitCollider.transform.parent, transform);
+
+                    break;
                 }
             }
 
