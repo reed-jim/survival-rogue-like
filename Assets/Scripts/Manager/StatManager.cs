@@ -54,7 +54,7 @@ public class StatManager : MonoBehaviour
     {
         _enemyStats[enemyIndex].MinusHP(playerStat.Damage);
 
-        updateEnemyUIEvent?.Invoke(enemyIndex, _enemyStats[enemyIndex].HP);
+        updateEnemyUIEvent?.Invoke(enemyIndex, playerStat.Damage);
     }
 
     private void OnPlayerHit(float damage)

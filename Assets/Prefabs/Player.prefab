@@ -5925,9 +5925,9 @@ MonoBehaviour:
   swordSlash: {fileID: 3488299781141894028}
   force: 0.03
   deltaSpeed: 0.003
-  _speedMultiplier: 3.5
+  _speedMultiplier: 4
   delayTimeAttackHit: 0.6
-  rotateTimeMultiplier: 0.001
+  rotateTimeMultiplier: 0.0005
   layerMaskCheckRangedAttack:
     serializedVersion: 2
     m_Bits: 4294967295

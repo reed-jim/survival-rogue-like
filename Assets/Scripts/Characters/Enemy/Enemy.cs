@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using PrimeTween;
 using System;
 
+public enum CharacterState
+{
+    NONE,
+    DIE
+}
+
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private Transform player;
@@ -28,10 +34,15 @@ public class Enemy : MonoBehaviour
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
     private Tween _hitEffectTween;
+    private CharacterState _state;
     private bool _isIgnorePhysic;
     private Material _dissolveMaterial;
 
     private int _index;
+
+    #region PROPERTY
+    public CharacterState State => _state;
+    #endregion
 
     public static event Action hitEvent;
     public static event Action<Vector3> playHitFxEvent;
@@ -65,6 +76,8 @@ public class Enemy : MonoBehaviour
     private void OnEnable()
     {
         _characterUI.ShowHpBar();
+
+        _state = CharacterState.NONE;
     }
 
     private void Start()
@@ -83,6 +96,14 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         FindPlayer();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Fx Collider")
+        {
+            OnHit(transform.position);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -164,11 +185,7 @@ public class Enemy : MonoBehaviour
 
         if (stat.HP <= 0)
         {
-            Dissolve();
-
-            _characterUI.HideHpBar();
-
-            enemyDieEvent?.Invoke(stat.Level);
+            Die();
         }
         else
         {
@@ -188,11 +205,11 @@ public class Enemy : MonoBehaviour
         playBulletHitFxEvent?.Invoke(hitPosition);
     }
 
-    private void UpdateUI(int enemyIndex, float prevHP)
+    private void UpdateUI(int enemyIndex, float damage)
     {
         if (enemyIndex == _index)
         {
-            _characterUI.SetHP(prevHP, stat.HP, maxHp: 100);
+            _characterUI.SetHP(stat.HP + damage, stat.HP, maxHp: 100);
         }
     }
 
@@ -208,6 +225,13 @@ public class Enemy : MonoBehaviour
 
     private void FindPlayer()
     {
+        if (_state == CharacterState.DIE)
+        {
+            _rigidBody.velocity = Vector3.zero;
+
+            return;
+        }
+
         _rigidBody.velocity = Vector3.zero;
 
         if (Mathf.Abs(transform.position.x - player.position.x) < offsetToPlayer.x)
@@ -234,5 +258,7 @@ public class Enemy : MonoBehaviour
         _characterUI.HideHpBar();
 
         enemyDieEvent?.Invoke(stat.Level);
+
+        _state = CharacterState.DIE;
     }
 }

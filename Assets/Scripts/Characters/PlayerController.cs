@@ -58,29 +58,6 @@ public class PlayerController : MonoBehaviour
 
     public PlayerShooterController playerShooterController;
 
-
-    // [SerializeField] private AnimancerComponent _Animancer;
-    // [SerializeField] private Float1ControllerTransitionAsset.UnShared _Controller;
-
-    // public float Speed
-    // {
-    //     get => _Controller.State.Parameter;
-    //     set => _Controller.State.Parameter = value;
-    // }
-
-    // private void OnEnable()
-    // {
-    //     _Animancer.Play(_Controller);
-    // }
-
-
-
-
-
-
-
-
-
     private void Awake()
     {
         _tweens = new List<Tween>();
@@ -180,11 +157,6 @@ public class PlayerController : MonoBehaviour
     {
         _waitForEndAttackAnimationTween.Stop();
     }
-
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.DrawSphere(transform.position, 10);
-    // }
 
     private void FaceToMouseCursor()
     {
@@ -350,7 +322,6 @@ public class PlayerController : MonoBehaviour
         _isAllowRotating = false;
     }
 
-
     private IEnumerator Shooting()
     {
         while (true)
@@ -374,9 +345,19 @@ public class PlayerController : MonoBehaviour
             {
                 if (hitCollider.transform.tag == Constants.ENEMY_TAG)
                 {
-                    Vector3 hitPoint = Physics.ClosestPoint(transform.position, hitCollider, hitCollider.transform.position, hitCollider.transform.rotation);
+                    Enemy enemy = hitCollider.transform.parent.GetComponent<Enemy>();
 
-                    // Debug.Log(hitCollider.transform.parent.name + " / " + hitCollider.transform.parent.position);
+                    if (enemy == null)
+                    {
+                        continue;
+                    }
+
+                    if (enemy.State == CharacterState.DIE)
+                    {
+                        continue;
+                    }
+
+                    Vector3 hitPoint = Physics.ClosestPoint(transform.position, hitCollider, hitCollider.transform.position, hitCollider.transform.rotation);
 
                     playerShooterController.Shoot(hitCollider.transform.parent, transform);
 
