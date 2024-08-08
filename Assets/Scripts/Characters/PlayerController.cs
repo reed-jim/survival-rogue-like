@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody _rigidbody;
+    [SerializeField ]private Rigidbody _rigidbody;
 
     [Header("ANIMATOR")]
     [SerializeField] private Animator playerAnimator;
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         _tweens = new List<Tween>();
 
-        _rigidbody = GetComponent<Rigidbody>();
+        // _rigidbody = GetComponent<Rigidbody>();
 
         playerRuntime.player = transform;
 
@@ -92,12 +92,24 @@ public class PlayerController : MonoBehaviour
         //         _waitCoroutine = StartCoroutine(WaitFor(0.5f, () => playerAnimator.SetInteger("State", 0)));
         //     }
         // }
-
         if (Input.GetKey(KeyCode.W))
         {
             if (_isAttacking == false)
             {
                 WalkFoward();
+            }
+        }
+        else
+        {
+            // Idle();
+
+            if (_speed > 0)
+            {
+                _speed -= deltaSpeed;
+            }
+            else
+            {
+                _speed = 0;
             }
         }
         // else if (Input.GetKeyDown(KeyCode.D))
@@ -127,19 +139,6 @@ public class PlayerController : MonoBehaviour
         //         _isTurning = true;
         //     }
         // }
-        else
-        {
-            // Idle();
-
-            if (_speed > 0)
-            {
-                _speed -= deltaSpeed;
-            }
-            else
-            {
-                _speed = 0;
-            }
-        }
 
         _rigidbody.velocity = _speedMultiplier * _speed * transform.forward;
 

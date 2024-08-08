@@ -38,7 +38,7 @@ public class PlayerShooterController : MonoBehaviour
 
         // Debug.Log(target.name + "/" + target.position + "/" + direction);
 
-        bullets[_currentEnemyIndex].transform.position = player.position + player.forward + new Vector3(0, 1, 0);
+        bullets[_currentEnemyIndex].transform.position = player.position + player.forward;
         bullets[_currentEnemyIndex].SetActive(true);
 
         bulletRigidBodies[_currentEnemyIndex].velocity = Vector3.zero;

@@ -11,12 +11,13 @@ public enum CharacterState
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    private Transform player;
     [SerializeField] private GameObject fx;
 
     [SerializeField] private PlayerRuntime playerRuntime;
 
-    private Rigidbody _rigidBody;
+    [Header("ANIMATOR")]
+    [SerializeField] private Animator playerAnimator;
 
     [Header("STAT")]
     [SerializeField] private EnemyStat stat;
@@ -35,6 +36,7 @@ public class Enemy : MonoBehaviour
     private List<Tween> _tweens;
     private Tween _hitEffectTween;
     private CharacterState _state;
+    private Rigidbody _rigidBody;
     private bool _isIgnorePhysic;
     private Material _dissolveMaterial;
 
@@ -247,6 +249,8 @@ public class Enemy : MonoBehaviour
         transform.LookAt(player);
 
         _rigidBody.velocity = speedMultiplier * (player.position - transform.position).normalized;
+
+        playerAnimator.SetFloat("Speed", _rigidBody.velocity.z);
 
         // transform.position = Vector3.Lerp(transform.position, playerRuntime.player.position + new Vector3(0, 0, 1), 0.002f);
     }
