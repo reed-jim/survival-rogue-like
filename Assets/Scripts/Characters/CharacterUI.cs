@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class CharacterUI : MonoBehaviour
 {
     [Header("UI")]
+    [SerializeField] private RectTransform container;
     [SerializeField] private Slider hpBar;
     [SerializeField] private TMP_Text damageText;
 
@@ -30,7 +31,7 @@ public class CharacterUI : MonoBehaviour
     private void Update()
     {
         // lock rotation
-        transform.eulerAngles = Vector3.zero;
+        container.eulerAngles = Vector3.zero;
     }
 
     private void OnDestroy()

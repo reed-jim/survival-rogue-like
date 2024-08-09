@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyContainer: {fileID: 958509770}
-  enemyPrefab: {fileID: 5729376730019115754, guid: f6fa49dff6b6997439a988e9477a4fe0,
+  enemyPrefab: {fileID: 7921613085204029372, guid: 9ba5cb0d49f2a354583a851310b6c35e,
     type: 3}
   enemies: []
   player: {fileID: 543450651959218514}
@@ -286,17 +286,17 @@ PrefabInstance:
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
@@ -1033,7 +1033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b575b3a2302f744d8039da316b81d41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 543450651959218514}
+  player: {fileID: 4763305602408050801}
   offset: {x: 15, y: 15, z: 0}
 --- !u!1 &347776398
 GameObject:
@@ -11755,17 +11755,17 @@ PrefabInstance:
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
@@ -13105,6 +13105,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CFXR3 Magic Aura A (Runic)
       objectReference: {fileID: 0}
+    - target: {fileID: 3280519133390621005, guid: a71be3e7990efb040a07565c43cbb198,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3280519133390621042, guid: a71be3e7990efb040a07565c43cbb198,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -13502,17 +13507,17 @@ PrefabInstance:
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2708598583397607896, guid: 6398d43fe79ea0140913dc5530c646af,
         type: 3}
@@ -13976,7 +13981,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

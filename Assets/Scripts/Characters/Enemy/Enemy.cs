@@ -11,10 +11,13 @@ public enum CharacterState
 
 public class Enemy : MonoBehaviour
 {
+    [Header("RAGDOLL")]
+    [SerializeField] private Collider[] ragdollColliders;
+    private Rigidbody[] _ragdollRigibodies;
+
+    [SerializeField] Renderer meshRenderer;
     private Transform player;
     [SerializeField] private GameObject fx;
-
-    [SerializeField] private PlayerRuntime playerRuntime;
 
     [Header("ANIMATOR")]
     [SerializeField] private Animator playerAnimator;
@@ -27,6 +30,7 @@ public class Enemy : MonoBehaviour
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private PlayerStat playerStat;
+    [SerializeField] private PlayerRuntime playerRuntime;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float speedMultiplier;
@@ -38,6 +42,7 @@ public class Enemy : MonoBehaviour
     private CharacterState _state;
     private Rigidbody _rigidBody;
     private bool _isIgnorePhysic;
+    MaterialPropertyBlock _materialPropertyBlock;
     private Material _dissolveMaterial;
 
     private int _index;
@@ -63,6 +68,7 @@ public class Enemy : MonoBehaviour
 
         _rigidBody = GetComponent<Rigidbody>();
         _characterUI = GetComponent<CharacterUI>();
+        _materialPropertyBlock = new MaterialPropertyBlock();
 
         _dissolveMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
 
@@ -73,6 +79,9 @@ public class Enemy : MonoBehaviour
         };
 
         _index = transform.GetSiblingIndex();
+
+        SetUpRagdoll();
+        EnableRagdoll(false);
     }
 
     private void OnEnable()
@@ -144,6 +153,32 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void SetUpRagdoll()
+    {
+        _ragdollRigibodies = new Rigidbody[ragdollColliders.Length];
+
+        for (int i = 0; i < ragdollColliders.Length; i++)
+        {
+            _ragdollRigibodies[i] = ragdollColliders[i].GetComponent<Rigidbody>();
+
+        }
+    }
+
+    public void EnableRagdoll(bool enableRagdoll)
+    {
+        playerAnimator.enabled = !enableRagdoll;
+        foreach (Collider item in ragdollColliders)
+        {
+            item.enabled = enableRagdoll;
+        }
+
+        foreach (var ragdollRigidBody in _ragdollRigibodies)
+        {
+            ragdollRigidBody.useGravity = enableRagdoll; // make rigidbody use gravity if ragdoll is active
+            ragdollRigidBody.isKinematic = !enableRagdoll; // enable or disable kinematic accordig to enableRagdoll variable
+        }
+    }
+
     private void SetIndex(int index)
     {
         // _index = index;
@@ -170,7 +205,12 @@ public class Enemy : MonoBehaviour
                 _hitEffectTween.Stop();
             }
 
-            _hitEffectTween = Tween.Scale(transform, 1.1f, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f);
+            float startScale = transform.localScale.x;
+
+            _hitEffectTween = Tween.Scale(transform, 1.1f * startScale, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f);
+
+            CommonUtil.OnHitColorEffect(meshRenderer, _materialPropertyBlock,
+                new Color(0.4f, 0.4f, 0.4f, 1), new Color(1, 0.4f, 0.4f, 1), 0.2f, _tweens);
         }
 
         // _tweens.Add(Tween.Delay(1).OnComplete(() => _isIgnorePhysic = false));
@@ -196,7 +236,12 @@ public class Enemy : MonoBehaviour
                 _hitEffectTween.Stop();
             }
 
-            _hitEffectTween = Tween.Scale(transform, 1.1f, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f);
+            float startScale = transform.localScale.x;
+
+            _hitEffectTween = Tween.Scale(transform, 1.1f * startScale, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.1f);
+
+            CommonUtil.OnHitColorEffect(meshRenderer, _materialPropertyBlock,
+                new Color(0.4f, 0.4f, 0.4f, 1), new Color(1, 0.4f, 0.4f, 1), 0.1f, _tweens);
         }
 
         // _tweens.Add(Tween.Delay(1).OnComplete(() => _isIgnorePhysic = false));
@@ -250,7 +295,7 @@ public class Enemy : MonoBehaviour
 
         _rigidBody.velocity = speedMultiplier * (player.position - transform.position).normalized;
 
-        playerAnimator.SetFloat("Speed", _rigidBody.velocity.z);
+        playerAnimator.SetFloat("Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
 
         // transform.position = Vector3.Lerp(transform.position, playerRuntime.player.position + new Vector3(0, 0, 1), 0.002f);
     }
@@ -263,6 +308,10 @@ public class Enemy : MonoBehaviour
 
         enemyDieEvent?.Invoke(stat.Level);
 
+        playerAnimator.SetFloat("Speed", 0);
+
         _state = CharacterState.DIE;
+
+        EnableRagdoll(true);
     }
 }
