@@ -24,6 +24,7 @@ public class PlayerShooterController : MonoBehaviour
         for (int i = 0; i < bullets.Length; i++)
         {
             bullets[i] = Instantiate(bulletPrefab, bulletContainer);
+            bullets[i].name = $"Bullet {i}";
             bullets[i].SetActive(false);
 
             bulletRigidBodies[i] = bullets[i].GetComponent<Rigidbody>();

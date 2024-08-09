@@ -36,21 +36,24 @@ public class EnemySpawnManager : MonoBehaviour
     {
         while (true)
         {
-            enemies[_currentEnemyIndex].transform.position = GetRandomPosition();
-            enemies[_currentEnemyIndex].SetActive(true);
-
-            if (_isFinishAssigningEnemyIndexes == false)
+            for (int i = 0; i < 2; i++)
             {
-                setEnemyIndexEvent?.Invoke(_currentEnemyIndex);
-            }
+                enemies[_currentEnemyIndex].transform.position = GetRandomPosition();
+                enemies[_currentEnemyIndex].SetActive(true);
 
-            _currentEnemyIndex++;
+                if (_isFinishAssigningEnemyIndexes == false)
+                {
+                    setEnemyIndexEvent?.Invoke(_currentEnemyIndex);
+                }
 
-            if (_currentEnemyIndex >= enemies.Length)
-            {
-                _currentEnemyIndex = 0;
+                _currentEnemyIndex++;
 
-                _isFinishAssigningEnemyIndexes = true;
+                if (_currentEnemyIndex >= enemies.Length)
+                {
+                    _currentEnemyIndex = 0;
+
+                    _isFinishAssigningEnemyIndexes = true;
+                }
             }
 
             yield return new WaitForSeconds(5);

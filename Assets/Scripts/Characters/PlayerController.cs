@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField ]private Rigidbody _rigidbody;
+    [SerializeField] private Rigidbody _rigidbody;
 
     [Header("ANIMATOR")]
     [SerializeField] private Animator playerAnimator;
@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
+    private Tween _waitForEndAttackAnimationTween;
+    private PlayerStat _playerStat;
     private Coroutine _waitCoroutine;
     private bool _isTurning;
     private bool _isAttacking;
@@ -51,13 +53,16 @@ public class PlayerController : MonoBehaviour
 
     private int _attackAnimation;
 
-    private Tween _waitForEndAttackAnimationTween;
+
 
 
     private bool _isAllowRotating = true;
 
     public PlayerShooterController playerShooterController;
 
+    public static CharacterStat.GetCharacterStatAction getStatEvent;
+
+    #region LIFE CYCLE
     private void Awake()
     {
         _tweens = new List<Tween>();
@@ -74,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
         swordSlash.gameObject.SetActive(false);
 
-        StartCoroutine(Shooting());
+        // StartCoroutine(Shooting());
     }
 
     private void Update()
@@ -148,7 +153,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Attack();
+            ManualShoot();
+            // Attack();
         }
     }
 
@@ -156,6 +162,7 @@ public class PlayerController : MonoBehaviour
     {
         _waitForEndAttackAnimationTween.Stop();
     }
+    #endregion
 
     private void FaceToMouseCursor()
     {
@@ -338,7 +345,14 @@ public class PlayerController : MonoBehaviour
             //     }
             // }
 
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, 6, layerMaskCheckRangedAttack);
+            if (_playerStat == null)
+            {
+                _playerStat = (PlayerStat)(getStatEvent?.Invoke());
+
+                continue;
+            }
+
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, _playerStat.AttackRange, layerMaskCheckRangedAttack);
 
             foreach (var hitCollider in hitColliders)
             {
@@ -366,6 +380,13 @@ public class PlayerController : MonoBehaviour
 
             yield return new WaitForSeconds(playerStatObserver.PlayerStat.ReloadTime);
         }
+    }
+
+    private void ManualShoot()
+    {
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit);
+
+        playerShooterController.Shoot(hit.point, transform);
     }
 
     private void SetState(int state)

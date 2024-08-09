@@ -22,7 +22,6 @@ public class PlayerStat : CharacterStat
         set => reloadTime = value;
     }
 
-
     private void Awake()
     {
         PlayerStat stat = DataUtility.Load<PlayerStat>(new PlayerStat());

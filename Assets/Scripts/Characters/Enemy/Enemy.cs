@@ -167,16 +167,19 @@ public class Enemy : MonoBehaviour
     public void EnableRagdoll(bool enableRagdoll)
     {
         playerAnimator.enabled = !enableRagdoll;
+
         foreach (Collider item in ragdollColliders)
         {
-            item.enabled = enableRagdoll;
+            item.enabled = false;
         }
 
         foreach (var ragdollRigidBody in _ragdollRigibodies)
         {
-            ragdollRigidBody.useGravity = enableRagdoll; // make rigidbody use gravity if ragdoll is active
-            ragdollRigidBody.isKinematic = !enableRagdoll; // enable or disable kinematic accordig to enableRagdoll variable
+            ragdollRigidBody.useGravity = enableRagdoll;
+            ragdollRigidBody.isKinematic = !enableRagdoll;
         }
+
+        _rigidBody.velocity = Vector3.zero;
     }
 
     private void SetIndex(int index)

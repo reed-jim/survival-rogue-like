@@ -23,11 +23,14 @@ public class StatManager : MonoBehaviour
         Enemy.enemyHitEvent += OnEnemyHit;
         Enemy.enemyDieEvent += EarnPlayerExpKillingEnemy;
         Enemy.playerGotHitEvent += OnPlayerHit;
+        PlayerController.getStatEvent += GetPlayerStat;
 
         PlayerStat starterPlayerStat = new PlayerStat()
         {
             HP = 100,
-            Damage = 15
+            Damage = 15,
+            AttackRange = 12,
+            ReloadTime = 1
         };
 
         playerStat = DataUtility.Load(defaultValue: starterPlayerStat);
@@ -43,6 +46,7 @@ public class StatManager : MonoBehaviour
         Enemy.enemyHitEvent -= OnEnemyHit;
         Enemy.enemyDieEvent -= EarnPlayerExpKillingEnemy;
         Enemy.playerGotHitEvent -= OnPlayerHit;
+        PlayerController.getStatEvent -= GetPlayerStat;
     }
 
     private void OnEnemySpawned(EnemyStat enemyStat)
@@ -69,5 +73,10 @@ public class StatManager : MonoBehaviour
         playerStat.EarnExp(playerStat.GetExpFromKillEnemy(enemyLevel));
 
         updateExpProgressBarEvent?.Invoke(playerStat.EXP, playerStat.GetRequiredExpForNextLevel());
+    }
+
+    private PlayerStat GetPlayerStat()
+    {
+        return playerStat;
     }
 }
