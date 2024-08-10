@@ -41,6 +41,7 @@ public class ExplosiveBullet : Bullet
     {
         bulletModel.SetActive(true);
         explosiveArea.SetActive(false);
+        explosionFx.gameObject.SetActive(false);
 
         _rigidBody.useGravity = true;
         _rigidBody.isKinematic = false;

@@ -39,5 +39,7 @@ public class CharacterStat
     public void MinusHP(float value)
     {
         hp -= value;
+
+        hp = Mathf.Max(hp, 0);
     }
 }

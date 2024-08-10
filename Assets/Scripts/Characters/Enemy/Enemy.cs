@@ -57,6 +57,7 @@ public class Enemy : MonoBehaviour
     public static event Action<EnemyStat> enemySpawnedEvent;
     public static event Action<int> enemyHitEvent;
     public static event Action<int> enemyDieEvent;
+    public static event Action<int> resetEnemyEvent;
     public static event Action<float> playerGotHitEvent;
 
     private void Awake()
@@ -88,7 +89,7 @@ public class Enemy : MonoBehaviour
     {
         _characterUI.ShowHpBar();
 
-        _state = CharacterState.NONE;
+        Reset();
     }
 
     private void Start()
@@ -107,6 +108,17 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         FindPlayer();
+    }
+
+    private void Reset()
+    {
+        EnableRagdoll(false);
+
+        resetEnemyEvent?.Invoke(_index);
+
+        _characterUI.Reset();
+
+        _state = CharacterState.NONE;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -151,6 +163,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    #region RAGDOLL
     private void SetUpRagdoll()
     {
         _ragdollRigibodies = new Rigidbody[ragdollColliders.Length];
@@ -179,6 +192,7 @@ public class Enemy : MonoBehaviour
 
         _rigidBody.velocity = Vector3.zero;
     }
+    #endregion
 
     private void SetIndex(int index)
     {
@@ -225,7 +239,7 @@ public class Enemy : MonoBehaviour
     private void OnBulletHit(Vector3 hitPosition)
     {
         enemyHitEvent?.Invoke(_index);
-
+        
         if (stat.HP <= 0)
         {
             Die();

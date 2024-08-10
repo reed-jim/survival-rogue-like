@@ -18,4 +18,9 @@ public class EnemyStat : CharacterStat
     // {
     //     _hp -= value;
     // }
+
+    public void Reset()
+    {
+        HP = 100;
+    }
 }

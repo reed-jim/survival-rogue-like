@@ -27,23 +27,7 @@ ModelImporter:
       = 149.258438 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
-    animationRetargetingWarnings: "\nRetargeting quality report for clip 'mixamo.com':\n\tLeftLowerLeg
-      average position error 499.8 mm and maximum position error 499.8 mm at time
-      1:18 (81.4%) Frame 48\n\tLeftFoot average position error 863.6 mm and maximum
-      position error 864.2 mm at time 0:29 (49.2%) Frame 29\n\tRightLowerLeg average
-      position error 504.6 mm and maximum position error 504.7 mm at time 1: 4 (57.6%)
-      Frame 34\n\tRightFoot average position error 864.7 mm and maximum position
-      error 868.4 mm at time 0:28 (47.5%) Frame 28\n\tLeftUpperArm average position
-      error 424.2 mm and maximum position error 430.9 mm at time 0:24 (40.7%) Frame
-      24\n\tLeftLowerArm average position error 341.8 mm and maximum position error
-      350.9 mm at time 0:24 (40.7%) Frame 24\n\tLeftHand average position error 337.0
-      mm and maximum position error 345.3 mm at time 0:24 (40.7%) Frame 24\n\tRightUpperArm
-      average position error 402.2 mm and maximum position error 409.4 mm at time
-      0:24 (40.7%) Frame 24\n\tRightLowerArm average position error 344.0 mm and
-      maximum position error 351.0 mm at time 0:24 (40.7%) Frame 24\n\tRightHand
-      average position error 329.3 mm and maximum position error 332.9 mm at time
-      1:27 (96.6%) Frame 57\n\tHead average position error 475.8 mm and maximum position
-      error 476.4 mm at time 0:27 (45.8%) Frame 27\n"
+    animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -71,10 +55,10 @@ ModelImporter:
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
-      loopBlendPositionXZ: 1
+      loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 0
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000

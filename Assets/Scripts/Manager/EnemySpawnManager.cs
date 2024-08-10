@@ -12,6 +12,10 @@ public class EnemySpawnManager : MonoBehaviour
     [Header("PLAYER")]
     [SerializeField] private Transform player;
 
+    [Header("CUSTOMIZE")]
+    [SerializeField] private int maxEnemy;
+    [SerializeField] private int maxEnemySpawnConcurrently;
+
     [Header("MANAGEMENT")]
     private int _currentEnemyIndex;
     private bool _isFinishAssigningEnemyIndexes;
@@ -20,7 +24,7 @@ public class EnemySpawnManager : MonoBehaviour
 
     private void Awake()
     {
-        enemies = new GameObject[10];
+        enemies = new GameObject[maxEnemy];
 
         for (int i = 0; i < enemies.Length; i++)
         {
@@ -36,23 +40,26 @@ public class EnemySpawnManager : MonoBehaviour
     {
         while (true)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < maxEnemySpawnConcurrently; i++)
             {
-                enemies[_currentEnemyIndex].transform.position = GetRandomPosition();
-                enemies[_currentEnemyIndex].SetActive(true);
-
-                if (_isFinishAssigningEnemyIndexes == false)
+                if (!enemies[_currentEnemyIndex].activeSelf)
                 {
-                    setEnemyIndexEvent?.Invoke(_currentEnemyIndex);
-                }
+                    enemies[_currentEnemyIndex].transform.position = GetRandomPosition();
+                    enemies[_currentEnemyIndex].SetActive(true);
 
-                _currentEnemyIndex++;
+                    if (_isFinishAssigningEnemyIndexes == false)
+                    {
+                        setEnemyIndexEvent?.Invoke(_currentEnemyIndex);
+                    }
 
-                if (_currentEnemyIndex >= enemies.Length)
-                {
-                    _currentEnemyIndex = 0;
+                    _currentEnemyIndex++;
 
-                    _isFinishAssigningEnemyIndexes = true;
+                    if (_currentEnemyIndex >= enemies.Length)
+                    {
+                        _currentEnemyIndex = 0;
+
+                        _isFinishAssigningEnemyIndexes = true;
+                    }
                 }
             }
 

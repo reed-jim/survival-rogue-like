@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class CharacterUI : MonoBehaviour
 {
+    [Header("LAZY HP BAR")]
+    [SerializeField] private LazyBar lazyHpBar;
+
     [Header("UI")]
     [SerializeField] private RectTransform container;
     [SerializeField] private Slider hpBar;
@@ -24,7 +27,11 @@ public class CharacterUI : MonoBehaviour
         _tweens = new List<Tween>();
 
         _hpBarRT = hpBar.GetComponent<RectTransform>();
+    }
 
+    private void OnEnable()
+    {
+        lazyHpBar.gameObject.SetActive(false);
         damageText.gameObject.SetActive(false);
     }
 
@@ -39,9 +46,21 @@ public class CharacterUI : MonoBehaviour
 
     }
 
+    public void Reset()
+    {
+        lazyHpBar.Reset();
+    }
+
     public void SetHP(float prevValue, float value, float maxHp)
     {
-        _tweens.Add(Tween.Custom(prevValue / maxHp, value / maxHp, duration: 0.3f, onValueChange: newVal => hpBar.value = newVal));
+        // _tweens.Add(Tween.Custom(prevValue / maxHp, value / maxHp, duration: 0.3f, onValueChange: newVal => hpBar.value = newVal));
+
+        if (!lazyHpBar.gameObject.activeSelf)
+        {
+            ShowHpBar();
+        }
+
+        lazyHpBar.SetValue(prevValue, value, maxHp);
 
         float damage = prevValue - value;
 
@@ -52,19 +71,19 @@ public class CharacterUI : MonoBehaviour
     {
         if (_hpBarRT != null)
         {
-            _hpBarRT.gameObject.SetActive(true);
+            lazyHpBar.gameObject.SetActive(true);
         }
     }
 
     public void HideHpBar()
     {
-        _tweens.Add(
-            Tween.ScaleX(_hpBarRT, 0, duration: scaleDownDuration).OnComplete(() =>
-            {
-                _hpBarRT.localScale = Vector3.one;
-                _hpBarRT.gameObject.SetActive(false);
-            })
-        );
+        // _tweens.Add(
+        //     Tween.ScaleX(_hpBarRT, 0, duration: scaleDownDuration).OnComplete(() =>
+        //     {
+        //         _hpBarRT.localScale = Vector3.one;
+        //         _hpBarRT.gameObject.SetActive(false);
+        //     })
+        // );
     }
 
     private void ShowDamage(float damage)
@@ -74,7 +93,7 @@ public class CharacterUI : MonoBehaviour
 
         Vector3 currentDamageTextPosition = damageText.rectTransform.localPosition;
 
-        _tweens.Add(Tween.LocalPositionY(damageText.rectTransform, currentDamageTextPosition.y + 1, duration: 0.3f).OnComplete(() =>
+        _tweens.Add(Tween.LocalPositionY(damageText.rectTransform, currentDamageTextPosition.y + 5f, duration: 0.3f).OnComplete(() =>
         {
 
         }));

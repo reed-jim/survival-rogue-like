@@ -23,6 +23,7 @@ public class StatManager : MonoBehaviour
         Enemy.enemyHitEvent += OnEnemyHit;
         Enemy.enemyDieEvent += EarnPlayerExpKillingEnemy;
         Enemy.playerGotHitEvent += OnPlayerHit;
+        Enemy.resetEnemyEvent += ResetEnemy;
         PlayerController.getStatEvent += GetPlayerStat;
 
         PlayerStat starterPlayerStat = new PlayerStat()
@@ -46,6 +47,7 @@ public class StatManager : MonoBehaviour
         Enemy.enemyHitEvent -= OnEnemyHit;
         Enemy.enemyDieEvent -= EarnPlayerExpKillingEnemy;
         Enemy.playerGotHitEvent -= OnPlayerHit;
+        Enemy.resetEnemyEvent -= ResetEnemy;
         PlayerController.getStatEvent -= GetPlayerStat;
     }
 
@@ -59,6 +61,14 @@ public class StatManager : MonoBehaviour
         _enemyStats[enemyIndex].MinusHP(playerStat.Damage);
 
         updateEnemyUIEvent?.Invoke(enemyIndex, playerStat.Damage);
+    }
+
+    private void ResetEnemy(int enemyIndex)
+    {
+        if (enemyIndex < _enemyStats.Count)
+        {
+            _enemyStats[enemyIndex].Reset();
+        }
     }
 
     private void OnPlayerHit(float damage)
