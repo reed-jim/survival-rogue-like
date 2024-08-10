@@ -141,8 +141,6 @@ public class Enemy : MonoBehaviour
         if (collision.collider.tag == Constants.PLAYER_BULLET_TAG)
         {
             OnBulletHit(hitPosition);
-
-            collision.gameObject.SetActive(false);
         }
 
         if (collision.collider.tag == Constants.PLAYER_TAG)

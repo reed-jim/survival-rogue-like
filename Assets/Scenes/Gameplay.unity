@@ -14103,6 +14103,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5863370328825412248, guid: 968ce7a83bf38fa4dbc3901fd2a89f22,
         type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 4460711504145492940, guid: c46c85cd8b1f28d4082782f5f05fe2fd,
+        type: 3}
+    - target: {fileID: 5863370328825412248, guid: 968ce7a83bf38fa4dbc3901fd2a89f22,
+        type: 3}
       propertyPath: bulletContainer
       value: 
       objectReference: {fileID: 1057337029}

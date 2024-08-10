@@ -2808,10 +2808,14 @@ MonoBehaviour:
     level: 0
     hp: 0
     damage: 0
+    attackRange: 0
+    attackSpeed: 0
+    criticalChance: 0
+    criticalDamage: 0
     exp: 0
     reloadTime: 1
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
-  speedMultiplier: 15
+  speedMultiplier: 12
   offsetToPlayer: {x: 0, y: 0, z: 0}
 --- !u!114 &6669211417923457503
 MonoBehaviour:

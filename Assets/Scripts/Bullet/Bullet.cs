@@ -1,14 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using PrimeTween;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     [Header("MANAGEMENT")]
-    [SerializeField] private TrailRenderer bulletTrail;
+    [SerializeField] protected TrailRenderer bulletTrail;
+    protected Rigidbody _rigidBody;
 
-    private void OnEnable()
+    protected virtual void Awake()
+    {
+        _rigidBody = GetComponent<Rigidbody>();
+    }
+
+    protected virtual void OnEnable()
     {
         Tween.Delay(0.5f).OnComplete(() => gameObject.SetActive(false));
     }
@@ -18,7 +22,7 @@ public class Bullet : MonoBehaviour
         bulletTrail.Clear();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag != Constants.PLAYER_TAG)
         {
