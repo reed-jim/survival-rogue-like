@@ -60,7 +60,9 @@ public class PlayerController : MonoBehaviour
 
     public PlayerShooterController playerShooterController;
 
+    #region ACTION
     public static CharacterStat.GetCharacterStatAction getStatEvent;
+    #endregion
 
     #region LIFE CYCLE
     private void Awake()
@@ -163,6 +165,16 @@ public class PlayerController : MonoBehaviour
         _waitForEndAttackAnimationTween.Stop();
     }
     #endregion
+
+    // #region COLLISION
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.gameObject.tag == Constants.ENEMY_TAG)
+    //     {
+
+    //     }
+    // }
+    // #endregion
 
     private void FaceToMouseCursor()
     {

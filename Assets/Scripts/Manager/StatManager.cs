@@ -25,6 +25,7 @@ public class StatManager : MonoBehaviour
         Enemy.playerGotHitEvent += OnPlayerHit;
         Enemy.resetEnemyEvent += ResetEnemy;
         PlayerController.getStatEvent += GetPlayerStat;
+        LevelingUI.upgradePlayerStatEvent += UpgradePlayerStat;
 
         PlayerStat starterPlayerStat = new PlayerStat()
         {
@@ -49,6 +50,7 @@ public class StatManager : MonoBehaviour
         Enemy.playerGotHitEvent -= OnPlayerHit;
         Enemy.resetEnemyEvent -= ResetEnemy;
         PlayerController.getStatEvent -= GetPlayerStat;
+        LevelingUI.upgradePlayerStatEvent -= UpgradePlayerStat;
     }
 
     private void OnEnemySpawned(EnemyStat enemyStat)
@@ -80,9 +82,25 @@ public class StatManager : MonoBehaviour
 
     private void EarnPlayerExpKillingEnemy(int enemyLevel)
     {
-        playerStat.EarnExp(playerStat.GetExpFromKillEnemy(enemyLevel));
+        // playerStat.EarnExp(playerStat.GetExpFromKillEnemy(enemyLevel));
 
-        updateExpProgressBarEvent?.Invoke(playerStat.EXP, playerStat.GetRequiredExpForNextLevel());
+        // updateExpProgressBarEvent?.Invoke(playerStat.EXP, playerStat.GetRequiredExpForNextLevel());
+    }
+
+    private void UpgradePlayerStat(StatType statType, float value)
+    {
+        if (statType == StatType.HP)
+        {
+            playerStat.HP += value;
+        }
+        else if (statType == StatType.DAMAGE)
+        {
+            playerStat.Damage += value;
+        }
+        else if (statType == StatType.ATTACK_SPEED)
+        {
+            playerStat.AttackSpeed += value;
+        }
     }
 
     private PlayerStat GetPlayerStat()

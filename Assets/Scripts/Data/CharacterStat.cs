@@ -30,10 +30,17 @@ public class CharacterStat
         get => level;
         set => level = value;
     }
+
     public float AttackRange
     {
         get => attackRange;
         set => attackRange = value;
+    }
+
+    public float AttackSpeed
+    {
+        get => attackSpeed;
+        set => attackSpeed = value;
     }
 
     public void MinusHP(float value)

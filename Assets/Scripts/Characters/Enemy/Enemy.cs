@@ -6,11 +6,16 @@ using System;
 public enum CharacterState
 {
     NONE,
-    DIE
+    IDLE,
+    DIE,
+    ATTACK
 }
 
 public class Enemy : MonoBehaviour
 {
+    [Header("COLLIDER")]
+    [SerializeField] private Collider meleeAttackCollider;
+
     [Header("RAGDOLL")]
     [SerializeField] private Collider[] ragdollColliders;
     private Rigidbody[] _ragdollRigibodies;
@@ -51,6 +56,7 @@ public class Enemy : MonoBehaviour
     public CharacterState State => _state;
     #endregion
 
+    #region ACTION
     public static event Action hitEvent;
     public static event Action<Vector3> playHitFxEvent;
     public static event Action<Vector3> playBulletHitFxEvent;
@@ -59,7 +65,9 @@ public class Enemy : MonoBehaviour
     public static event Action<int> enemyDieEvent;
     public static event Action<int> resetEnemyEvent;
     public static event Action<float> playerGotHitEvent;
+    #endregion
 
+    #region LIFE CYCLE
     private void Awake()
     {
         _tweens = new List<Tween>();
@@ -109,10 +117,13 @@ public class Enemy : MonoBehaviour
     {
         FindPlayer();
     }
+    #endregion
 
     private void Reset()
     {
         EnableRagdoll(false);
+
+        meleeAttackCollider.gameObject.SetActive(false);
 
         resetEnemyEvent?.Invoke(_index);
 
@@ -123,9 +134,14 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Fx Collider")
+        if (other.name == "Fx Collider")
         {
             OnHit(transform.position);
+        }
+
+        if (other.tag == Constants.PLAYER_TAG)
+        {
+            playerGotHitEvent?.Invoke(stat.Damage);
         }
     }
 
@@ -153,13 +169,6 @@ public class Enemy : MonoBehaviour
         if (collision.collider.tag == Constants.PLAYER_BULLET_TAG)
         {
             OnBulletHit(hitPosition);
-        }
-
-        if (collision.collider.tag == Constants.PLAYER_TAG)
-        {
-            playerGotHitEvent?.Invoke(stat.Damage);
-
-            Die();
         }
     }
 
@@ -239,7 +248,7 @@ public class Enemy : MonoBehaviour
     private void OnBulletHit(Vector3 hitPosition)
     {
         enemyHitEvent?.Invoke(_index);
-        
+
         if (stat.HP <= 0)
         {
             Die();
@@ -287,6 +296,11 @@ public class Enemy : MonoBehaviour
 
     private void FindPlayer()
     {
+        if (_state == CharacterState.ATTACK)
+        {
+            return;
+        }
+
         if (_state == CharacterState.DIE)
         {
             _rigidBody.velocity = Vector3.zero;
@@ -296,13 +310,14 @@ public class Enemy : MonoBehaviour
 
         _rigidBody.velocity = Vector3.zero;
 
-        if (Mathf.Abs(transform.position.x - player.position.x) < offsetToPlayer.x)
+        if
+        (
+            Mathf.Abs(transform.position.x - player.position.x) < offsetToPlayer.x &&
+            Mathf.Abs(transform.position.z - player.position.z) < offsetToPlayer.z
+        )
         {
-            return;
-        }
+            Attack();
 
-        if (Mathf.Abs(transform.position.z - player.position.z) < offsetToPlayer.z)
-        {
             return;
         }
 
@@ -311,8 +326,6 @@ public class Enemy : MonoBehaviour
         _rigidBody.velocity = speedMultiplier * (player.position - transform.position).normalized;
 
         playerAnimator.SetFloat("Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
-
-        // transform.position = Vector3.Lerp(transform.position, playerRuntime.player.position + new Vector3(0, 0, 1), 0.002f);
     }
 
     private void Die()
@@ -328,5 +341,18 @@ public class Enemy : MonoBehaviour
         _state = CharacterState.DIE;
 
         EnableRagdoll(true);
+    }
+
+    private void Attack()
+    {
+        playerAnimator.SetFloat("Speed", 0);
+        playerAnimator.SetInteger("State", 1);
+
+        _tweens.Add(Tween.Delay(1.3f).OnComplete(() => meleeAttackCollider.gameObject.SetActive(true)));
+        // _tweens.Add(Tween.Delay(5f).OnComplete(() => _state = CharacterState.IDLE));
+
+        _state = CharacterState.ATTACK;
+
+        // playerAnimator.SetFloat("Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
     }
 }
