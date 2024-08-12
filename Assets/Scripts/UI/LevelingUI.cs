@@ -1,4 +1,5 @@
 using System;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ public class LevelingUI : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private RectTransform canvas;
+    [SerializeField] private Button showUpgradePanelButton;
+    private RectTransform _showUpgradePanelButtonRT;
     [SerializeField] private Button[] selectUpgradeButtons;
     private RectTransform[] selectUpgradeRTs;
     private TMP_Text[] selectUpgradeTexts;
@@ -18,10 +21,13 @@ public class LevelingUI : MonoBehaviour
 
     #region ACTION
     public static Action<StatType, float> upgradePlayerStatEvent;
+    public static Action<bool> enableInput;
     #endregion
 
     private void Awake()
     {
+        StatManager.showUpgradePanelEvent += OnPlayerLeveledUp;
+
         _canvasSize = canvas.sizeDelta;
 
         _upgradeStatTypes = new StatType[selectUpgradeButtons.Length];
@@ -29,20 +35,27 @@ public class LevelingUI : MonoBehaviour
 
         BuildUI();
 
-        ShowUpgrades();
-
         for (int i = 0; i < selectUpgradeButtons.Length; i++)
         {
             int slot = i;
 
             selectUpgradeButtons[i].onClick.AddListener(() => SelectUpgrade(slot));
         }
+
+        showUpgradePanelButton.onClick.AddListener(ShowUpgradePanel);
+    }
+
+    private void OnDestroy()
+    {
+        StatManager.showUpgradePanelEvent -= OnPlayerLeveledUp;
     }
 
     private void BuildUI()
     {
         selectUpgradeRTs = new RectTransform[selectUpgradeButtons.Length];
         selectUpgradeTexts = new TMP_Text[selectUpgradeButtons.Length];
+
+        _showUpgradePanelButtonRT = showUpgradePanelButton.GetComponent<RectTransform>();
 
         for (int i = 0; i < selectUpgradeButtons.Length; i++)
         {
@@ -53,14 +66,21 @@ public class LevelingUI : MonoBehaviour
             selectUpgradeRTs[i].localPosition = new Vector2((i - 1) * 1.1f * selectUpgradeRTs[i].sizeDelta.x, 0);
 
             selectUpgradeTexts[i].fontSize = 0.02f * _canvasSize.x;
+
+            selectUpgradeRTs[i].gameObject.SetActive(false);
         }
+
+        _showUpgradePanelButtonRT.sizeDelta = new Vector2(0.2f * _canvasSize.y, 0.1f * _canvasSize.y);
+        _showUpgradePanelButtonRT.localPosition = new Vector2(0, -0.35f * _canvasSize.y);
+
+        showUpgradePanelButton.gameObject.SetActive(false);
     }
 
     private void SelectUpgrade(int slot)
     {
         upgradePlayerStatEvent?.Invoke(_upgradeStatTypes[slot], _upgradeStatValues[slot]);
 
-        canvas.gameObject.SetActive(false);
+        HideUpgradeSlot();
     }
 
     private void ShowUpgrades()
@@ -112,5 +132,46 @@ public class LevelingUI : MonoBehaviour
         _upgradeStatValues[slot] = additionalValue;
 
         return $"+{additionalValue * 100}% Attack Speed";
+    }
+
+    private void OnPlayerLeveledUp()
+    {
+        showUpgradePanelButton.gameObject.SetActive(true);
+    }
+
+    private void ShowUpgradePanel()
+    {
+        for (int i = 0; i < selectUpgradeButtons.Length; i++)
+        {
+            selectUpgradeRTs[i].gameObject.SetActive(true);
+        }
+
+        ShowUpgrades();
+
+        showUpgradePanelButton.gameObject.SetActive(false);
+
+        enableInput?.Invoke(false);
+
+        Time.timeScale = 0;
+    }
+
+    private void HideUpgradeSlot()
+    {
+        for (int i = 0; i < selectUpgradeButtons.Length; i++)
+        {
+            int index = i;
+            Vector3 startPosition = selectUpgradeRTs[i].localPosition;
+
+            Tween.LocalPositionY(selectUpgradeRTs[index], startPosition.y + _canvasSize.y, duration: 0.5f)
+            .OnComplete(() =>
+            {
+                selectUpgradeRTs[index].localPosition = startPosition;
+                selectUpgradeRTs[index].gameObject.SetActive(false);
+
+                enableInput?.Invoke(true);
+            });
+
+            Time.timeScale = 1;
+        }
     }
 }

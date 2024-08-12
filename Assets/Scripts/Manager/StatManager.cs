@@ -10,12 +10,15 @@ public class StatManager : MonoBehaviour
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private PlayerStatObserver playerStatObserver;
 
+    [Header("MANAGEMENT")]
     private List<EnemyStat> _enemyStats;
+    private List<int> _enemySpawnTimes;
 
     public static event Action<float, float> updatePlayerHpBarEvent;
     public static event Action<float, float> updateExpProgressBarEvent;
 
     public static event Action<int, float> updateEnemyUIEvent;
+    public static event Action showUpgradePanelEvent;
 
     private void Awake()
     {
@@ -40,6 +43,7 @@ public class StatManager : MonoBehaviour
         playerStatObserver.PlayerStat = playerStat;
 
         _enemyStats = new List<EnemyStat>();
+        _enemySpawnTimes = new List<int>();
     }
 
     private void OnDestroy()
@@ -56,6 +60,7 @@ public class StatManager : MonoBehaviour
     private void OnEnemySpawned(EnemyStat enemyStat)
     {
         _enemyStats.Add(enemyStat);
+        _enemySpawnTimes.Add(0);
     }
 
     private void OnEnemyHit(int enemyIndex)
@@ -69,7 +74,9 @@ public class StatManager : MonoBehaviour
     {
         if (enemyIndex < _enemyStats.Count)
         {
-            _enemyStats[enemyIndex].Reset();
+            _enemySpawnTimes[enemyIndex]++;
+
+            _enemyStats[enemyIndex].GetStronger(_enemySpawnTimes[enemyIndex]);
         }
     }
 
@@ -82,9 +89,16 @@ public class StatManager : MonoBehaviour
 
     private void EarnPlayerExpKillingEnemy(int enemyLevel)
     {
-        // playerStat.EarnExp(playerStat.GetExpFromKillEnemy(enemyLevel));
+        bool isLeveledUp;
 
-        // updateExpProgressBarEvent?.Invoke(playerStat.EXP, playerStat.GetRequiredExpForNextLevel());
+        playerStat.EarnExp(playerStat.GetExpFromKillEnemy(enemyLevel), out isLeveledUp);
+
+        updateExpProgressBarEvent?.Invoke(playerStat.EXP, playerStat.GetRequiredExpForNextLevel());
+
+        if (isLeveledUp)
+        {
+            showUpgradePanelEvent?.Invoke();
+        }
     }
 
     private void UpgradePlayerStat(StatType statType, float value)

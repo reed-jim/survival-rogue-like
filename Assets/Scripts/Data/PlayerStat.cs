@@ -27,16 +27,19 @@ public class PlayerStat : CharacterStat
         PlayerStat stat = DataUtility.Load<PlayerStat>(new PlayerStat());
     }
 
-    public void EarnExp(float earnedExp)
+    public void EarnExp(float earnedExp, out bool isLeveledUp)
     {
+        isLeveledUp = false;
+
         exp += earnedExp;
 
         if (exp > GetRequiredExpForNextLevel())
         {
             Level++;
-            Damage += 10 * Level;
 
             exp = 0;
+
+            isLeveledUp = true;
 
             // updateExpProgressBarEvent?.Invoke(exp, );
         }

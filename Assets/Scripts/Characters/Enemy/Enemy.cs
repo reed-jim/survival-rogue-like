@@ -349,10 +349,12 @@ public class Enemy : MonoBehaviour
         playerAnimator.SetInteger("State", 1);
 
         _tweens.Add(Tween.Delay(1.3f).OnComplete(() => meleeAttackCollider.gameObject.SetActive(true)));
-        // _tweens.Add(Tween.Delay(5f).OnComplete(() => _state = CharacterState.IDLE));
+        _tweens.Add(Tween.Delay(5f).OnComplete(() =>
+        {
+            playerAnimator.SetInteger("State", 0);
+            _state = CharacterState.IDLE;
+        }));
 
         _state = CharacterState.ATTACK;
-
-        // playerAnimator.SetFloat("Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
     }
 }

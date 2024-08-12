@@ -46,17 +46,14 @@ public class PlayerController : MonoBehaviour
     private Tween _waitForEndAttackAnimationTween;
     private PlayerStat _playerStat;
     private Coroutine _waitCoroutine;
+    private Coroutine _rotateCoroutine;
     private bool _isTurning;
     private bool _isAttacking;
     private float _initialPositionY;
     private float _speed;
-
     private int _attackAnimation;
-
-
-
-
     private bool _isAllowRotating = true;
+    private bool _isEnableInput = true;
 
     public PlayerShooterController playerShooterController;
 
@@ -69,7 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         _tweens = new List<Tween>();
 
-        // _rigidbody = GetComponent<Rigidbody>();
+        LevelingUI.enableInput += EnableInput;
 
         playerRuntime.player = transform;
 
@@ -153,7 +150,7 @@ public class PlayerController : MonoBehaviour
 
         FaceToMouseCursor();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && _isEnableInput)
         {
             ManualShoot();
             // Attack();
@@ -162,6 +159,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
+        LevelingUI.enableInput -= EnableInput;
+
         _waitForEndAttackAnimationTween.Stop();
     }
     #endregion
@@ -238,7 +237,12 @@ public class PlayerController : MonoBehaviour
         //     _tweens.Add(Tween.EulerAngles(transform, initialEulerAngles, endEulerAngles, duration: duration, ease: Ease.Linear).OnComplete(() => _isAllowRotating = true));
         // }
 
-        StartCoroutine(SmoothRotateY(transform, initialEulerAngles.y, endEulerAngles.y));
+        if (_rotateCoroutine != null)
+        {
+            StopCoroutine(_rotateCoroutine);
+        }
+
+        _rotateCoroutine = StartCoroutine(SmoothRotateY(transform, initialEulerAngles.y, endEulerAngles.y));
 
         transform.position = new Vector3(transform.position.x, _initialPositionY, transform.position.z);
 
@@ -462,19 +466,21 @@ public class PlayerController : MonoBehaviour
 
         _isAllowRotating = false;
 
+        float deltaAngle = requiredAngleRotated / 10f;
+
         while (angleRotated < requiredAngleRotated)
         {
             if (isClockWise)
             {
-                target.eulerAngles += new Vector3(0, 3, 0);
+                target.eulerAngles += new Vector3(0, deltaAngle, 0);
 
-                angleRotated += 3;
+                angleRotated += deltaAngle;
             }
             else
             {
-                target.eulerAngles -= new Vector3(0, 3, 0);
+                target.eulerAngles -= new Vector3(0, deltaAngle, 0);
 
-                angleRotated += 3;
+                angleRotated += deltaAngle;
             }
 
             yield return new WaitForFixedUpdate();
@@ -488,5 +494,15 @@ public class PlayerController : MonoBehaviour
         // swordSlash.transform.position = transform.position + new Vector3(0, 1f, 1.5f);
         swordSlash.gameObject.SetActive(true);
         swordSlash.Play();
+    }
+
+    private void EnableInput(bool isEnable)
+    {
+        _isEnableInput = isEnable;
+    }
+
+    private bool IsTouchOverUI()
+    {
+        return false;
     }
 }

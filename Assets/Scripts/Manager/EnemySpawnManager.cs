@@ -73,9 +73,9 @@ public class EnemySpawnManager : MonoBehaviour
 
         int[] allDirections = new int[] { 1, -1 };
 
-        position.x = player.transform.position.x + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(10, 15);
+        position.x = player.transform.position.x + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(15, 30);
         position.y = 1.3f;
-        position.z = player.transform.position.y + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(10, 15);
+        position.z = player.transform.position.y + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(15, 30);
 
         return position;
     }
