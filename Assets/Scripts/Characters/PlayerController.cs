@@ -5,6 +5,7 @@ using Animancer;
 using PrimeTween;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -150,7 +151,7 @@ public class PlayerController : MonoBehaviour
 
         FaceToMouseCursor();
 
-        if (Input.GetMouseButtonDown(0) && _isEnableInput)
+        if (Input.GetMouseButtonDown(0) && _isEnableInput && !IsTouchOverUI())
         {
             ManualShoot();
             // Attack();
@@ -503,6 +504,13 @@ public class PlayerController : MonoBehaviour
 
     private bool IsTouchOverUI()
     {
-        return false;
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

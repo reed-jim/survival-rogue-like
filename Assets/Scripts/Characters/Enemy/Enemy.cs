@@ -143,6 +143,11 @@ public class Enemy : MonoBehaviour
         {
             playerGotHitEvent?.Invoke(stat.Damage);
         }
+
+        if (other.tag == Constants.PLAYER_BULLET_TAG)
+        {
+            OnBulletHit(other.transform.position);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
