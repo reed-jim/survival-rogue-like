@@ -16,12 +16,8 @@ public class Enemy : MonoBehaviour
     [Header("COLLIDER")]
     [SerializeField] private Collider meleeAttackCollider;
 
-    [Header("RAGDOLL")]
-    [SerializeField] private Collider[] ragdollColliders;
-    private Rigidbody[] _ragdollRigibodies;
-
     [SerializeField] Renderer meshRenderer;
-    private Transform player;
+    protected Transform player;
     [SerializeField] private GameObject fx;
 
     [Header("ANIMATOR")]
@@ -42,15 +38,17 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Vector3 offsetToPlayer;
 
     [Header("MANAGEMENT")]
-    private List<Tween> _tweens;
+    protected List<Tween> _tweens;
     private Tween _hitEffectTween;
-    private CharacterState _state;
+    protected CharacterState _state;
     private Rigidbody _rigidBody;
     private bool _isIgnorePhysic;
     MaterialPropertyBlock _materialPropertyBlock;
     private Material _dissolveMaterial;
-
     private int _index;
+
+    [Header("MODULE")]
+    private CharacterRagdoll _characterRagdoll;
 
     #region PROPERTY
     public CharacterState State => _state;
@@ -77,6 +75,7 @@ public class Enemy : MonoBehaviour
 
         _rigidBody = GetComponent<Rigidbody>();
         _characterUI = GetComponent<CharacterUI>();
+        _characterRagdoll = GetComponent<CharacterRagdoll>();
         _materialPropertyBlock = new MaterialPropertyBlock();
 
         _dissolveMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
@@ -88,9 +87,6 @@ public class Enemy : MonoBehaviour
         };
 
         _index = transform.GetSiblingIndex();
-
-        SetUpRagdoll();
-        EnableRagdoll(false);
     }
 
     private void OnEnable()
@@ -121,7 +117,7 @@ public class Enemy : MonoBehaviour
 
     private void Reset()
     {
-        EnableRagdoll(false);
+        _characterRagdoll.EnableRagdoll(false);
 
         meleeAttackCollider.gameObject.SetActive(false);
 
@@ -132,6 +128,7 @@ public class Enemy : MonoBehaviour
         _state = CharacterState.NONE;
     }
 
+    #region COLLISION
     private void OnTriggerEnter(Collider other)
     {
         if (other.name == "Fx Collider")
@@ -175,36 +172,6 @@ public class Enemy : MonoBehaviour
         {
             OnBulletHit(hitPosition);
         }
-    }
-
-    #region RAGDOLL
-    private void SetUpRagdoll()
-    {
-        _ragdollRigibodies = new Rigidbody[ragdollColliders.Length];
-
-        for (int i = 0; i < ragdollColliders.Length; i++)
-        {
-            _ragdollRigibodies[i] = ragdollColliders[i].GetComponent<Rigidbody>();
-
-        }
-    }
-
-    public void EnableRagdoll(bool enableRagdoll)
-    {
-        playerAnimator.enabled = !enableRagdoll;
-
-        foreach (Collider item in ragdollColliders)
-        {
-            item.enabled = false;
-        }
-
-        foreach (var ragdollRigidBody in _ragdollRigibodies)
-        {
-            ragdollRigidBody.useGravity = enableRagdoll;
-            ragdollRigidBody.isKinematic = !enableRagdoll;
-        }
-
-        _rigidBody.velocity = Vector3.zero;
     }
     #endregion
 
@@ -345,10 +312,15 @@ public class Enemy : MonoBehaviour
 
         _state = CharacterState.DIE;
 
-        EnableRagdoll(true);
+        _characterRagdoll.EnableRagdoll(true);
     }
 
-    private void Attack()
+    protected virtual void Attack()
+    {
+        MeleeAttack();
+    }
+
+    private void MeleeAttack()
     {
         playerAnimator.SetFloat("Speed", 0);
         playerAnimator.SetInteger("State", 1);

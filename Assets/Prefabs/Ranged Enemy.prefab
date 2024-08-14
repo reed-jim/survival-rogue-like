@@ -3054,13 +3054,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8625397324951147358}
-  - component: {fileID: 5032477070738748390}
+  - component: {fileID: 6710424781381988987}
   - component: {fileID: 6669211417923457503}
+  - component: {fileID: 8452685844258175403}
   - component: {fileID: 7843867010801606628}
   - component: {fileID: 7269753473283258523}
   - component: {fileID: 640653567355872999}
   m_Layer: 7
-  m_Name: Enemy Ragdoll
+  m_Name: Ranged Enemy
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3093,7 +3094,7 @@ Transform:
   - {fileID: 3795092254270209180}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5032477070738748390
+--- !u!114 &6710424781381988987
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3102,7 +3103,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7921613085204029372}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 775414057d8e4c94dbcdeb3f2b18d7ac, type: 3}
+  m_Script: {fileID: 11500000, guid: 73b5965043fddd845a36ae5674fe2ceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   meleeAttackCollider: {fileID: 1490798671485314889}
@@ -3121,7 +3122,8 @@ MonoBehaviour:
     reloadTime: 1
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
   speedMultiplier: 14
-  offsetToPlayer: {x: 1, y: 0, z: 1}
+  offsetToPlayer: {x: 7, y: 0, z: 7}
+  rangedAttack: {fileID: 8452685844258175403}
 --- !u!114 &6669211417923457503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3139,6 +3141,19 @@ MonoBehaviour:
   hpBar: {fileID: 1093514428759601201}
   damageText: {fileID: 8847772238070330031}
   scaleDownDuration: 0.5
+--- !u!114 &8452685844258175403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7921613085204029372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 889ea14808db59c4195f3cff379f0e32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpeedMultiplier: 25
 --- !u!114 &7843867010801606628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3163,7 +3178,6 @@ MonoBehaviour:
   - {fileID: 2627035703732730560}
   - {fileID: 4081823837977886212}
   - {fileID: 2404185863260167451}
-  _playerAnimator: {fileID: 7269753473283258523}
 --- !u!95 &7269753473283258523
 Animator:
   serializedVersion: 5

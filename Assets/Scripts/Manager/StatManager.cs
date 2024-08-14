@@ -28,6 +28,7 @@ public class StatManager : MonoBehaviour
         Enemy.playerGotHitEvent += OnPlayerHit;
         Enemy.resetEnemyEvent += ResetEnemy;
         PlayerController.getStatEvent += GetPlayerStat;
+        PlayerController.playerGotHitEvent += OnPlayerHit;
         LevelingUI.upgradePlayerStatEvent += UpgradePlayerStat;
 
         PlayerStat starterPlayerStat = new PlayerStat()
@@ -54,6 +55,7 @@ public class StatManager : MonoBehaviour
         Enemy.playerGotHitEvent -= OnPlayerHit;
         Enemy.resetEnemyEvent -= ResetEnemy;
         PlayerController.getStatEvent -= GetPlayerStat;
+        PlayerController.playerGotHitEvent -= OnPlayerHit;
         LevelingUI.upgradePlayerStatEvent -= UpgradePlayerStat;
     }
 

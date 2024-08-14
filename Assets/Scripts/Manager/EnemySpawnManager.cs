@@ -44,7 +44,7 @@ public class EnemySpawnManager : MonoBehaviour
             {
                 if (!enemies[_currentEnemyIndex].activeSelf)
                 {
-                    enemies[_currentEnemyIndex].transform.position = GetRandomPosition();
+                    enemies[_currentEnemyIndex].transform.position = GetRandomPositionCircular();
                     enemies[_currentEnemyIndex].SetActive(true);
 
                     if (_isFinishAssigningEnemyIndexes == false)
@@ -76,6 +76,21 @@ public class EnemySpawnManager : MonoBehaviour
         position.x = player.transform.position.x + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(15, 30);
         position.y = 1.3f;
         position.z = player.transform.position.y + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(15, 30);
+
+        return position;
+    }
+
+    private Vector3 GetRandomPositionCircular()
+    {
+        Vector3 position = new Vector3();
+
+        int[] allDirections = new int[] { 1, -1 };
+
+        float radius = 30;
+
+        position.x = player.transform.position.x + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(15, 30);
+        position.y = 1.3f;
+        position.z = allDirections[UnityEngine.Random.Range(0, 2)] * Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(position.x, 2));
 
         return position;
     }
