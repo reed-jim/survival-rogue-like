@@ -26,6 +26,8 @@ public class CharacterUI : MonoBehaviour
     {
         _tweens = new List<Tween>();
 
+        CharacterStatManager.setHpEvent += SetHP;
+
         _hpBarRT = hpBar.GetComponent<RectTransform>();
     }
 
@@ -43,12 +45,20 @@ public class CharacterUI : MonoBehaviour
 
     private void OnDestroy()
     {
-
+        CharacterStatManager.setHpEvent -= SetHP;
     }
 
     public void Reset()
     {
         lazyHpBar.Reset();
+    }
+
+    public void SetHP(string instanceId, float prevValue, float value, float maxHp)
+    {
+        if (gameObject.GetInstanceID().ToString() == instanceId)
+        {
+            SetHP(prevValue, value, maxHp);
+        }
     }
 
     public void SetHP(float prevValue, float value, float maxHp)

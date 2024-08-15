@@ -13,8 +13,10 @@ public class GameplayUIManager : MonoBehaviour
     [Header("CUSTOMIZE")]
     [SerializeField] private float playerLazyHpBarDuration;
 
-    [Header("MANAGEMENT")]
+    #region PRIVATE FIELD
     private Tween _lazyPlayerHpBarTween;
+    private Tween _updateExpBarTween;
+    #endregion
 
     private void Awake()
     {
@@ -47,6 +49,11 @@ public class GameplayUIManager : MonoBehaviour
 
     private void UpdateExpProgressBar(float currentExp, float maxExp)
     {
-        expProgressBar.value = currentExp / maxExp;
+        if (_updateExpBarTween.isAlive)
+        {
+            _updateExpBarTween.Stop();
+        }
+
+        _updateExpBarTween = Tween.Custom(expProgressBar.value, currentExp / maxExp, duration: 0.3f, onValueChange: newVal => expProgressBar.value = newVal);
     }
 }

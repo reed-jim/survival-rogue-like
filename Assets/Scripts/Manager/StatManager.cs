@@ -33,6 +33,7 @@ public class StatManager : MonoBehaviour
 
         PlayerStat starterPlayerStat = new PlayerStat()
         {
+            Level = 1,
             HP = 100,
             Damage = 15,
             AttackRange = 12,
@@ -45,6 +46,11 @@ public class StatManager : MonoBehaviour
 
         _enemyStats = new List<EnemyStat>();
         _enemySpawnTimes = new List<int>();
+    }
+
+    private void TestDamageOverTime()
+    {
+        
     }
 
     private void OnDestroy()

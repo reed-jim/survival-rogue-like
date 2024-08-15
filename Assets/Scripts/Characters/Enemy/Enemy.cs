@@ -60,6 +60,7 @@ public class Enemy : MonoBehaviour
     public static event Action<Vector3> playBulletHitFxEvent;
     public static event Action<EnemyStat> enemySpawnedEvent;
     public static event Action<int> enemyHitEvent;
+    public static event Action<string> characterHitEvent;
     public static event Action<int> enemyDieEvent;
     public static event Action<int> resetEnemyEvent;
     public static event Action<float> playerGotHitEvent;
@@ -82,6 +83,7 @@ public class Enemy : MonoBehaviour
 
         stat = new EnemyStat()
         {
+            Level = 1,
             HP = 100,
             Damage = 10
         };
@@ -185,7 +187,8 @@ public class Enemy : MonoBehaviour
         // float prevHP = stat.HP;
 
         enemyHitEvent?.Invoke(_index);
-
+        characterHitEvent?.Invoke(gameObject.GetInstanceID().ToString());
+        
         // stat.MinusHP(playerStat.Damage);
 
         // _characterUI.SetHP(prevHP, stat.HP, maxHp: 100);

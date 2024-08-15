@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyContainer: {fileID: 958509770}
-  enemyPrefab: {fileID: 7921613085204029372, guid: 11534870bad19814e8ddca5e06009743,
+  enemyPrefab: {fileID: 7921613085204029372, guid: 9ba5cb0d49f2a354583a851310b6c35e,
     type: 3}
   enemies: []
   player: {fileID: 543450651959218514}
@@ -1502,7 +1502,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.5
+      scalar: 0.5
       minScalar: 0.5
       maxCurve:
         serializedVersion: 2
@@ -6192,35 +6192,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 505291914}
-  - component: {fileID: 505291913}
+  - component: {fileID: 505291915}
   m_Layer: 3
   m_Name: Fake Sword Collider
-  m_TagString: Player Bullet
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &505291913
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505291912}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 4}
-  m_Center: {x: 0, y: 0, z: 1.5}
 --- !u!4 &505291914
 Transform:
   m_ObjectHideFlags: 0
@@ -6229,13 +6208,34 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505291912}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.2, z: 3}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 6, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4763305602408050801}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &505291915
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505291912}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &510763631
 GameObject:
   m_ObjectHideFlags: 0
@@ -6426,8 +6426,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.6
-      minScalar: 0.2
+      scalar: 0.3
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -11094,17 +11094,17 @@ PrefabInstance:
     - target: {fileID: 6710139492206580329, guid: 95b8d3d65b5d7f1409c4ed1723887826,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6710139492206580329, guid: 95b8d3d65b5d7f1409c4ed1723887826,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6710139492206580329, guid: 95b8d3d65b5d7f1409c4ed1723887826,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6710139492206580329, guid: 95b8d3d65b5d7f1409c4ed1723887826,
         type: 3}
@@ -11174,7 +11174,7 @@ PrefabInstance:
     - target: {fileID: 6710139492206580332, guid: 95b8d3d65b5d7f1409c4ed1723887826,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6710139492206580334, guid: 95b8d3d65b5d7f1409c4ed1723887826,
         type: 3}
@@ -11194,7 +11194,7 @@ PrefabInstance:
     - target: {fileID: 6710139492206580334, guid: 95b8d3d65b5d7f1409c4ed1723887826,
         type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6710139492206580334, guid: 95b8d3d65b5d7f1409c4ed1723887826,
         type: 3}
@@ -13941,7 +13941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.3529412, b: 0.74509805, a: 1}
+  m_Color: {r: 1, g: 0.774152, b: 0.33490568, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -16203,7 +16203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1935071200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17858,6 +17858,7 @@ GameObject:
   - component: {fileID: 4763305602408050801}
   - component: {fileID: 1511667829862377995}
   - component: {fileID: 5283137539385371340}
+  - component: {fileID: 5283137539385371342}
   - component: {fileID: 5283137539385371341}
   m_Layer: 3
   m_Name: Player New
@@ -17881,13 +17882,13 @@ MonoBehaviour:
   _rigidbody: {fileID: 5283137539385371341}
   playerAnimator: {fileID: 1511667829862377995}
   attackAnimation: {fileID: 0}
-  swordCollider: {fileID: 505291913}
+  swordCollider: {fileID: 505291915}
   swordTrail: {fileID: 521305690}
   swordSlash: {fileID: 521305694}
   force: 0.03
   deltaSpeed: 0.003
   _speedMultiplier: 4
-  delayTimeAttackHit: 0.6
+  delayTimeAttackHit: 0.2
   rotateTimeMultiplier: 0.0002
   layerMaskCheckRangedAttack:
     serializedVersion: 2
@@ -17922,6 +17923,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &5283137539385371342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5283137539385371339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab1dbae41aa45ab4f95b727f67ad8239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageSkills: []
 --- !u!1 &5374220235521477008
 GameObject:
   m_ObjectHideFlags: 0

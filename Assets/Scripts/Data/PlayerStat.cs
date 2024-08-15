@@ -54,7 +54,7 @@ public class PlayerStat : CharacterStat
 
     public float GetExpFromKillEnemy(int enemyLevel)
     {
-        return 50f / (Level - enemyLevel + 1) + 5 * (Level - 1);
+        return 5 * (Level + enemyLevel - 1);
     }
 
     public float GetRequiredExpForNextLevel()

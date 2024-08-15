@@ -168,15 +168,15 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region COLLISION
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == Constants.ENEMY_TAG)
-        {
-            playerGotHitEvent?.Invoke(20);
-        }
-    }
-    #endregion
+    // #region COLLISION
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.gameObject.tag == Constants.ENEMY_TAG)
+    //     {
+    //         playerGotHitEvent?.Invoke(20);
+    //     }
+    // }
+    // #endregion
 
     private void FaceToMouseCursor()
     {
@@ -365,29 +365,21 @@ public class PlayerController : MonoBehaviour
             _waitForEndAttackAnimationTween.Stop();
         }
 
-        // _waitForEndAttackAnimationTween = Tween.Delay(attackAnimation.length).OnComplete(() =>
-        // {
-        //     _tweens.Add(Tween.Delay(0.3f).OnComplete(() =>
-        //     {
-        //         _isAttacking = false;
-        //     }));
-        // });
-
         _tweens.Add(Tween.Delay(0.5f).OnComplete(() =>
         {
             _isAttacking = false;
         }));
 
-        if (_attackAnimation == 0)
-        {
-            _tweens.Add(Tween.Delay(1f).OnComplete(() => swordTrail.SetActive(false)));
-        }
+        // if (_attackAnimation == 0)
+        // {
+        //     _tweens.Add(Tween.Delay(1f).OnComplete(() => swordTrail.SetActive(false)));
+        // }
 
         _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
         {
             swordCollider.enabled = true;
 
-            _tweens.Add(Tween.Delay(0.05f).OnComplete(() => swordCollider.enabled = false));
+            _tweens.Add(Tween.Delay(0.02f).OnComplete(() => swordCollider.enabled = false));
         }));
     }
 
