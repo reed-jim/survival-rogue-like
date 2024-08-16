@@ -53,9 +53,9 @@ public class CharacterUI : MonoBehaviour
         lazyHpBar.Reset();
     }
 
-    public void SetHP(string instanceId, float prevValue, float value, float maxHp)
+    public void SetHP(int instanceId, float prevValue, float value, float maxHp)
     {
-        if (gameObject.GetInstanceID().ToString() == instanceId)
+        if (gameObject.GetInstanceID() == instanceId)
         {
             SetHP(prevValue, value, maxHp);
         }

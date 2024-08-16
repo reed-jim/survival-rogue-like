@@ -5,6 +5,8 @@ public class CharacterStat
 {
     [SerializeField] private int level;
     [SerializeField] private float hp;
+    [SerializeField] private float armor;
+    [SerializeField] private float blockChance;
     [SerializeField] private float damage;
     [SerializeField] private float attackRange;
     [SerializeField] private float attackSpeed;
@@ -23,6 +25,18 @@ public class CharacterStat
     {
         get => damage;
         set => damage = value;
+    }
+
+    public float Armor
+    {
+        get => armor;
+        set => armor = value;
+    }
+
+    public float BlockChance
+    {
+        get => blockChance;
+        set => blockChance = value;
     }
 
     public int Level

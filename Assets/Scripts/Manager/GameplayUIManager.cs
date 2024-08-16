@@ -20,19 +20,19 @@ public class GameplayUIManager : MonoBehaviour
 
     private void Awake()
     {
-        StatManager.updateExpProgressBarEvent += UpdateExpProgressBar;
-        StatManager.updatePlayerHpBarEvent += UpdatePlayerHpBar;
+        // StatManager.updateExpProgressBarEvent += UpdateExpProgressBar;
+        CharacterStatManager.setHpEvent += UpdatePlayerHpBar;
         PlayerStat.updateExpProgressBarEvent += UpdateExpProgressBar;
     }
 
     private void OnDestroy()
     {
-        StatManager.updateExpProgressBarEvent -= UpdateExpProgressBar;
-        StatManager.updatePlayerHpBarEvent -= UpdatePlayerHpBar;
+        // StatManager.updateExpProgressBarEvent -= UpdateExpProgressBar;
+        CharacterStatManager.setHpEvent -= UpdatePlayerHpBar;
         PlayerStat.updateExpProgressBarEvent -= UpdateExpProgressBar;
     }
 
-    private void UpdatePlayerHpBar(float currentHp, float maxHp)
+    private void UpdatePlayerHpBar(int instanceId, float prevHp, float currentHp, float maxHp)
     {
         playerHpProgressBar.value = currentHp / maxHp;
 

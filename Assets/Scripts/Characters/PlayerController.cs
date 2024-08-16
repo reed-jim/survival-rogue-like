@@ -85,19 +85,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     _rigidbody.AddForce(force * Vector3.forward, ForceMode.Force);
-
-        //     playerAnimator.SetInteger("State", 1);
-
-        //     StopCoroutine(_waitCoroutine);
-
-        //     if (_waitCoroutine == null)
-        //     {
-        //         _waitCoroutine = StartCoroutine(WaitFor(0.5f, () => playerAnimator.SetInteger("State", 0)));
-        //     }
-        // }
         if (Input.GetKey(KeyCode.W))
         {
             if (_isAttacking == false)
@@ -107,8 +94,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // Idle();
-
             if (_speed > 0)
             {
                 _speed -= deltaSpeed;
@@ -118,33 +103,6 @@ public class PlayerController : MonoBehaviour
                 _speed = 0;
             }
         }
-        // else if (Input.GetKeyDown(KeyCode.D))
-        // {
-        //     if (!_isTurning)
-        //     {
-        //         TransformUtil.RotateRight(transform, _tweens, onCompletedAction: () => _isTurning = false);
-
-        //         _isTurning = true;
-        //     }
-        // }
-        // else if (Input.GetKeyDown(KeyCode.A))
-        // {
-        //     if (!_isTurning)
-        //     {
-        //         TransformUtil.RotateLeft(transform, _tweens, onCompletedAction: () => _isTurning = false);
-
-        //         _isTurning = true;
-        //     }
-        // }
-        // else if (Input.GetKeyDown(KeyCode.S))
-        // {
-        //     if (!_isTurning)
-        //     {
-        //         TransformUtil.RotateBack(transform, _tweens, onCompletedAction: () => _isTurning = false);
-
-        //         _isTurning = true;
-        //     }
-        // }
 
         _rigidbody.velocity = _speedMultiplier * _speed * transform.forward;
 
@@ -167,16 +125,6 @@ public class PlayerController : MonoBehaviour
         _waitForEndAttackAnimationTween.Stop();
     }
     #endregion
-
-    // #region COLLISION
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.gameObject.tag == Constants.ENEMY_TAG)
-    //     {
-    //         playerGotHitEvent?.Invoke(20);
-    //     }
-    // }
-    // #endregion
 
     private void FaceToMouseCursor()
     {
@@ -254,17 +202,6 @@ public class PlayerController : MonoBehaviour
 
     private void WalkFoward()
     {
-        // _rigidbody.AddForce(force * Vector3.forward, ForceMode.Impulse);
-
-        // if (playerAnimator.GetInteger("State") == 1) return;
-
-        // playerAnimator.SetInteger("State", 1);
-
-        // if (_waitCoroutine == null)
-        // {
-        //     _waitCoroutine = StartCoroutine(WaitFor(1.033f, () => playerAnimator.SetInteger("State", 0)));
-        // }
-
         if (_speed <= 1)
         {
             _speed += deltaSpeed;
@@ -273,13 +210,6 @@ public class PlayerController : MonoBehaviour
         {
             _speed = 1;
         }
-    }
-
-    private void Idle()
-    {
-        if (playerAnimator.GetInteger("State") == 0) return;
-
-        playerAnimator.SetInteger("State", 0);
     }
 
     private void Attack()
@@ -369,11 +299,6 @@ public class PlayerController : MonoBehaviour
         {
             _isAttacking = false;
         }));
-
-        // if (_attackAnimation == 0)
-        // {
-        //     _tweens.Add(Tween.Delay(1f).OnComplete(() => swordTrail.SetActive(false)));
-        // }
 
         _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
         {
@@ -530,7 +455,6 @@ public class PlayerController : MonoBehaviour
 
     private void PlaySwordSlash()
     {
-        // swordSlash.transform.position = transform.position + new Vector3(0, 1f, 1.5f);
         swordSlash.gameObject.SetActive(true);
         swordSlash.Play();
     }

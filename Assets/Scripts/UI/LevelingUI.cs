@@ -14,24 +14,26 @@ public class LevelingUI : MonoBehaviour
     private RectTransform[] selectUpgradeRTs;
     private TMP_Text[] selectUpgradeTexts;
 
+    [Header("SCRIPTABLE OBJECT")]
+    [SerializeField] private SkillContainer skillContainer;
+
     [Header("MANAGEMENT")]
     private Vector2 _canvasSize;
-    private StatType[] _upgradeStatTypes;
-    private float[] _upgradeStatValues;
+    private ISkill[] skillsToChoose;
 
     #region ACTION
     public static Action<StatType, float> upgradePlayerStatEvent;
     public static Action<bool> enableInput;
     #endregion
 
+    #region LIFE CYCLE
     private void Awake()
     {
-        StatManager.showUpgradePanelEvent += OnPlayerLeveledUp;
+        // StatManager.showUpgradePanelEvent += OnPlayerLeveledUp;
 
         _canvasSize = canvas.sizeDelta;
 
-        _upgradeStatTypes = new StatType[selectUpgradeButtons.Length];
-        _upgradeStatValues = new float[selectUpgradeButtons.Length];
+        skillsToChoose = new ISkill[selectUpgradeButtons.Length];
 
         BuildUI();
 
@@ -43,12 +45,15 @@ public class LevelingUI : MonoBehaviour
         }
 
         showUpgradePanelButton.onClick.AddListener(ShowUpgradePanel);
+
+        ShowUpgradePanel();
     }
 
     private void OnDestroy()
     {
-        StatManager.showUpgradePanelEvent -= OnPlayerLeveledUp;
+        // StatManager.showUpgradePanelEvent -= OnPlayerLeveledUp;
     }
+    #endregion
 
     private void BuildUI()
     {
@@ -78,7 +83,7 @@ public class LevelingUI : MonoBehaviour
 
     private void SelectUpgrade(int slot)
     {
-        upgradePlayerStatEvent?.Invoke(_upgradeStatTypes[slot], _upgradeStatValues[slot]);
+        // upgradePlayerStatEvent?.Invoke(_upgradeStatTypes[slot], _upgradeStatValues[slot]);
 
         HideUpgradeSlot();
     }
@@ -87,51 +92,10 @@ public class LevelingUI : MonoBehaviour
     {
         for (int i = 0; i < selectUpgradeTexts.Length; i++)
         {
-            selectUpgradeTexts[i].text = GetRandomUpgrade(slot: i);
+            skillsToChoose[i] = RandomSkillMachine.GetRandomSkill(skillContainer);
+
+            selectUpgradeTexts[i].text = skillsToChoose[i].GetDescription();
         }
-    }
-
-    private string GetRandomUpgrade(int slot)
-    {
-        int statType = UnityEngine.Random.Range(0, 5);
-
-        switch ((StatType)statType)
-        {
-            case StatType.HP: return GetHPUpgrade(slot);
-            case StatType.DAMAGE: return GetDamageUpgrade(slot);
-            case StatType.ATTACK_SPEED: return GetAttackSpeedUpgrade(slot);
-            default: return GetDamageUpgrade(slot);
-        }
-    }
-
-    private string GetHPUpgrade(int slot)
-    {
-        int additionalValue = 10 * UnityEngine.Random.Range(1, 5);
-
-        _upgradeStatTypes[slot] = StatType.HP;
-        _upgradeStatValues[slot] = additionalValue;
-
-        return $"+{additionalValue} HP";
-    }
-
-    private string GetDamageUpgrade(int slot)
-    {
-        int additionalValue = 2 * UnityEngine.Random.Range(1, 30);
-
-        _upgradeStatTypes[slot] = StatType.DAMAGE;
-        _upgradeStatValues[slot] = additionalValue;
-
-        return $"+{additionalValue} Base Damage";
-    }
-
-    private string GetAttackSpeedUpgrade(int slot)
-    {
-        float additionalValue = 0.01f * UnityEngine.Random.Range(1, 30);
-
-        _upgradeStatTypes[slot] = StatType.ATTACK_SPEED;
-        _upgradeStatValues[slot] = additionalValue;
-
-        return $"+{additionalValue * 100}% Attack Speed";
     }
 
     private void OnPlayerLeveledUp()

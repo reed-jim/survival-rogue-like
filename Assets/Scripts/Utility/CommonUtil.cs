@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using PrimeTween;
 using UnityEngine;
 
@@ -28,4 +29,31 @@ public static class CommonUtil
 
         tweens.Add(tween);
     }
+
+    public static bool IsNull(object testObject)
+    {
+        return testObject == null;
+    }
+
+    public static bool IsNotNull(object testObject)
+    {
+        return testObject != null;
+    }
+
+    public static GameObject GetParentGameObject(GameObject child)
+    {
+        return child.transform.parent.gameObject;
+    }
+
+    #region CONSOLE
+    public static void ClearLog()
+    {
+#if UNITY_EDITOR
+        var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
+        var type = assembly.GetType("UnityEditor.LogEntries");
+        var method = type.GetMethod("Clear");
+        method.Invoke(new object(), null);
+#endif
+    }
+    #endregion
 }

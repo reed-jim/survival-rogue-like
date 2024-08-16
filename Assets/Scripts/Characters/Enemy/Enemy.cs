@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour
     {
         _tweens = new List<Tween>();
 
-        StatManager.updateEnemyUIEvent += UpdateUI;
+        // StatManager.updateEnemyUIEvent += UpdateUI;
         EnemySpawnManager.setEnemyIndexEvent += SetIndex;
 
         _rigidBody = GetComponent<Rigidbody>();
@@ -107,7 +107,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        StatManager.updateEnemyUIEvent -= UpdateUI;
+        // StatManager.updateEnemyUIEvent -= UpdateUI;
         EnemySpawnManager.setEnemyIndexEvent -= SetIndex;
     }
 

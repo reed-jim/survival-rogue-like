@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharacterDamageObserver : MonoBehaviour
 {
-    public static event Action<string, float> applyDamageEvent;
+    public static event Action<int, float> applyDamageEvent;
 
     private List<DamageOverTimeSkill> _damageSkillsTaken;
 
@@ -46,7 +46,7 @@ public class CharacterDamageObserver : MonoBehaviour
         {
             if (_damageSkillsTaken.Count > 0)
             {
-                applyDamageEvent?.Invoke(gameObject.GetInstanceID().ToString(), _damageSkillsTaken[0].DamagePerSecond);
+                applyDamageEvent?.Invoke(gameObject.GetInstanceID(), _damageSkillsTaken[0].DamagePerSecond);
             }
 
             yield return waitForSeconds;
