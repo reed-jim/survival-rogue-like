@@ -3,14 +3,6 @@ using System.Collections.Generic;
 using PrimeTween;
 using System;
 
-public enum CharacterState
-{
-    NONE,
-    IDLE,
-    DIE,
-    ATTACK
-}
-
 public class Enemy : MonoBehaviour
 {
     [Header("COLLIDER")]
@@ -18,10 +10,6 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] Renderer meshRenderer;
     protected Transform player;
-    [SerializeField] private GameObject fx;
-
-    [Header("ANIMATOR")]
-    [SerializeField] private Animator playerAnimator;
 
     [Header("STAT")]
     [SerializeField] private EnemyStat stat;
@@ -30,7 +18,6 @@ public class Enemy : MonoBehaviour
     private CharacterUI _characterUI;
 
     [Header("SCRIPTABLE OBJECT")]
-    [SerializeField] private PlayerStat playerStat;
     [SerializeField] private PlayerRuntime playerRuntime;
 
     [Header("CUSTOMIZE")]
@@ -40,19 +27,15 @@ public class Enemy : MonoBehaviour
     [Header("MANAGEMENT")]
     protected List<Tween> _tweens;
     private Tween _hitEffectTween;
-    protected CharacterState _state;
     private Rigidbody _rigidBody;
-    private bool _isIgnorePhysic;
     MaterialPropertyBlock _materialPropertyBlock;
     private Material _dissolveMaterial;
     private int _index;
 
     [Header("MODULE")]
+    private CharacterStateManager _characterStateManager;
     private CharacterRagdoll _characterRagdoll;
-
-    #region PROPERTY
-    public CharacterState State => _state;
-    #endregion
+    private CharacterAttack _characterAttack;
 
     #region ACTION
     public static event Action hitEvent;
@@ -62,8 +45,7 @@ public class Enemy : MonoBehaviour
     public static event Action<int> enemyHitEvent;
     public static event Action<string> characterHitEvent;
     public static event Action<int> enemyDieEvent;
-    public static event Action<int> resetEnemyEvent;
-    public static event Action<float> playerGotHitEvent;
+    public static event Action<string, float> setCharacterAnimationFloatProperty;
     #endregion
 
     #region LIFE CYCLE
@@ -71,12 +53,13 @@ public class Enemy : MonoBehaviour
     {
         _tweens = new List<Tween>();
 
-        EnemySpawnManager.setEnemyIndexEvent += SetIndex;
         CharacterStatManager.characterDieEvent += Die;
 
         _rigidBody = GetComponent<Rigidbody>();
         _characterUI = GetComponent<CharacterUI>();
         _characterRagdoll = GetComponent<CharacterRagdoll>();
+        _characterStateManager = GetComponent<CharacterStateManager>();
+        _characterAttack = GetComponent<CharacterAttack>();
         _materialPropertyBlock = new MaterialPropertyBlock();
 
         _dissolveMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
@@ -107,7 +90,6 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        EnemySpawnManager.setEnemyIndexEvent -= SetIndex;
         CharacterStatManager.characterDieEvent -= Die;
     }
 
@@ -123,63 +105,9 @@ public class Enemy : MonoBehaviour
 
         meleeAttackCollider.gameObject.SetActive(false);
 
-        resetEnemyEvent?.Invoke(_index);
-
         _characterUI.Reset();
 
-        _state = CharacterState.NONE;
-    }
-
-    #region COLLISION
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.name == "Fx Collider")
-        {
-            OnHit(transform.position);
-        }
-
-        if (other.tag == Constants.PLAYER_TAG)
-        {
-            playerGotHitEvent?.Invoke(stat.Damage);
-        }
-
-        if (other.tag == Constants.PLAYER_BULLET_TAG)
-        {
-            OnBulletHit(other.transform.position);
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (_isIgnorePhysic || stat.HP <= 0)
-        {
-            return;
-        }
-
-        Vector3 hitPosition = new Vector3();
-
-        foreach (ContactPoint contact in collision.contacts)
-        {
-            hitPosition = contact.point;
-
-            break;
-        }
-
-        if (collision.collider.tag == "Sword")
-        {
-            OnHit(hitPosition);
-        }
-
-        if (collision.collider.tag == Constants.PLAYER_BULLET_TAG)
-        {
-            OnBulletHit(hitPosition);
-        }
-    }
-    #endregion
-
-    private void SetIndex(int index)
-    {
-        // _index = index;
+        _characterStateManager.State = CharacterState.NONE;
     }
 
     private void Dissolve()
@@ -194,12 +122,12 @@ public class Enemy : MonoBehaviour
 
     private void FindPlayer()
     {
-        if (_state == CharacterState.ATTACK)
+        if (_characterStateManager.State == CharacterState.ATTACK)
         {
             return;
         }
 
-        if (_state == CharacterState.DIE)
+        if (_characterStateManager.State == CharacterState.DIE)
         {
             _rigidBody.velocity = Vector3.zero;
 
@@ -223,7 +151,7 @@ public class Enemy : MonoBehaviour
 
         _rigidBody.velocity = speedMultiplier * (player.position - transform.position).normalized;
 
-        playerAnimator.SetFloat("Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
+        setCharacterAnimationFloatProperty?.Invoke("Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
     }
 
     private void Die(int instanceId)
@@ -242,31 +170,16 @@ public class Enemy : MonoBehaviour
 
         enemyDieEvent?.Invoke(stat.Level);
 
-        playerAnimator.SetFloat("Speed", 0);
+        setCharacterAnimationFloatProperty?.Invoke("Speed", 0);
 
-        _state = CharacterState.DIE;
+        _characterStateManager.State = CharacterState.DIE;
 
         _characterRagdoll.EnableRagdoll(true);
     }
 
     protected virtual void Attack()
     {
-        MeleeAttack();
-    }
-
-    private void MeleeAttack()
-    {
-        playerAnimator.SetFloat("Speed", 0);
-        playerAnimator.SetInteger("State", 1);
-
-        _tweens.Add(Tween.Delay(1.3f).OnComplete(() => meleeAttackCollider.gameObject.SetActive(true)));
-        _tweens.Add(Tween.Delay(5f).OnComplete(() =>
-        {
-            playerAnimator.SetInteger("State", 0);
-            _state = CharacterState.IDLE;
-        }));
-
-        _state = CharacterState.ATTACK;
+        _characterAttack.MeleeAttack();
     }
 
 

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae53d9215a9c97d44a1a61d71ff5bc00, type: 3}
   m_Name: Skill Container
   m_EditorClassIdentifier: 
-  clickThisToAutoAssignSkillToThisContainer: 0
+  clickThisToAutoAssignSkillToThisContainer: 1

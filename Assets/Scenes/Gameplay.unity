@@ -17847,11 +17847,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4763305602408050801}
-  - component: {fileID: 1511667829862377995}
   - component: {fileID: 5283137539385371340}
   - component: {fileID: 5283137539385371342}
   - component: {fileID: 5283137539385371343}
   - component: {fileID: 5283137539385371344}
+  - component: {fileID: 5283137539385371345}
+  - component: {fileID: 5283137539385371347}
+  - component: {fileID: 5283137539385371346}
+  - component: {fileID: 1511667829862377995}
   - component: {fileID: 5283137539385371341}
   m_Layer: 3
   m_Name: Player New
@@ -17872,23 +17875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc273068f4c4f74ebeebd57eadac608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 5283137539385371341}
-  playerAnimator: {fileID: 1511667829862377995}
-  attackAnimation: {fileID: 0}
-  swordCollider: {fileID: 505291915}
-  swordTrail: {fileID: 521305690}
-  swordSlash: {fileID: 521305694}
-  force: 0.03
-  deltaSpeed: 0.003
-  _speedMultiplier: 4
-  delayTimeAttackHit: 0.2
-  rotateTimeMultiplier: 0.0002
-  layerMaskCheckRangedAttack:
-    serializedVersion: 2
-    m_Bits: 4294967295
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
-  playerStatObserver: {fileID: 11400000, guid: e6562857a6e455c4d8b886cab4a28687, type: 2}
-  playerShooterController: {fileID: 1231552030}
 --- !u!54 &5283137539385371341
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17928,6 +17915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1dbae41aa45ab4f95b727f67ad8239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageSkills: []
 --- !u!114 &5283137539385371343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17954,6 +17942,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d613a77cc7ecb1041881192d3acdf6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5283137539385371345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5283137539385371339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1520f31a95519e43917320ee365f245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerShooterController: {fileID: 1231552030}
+  swordCollider: {fileID: 505291915}
+  swordSlash: {fileID: 521305694}
+  delayTimeAttackHit: 0.2
+--- !u!114 &5283137539385371346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5283137539385371339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2454fc85f88cc4f40845db8cc48331dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5283137539385371347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5283137539385371339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5603089e199a6b44ba7fdb2ec9c22759, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedMultiplier: 4
+  deltaSpeed: 0.005
 --- !u!1 &5374220235521477008
 GameObject:
   m_ObjectHideFlags: 0

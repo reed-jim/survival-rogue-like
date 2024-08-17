@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -56,4 +57,22 @@ public static class CommonUtil
 #endif
     }
     #endregion
+
+    private static IEnumerator WaitFor(float amount, Action onCompletedAction)
+    {
+        float deltaTime = Time.deltaTime;
+
+        WaitForSeconds waitForSeconds = new WaitForSeconds(deltaTime);
+
+        float time = 0;
+
+        while (time < amount)
+        {
+            time += deltaTime;
+
+            yield return waitForSeconds;
+        }
+
+        onCompletedAction?.Invoke();
+    }
 }
