@@ -11,39 +11,51 @@ public class GameplayUIManager : MonoBehaviour
     [SerializeField] private Slider expProgressBar;
 
     [Header("CUSTOMIZE")]
+    [SerializeField] private float playerHpBarDuration;
     [SerializeField] private float playerLazyHpBarDuration;
 
     #region PRIVATE FIELD
+    private Tween _playerHpBarTween;
     private Tween _lazyPlayerHpBarTween;
     private Tween _updateExpBarTween;
     #endregion
 
     private void Awake()
     {
-        // StatManager.updateExpProgressBarEvent += UpdateExpProgressBar;
-        CharacterStatManager.setHpEvent += UpdatePlayerHpBar;
-        PlayerStat.updateExpProgressBarEvent += UpdateExpProgressBar;
+        StatManager.updateExpProgressBarEvent += UpdateExpProgressBar;
+        PlayerStatManager.setPlayerHpEvent += UpdatePlayerHpBar;
+        StatManager.setPlayerHpEvent += UpdatePlayerHpBar;
     }
 
     private void OnDestroy()
     {
-        // StatManager.updateExpProgressBarEvent -= UpdateExpProgressBar;
-        CharacterStatManager.setHpEvent -= UpdatePlayerHpBar;
-        PlayerStat.updateExpProgressBarEvent -= UpdateExpProgressBar;
+        StatManager.updateExpProgressBarEvent -= UpdateExpProgressBar;
+        PlayerStatManager.setPlayerHpEvent -= UpdatePlayerHpBar;
+        StatManager.setPlayerHpEvent -= UpdatePlayerHpBar;
+
+        _playerHpBarTween.Stop();
+        _lazyPlayerHpBarTween.Stop();
+        _updateExpBarTween.Stop();
     }
 
-    private void UpdatePlayerHpBar(int instanceId, float prevHp, float currentHp, float maxHp)
+    private void UpdatePlayerHpBar(float currentHp, float maxHp)
     {
-        playerHpProgressBar.value = currentHp / maxHp;
+        // playerHpProgressBar.value = currentHp / maxHp;
 
         float prevValue = playerLazyHpProgressBar.value;
         float currentValue = currentHp / maxHp;
+
+        if (_playerHpBarTween.isAlive)
+        {
+            _playerHpBarTween.Stop();
+        }
 
         if (_lazyPlayerHpBarTween.isAlive)
         {
             _lazyPlayerHpBarTween.Stop();
         }
 
+        _playerHpBarTween = Tween.Custom(prevValue, currentValue, duration: playerHpBarDuration, onValueChange: newVal => playerHpProgressBar.value = newVal);
         _lazyPlayerHpBarTween = Tween.Custom(prevValue, currentValue, duration: playerLazyHpBarDuration, onValueChange: newVal => playerLazyHpProgressBar.value = newVal);
     }
 

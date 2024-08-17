@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +6,13 @@ public class StatManager : MonoBehaviour
 {
     #region PRIVATE FIELD
     private Dictionary<int, CharacterStat> _characterStats;
+    private PlayerStat _playerStat;
+    #endregion
+
+    #region ACTION
+    public static event Action<float, float> updateExpProgressBarEvent;
+    public static event Action showUpgradePanelEvent;
+    public static event Action<float, float> setPlayerHpEvent;
     #endregion
 
     #region LIFE CYCLE
@@ -15,13 +21,19 @@ public class StatManager : MonoBehaviour
         _characterStats = new Dictionary<int, CharacterStat>();
 
         CharacterStatManager.addCharacterStatToListEvent += AddCharacterStat;
+        PlayerStatManager.addPlayerStatToListEvent += AddPlayerStat;
         CollisionHandler.getAttackerStatAction += GetStat;
+        Enemy.enemyDieEvent += EarnPlayerExpKillingEnemy;
+        CharacterSkill.updatePlayerStat += UpdatePlayerStat;
     }
 
     private void OnDestroy()
     {
         CharacterStatManager.addCharacterStatToListEvent -= AddCharacterStat;
+        PlayerStatManager.addPlayerStatToListEvent -= AddPlayerStat;
         CollisionHandler.getAttackerStatAction -= GetStat;
+        Enemy.enemyDieEvent -= EarnPlayerExpKillingEnemy;
+        CharacterSkill.updatePlayerStat -= UpdatePlayerStat;
     }
     #endregion
 
@@ -33,9 +45,35 @@ public class StatManager : MonoBehaviour
         }
     }
 
+    private void AddPlayerStat(PlayerStat stat)
+    {
+        _playerStat = stat;
+    }
+
     private CharacterStat GetStat(int instanceId)
     {
         return _characterStats[instanceId];
+    }
+
+    private void EarnPlayerExpKillingEnemy(int enemyLevel)
+    {
+        bool isLeveledUp;
+
+        _playerStat.EarnExp(_playerStat.GetExpFromKillEnemy(enemyLevel), out isLeveledUp);
+
+        updateExpProgressBarEvent?.Invoke(_playerStat.EXP, _playerStat.GetRequiredExpForNextLevel());
+
+        if (isLeveledUp)
+        {
+            showUpgradePanelEvent?.Invoke();
+        }
+    }
+
+    private void UpdatePlayerStat(CharacterStat modifierStat)
+    {
+        _playerStat += modifierStat;
+
+        setPlayerHpEvent?.Invoke(_playerStat.HP, _playerStat.MaxHP);
     }
 
     // [SerializeField] private PlayerStat playerStat;
@@ -126,20 +164,6 @@ public class StatManager : MonoBehaviour
     //     playerStat.MinusHP(damage);
 
     //     updatePlayerHpBarEvent?.Invoke(playerStat.HP, playerStat.GetMaxHp());
-    // }
-
-    // private void EarnPlayerExpKillingEnemy(int enemyLevel)
-    // {
-    //     bool isLeveledUp;
-
-    //     playerStat.EarnExp(playerStat.GetExpFromKillEnemy(enemyLevel), out isLeveledUp);
-
-    //     updateExpProgressBarEvent?.Invoke(playerStat.EXP, playerStat.GetRequiredExpForNextLevel());
-
-    //     if (isLeveledUp)
-    //     {
-    //         showUpgradePanelEvent?.Invoke();
-    //     }
     // }
 
     // private void UpgradePlayerStat(StatType statType, float value)

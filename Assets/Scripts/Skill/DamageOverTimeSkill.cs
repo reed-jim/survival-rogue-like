@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageOverTimeSkill : Skill
+[CreateAssetMenu(fileName = "skill", menuName = "ScriptableObjects/RPG/DamageSkill")]
+public class DamageOverTimeSkill : ScriptableObject, ISkill
 {
     [SerializeField] private float totalDamage;
     [SerializeField] private float duration;
@@ -18,4 +17,14 @@ public class DamageOverTimeSkill : Skill
     }
 
     public float DamagePerSecond => totalDamage / duration;
+
+    public string GetDescription()
+    {
+        return $"Trigger Burn effect. Burn: Cause {totalDamage} over {duration}s";
+    }
+
+    public int GetTier()
+    {
+        return Random.Range(1, 5);
+    }
 }

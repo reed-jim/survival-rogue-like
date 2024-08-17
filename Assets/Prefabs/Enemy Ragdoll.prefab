@@ -2954,7 +2954,7 @@ GameObject:
   - component: {fileID: 1490798671485314889}
   m_Layer: 7
   m_Name: Melee Attack Collider
-  m_TagString: Enemy
+  m_TagString: Melee Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3059,6 +3059,7 @@ GameObject:
   - component: {fileID: 7843867010801606628}
   - component: {fileID: 3486256241774218579}
   - component: {fileID: 1629421385899482550}
+  - component: {fileID: 4596737555135861345}
   - component: {fileID: 7269753473283258523}
   - component: {fileID: 640653567355872999}
   m_Layer: 7
@@ -3114,15 +3115,17 @@ MonoBehaviour:
   playerStat:
     level: 0
     hp: 0
+    maxHp: 100
     armor: 0
     blockChance: 0
     damage: 0
-    attackRange: 0
-    attackSpeed: 0
+    damageModifier: 0
     criticalChance: 0
     criticalDamage: 0
-    exp: 0
+    attackRange: 0
+    attackSpeed: 0
     reloadTime: 1
+    exp: 0
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
   speedMultiplier: 14
   offsetToPlayer: {x: 1, y: 0, z: 1}
@@ -3191,6 +3194,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183bfafba7edd6d4eb0304954ae07de2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4596737555135861345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7921613085204029372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d47c575de066fa45ae76b5609b890fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collideTags:
+  - Sword
 --- !u!95 &7269753473283258523
 Animator:
   serializedVersion: 5

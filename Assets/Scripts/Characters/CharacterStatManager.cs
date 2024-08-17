@@ -1,26 +1,55 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using PrimeTween;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterStatManager : MonoBehaviour
 {
     #region PRIVATE FIELD
-    private CharacterStat _stat;
+    protected CharacterStat _stat;
     #endregion
+
+    public virtual CharacterStat Stat
+    {
+        get => _stat;
+    }
 
     #region ACTION
     public static event Action<int, float, float, float> setHpEvent;
     public static event Action<int, CharacterStat> addCharacterStatToListEvent;
+    public static event Action<int> characterDieEvent;
     #endregion
 
     private void Awake()
     {
+        RegisterEvent();
+
+        InitializeStat();
+    }
+
+    protected virtual void OnEnable()
+    {
+        Tween.Delay(0.5f).OnComplete(() => addCharacterStatToListEvent?.Invoke(gameObject.GetInstanceID(), Stat));
+    }
+
+    private void OnDestroy()
+    {
+        UnregisterEvent();
+    }
+
+    private void RegisterEvent()
+    {
         CharacterDamageObserver.applyDamageEvent += TakeDamage;
         CollisionHandler.applyDamageEvent += TakeDamage;
+    }
 
+    private void UnregisterEvent()
+    {
+        CharacterDamageObserver.applyDamageEvent -= TakeDamage;
+        CollisionHandler.applyDamageEvent -= TakeDamage;
+    }
+
+    protected virtual void InitializeStat()
+    {
         _stat = new CharacterStat
         {
             Level = 1,
@@ -29,29 +58,32 @@ public class CharacterStatManager : MonoBehaviour
         };
     }
 
-    private void OnEnable()
-    {
-        Tween.Delay(0.5f).OnComplete(() => addCharacterStatToListEvent?.Invoke(gameObject.GetInstanceID(), _stat));
-
-        // addCharacterStatToListEvent?.Invoke(gameObject.GetInstanceID(), _stat);
-    }
-
-    private void OnDestroy()
-    {
-        CharacterDamageObserver.applyDamageEvent -= TakeDamage;
-        CollisionHandler.applyDamageEvent -= TakeDamage;
-    }
-
     private void TakeDamage(int instanceId, float damage)
     {
-        damage = (int)damage;
+        int intDamage = (int)damage;
 
         if (gameObject.GetInstanceID() == instanceId)
         {
-            float prevHp = _stat.HP;
-            _stat.HP -= damage;
+            float prevHp = Stat.HP;
 
-            setHpEvent?.Invoke(instanceId, prevHp, _stat.HP, 100);
+            MinusHP(intDamage);
+
+            InvokeUpdateHPBarEvent(prevHp);
+
+            if (Stat.HP <= 0)
+            {
+                characterDieEvent?.Invoke(instanceId);
+            }
         }
+    }
+
+    protected virtual void MinusHP(int damage)
+    {
+        _stat.HP -= damage;
+    }
+
+    protected virtual void InvokeUpdateHPBarEvent(float prevHp)
+    {
+        setHpEvent?.Invoke(gameObject.GetInstanceID(), prevHp, Stat.HP, 100);
     }
 }

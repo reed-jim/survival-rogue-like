@@ -5,13 +5,16 @@ public class CharacterStat
 {
     [SerializeField] private int level;
     [SerializeField] private float hp;
+    [SerializeField] private float maxHp;
     [SerializeField] private float armor;
     [SerializeField] private float blockChance;
     [SerializeField] private float damage;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float attackSpeed;
+    [SerializeField] private float damageModifier;
     [SerializeField] private float criticalChance;
     [SerializeField] private float criticalDamage;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float attackSpeed;
+    [SerializeField] protected float reloadTime = 1;
 
     public delegate CharacterStat GetCharacterStatAction();
 
@@ -21,10 +24,33 @@ public class CharacterStat
         set => hp = value;
     }
 
+    public float MaxHP
+    {
+        get => maxHp;
+        set => maxHp = value;
+    }
+
     public float Damage
     {
         get => damage;
         set => damage = value;
+    }
+
+    public float DamageMultiplier
+    {
+        get => damageModifier;
+        set => damageModifier = value;
+    }
+
+    public float CriticalChance
+    {
+        get => criticalChance;
+        set => criticalChance = value;
+    }
+    public float CriticalMultiplier
+    {
+        get => criticalDamage;
+        set => criticalDamage = value;
     }
 
     public float Armor
@@ -57,10 +83,24 @@ public class CharacterStat
         set => attackSpeed = value;
     }
 
-    public void MinusHP(float value)
+    public float ReloadTime
     {
-        hp -= value;
+        get => reloadTime;
+        set => reloadTime = value;
+    }
 
-        hp = Mathf.Max(hp, 0);
+    public static CharacterStat operator +(CharacterStat currentStat, CharacterStat bonusStat)
+    {
+        CharacterStat modifiedStat = currentStat;
+
+        modifiedStat.HP += bonusStat.HP;
+        modifiedStat.Armor += bonusStat.Armor;
+        modifiedStat.BlockChance += bonusStat.BlockChance;
+        modifiedStat.Damage += bonusStat.Damage;
+        modifiedStat.DamageMultiplier += bonusStat.DamageMultiplier;
+        modifiedStat.CriticalChance += bonusStat.CriticalChance;
+        modifiedStat.CriticalMultiplier += bonusStat.CriticalMultiplier;
+
+        return modifiedStat;
     }
 }

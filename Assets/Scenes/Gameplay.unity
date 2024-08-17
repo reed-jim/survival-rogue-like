@@ -15112,7 +15112,8 @@ MonoBehaviour:
   playerHpProgressBar: {fileID: 837270422}
   playerLazyHpProgressBar: {fileID: 1318698228}
   expProgressBar: {fileID: 6333520}
-  playerLazyHpBarDuration: 0.5
+  playerHpBarDuration: 0.2
+  playerLazyHpBarDuration: 1
 --- !u!4 &1701297522
 Transform:
   m_ObjectHideFlags: 0
@@ -17927,7 +17928,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1dbae41aa45ab4f95b727f67ad8239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageSkills: []
 --- !u!114 &5283137539385371343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17941,7 +17941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collideTags:
-  - Enemy
+  - Melee Attack
 --- !u!114 &5283137539385371344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17951,7 +17951,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5283137539385371339}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b315c3a76130a741bf9d2b11035b16b, type: 3}
+  m_Script: {fileID: 11500000, guid: d613a77cc7ecb1041881192d3acdf6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5374220235521477008

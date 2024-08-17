@@ -19,21 +19,21 @@ public class LevelingUI : MonoBehaviour
 
     [Header("MANAGEMENT")]
     private Vector2 _canvasSize;
-    private ISkill[] skillsToChoose;
+    private ISkill[] _skillsToChoose;
 
     #region ACTION
-    public static Action<StatType, float> upgradePlayerStatEvent;
+    public static Action<ISkill> addSkillEvent;
     public static Action<bool> enableInput;
     #endregion
 
     #region LIFE CYCLE
     private void Awake()
     {
-        // StatManager.showUpgradePanelEvent += OnPlayerLeveledUp;
+        StatManager.showUpgradePanelEvent += OnPlayerLeveledUp;
 
         _canvasSize = canvas.sizeDelta;
 
-        skillsToChoose = new ISkill[selectUpgradeButtons.Length];
+        _skillsToChoose = new ISkill[selectUpgradeButtons.Length];
 
         BuildUI();
 
@@ -51,7 +51,7 @@ public class LevelingUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        // StatManager.showUpgradePanelEvent -= OnPlayerLeveledUp;
+        StatManager.showUpgradePanelEvent -= OnPlayerLeveledUp;
     }
     #endregion
 
@@ -83,7 +83,7 @@ public class LevelingUI : MonoBehaviour
 
     private void SelectUpgrade(int slot)
     {
-        // upgradePlayerStatEvent?.Invoke(_upgradeStatTypes[slot], _upgradeStatValues[slot]);
+        addSkillEvent?.Invoke(_skillsToChoose[slot]);
 
         HideUpgradeSlot();
     }
@@ -92,9 +92,9 @@ public class LevelingUI : MonoBehaviour
     {
         for (int i = 0; i < selectUpgradeTexts.Length; i++)
         {
-            skillsToChoose[i] = RandomSkillMachine.GetRandomSkill(skillContainer);
+            _skillsToChoose[i] = RandomSkillMachine.GetRandomSkill(skillContainer);
 
-            selectUpgradeTexts[i].text = skillsToChoose[i].GetDescription();
+            selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();
         }
     }
 

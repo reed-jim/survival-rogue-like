@@ -71,8 +71,8 @@ public class Enemy : MonoBehaviour
     {
         _tweens = new List<Tween>();
 
-        // StatManager.updateEnemyUIEvent += UpdateUI;
         EnemySpawnManager.setEnemyIndexEvent += SetIndex;
+        CharacterStatManager.characterDieEvent += Die;
 
         _rigidBody = GetComponent<Rigidbody>();
         _characterUI = GetComponent<CharacterUI>();
@@ -107,8 +107,8 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        // StatManager.updateEnemyUIEvent -= UpdateUI;
         EnemySpawnManager.setEnemyIndexEvent -= SetIndex;
+        CharacterStatManager.characterDieEvent -= Die;
     }
 
     private void Update()
@@ -182,13 +182,116 @@ public class Enemy : MonoBehaviour
         // _index = index;
     }
 
+    private void Dissolve()
+    {
+        _tweens.Add(Tween.Custom(3, 0, duration: 1f, onValueChange: value => _dissolveMaterial.SetFloat("_CutoffHeight", value)).OnComplete(() =>
+        {
+            gameObject.SetActive(false);
+
+            _dissolveMaterial.SetFloat("_CutoffHeight", 3);
+        }));
+    }
+
+    private void FindPlayer()
+    {
+        if (_state == CharacterState.ATTACK)
+        {
+            return;
+        }
+
+        if (_state == CharacterState.DIE)
+        {
+            _rigidBody.velocity = Vector3.zero;
+
+            return;
+        }
+
+        _rigidBody.velocity = Vector3.zero;
+
+        if
+        (
+            Mathf.Abs(transform.position.x - player.position.x) < offsetToPlayer.x &&
+            Mathf.Abs(transform.position.z - player.position.z) < offsetToPlayer.z
+        )
+        {
+            Attack();
+
+            return;
+        }
+
+        transform.LookAt(player);
+
+        _rigidBody.velocity = speedMultiplier * (player.position - transform.position).normalized;
+
+        playerAnimator.SetFloat("Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
+    }
+
+    private void Die(int instanceId)
+    {
+        if (instanceId == gameObject.GetInstanceID())
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Dissolve();
+
+        _characterUI.HideHpBar();
+
+        enemyDieEvent?.Invoke(stat.Level);
+
+        playerAnimator.SetFloat("Speed", 0);
+
+        _state = CharacterState.DIE;
+
+        _characterRagdoll.EnableRagdoll(true);
+    }
+
+    protected virtual void Attack()
+    {
+        MeleeAttack();
+    }
+
+    private void MeleeAttack()
+    {
+        playerAnimator.SetFloat("Speed", 0);
+        playerAnimator.SetInteger("State", 1);
+
+        _tweens.Add(Tween.Delay(1.3f).OnComplete(() => meleeAttackCollider.gameObject.SetActive(true)));
+        _tweens.Add(Tween.Delay(5f).OnComplete(() =>
+        {
+            playerAnimator.SetInteger("State", 0);
+            _state = CharacterState.IDLE;
+        }));
+
+        _state = CharacterState.ATTACK;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private void OnHit(Vector3 hitPosition)
     {
         // float prevHP = stat.HP;
 
         enemyHitEvent?.Invoke(_index);
         characterHitEvent?.Invoke(gameObject.GetInstanceID().ToString());
-        
+
         // stat.MinusHP(playerStat.Damage);
 
         // _characterUI.SetHP(prevHP, stat.HP, maxHp: 100);
@@ -249,92 +352,5 @@ public class Enemy : MonoBehaviour
 
         hitEvent?.Invoke();
         playBulletHitFxEvent?.Invoke(hitPosition);
-    }
-
-    private void UpdateUI(int enemyIndex, float damage)
-    {
-        if (enemyIndex == _index)
-        {
-            _characterUI.SetHP(stat.HP + damage, stat.HP, maxHp: 100);
-        }
-    }
-
-    private void Dissolve()
-    {
-        _tweens.Add(Tween.Custom(3, 0, duration: 1f, onValueChange: value => _dissolveMaterial.SetFloat("_CutoffHeight", value)).OnComplete(() =>
-        {
-            gameObject.SetActive(false);
-
-            _dissolveMaterial.SetFloat("_CutoffHeight", 3);
-        }));
-    }
-
-    private void FindPlayer()
-    {
-        if (_state == CharacterState.ATTACK)
-        {
-            return;
-        }
-
-        if (_state == CharacterState.DIE)
-        {
-            _rigidBody.velocity = Vector3.zero;
-
-            return;
-        }
-
-        _rigidBody.velocity = Vector3.zero;
-
-        if
-        (
-            Mathf.Abs(transform.position.x - player.position.x) < offsetToPlayer.x &&
-            Mathf.Abs(transform.position.z - player.position.z) < offsetToPlayer.z
-        )
-        {
-            Attack();
-
-            return;
-        }
-
-        transform.LookAt(player);
-
-        _rigidBody.velocity = speedMultiplier * (player.position - transform.position).normalized;
-
-        playerAnimator.SetFloat("Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
-    }
-
-    private void Die()
-    {
-        Dissolve();
-
-        _characterUI.HideHpBar();
-
-        enemyDieEvent?.Invoke(stat.Level);
-
-        playerAnimator.SetFloat("Speed", 0);
-
-        _state = CharacterState.DIE;
-
-        _characterRagdoll.EnableRagdoll(true);
-    }
-
-    protected virtual void Attack()
-    {
-        MeleeAttack();
-    }
-
-    private void MeleeAttack()
-    {
-        playerAnimator.SetFloat("Speed", 0);
-        playerAnimator.SetInteger("State", 1);
-
-        _tweens.Add(Tween.Delay(1.3f).OnComplete(() => meleeAttackCollider.gameObject.SetActive(true)));
-        _tweens.Add(Tween.Delay(5f).OnComplete(() =>
-        {
-            playerAnimator.SetInteger("State", 0);
-            _state = CharacterState.IDLE;
-        }));
-
-        _state = CharacterState.ATTACK;
     }
 }

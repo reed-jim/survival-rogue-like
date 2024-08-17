@@ -8,23 +8,23 @@ public class PlayerStat : CharacterStat
 
     [SerializeField] private float exp;
 
-    [SerializeField] private float reloadTime = 1;
-
     public float EXP
     {
         get => exp;
         set => exp = value;
     }
 
-    public float ReloadTime
+    public PlayerStat()
     {
-        get => reloadTime;
-        set => reloadTime = value;
+        Level = 1;
+        HP = 100;
+        MaxHP = 100;
+        Damage = 20;
     }
 
-    private void Awake()
+    public static PlayerStat Load()
     {
-        PlayerStat stat = DataUtility.Load<PlayerStat>(new PlayerStat());
+        return DataUtility.Load(new PlayerStat());
     }
 
     public void EarnExp(float earnedExp, out bool isLeveledUp)
@@ -40,8 +40,6 @@ public class PlayerStat : CharacterStat
             exp = 0;
 
             isLeveledUp = true;
-
-            // updateExpProgressBarEvent?.Invoke(exp, );
         }
 
         DataUtility.Save(this);
@@ -54,11 +52,26 @@ public class PlayerStat : CharacterStat
 
     public float GetExpFromKillEnemy(int enemyLevel)
     {
-        return 5 * (Level + enemyLevel - 1);
+        return 45 * (Level + enemyLevel - 1);
     }
 
     public float GetRequiredExpForNextLevel()
     {
         return 100 * Level + 5 * Level * (Level - 1);
+    }
+
+    public static PlayerStat operator +(PlayerStat currentStat, CharacterStat bonusStat)
+    {
+        PlayerStat modifiedStat = currentStat;
+
+        modifiedStat.HP += bonusStat.HP;
+        modifiedStat.Armor += bonusStat.Armor;
+        modifiedStat.BlockChance += bonusStat.BlockChance;
+        modifiedStat.Damage += bonusStat.Damage;
+        modifiedStat.DamageMultiplier += bonusStat.DamageMultiplier;
+        modifiedStat.CriticalChance += bonusStat.CriticalChance;
+        modifiedStat.CriticalMultiplier += bonusStat.CriticalMultiplier;
+
+        return modifiedStat;
     }
 }
