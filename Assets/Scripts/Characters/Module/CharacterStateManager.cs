@@ -30,8 +30,11 @@ public class CharacterStateManager : MonoBehaviour
         CharacterAttack.setCharacterState -= SetCharacterState;
     }
 
-    private void SetCharacterState(CharacterState state)
+    private void SetCharacterState(int instanceId, CharacterState state)
     {
-        _state = state;
+        if (instanceId == gameObject.GetInstanceID())
+        {
+            _state = state;
+        }
     }
 }

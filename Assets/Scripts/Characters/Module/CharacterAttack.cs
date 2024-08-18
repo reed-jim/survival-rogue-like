@@ -13,9 +13,9 @@ public class CharacterAttack : MonoBehaviour
     #endregion
 
     #region ACTION
-    public static event Action<CharacterState> setCharacterState;
-    public static event Action<string, int> setCharacterAnimationIntProperty;
-    public static event Action<string, float> setCharacterAnimationFloatProperty;
+    public static event Action<int, CharacterState> setCharacterState;
+    public static event Action<int, string, int> setCharacterAnimationIntProperty;
+    public static event Action<int, string, float> setCharacterAnimationFloatProperty;
     #endregion
 
     #region LIFE CYCLE
@@ -23,9 +23,8 @@ public class CharacterAttack : MonoBehaviour
     {
         _tweens = new List<Tween>();
 
-        meleeAttackCollider.enabled = false;
+        meleeAttackCollider.gameObject.SetActive(false);
     }
-
 
     private void OnDestroy()
     {
@@ -35,17 +34,26 @@ public class CharacterAttack : MonoBehaviour
 
     public void MeleeAttack()
     {
-        setCharacterAnimationIntProperty?.Invoke("Speed", 0);
-        setCharacterAnimationFloatProperty?.Invoke("State", 1);
+        setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", 1);
+        setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
 
-        _tweens.Add(Tween.Delay(1.3f).OnComplete(() => meleeAttackCollider.gameObject.SetActive(true)));
+        _tweens.Add(Tween.Delay(1.3f).OnComplete(() =>
+        {
+            meleeAttackCollider.gameObject.SetActive(true);
+
+            _tweens.Add(Tween.Delay(0.02f).OnComplete(() =>
+            {
+                meleeAttackCollider.gameObject.SetActive(false);
+
+            }));
+        }));
         _tweens.Add(Tween.Delay(5f).OnComplete(() =>
         {
-            setCharacterAnimationFloatProperty?.Invoke("State", 1);
+            setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", 0);
 
-            setCharacterState?.Invoke(CharacterState.IDLE);
+            setCharacterState?.Invoke(gameObject.GetInstanceID(), CharacterState.IDLE);
         }));
 
-        setCharacterState?.Invoke(CharacterState.ATTACK);
+        setCharacterState?.Invoke(gameObject.GetInstanceID(), CharacterState.ATTACK);
     }
 }

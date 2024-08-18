@@ -25,7 +25,7 @@ public class CollisionHandler : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         GameObject otherGameObject = other.collider.gameObject;
-
+     
         HandleOnCollisionExplosive(otherGameObject);
         HandleOnBeingMeleeAttacked(otherGameObject);
     }

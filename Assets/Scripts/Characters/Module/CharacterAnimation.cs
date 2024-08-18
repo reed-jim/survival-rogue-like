@@ -11,6 +11,7 @@ public class CharacterAnimation : MonoBehaviour
         CharacterMovement.setSpeedPropertyAnimation += SetSpeedPropertyAnimation;
         CharacterAttack.setCharacterAnimationIntProperty += SetIntPropertyAnimation;
         CharacterAttack.setCharacterAnimationFloatProperty += SetFloatPropertyAnimation;
+        Enemy.setCharacterAnimationFloatProperty += SetFloatPropertyAnimation;
     }
 
     private void OnDestroy()
@@ -18,6 +19,7 @@ public class CharacterAnimation : MonoBehaviour
         CharacterMovement.setSpeedPropertyAnimation -= SetSpeedPropertyAnimation;
         CharacterAttack.setCharacterAnimationIntProperty -= SetIntPropertyAnimation;
         CharacterAttack.setCharacterAnimationFloatProperty -= SetFloatPropertyAnimation;
+        Enemy.setCharacterAnimationFloatProperty -= SetFloatPropertyAnimation;
     }
 
     private void SetAnimationState(int state)
@@ -25,18 +27,27 @@ public class CharacterAnimation : MonoBehaviour
         _animator.SetInteger("State", state);
     }
 
-    private void SetSpeedPropertyAnimation(float speed)
+    private void SetSpeedPropertyAnimation(int instanceId, float speed)
     {
-        _animator.SetFloat("Speed", speed);
+        if (gameObject.GetInstanceID() == instanceId)
+        {
+            _animator.SetFloat("Speed", speed);
+        }
     }
 
-    private void SetIntPropertyAnimation(string name, int value)
+    private void SetIntPropertyAnimation(int instanceId, string name, int value)
     {
-        _animator.SetInteger(name, value);
+        if (gameObject.GetInstanceID() == instanceId)
+        {
+            _animator.SetInteger(name, value);
+        }
     }
 
-    private void SetFloatPropertyAnimation(string name, float value)
+    private void SetFloatPropertyAnimation(int instanceId, string name, float value)
     {
-        _animator.SetFloat(name, value);
+        if (gameObject.GetInstanceID() == instanceId)
+        {
+            _animator.SetFloat(name, value);
+        }
     }
 }

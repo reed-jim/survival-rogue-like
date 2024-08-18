@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
     public static event Action<int> enemyHitEvent;
     public static event Action<string> characterHitEvent;
     public static event Action<int> enemyDieEvent;
-    public static event Action<string, float> setCharacterAnimationFloatProperty;
+    public static event Action<int, string, float> setCharacterAnimationFloatProperty;
     #endregion
 
     #region LIFE CYCLE
@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour
 
         _rigidBody.velocity = speedMultiplier * (player.position - transform.position).normalized;
 
-        setCharacterAnimationFloatProperty?.Invoke("Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
+        setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
     }
 
     private void Die(int instanceId)
@@ -170,7 +170,7 @@ public class Enemy : MonoBehaviour
 
         enemyDieEvent?.Invoke(stat.Level);
 
-        setCharacterAnimationFloatProperty?.Invoke("Speed", 0);
+        setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
 
         _characterStateManager.State = CharacterState.DIE;
 

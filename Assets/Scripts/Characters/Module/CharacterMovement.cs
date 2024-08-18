@@ -17,7 +17,7 @@ public class CharacterMovement : MonoBehaviour
     #endregion
 
     #region ACTION
-    public static event Action<float> setSpeedPropertyAnimation;
+    public static event Action<int, float> setSpeedPropertyAnimation;
     #endregion
 
     #region LIFE CYCLE  
@@ -53,7 +53,7 @@ public class CharacterMovement : MonoBehaviour
 
         _rigidbody.velocity = speedMultiplier * _speed * transform.forward;
 
-        setSpeedPropertyAnimation?.Invoke(_speed);
+        setSpeedPropertyAnimation?.Invoke(gameObject.GetInstanceID(), _speed);
 
         FaceToMouseCursor();
     }
