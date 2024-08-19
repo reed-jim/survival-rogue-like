@@ -9,6 +9,7 @@ TagManager:
   - Player Bullet
   - FxTemporaire
   - Melee Attack
+  - Enemy Bullet
   layers:
   - Default
   - TransparentFX

@@ -20,15 +20,12 @@ public class CharacterUI : MonoBehaviour
 
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
-    private RectTransform _hpBarRT;
 
     private void Awake()
     {
         _tweens = new List<Tween>();
 
         CharacterStatManager.setHpEvent += SetHP;
-
-        _hpBarRT = hpBar.GetComponent<RectTransform>();
     }
 
     private void OnEnable()
@@ -79,7 +76,7 @@ public class CharacterUI : MonoBehaviour
 
     public void ShowHpBar()
     {
-        if (_hpBarRT != null)
+        if (lazyHpBar != null)
         {
             lazyHpBar.gameObject.SetActive(true);
         }

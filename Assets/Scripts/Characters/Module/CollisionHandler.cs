@@ -25,7 +25,7 @@ public class CollisionHandler : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         GameObject otherGameObject = other.collider.gameObject;
-     
+
         HandleOnCollisionExplosive(otherGameObject);
         HandleOnBeingMeleeAttacked(otherGameObject);
     }
@@ -58,9 +58,9 @@ public class CollisionHandler : MonoBehaviour
         {
             float damage = 0;
 
-            GameObject attacker = CommonUtil.GetParentGameObject(weapon);
+            // GameObject attacker = CommonUtil.GetParentGameObject(weapon);
 
-            CharacterStat characterStat = getAttackerStatAction.Invoke(attacker.GetInstanceID());
+            CharacterStat characterStat = getAttackerStatAction.Invoke(weapon.GetComponent<Bullet>().GetParentInstanceId());
 
             if (characterStat != null)
             {
@@ -72,6 +72,10 @@ public class CollisionHandler : MonoBehaviour
 
         // if (CommonUtil.IsNull(_hitByMeleeAttackObject))
         // {
+
+
+
+
         //     return;
         // }
 

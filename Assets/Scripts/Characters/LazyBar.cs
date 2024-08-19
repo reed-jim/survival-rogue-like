@@ -28,6 +28,15 @@ public class LazyBar : MonoBehaviour
     {
         bar.value = value / maxValue;
 
-        _tweens.Add(Tween.Custom(prevValue / maxValue, value / maxValue, duration: 0.5f, onValueChange: newVal => lazyBar.value = newVal));
+        _tweens.Add(
+            Tween.Custom(prevValue / maxValue, value / maxValue, duration: 0.5f, onValueChange: newVal => lazyBar.value = newVal)
+            .OnComplete(() =>
+            {
+                if (value <= 0)
+                {
+                    gameObject.SetActive(false);
+                }
+            })
+        );
     }
 }

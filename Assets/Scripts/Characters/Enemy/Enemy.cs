@@ -35,7 +35,6 @@ public class Enemy : MonoBehaviour
     [Header("MODULE")]
     private CharacterStateManager _characterStateManager;
     private CharacterRagdoll _characterRagdoll;
-    private CharacterAttack _characterAttack;
 
     #region ACTION
     public static event Action hitEvent;
@@ -45,6 +44,7 @@ public class Enemy : MonoBehaviour
     public static event Action<int> enemyHitEvent;
     public static event Action<string> characterHitEvent;
     public static event Action<int> enemyDieEvent;
+    public static event Action enemyAttackEvent;
     public static event Action<int, string, float> setCharacterAnimationFloatProperty;
     #endregion
 
@@ -59,7 +59,6 @@ public class Enemy : MonoBehaviour
         _characterUI = GetComponent<CharacterUI>();
         _characterRagdoll = GetComponent<CharacterRagdoll>();
         _characterStateManager = GetComponent<CharacterStateManager>();
-        _characterAttack = GetComponent<CharacterAttack>();
         _materialPropertyBlock = new MaterialPropertyBlock();
 
         _dissolveMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
@@ -179,7 +178,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Attack()
     {
-        _characterAttack.MeleeAttack();
+        enemyAttackEvent?.Invoke();
     }
 
 

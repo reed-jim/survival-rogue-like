@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyContainer: {fileID: 958509770}
-  enemyPrefab: {fileID: 7921613085204029372, guid: 9ba5cb0d49f2a354583a851310b6c35e,
+  enemyPrefab: {fileID: 7921613085204029372, guid: 0edc69118f4b0c64d9db77a4ac913b8d,
     type: 3}
   enemies: []
   player: {fileID: 543450651959218514}
@@ -4885,7 +4885,7 @@ ParticleSystem:
   CollisionModule:
     enabled: 0
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -6233,7 +6233,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 4.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -11382,6 +11382,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 521305692}
+    - targetCorrespondingSourceObject: {fileID: 6710139492206580332, guid: 95b8d3d65b5d7f1409c4ed1723887826,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 521305696}
   m_SourcePrefab: {fileID: 100100000, guid: 95b8d3d65b5d7f1409c4ed1723887826, type: 3}
 --- !u!1 &521305690 stripped
 GameObject:
@@ -11546,6 +11550,18 @@ ParticleSystem:
     type: 3}
   m_PrefabInstance: {fileID: 521305689}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &521305696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521305690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea155858c48dbe409c362244aa39a3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &547507257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15303,7 +15319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1781459156
 Light:
   m_ObjectHideFlags: 0
@@ -18040,6 +18056,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collideTags:
   - Melee Attack
+  - Enemy Bullet
 --- !u!114 &5283137539385371344
 MonoBehaviour:
   m_ObjectHideFlags: 0
