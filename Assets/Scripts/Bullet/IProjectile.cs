@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IProjectile
 {
-    public void Shoot(Vector3 direction);
+    public void Shoot(Transform target, Vector3 shotPosition, int attackInstanceId);
 }

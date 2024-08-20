@@ -1,10 +1,11 @@
+using System;
 using PrimeTween;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId
 {
     [Header("CUSTOMIZE")]
-    [SerializeField] private float forceMultiplier;
+    [SerializeField] protected float forceMultiplier;
     [SerializeField] private float maxExistingTime;
 
     [Header("MANAGEMENT")]
@@ -16,7 +17,7 @@ public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId
     {
         _rigidBody = GetComponent<Rigidbody>();
 
-        CharacterRangedAttack.setBulletAttackerInstanceId += SetAttackInstanceId;
+        // CharacterRangedAttack.setBulletAttackerInstanceId += SetAttackInstanceId;
     }
 
     protected virtual void OnEnable()
@@ -31,7 +32,7 @@ public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId
 
     private void OnDestroy()
     {
-        CharacterRangedAttack.setBulletAttackerInstanceId -= SetAttackInstanceId;
+        // CharacterRangedAttack.setBulletAttackerInstanceId -= SetAttackInstanceId;
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
@@ -44,9 +45,15 @@ public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId
         // }
     }
 
-    public void Shoot(Vector3 direction)
+    public virtual void Shoot(Transform target, Vector3 shotPosition, int attackInstanceId)
     {
-        _rigidBody.AddForce(forceMultiplier * direction);
+        gameObject.SetActive(true);
+
+        SetAttackInstanceId(attackInstanceId);
+
+        transform.position = shotPosition;
+
+        _rigidBody.AddForce(forceMultiplier * (target.position - shotPosition));
     }
 
     public int GetParentInstanceId()
@@ -54,11 +61,8 @@ public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId
         return _attackerInstanceId;
     }
 
-    public void SetAttackInstanceId(int bulletInstanceId, int attackInstanceId)
+    public void SetAttackInstanceId(int attackInstanceId)
     {
-        if (bulletInstanceId == gameObject.GetInstanceID())
-        {
-            _attackerInstanceId = attackInstanceId;
-        }
+        _attackerInstanceId = attackInstanceId;
     }
 }

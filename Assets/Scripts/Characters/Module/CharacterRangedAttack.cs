@@ -7,8 +7,7 @@ public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
     [Header("CUSTOMIZE")]
     [SerializeField] private float forceMultiplier;
 
-    public static event GetRigidbodyAction getRigidbodyEvent;
-    public static event Action<int, int> setBulletAttackerInstanceId;
+    public static event GetBulletAction getBulletEvent;
 
     private void Awake()
     {
@@ -30,17 +29,31 @@ public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
     {
         if (instanceId == gameObject.GetInstanceID())
         {
-            Rigidbody bullet = getRigidbodyEvent?.Invoke();
-
-            bullet.gameObject.SetActive(true);
-
-            setBulletAttackerInstanceId?.Invoke(bullet.gameObject.GetInstanceID(), gameObject.GetInstanceID());
+            IProjectile bullet = GetProjectile();
 
             Vector3 shotPosition = transform.position + new Vector3(0, 2, 0);
 
-            bullet.transform.position = shotPosition;
+            bullet.Shoot(target, shotPosition, attackInstanceId: gameObject.GetInstanceID());
 
-            bullet.AddForce(forceMultiplier * (target.position - shotPosition));
+            // bullet.gameObject.SetActive(true);
+
+            // setBulletAttackerInstanceId?.Invoke(bullet.gameObject.GetInstanceID(), gameObject.GetInstanceID());
+
+            // Vector3 shotPosition = transform.position + new Vector3(0, 2, 0);
+
+            // bullet.transform.position = shotPosition;
+
+            // ShootBullet(bullet, target, shotPosition);
         }
+    }
+
+    protected virtual IProjectile GetProjectile()
+    {
+        return getBulletEvent?.Invoke();
+    }
+
+    protected virtual void ShootBullet(Rigidbody bullet, Transform target, Vector3 shotPosition)
+    {
+        bullet.AddForce(forceMultiplier * (target.position - shotPosition));
     }
 }

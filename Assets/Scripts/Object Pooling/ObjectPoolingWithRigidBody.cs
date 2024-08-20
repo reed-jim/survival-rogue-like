@@ -8,11 +8,11 @@ public class ObjectPoolingWithRigidBody : ObjectPoolingWithOneComponent<Rigidbod
     {
         base.Awake();
 
-        CharacterRangedAttack.getRigidbodyEvent += GetComponentFromPool;
+        // CharacterRangedAttack.getRigidbodyEvent += GetComponentFromPool;
     }
 
     private void OnDestroy()
     {
-        CharacterRangedAttack.getRigidbodyEvent -= GetComponentFromPool;
+        // CharacterRangedAttack.getRigidbodyEvent -= GetComponentFromPool;
     }
 }
