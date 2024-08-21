@@ -7,6 +7,10 @@ using UnityEngine;
 
 public static class CommonUtil
 {
+    public static void StopAllTweens(List<Tween> tweens) {
+
+    }
+    
     public static void OnHitColorEffect(
         Renderer meshRenderer,
         MaterialPropertyBlock materialPropertyBlock,
@@ -55,6 +59,13 @@ public static class CommonUtil
         var method = type.GetMethod("Clear");
         method.Invoke(new object(), null);
 #endif
+    }
+    #endregion
+
+    #region COLOR
+    public static Color ChangeAlpha(Color color, float alpha)
+    {
+        return new Color(color.r, color.g, color.b, alpha);
     }
     #endregion
 

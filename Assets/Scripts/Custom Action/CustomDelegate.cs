@@ -8,4 +8,5 @@ public class CustomDelegate
     public delegate IProjectile GetIProjectileAction();
     public delegate Bullet GetBulletAction();
     public delegate ExplosiveBullet GetExplosiveBulletAction();
+    public delegate ExplosiveAreaIndicator GetExplosiveAreaIndicatorAction();
 }

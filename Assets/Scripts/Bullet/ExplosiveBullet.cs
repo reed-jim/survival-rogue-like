@@ -1,10 +1,12 @@
 using PrimeTween;
 using UnityEngine;
+using static CustomDelegate;
 
 public class ExplosiveBullet : Bullet
 {
     [Header("EXPLOSIVE")]
     [SerializeField] private GameObject explosiveArea;
+    [SerializeField] private SphereCollider explosiveCollider;
 
     [Header("MODEL")]
     [SerializeField] private GameObject bulletModel;
@@ -12,12 +14,17 @@ public class ExplosiveBullet : Bullet
     [Header("FX")]
     [SerializeField] private ParticleSystem explosionFx;
 
+    #region ACTION
+    public static GetExplosiveAreaIndicatorAction getExplosiveAreaIndicatorAction;
+    #endregion
+
     protected override void Awake()
     {
         base.Awake();
 
         explosionFx.gameObject.SetActive(false);
         explosiveArea.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     protected override void OnEnable()
@@ -81,9 +88,11 @@ public class ExplosiveBullet : Bullet
 
     private void PredictTrajectory(Vector3 shotLocation, Vector3 force, Vector3 direction)
     {
-        Vector3 velocity = force / _rigidBody.mass * Time.fixedDeltaTime;
+        float deltaTime = Time.fixedDeltaTime;
 
-        for (float i = 0; i < 10; i += 0.2f)
+        Vector3 velocity = force / _rigidBody.mass * deltaTime;
+
+        for (float i = 0; i < 10; i += deltaTime)
         {
             Vector3 position = new Vector3();
 
@@ -93,7 +102,11 @@ public class ExplosiveBullet : Bullet
 
             if (position.y <= 0)
             {
-                Debug.Log(shotLocation + "/" + position);
+                ExplosiveAreaIndicator explosiveAreaIndicator = getExplosiveAreaIndicatorAction?.Invoke();
+
+                float countdown = i;
+
+                explosiveAreaIndicator.ShowExplosiveArea(position, explosiveCollider.radius, countdown);
 
                 break;
             }

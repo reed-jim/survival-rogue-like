@@ -211,6 +211,7 @@ MonoBehaviour:
   maxExistingTime: 5
   bulletTrail: {fileID: 2677207036229600766}
   explosiveArea: {fileID: 3653995576978212050}
+  explosiveCollider: {fileID: 373421580852754956}
   bulletModel: {fileID: 2209542392904492468}
   explosionFx: {fileID: 2652424483413464038}
 --- !u!54 &7041639118598316266
