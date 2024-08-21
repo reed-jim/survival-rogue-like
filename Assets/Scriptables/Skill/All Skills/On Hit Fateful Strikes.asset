@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae53d9215a9c97d44a1a61d71ff5bc00, type: 3}
-  m_Name: Skill Container
+  m_Script: {fileID: 11500000, guid: 94a326e6cf07bbe4ebd4d011bc9c05f0, type: 3}
+  m_Name: On Hit Fateful Strikes
   m_EditorClassIdentifier: 
-  clickThisToAutoAssignSkillToThisContainer: 0
+  totalDamage: 80
+  duration: 15

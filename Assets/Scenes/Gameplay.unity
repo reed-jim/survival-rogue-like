@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyContainer: {fileID: 958509770}
-  enemyPrefab: {fileID: 7921613085204029372, guid: 2c67b6790ca6f994ca6d2cec38fb2080,
+  enemyPrefab: {fileID: 7921613085204029372, guid: 9ba5cb0d49f2a354583a851310b6c35e,
     type: 3}
   enemies: []
   player: {fileID: 543450651959218514}

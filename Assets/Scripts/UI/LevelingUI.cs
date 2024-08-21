@@ -45,6 +45,8 @@ public class LevelingUI : MonoBehaviour
         }
 
         showUpgradePanelButton.onClick.AddListener(ShowUpgradePanel);
+
+        Tween.Delay(1).OnComplete(() => ShowUpgradePanel());
     }
 
     private void OnDestroy()

@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a326e6cf07bbe4ebd4d011bc9c05f0, type: 3}
-  m_Name: Burn
+  m_Script: {fileID: 11500000, guid: a2fe0392c1c0f724ab498c0df97ab5b0, type: 3}
+  m_Name: Lethality
   m_EditorClassIdentifier: 
-  totalDamage: 80
-  duration: 5
+  damageMultiplier: 0
+  criticalChance: 0.05
+  criticalDamageMultiplier: 0

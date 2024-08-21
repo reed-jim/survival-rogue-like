@@ -20,6 +20,9 @@ public class PlayerStat : CharacterStat
         HP = 100;
         MaxHP = 100;
         Damage = 20;
+        DamageMultiplier = 1;
+        CriticalChance = 0.5f;
+        CriticalMultiplier = 2;
     }
 
     public static PlayerStat Load()

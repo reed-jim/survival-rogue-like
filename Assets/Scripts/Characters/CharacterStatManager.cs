@@ -38,13 +38,13 @@ public class CharacterStatManager : MonoBehaviour
 
     private void RegisterEvent()
     {
-        CharacterDamageObserver.applyDamageEvent += TakeDamage;
+        // CharacterDamageObserver.applyDamageEvent += TakeDamage;
         CollisionHandler.applyDamageEvent += TakeDamage;
     }
 
     private void UnregisterEvent()
     {
-        CharacterDamageObserver.applyDamageEvent -= TakeDamage;
+        // CharacterDamageObserver.applyDamageEvent -= TakeDamage;
         CollisionHandler.applyDamageEvent -= TakeDamage;
     }
 
@@ -58,12 +58,12 @@ public class CharacterStatManager : MonoBehaviour
         };
     }
 
-    private void TakeDamage(int instanceId, float damage)
+    private void TakeDamage(int instanceId, CharacterStat attackerStat)
     {
-        int intDamage = (int)damage;
-
         if (gameObject.GetInstanceID() == instanceId)
         {
+            int intDamage = DamageCalculator.GetDamage(attackerStat, _stat);
+
             float prevHp = Stat.HP;
 
             MinusHP(intDamage);

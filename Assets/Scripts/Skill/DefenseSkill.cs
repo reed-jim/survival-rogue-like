@@ -6,7 +6,7 @@ public class DefenseSkill : ScriptableObject, IModifierSkill
 {
     [SerializeField] private int hp;
     [SerializeField] private int armor;
-    [SerializeField] private int blockChance;
+    [SerializeField] private float blockChance;
 
     public CharacterStat GetBonusStat()
     {
@@ -29,12 +29,12 @@ public class DefenseSkill : ScriptableObject, IModifierSkill
 
         if (armor > 0)
         {
-            description.Append($"Increase {hp} Armor. ");
+            description.Append($"Increase {armor} Armor. ");
         }
 
         if (blockChance > 0)
         {
-            description.Append($"Increase {hp * 100}% Block Chance.");
+            description.Append($"Increase {blockChance * 100}% Block Chance.");
         }
 
         return description.ToString();

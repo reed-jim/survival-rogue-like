@@ -12,7 +12,7 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] private string[] collideTags;
 
     #region ACTION
-    public static event Action<int, float> applyDamageEvent;
+    public static event Action<int, CharacterStat> applyDamageEvent;
     public static event GetCharacterStatAction<int> getAttackerStatAction;
     #endregion
 
@@ -58,24 +58,20 @@ public class CollisionHandler : MonoBehaviour
         {
             float damage = 0;
 
-            // GameObject attacker = CommonUtil.GetParentGameObject(weapon);
+            GameObject attacker = CommonUtil.GetParentGameObject(weapon);
 
-            CharacterStat characterStat = getAttackerStatAction.Invoke(weapon.GetComponent<Bullet>().GetParentInstanceId());
+            CharacterStat characterStat = getAttackerStatAction.Invoke(attacker.GetInstanceID());
 
             if (characterStat != null)
             {
                 damage = characterStat.Damage;
             }
 
-            applyDamageEvent?.Invoke(gameObject.GetInstanceID(), damage);
+            applyDamageEvent?.Invoke(gameObject.GetInstanceID(), characterStat);
         }
 
         // if (CommonUtil.IsNull(_hitByMeleeAttackObject))
         // {
-
-
-
-
         //     return;
         // }
 
@@ -88,5 +84,22 @@ public class CollisionHandler : MonoBehaviour
 
         // // solution 2
         // // use Action
+    }
+
+    private void HandleOnBeingHitByBullet(GameObject weapon)
+    {
+        if (collideTags.Contains(weapon.tag))
+        {
+            float damage = 0;
+
+            CharacterStat characterStat = getAttackerStatAction.Invoke(weapon.GetComponent<Bullet>().GetParentInstanceId());
+
+            if (characterStat != null)
+            {
+                damage = characterStat.Damage;
+            }
+
+            applyDamageEvent?.Invoke(gameObject.GetInstanceID(), characterStat);
+        }
     }
 }
