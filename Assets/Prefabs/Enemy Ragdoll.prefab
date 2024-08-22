@@ -3063,6 +3063,7 @@ GameObject:
   - component: {fileID: 8339100149260213178}
   - component: {fileID: 2158228789459611405}
   - component: {fileID: 1415114645780345984}
+  - component: {fileID: 1610931674869492159}
   - component: {fileID: 7269753473283258523}
   - component: {fileID: 640653567355872999}
   m_Layer: 7
@@ -3231,10 +3232,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8f4e6489b1059a4fb1f6eca43e795ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerShooterController: {fileID: 0}
   meleeAttackCollider: {fileID: 1490798671485314889}
-  swordSlash: {fileID: 0}
-  delayTimeAttackHit: 0
+--- !u!114 &1610931674869492159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7921613085204029372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cae24d42121e5954ba1c056e7e6fba48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &7269753473283258523
 Animator:
   serializedVersion: 5

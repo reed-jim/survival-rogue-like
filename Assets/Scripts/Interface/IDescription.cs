@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISkill : ITier
+public interface IDescription
 {
     public string GetDescription();
-    public string GetName();
 }

@@ -12,6 +12,7 @@ public class LevelingUI : MonoBehaviour
     private RectTransform _showUpgradePanelButtonRT;
     [SerializeField] private Button[] selectUpgradeButtons;
     private RectTransform[] selectUpgradeRTs;
+    private TMP_Text[] skillNameTexts;
     private TMP_Text[] selectUpgradeTexts;
 
     [Header("SCRIPTABLE OBJECT")]
@@ -58,6 +59,7 @@ public class LevelingUI : MonoBehaviour
     private void BuildUI()
     {
         selectUpgradeRTs = new RectTransform[selectUpgradeButtons.Length];
+        skillNameTexts = new TMP_Text[selectUpgradeButtons.Length];
         selectUpgradeTexts = new TMP_Text[selectUpgradeButtons.Length];
 
         _showUpgradePanelButtonRT = showUpgradePanelButton.GetComponent<RectTransform>();
@@ -65,11 +67,15 @@ public class LevelingUI : MonoBehaviour
         for (int i = 0; i < selectUpgradeButtons.Length; i++)
         {
             selectUpgradeRTs[i] = selectUpgradeButtons[i].GetComponent<RectTransform>();
-            selectUpgradeTexts[i] = selectUpgradeButtons[i].transform.GetChild(0).GetComponent<TMP_Text>();
+            skillNameTexts[i] = selectUpgradeButtons[i].transform.GetChild(0).GetComponent<TMP_Text>();
+            selectUpgradeTexts[i] = selectUpgradeButtons[i].transform.GetChild(1).GetComponent<TMP_Text>();
 
             selectUpgradeRTs[i].sizeDelta = new Vector2(0.25f * _canvasSize.x, 0.7f * _canvasSize.y);
             selectUpgradeRTs[i].localPosition = new Vector2((i - 1) * 1.1f * selectUpgradeRTs[i].sizeDelta.x, 0);
 
+            skillNameTexts[i].rectTransform.localPosition = new Vector2(0, 0.35f * selectUpgradeRTs[i].sizeDelta.y);
+
+            skillNameTexts[i].fontSize = 0.02f * _canvasSize.x;
             selectUpgradeTexts[i].fontSize = 0.02f * _canvasSize.x;
 
             selectUpgradeRTs[i].gameObject.SetActive(false);
@@ -92,8 +98,10 @@ public class LevelingUI : MonoBehaviour
     {
         for (int i = 0; i < selectUpgradeTexts.Length; i++)
         {
-            _skillsToChoose[i] = RandomSkillMachine.GetRandomSkill(skillContainer);
+            // _skillsToChoose[i] = RandomSkillMachine.GetRandomSkill(skillContainer);
+            _skillsToChoose[i] = skillContainer.AllSkills[5 + i];
 
+            skillNameTexts[i].text = _skillsToChoose[i].GetName();
             selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();
         }
     }

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a326e6cf07bbe4ebd4d011bc9c05f0, type: 3}
   m_Name: On Hit Spontaneous Combustion
   m_EditorClassIdentifier: 
-  totalDamage: 60
-  duration: 4
+  statusEffectDamaging: {fileID: 11400000, guid: 22da72dedcd5a5f49b61036ab40c14ea,
+    type: 2}

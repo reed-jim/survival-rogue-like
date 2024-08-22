@@ -40,6 +40,11 @@ public class OffensiveSkill : ScriptableObject, IModifierSkill
         return description.ToString();
     }
 
+    public string GetName()
+    {
+        return name;
+    }
+
     public int GetTier()
     {
         return 1;

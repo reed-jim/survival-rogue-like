@@ -3,24 +3,30 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "skill", menuName = "ScriptableObjects/RPG/DamageSkill")]
 public class DamageOverTimeSkill : ScriptableObject, ISkill
 {
-    [SerializeField] private float totalDamage;
-    [SerializeField] private float duration;
+    [SerializeField] private StatusEffectDamaging statusEffectDamaging;
 
-    public float TotalDamage
-    {
-        set => totalDamage = value;
-    }
+    public StatusEffectDamaging StatusEffectDamaging => statusEffectDamaging;
 
-    public float Duration
-    {
-        set => duration = value;
-    }
+    // public float TotalDamage
+    // {
+    //     set => totalDamage = value;
+    // }
 
-    public float DamagePerSecond => totalDamage / duration;
+    // public float Duration
+    // {
+    //     set => duration = value;
+    // }
+
+    // public float DamagePerSecond => totalDamage / duration;
 
     public string GetDescription()
     {
-        return $"Trigger Burn effect. Burn: Cause {totalDamage} over {duration}s";
+        return statusEffectDamaging.GetDescription();
+    }
+
+    public string GetName()
+    {
+        return name;
     }
 
     public int GetTier()

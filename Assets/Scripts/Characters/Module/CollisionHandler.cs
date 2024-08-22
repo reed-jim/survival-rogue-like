@@ -14,6 +14,7 @@ public class CollisionHandler : MonoBehaviour
     #region ACTION
     public static event Action<int, CharacterStat> applyDamageEvent;
     public static event GetCharacterStatAction<int> getAttackerStatAction;
+    public static event Action<int> characterHitEvent;
     #endregion
 
     private void Awake()
@@ -68,6 +69,8 @@ public class CollisionHandler : MonoBehaviour
             }
 
             applyDamageEvent?.Invoke(gameObject.GetInstanceID(), characterStat);
+
+            characterHitEvent?.Invoke(gameObject.GetInstanceID());
         }
 
         // if (CommonUtil.IsNull(_hitByMeleeAttackObject))

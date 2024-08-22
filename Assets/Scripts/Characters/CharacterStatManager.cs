@@ -40,12 +40,14 @@ public class CharacterStatManager : MonoBehaviour
     {
         // CharacterDamageObserver.applyDamageEvent += TakeDamage;
         CollisionHandler.applyDamageEvent += TakeDamage;
+        CharacterStatusEffectObserver.applyDamageEvent += TakeDamage;
     }
 
     private void UnregisterEvent()
     {
         // CharacterDamageObserver.applyDamageEvent -= TakeDamage;
         CollisionHandler.applyDamageEvent -= TakeDamage;
+        CharacterStatusEffectObserver.applyDamageEvent -= TakeDamage;
     }
 
     protected virtual void InitializeStat()

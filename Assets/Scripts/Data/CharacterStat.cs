@@ -15,6 +15,11 @@ public class CharacterStat
     [SerializeField] private float attackRange;
     [SerializeField] private float attackSpeed;
     [SerializeField] protected float reloadTime = 1;
+    [SerializeField] private float movementSpeed;
+
+    [SerializeField] private float takenDamageMultiplier;
+    [SerializeField] private float takenDamageCriticalChance;
+    [SerializeField] private float takenDamageCriticalMultiplier;
 
     public delegate CharacterStat GetCharacterStatAction();
 
@@ -89,6 +94,30 @@ public class CharacterStat
         set => reloadTime = value;
     }
 
+    public float MovementSpeed
+    {
+        get => movementSpeed;
+        set => movementSpeed = value;
+    }
+
+    public float TakenDamageMultiplier
+    {
+        get => takenDamageMultiplier;
+        set => takenDamageMultiplier = value;
+    }
+
+    public float TakenDamageCriticalChance
+    {
+        get => takenDamageCriticalChance;
+        set => takenDamageCriticalChance = value;
+    }
+
+    public float TakenDamageCriticalMultiplier
+    {
+        get => takenDamageCriticalMultiplier;
+        set => takenDamageCriticalMultiplier = value;
+    }
+
     public static CharacterStat operator +(CharacterStat currentStat, CharacterStat bonusStat)
     {
         CharacterStat modifiedStat = currentStat;
@@ -100,6 +129,12 @@ public class CharacterStat
         modifiedStat.DamageMultiplier += bonusStat.DamageMultiplier;
         modifiedStat.CriticalChance += bonusStat.CriticalChance;
         modifiedStat.CriticalMultiplier += bonusStat.CriticalMultiplier;
+
+        modifiedStat.MovementSpeed += bonusStat.MovementSpeed;
+
+        modifiedStat.TakenDamageMultiplier += bonusStat.TakenDamageMultiplier;
+        modifiedStat.TakenDamageCriticalChance += bonusStat.TakenDamageCriticalChance;
+        modifiedStat.TakenDamageCriticalMultiplier += bonusStat.TakenDamageCriticalMultiplier;
 
         return modifiedStat;
     }

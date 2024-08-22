@@ -52,24 +52,3 @@ public static class DamageCalculator
         return (int)finalDamage;
     }
 }
-
-public class DamageOverTime
-{
-    float totalDamage;
-    float duration;
-    float durationPerDamageInflicted;
-
-    private IEnumerator CauseDamageOverTime()
-    {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(durationPerDamageInflicted);
-
-        float timePassed = 0;
-
-        while (timePassed < duration)
-        {
-            // cause damage
-
-            yield return waitForSeconds;
-        }
-    }
-}

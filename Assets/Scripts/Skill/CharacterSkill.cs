@@ -8,7 +8,7 @@ public class CharacterSkill : MonoBehaviour
     [SerializeField] private List<DamageOverTimeSkill> damageSkills;
 
     #region ACTION
-    public static event Action<string, DamageOverTimeSkill> applyDamageEvent;
+    public static event Action<int, StatusEffectDamaging[]> applyDamagingStatusEffect;
     public static event Action<CharacterStat> updatePlayerStat;
     #endregion
 
@@ -17,21 +17,13 @@ public class CharacterSkill : MonoBehaviour
     {
         damageSkills = new List<DamageOverTimeSkill>();
 
-        Enemy.characterHitEvent += ApplyEffect;
+        CollisionHandler.characterHitEvent += ApplyEffect;
         LevelingUI.addSkillEvent += OnSkillAdded;
-
-        DamageOverTimeSkill testSkill = new DamageOverTimeSkill
-        {
-            TotalDamage = 50,
-            Duration = 3
-        };
-
-        damageSkills.Add(testSkill);
     }
 
     private void OnDestroy()
     {
-        Enemy.characterHitEvent -= ApplyEffect;
+        CollisionHandler.characterHitEvent -= ApplyEffect;
         LevelingUI.addSkillEvent -= OnSkillAdded;
     }
     #endregion
@@ -44,10 +36,21 @@ public class CharacterSkill : MonoBehaviour
 
             updatePlayerStat?.Invoke(modifierSkill.GetBonusStat());
         }
+        else if (skill is DamageOverTimeSkill)
+        {
+            damageSkills.Add((DamageOverTimeSkill)skill);
+        }
     }
 
-    private void ApplyEffect(string instanceId)
+    private void ApplyEffect(int instanceId)
     {
-        // applyDamageEvent?.Invoke(instanceId, damageSkills[0]);
+        StatusEffectDamaging[] statusEffectDamagings = new StatusEffectDamaging[damageSkills.Count];
+
+        for (int i = 0; i < statusEffectDamagings.Length; i++)
+        {
+            statusEffectDamagings[i] = damageSkills[i].StatusEffectDamaging;
+        }
+
+        applyDamagingStatusEffect?.Invoke(instanceId, statusEffectDamagings);
     }
 }
