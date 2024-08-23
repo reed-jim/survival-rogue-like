@@ -167,7 +167,7 @@ public class Enemy : MonoBehaviour
 
         _characterUI.HideHpBar();
 
-        enemyDieEvent?.Invoke(stat.Level);
+        enemyDieEvent?.Invoke(gameObject.GetInstanceID());
 
         setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
 

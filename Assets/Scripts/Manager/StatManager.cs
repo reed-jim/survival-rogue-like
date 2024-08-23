@@ -23,7 +23,7 @@ public class StatManager : MonoBehaviour
         CharacterStatManager.addCharacterStatToListEvent += AddCharacterStat;
         PlayerStatManager.addPlayerStatToListEvent += AddPlayerStat;
         CollisionHandler.getAttackerStatAction += GetStat;
-        Enemy.enemyDieEvent += EarnPlayerExpKillingEnemy;
+        CollectibleExperienceShard.earnPlayerExperienceEvent += EarnPlayerExpKillingEnemy;
         CharacterSkill.updatePlayerStat += UpdatePlayerStat;
     }
 
@@ -32,7 +32,7 @@ public class StatManager : MonoBehaviour
         CharacterStatManager.addCharacterStatToListEvent -= AddCharacterStat;
         PlayerStatManager.addPlayerStatToListEvent -= AddPlayerStat;
         CollisionHandler.getAttackerStatAction -= GetStat;
-        Enemy.enemyDieEvent -= EarnPlayerExpKillingEnemy;
+        CollectibleExperienceShard.earnPlayerExperienceEvent -= EarnPlayerExpKillingEnemy;
         CharacterSkill.updatePlayerStat -= UpdatePlayerStat;
     }
     #endregion
