@@ -7,6 +7,8 @@ public class OffensiveSkill : ScriptableObject, IModifierSkill
     [SerializeField] private float damageMultiplier;
     [SerializeField] private float criticalChance;
     [SerializeField] private float criticalDamageMultiplier;
+    [SerializeField] private float percentDirectDamage;
+    [SerializeField] private float percentHealthExecuted;
 
     public CharacterStat GetBonusStat()
     {
@@ -14,7 +16,9 @@ public class OffensiveSkill : ScriptableObject, IModifierSkill
         {
             DamageMultiplier = damageMultiplier,
             CriticalChance = criticalChance,
-            CriticalMultiplier = criticalDamageMultiplier
+            CriticalMultiplier = criticalDamageMultiplier,
+            PercentDirectDamage = percentDirectDamage,
+            PercentHealthExecuted = percentHealthExecuted
         };
     }
 
@@ -35,6 +39,16 @@ public class OffensiveSkill : ScriptableObject, IModifierSkill
         if (criticalDamageMultiplier > 0)
         {
             description.Append($"Increases your critical damage modifier by an additional {criticalDamageMultiplier * 100}%.");
+        }
+
+        if (percentDirectDamage > 0)
+        {
+            description.Append($"{percentDirectDamage * 100}% of your damage will be direct damage.");
+        }
+
+        if (percentHealthExecuted > 0)
+        {
+            description.Append($"if enemies health are under {percentHealthExecuted * 100}% then executed them immediately");
         }
 
         return description.ToString();

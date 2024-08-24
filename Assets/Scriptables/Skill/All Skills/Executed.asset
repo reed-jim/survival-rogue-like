@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae53d9215a9c97d44a1a61d71ff5bc00, type: 3}
-  m_Name: Skill Container
+  m_Script: {fileID: 11500000, guid: a2fe0392c1c0f724ab498c0df97ab5b0, type: 3}
+  m_Name: Executed
   m_EditorClassIdentifier: 
-  clickThisToAutoAssignSkillToThisContainer: 1
+  damageMultiplier: 0
+  criticalChance: 0
+  criticalDamageMultiplier: 0
+  percentDirectDamage: 0
+  percentHealthExecuted: 0.5

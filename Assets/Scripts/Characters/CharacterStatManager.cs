@@ -1,9 +1,13 @@
 using System;
 using PrimeTween;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterStatManager : MonoBehaviour
 {
+    [Header("STAT")]
+    [SerializeField] private CharacterStatData baseStat;
+
     #region PRIVATE FIELD
     protected CharacterStat _stat;
     #endregion
@@ -26,21 +30,27 @@ public class CharacterStatManager : MonoBehaviour
         InitializeStat();
     }
 
-    protected virtual void OnEnable()
-    {
-        Tween.Delay(0.5f).OnComplete(() => addCharacterStatToListEvent?.Invoke(gameObject.GetInstanceID(), Stat));
-    }
+    // protected virtual void OnEnable()
+    // {
+    //     Tween.Delay(0.5f).OnComplete(() => addCharacterStatToListEvent?.Invoke(gameObject.GetInstanceID(), Stat));
+    // }
 
     private void OnDestroy()
     {
         UnregisterEvent();
     }
 
+    // private void OnApplicationQuit()
+    // {
+    //     _stat.Save(gameObject.name);
+    // }
+
     private void RegisterEvent()
     {
         // CharacterDamageObserver.applyDamageEvent += TakeDamage;
         CollisionHandler.applyDamageEvent += TakeDamage;
         CharacterStatusEffectObserver.applyDamageEvent += TakeDamage;
+        EnemySpawnManager.spawnEnemyEvent += OnEnemySpawnEvent;
     }
 
     private void UnregisterEvent()
@@ -48,16 +58,24 @@ public class CharacterStatManager : MonoBehaviour
         // CharacterDamageObserver.applyDamageEvent -= TakeDamage;
         CollisionHandler.applyDamageEvent -= TakeDamage;
         CharacterStatusEffectObserver.applyDamageEvent -= TakeDamage;
+        EnemySpawnManager.spawnEnemyEvent -= OnEnemySpawnEvent;
     }
 
     protected virtual void InitializeStat()
     {
-        _stat = new CharacterStat
+        // _stat = new CharacterStat
+        // {
+        //     Level = 1,
+        //     HP = 100,
+        //     Damage = 10
+        // };
+
+        Tween.Delay(0.5f).OnComplete(() =>
         {
-            Level = 1,
-            HP = 100,
-            Damage = 10
-        };
+            _stat = new CharacterStat().Load(gameObject.name, baseStat.CharacterStat);
+
+            addCharacterStatToListEvent?.Invoke(gameObject.GetInstanceID(), Stat);
+        });
     }
 
     private void TakeDamage(int instanceId, CharacterStat attackerStat)
@@ -87,5 +105,13 @@ public class CharacterStatManager : MonoBehaviour
     protected virtual void InvokeUpdateHPBarEvent(float prevHp)
     {
         setHpEvent?.Invoke(gameObject.GetInstanceID(), prevHp, Stat.HP, 100);
+    }
+
+    private void OnEnemySpawnEvent(int instanceId)
+    {
+        if (instanceId == gameObject.GetInstanceID())
+        {
+            InvokeUpdateHPBarEvent(_stat.MaxHP);
+        }
     }
 }

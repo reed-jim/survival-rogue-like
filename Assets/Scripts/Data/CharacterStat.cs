@@ -1,11 +1,11 @@
 using UnityEngine;
 
 [System.Serializable]
-public class CharacterStat
+public class CharacterStat : ISaveLoad
 {
     [SerializeField] private int level;
     [SerializeField] private float hp;
-    [SerializeField] private float maxHp;
+    [SerializeField] private float maxHp = 100;
     [SerializeField] private float armor;
     [SerializeField] private float blockChance;
     [SerializeField] private float damage;
@@ -152,7 +152,18 @@ public class CharacterStat
         modifiedStat.TakenDamageCriticalMultiplier += bonusStat.TakenDamageCriticalMultiplier;
 
         modifiedStat.PercentDirectDamage += bonusStat.PercentDirectDamage;
+        modifiedStat.PercentHealthExecuted += bonusStat.PercentHealthExecuted;
 
         return modifiedStat;
+    }
+
+    public void Save(string key)
+    {
+        DataUtility.Save(Constants.STAT_DATA_FILE_NAME, key, this);
+    }
+
+    public T Load<T>(string key, T baseStat)
+    {
+        return DataUtility.Load(Constants.STAT_DATA_FILE_NAME, key, baseStat);
     }
 }

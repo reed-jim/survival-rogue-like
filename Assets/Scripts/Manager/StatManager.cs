@@ -45,9 +45,11 @@ public class StatManager : MonoBehaviour
         }
     }
 
-    private void AddPlayerStat(PlayerStat stat)
+    private void AddPlayerStat(int instanceId, PlayerStat stat)
     {
         _playerStat = stat;
+
+        AddCharacterStat(instanceId, stat);
     }
 
     private CharacterStat GetStat(int instanceId)

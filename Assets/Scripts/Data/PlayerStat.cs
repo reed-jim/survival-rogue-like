@@ -27,7 +27,7 @@ public class PlayerStat : CharacterStat
 
     public static PlayerStat Load()
     {
-        return DataUtility.Load(new PlayerStat());
+        return DataUtility.Load(Constants.STAT_DATA_FILE_NAME, Constants.PLAYER_TAG, new PlayerStat());
     }
 
     public void EarnExp(float earnedExp, out bool isLeveledUp)
@@ -45,7 +45,7 @@ public class PlayerStat : CharacterStat
             isLeveledUp = true;
         }
 
-        DataUtility.Save(this);
+        DataUtility.Save(Constants.STAT_DATA_FILE_NAME, Constants.PLAYER_TAG, this);
     }
 
     public float GetMaxHp()
@@ -74,6 +74,15 @@ public class PlayerStat : CharacterStat
         modifiedStat.DamageMultiplier += bonusStat.DamageMultiplier;
         modifiedStat.CriticalChance += bonusStat.CriticalChance;
         modifiedStat.CriticalMultiplier += bonusStat.CriticalMultiplier;
+
+        modifiedStat.MovementSpeed += bonusStat.MovementSpeed;
+
+        modifiedStat.TakenDamageMultiplier += bonusStat.TakenDamageMultiplier;
+        modifiedStat.TakenDamageCriticalChance += bonusStat.TakenDamageCriticalChance;
+        modifiedStat.TakenDamageCriticalMultiplier += bonusStat.TakenDamageCriticalMultiplier;
+
+        modifiedStat.PercentDirectDamage += bonusStat.PercentDirectDamage;
+        modifiedStat.PercentHealthExecuted += bonusStat.PercentHealthExecuted;
 
         return modifiedStat;
     }

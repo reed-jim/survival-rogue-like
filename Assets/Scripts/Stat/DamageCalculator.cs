@@ -53,7 +53,7 @@ public static class DamageCalculator
         // finalDamage *= (1 - wardSave);
 
         // EXECUTED
-        if (finalDamage > attacker.PercentHealthExecuted * target.HP)
+        if (target.HP - finalDamage < attacker.PercentHealthExecuted * target.MaxHP)
         {
             finalDamage = target.MaxHP;
         }

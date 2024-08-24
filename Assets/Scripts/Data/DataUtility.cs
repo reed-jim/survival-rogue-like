@@ -1,18 +1,38 @@
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 public static class DataUtility
 {
-    public static void Save(object data)
+    public static void Save<T>(string fileName, string key, T data)
     {
-        string filePath = Application.persistentDataPath + "/data.json";
+        string filePath = Application.persistentDataPath + $"/{fileName}.json";
 
-        File.WriteAllText(filePath, JsonUtility.ToJson(data));
+        string fileText = "{}";
+
+        if (File.Exists(filePath))
+        {
+            fileText = File.ReadAllText(filePath);
+        }
+
+        JObject json = JObject.Parse(fileText);
+
+        if (json.ContainsKey(key))
+        {
+            json[key] = JsonUtility.ToJson(data);
+        }
+        else
+        {
+            json.Add(key, JsonUtility.ToJson(data));
+        }
+
+        File.WriteAllText(filePath, json.ToString());
     }
 
-    public static T Load<T>(T defaultValue)
+    public static T Load<T>(string fileName, string key, T defaultValue)
     {
-        string filePath = Application.persistentDataPath + "/data.json";
+        string filePath = Application.persistentDataPath + $"/{fileName}.json";
 
         if (File.Exists(filePath))
         {
@@ -20,7 +40,16 @@ public static class DataUtility
 
             if (data != "")
             {
-                return JsonUtility.FromJson<T>(data);
+                JObject json = JObject.Parse(data);
+
+                if (json.ContainsKey(key))
+                {
+                    return JsonConvert.DeserializeObject<T>(json[key].ToString());
+                }
+                else
+                {
+                    return defaultValue;
+                }
             }
             else
             {

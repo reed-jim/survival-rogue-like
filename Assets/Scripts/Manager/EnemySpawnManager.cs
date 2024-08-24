@@ -18,9 +18,8 @@ public class EnemySpawnManager : MonoBehaviour
 
     [Header("MANAGEMENT")]
     private int _currentEnemyIndex;
-    private bool _isFinishAssigningEnemyIndexes;
 
-    public static event Action<int> setEnemyIndexEvent;
+    public static event Action<int> spawnEnemyEvent;
 
     private void Awake()
     {
@@ -38,6 +37,9 @@ public class EnemySpawnManager : MonoBehaviour
 
     private IEnumerator Spawn()
     {
+        // wait for enemy to be set up
+        yield return new WaitForSeconds(1f);
+        
         while (true)
         {
             for (int i = 0; i < maxEnemySpawnConcurrently; i++)
@@ -47,18 +49,13 @@ public class EnemySpawnManager : MonoBehaviour
                     enemies[_currentEnemyIndex].transform.position = GetRandomPositionCircular();
                     enemies[_currentEnemyIndex].SetActive(true);
 
-                    if (_isFinishAssigningEnemyIndexes == false)
-                    {
-                        setEnemyIndexEvent?.Invoke(_currentEnemyIndex);
-                    }
+                    spawnEnemyEvent?.Invoke(enemies[_currentEnemyIndex].GetInstanceID());
 
                     _currentEnemyIndex++;
 
                     if (_currentEnemyIndex >= enemies.Length)
                     {
                         _currentEnemyIndex = 0;
-
-                        _isFinishAssigningEnemyIndexes = true;
                     }
                 }
             }
