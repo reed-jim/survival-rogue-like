@@ -21,6 +21,9 @@ public class CharacterStat
     [SerializeField] private float takenDamageCriticalChance;
     [SerializeField] private float takenDamageCriticalMultiplier;
 
+    [SerializeField] private float percentDirectDamage;
+    [SerializeField] private float percentHealthExecuted;
+
     public delegate CharacterStat GetCharacterStatAction();
 
     public float HP
@@ -118,6 +121,18 @@ public class CharacterStat
         set => takenDamageCriticalMultiplier = value;
     }
 
+    public float PercentDirectDamage
+    {
+        get => percentDirectDamage;
+        set => percentDirectDamage = value;
+    }
+
+    public float PercentHealthExecuted
+    {
+        get => percentHealthExecuted;
+        set => percentHealthExecuted = value;
+    }
+
     public static CharacterStat operator +(CharacterStat currentStat, CharacterStat bonusStat)
     {
         CharacterStat modifiedStat = currentStat;
@@ -135,6 +150,8 @@ public class CharacterStat
         modifiedStat.TakenDamageMultiplier += bonusStat.TakenDamageMultiplier;
         modifiedStat.TakenDamageCriticalChance += bonusStat.TakenDamageCriticalChance;
         modifiedStat.TakenDamageCriticalMultiplier += bonusStat.TakenDamageCriticalMultiplier;
+
+        modifiedStat.PercentDirectDamage += bonusStat.PercentDirectDamage;
 
         return modifiedStat;
     }

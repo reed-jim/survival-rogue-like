@@ -11,7 +11,7 @@ public static class DamageCalculator
     {
         float finalDamage = 0;
 
-        // // check if is hit
+        // // CHECK IF IS HIT
         // bool isHit = false;
 
         // float finalBlockChance = baseBlockChance - reducedBlockChance;
@@ -23,7 +23,7 @@ public static class DamageCalculator
         //     return 0;
         // }
 
-        // damage output
+        // DAMAGE OUTPUT
         // float finalCriticalChance = attacker.CriticalChance - reducedCriticalChance;
         float finalCriticalChance = attacker.CriticalChance;
 
@@ -41,13 +41,22 @@ public static class DamageCalculator
         finalDamage *= attacker.DamageMultiplier;
         // finalDamage *= (1 + increasedDamagePercent);
 
-        // damage reduced
+        // DAMAGE REDUCED
         // finalDamage *= damageDivider;
 
         float percentDamageReducedByArmor = 1 - 1 / (1 + (target.Armor * target.Armor / 1000f));
 
-        finalDamage *= (1 - percentDamageReducedByArmor);
+        float directDamage = finalDamage * attacker.PercentDirectDamage;
+        float normalDamage = finalDamage - directDamage;
+
+        finalDamage = directDamage + normalDamage * (1 - percentDamageReducedByArmor);
         // finalDamage *= (1 - wardSave);
+
+        // EXECUTED
+        if (finalDamage > attacker.PercentHealthExecuted * target.HP)
+        {
+            finalDamage = target.MaxHP;
+        }
 
         return (int)finalDamage;
     }
