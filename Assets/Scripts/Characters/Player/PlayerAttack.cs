@@ -6,6 +6,10 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private PlayerShooterController playerShooterController;
 
+    [Header("TEMP")]
+    [SerializeField] private Material sworldSlashMaterial;
+    [SerializeField] private GameObject swordSlashTemp;
+
     [Header("COLLIDER")]
     [SerializeField] private Collider swordCollider;
 
@@ -183,7 +187,10 @@ public class PlayerAttack : MonoBehaviour
 
     private void PlaySwordSlash()
     {
-        swordSlash.gameObject.SetActive(true);
-        swordSlash.Play();
+        swordSlashTemp.gameObject.SetActive(true);
+
+        Tween.Custom(0, 1, duration: 0.8f, onValueChange: newVal => sworldSlashMaterial.SetFloat("_Slash", newVal));
+
+        // swordSlash.Play();
     }
 }

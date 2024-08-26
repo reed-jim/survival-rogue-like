@@ -205,26 +205,26 @@ namespace Animancer.Editor
                 var guid = guids[i];
 
                 var assetPath = AssetDatabase.GUIDToAssetPath(guid);
-                var asset = AssetDatabase.LoadAssetAtPath<ReadMe>(assetPath);
-                if (asset == null)
-                    continue;
+                // var asset = AssetDatabase.LoadAssetAtPath<ReadMe>(assetPath);
+                // if (asset == null)
+                //     continue;
 
-                instances.Add(asset);
+                // instances.Add(asset);
 
-                if (asset._DontShowOnStartup && asset.HasCorrectName)
-                    continue;
+                // if (asset._DontShowOnStartup && asset.HasCorrectName)
+                //     continue;
 
-                // Check if already shown since opening the Unity Editor.
-                if (SessionState.GetBool(guid, false))
-                    continue;
+                // // Check if already shown since opening the Unity Editor.
+                // if (SessionState.GetBool(guid, false))
+                //     continue;
 
-                var writeTime = File.GetLastWriteTimeUtc(assetPath);
-                if (latestWriteTime < writeTime)
-                {
-                    latestWriteTime = writeTime;
-                    autoSelect = asset;
-                    autoSelectGUID = guid;
-                }
+                // var writeTime = File.GetLastWriteTimeUtc(assetPath);
+                // if (latestWriteTime < writeTime)
+                // {
+                //     latestWriteTime = writeTime;
+                //     autoSelect = asset;
+                //     autoSelectGUID = guid;
+                // }
             }
 
             if (autoSelectGUID != null)

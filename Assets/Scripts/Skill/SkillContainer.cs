@@ -50,12 +50,14 @@ public class SkillContainer : ScriptableObject
 
     private async void LoadAsset(List<string> paths)
     {
+        #if UNITY_EDITOR
         foreach (var path in paths)
         {
             ISkill skill = (ISkill)AssetDatabase.LoadAssetAtPath(path, typeof(ISkill));
 
             allSkills.Add(skill);
         }
+        #endif
     }
 }
 
