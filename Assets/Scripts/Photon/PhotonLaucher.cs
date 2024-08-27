@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PhotonLaucher : MonoBehaviourPunCallbacks
 {
@@ -36,9 +37,14 @@ public class PhotonLaucher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        RoomOptions roomOptions = new RoomOptions { MaxPlayers = 2, IsVisible = true };
+        // RoomOptions roomOptions = new RoomOptions { MaxPlayers = 2, IsVisible = true };
 
-        PhotonNetwork.CreateRoom("Room 1");
+        // PhotonNetwork.CreateRoom("Room 1");
+    }
+
+    public override void OnJoinedRoom()
+    {
+        SceneManager.LoadScene("Gameplay");
     }
 
     public override void OnDisconnected(DisconnectCause cause)

@@ -9,6 +9,16 @@ public class FollowPlayerCamera : MonoBehaviour
     [Header("CUSTOMIZE")]
     [SerializeField] private Vector3 offset;
 
+    private void Awake()
+    {
+        PhotonManager.followPlayerEvent += FollowPlayer;
+    }
+
+    private void OnDestroy()
+    {
+        PhotonManager.followPlayerEvent -= FollowPlayer;
+    }
+
     void Update()
     {
         Vector3 position = transform.position;
@@ -17,5 +27,10 @@ public class FollowPlayerCamera : MonoBehaviour
         position.z = player.transform.position.z + offset.z;
 
         transform.position = position;
+    }
+
+    private void FollowPlayer(Transform followedPlayer)
+    {
+        player = followedPlayer;
     }
 }
