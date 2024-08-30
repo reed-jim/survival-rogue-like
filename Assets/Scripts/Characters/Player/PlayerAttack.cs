@@ -7,6 +7,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private PlayerShooterController playerShooterController;
 
     [Header("TEMP")]
+    [SerializeField] private Transform hammer;
     [SerializeField] private Material sworldSlashMaterial;
     [SerializeField] private GameObject swordSlashTemp;
 
@@ -190,6 +191,36 @@ public class PlayerAttack : MonoBehaviour
         swordSlashTemp.gameObject.SetActive(true);
 
         Tween.Custom(0, 1, duration: 0.8f, onValueChange: newVal => sworldSlashMaterial.SetFloat("_Slash", newVal));
+
+
+
+        Sequence.Create()
+            .Chain(Tween.Custom(0, -90, duration: 0.1f, onValueChange: newVal =>
+            {
+                hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
+            }))
+            .Chain(Tween.Custom(-90, 90, duration: 0.25f, onValueChange: newVal =>
+            {
+                hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
+            }))
+            .Chain(Tween.Custom(90, 0, duration: 0.55f, onValueChange: newVal =>
+            {
+                hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
+            }));
+
+        // Tween.Custom(0, 70, duration: 0.4f, cycles: 1, cycleMode: CycleMode.Yoyo, onValueChange: newVal =>
+        // {
+        //     hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
+        // })
+        // .OnComplete(() =>
+        // {
+        //     Tween.Custom(0, 70, duration: 0.5f, onValueChange: newVal =>
+        //     {
+        //         hammer.transform.eulerAngles = _prevHammerEulerAngle + new Vector3(0, newVal, 0);
+
+        //         _prevHammerEulerAngle = hammer.transform.eulerAngles;
+        //     });
+        // });
 
         // swordSlash.Play();
     }
