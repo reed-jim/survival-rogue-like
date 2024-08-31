@@ -3116,8 +3116,8 @@ MonoBehaviour:
   meleeAttackCollider: {fileID: 1490798671485314889}
   meshRenderer: {fileID: 3563162751393120598}
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
-  speedMultiplier: 14
-  offsetToPlayer: {x: 1, y: 0, z: 1}
+  speedMultiplier: 2
+  offsetToPlayer: {x: 3, y: 0, z: 3}
 --- !u!114 &6669211417923457503
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -33,6 +33,8 @@ public class PlayerAttack : MonoBehaviour
     {
         _tweens = new List<Tween>();
 
+        _animator = GetComponent<Animator>();
+
         LevelingUI.enableInput += EnableInput;
 
         swordCollider.enabled = false;
@@ -117,6 +119,13 @@ public class PlayerAttack : MonoBehaviour
         {
             _isAttacking = true;
         }
+
+        if (_animator.GetInteger("State") != 1)
+        {
+            _animator.SetInteger("State", 1);
+        }
+
+        Tween.Delay(0.8f).OnComplete(() => _animator.SetInteger("State", 0));
 
         PlaySwordSlash();
 
