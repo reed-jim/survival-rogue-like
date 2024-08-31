@@ -1,10 +1,14 @@
 using System.Collections.Generic;
 using PrimeTween;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private PlayerShooterController playerShooterController;
+
+    [Header("ANIMATION")]
+    private float _actualAttackAnimationDuration;
 
     [Header("TEMP")]
     [SerializeField] private Transform hammer;
@@ -40,6 +44,8 @@ public class PlayerAttack : MonoBehaviour
         swordCollider.enabled = false;
 
         swordSlash.gameObject.SetActive(false);
+
+        _actualAttackAnimationDuration = GetActualAttackAnimationDuration();
     }
 
     private void Update()
@@ -125,14 +131,12 @@ public class PlayerAttack : MonoBehaviour
             _animator.SetInteger("State", 1);
         }
 
-        Tween.Delay(0.8f).OnComplete(() => _animator.SetInteger("State", 0));
+        _waitForEndAttackAnimationTween = Tween.Delay(_actualAttackAnimationDuration).OnComplete(() =>
+        {
+            _animator.SetInteger("State", 0);
+        });
 
         PlaySwordSlash();
-
-        if (_waitForEndAttackAnimationTween.isAlive)
-        {
-            _waitForEndAttackAnimationTween.Stop();
-        }
 
         _tweens.Add(Tween.Delay(0.5f).OnComplete(() =>
         {
@@ -145,6 +149,30 @@ public class PlayerAttack : MonoBehaviour
 
             _tweens.Add(Tween.Delay(0.02f).OnComplete(() => swordCollider.enabled = false));
         }));
+    }
+
+    private float GetActualAttackAnimationDuration()
+    {
+        AnimatorController runtimeAnimatorController = _animator.runtimeAnimatorController as AnimatorController;
+
+        AnimatorControllerLayer[] acLayers = runtimeAnimatorController.layers;
+
+        AnimatorState attackState = new AnimatorState();
+
+        foreach (AnimatorControllerLayer i in acLayers)
+        {
+            ChildAnimatorState[] animStates = i.stateMachine.states;
+
+            foreach (ChildAnimatorState j in animStates)
+            {
+                if (j.state.name == "Sword And Shield Slash")
+                {
+                    attackState = j.state;
+                }
+            }
+        }
+
+        return attackState.motion.averageDuration / attackState.speed;
     }
 
     // private IEnumerator Shooting()
@@ -199,7 +227,12 @@ public class PlayerAttack : MonoBehaviour
     {
         swordSlashTemp.gameObject.SetActive(true);
 
-        Tween.Custom(0, 1, duration: 0.8f, onValueChange: newVal => sworldSlashMaterial.SetFloat("_Slash", newVal));
+        Tween.Delay(0.4f * _actualAttackAnimationDuration).OnComplete(() =>
+        {
+            Tween.Custom(0, 1, duration: 0.9f * _actualAttackAnimationDuration, onValueChange: newVal => sworldSlashMaterial.SetFloat("_Slash", newVal));
+        });
+
+        // Tween.Custom(0, 1, duration: _actualAttackAnimationDuration, onValueChange: newVal => sworldSlashMaterial.SetFloat("_Slash", newVal));
 
 
 

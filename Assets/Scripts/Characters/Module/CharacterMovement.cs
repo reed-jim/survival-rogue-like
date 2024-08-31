@@ -86,7 +86,10 @@ public class CharacterMovement : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
 
-        // SMOOTH
+        // INSTANT ROTATE
+        return;
+
+        // SMOOTH ROTATE
         Vector3 endEulerAngles = transform.eulerAngles;
 
         if (endEulerAngles.y < 0)

@@ -59,7 +59,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Intensity: 60
+    - _Intensity: 200
     - _Length: 0.5
     - _NoiseSpeed: 2
     - _QueueControl: 0
@@ -68,7 +68,7 @@ Material:
     - _Slash: 1
     m_Colors:
     - _Color1: {r: 0, g: 0, b: 0, a: 0}
-    - _Color2: {r: 1, g: 0.00969137, b: 0, a: 0}
-    - _NoiseTexureTiling: {r: 1, g: 1, b: 0, a: 0}
-    - _Step: {r: 0, g: 0.1, b: 0, a: 0}
+    - _Color2: {r: 0.3301887, g: 0.022832155, b: 0, a: 1}
+    - _NoiseTexureTiling: {r: 0, g: 1, b: 0, a: 0}
+    - _Step: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
