@@ -1,5 +1,6 @@
 using ReedJim.RPG.Stat;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class CustomDelegate
 {
@@ -11,4 +12,5 @@ public class CustomDelegate
     public delegate ExplosiveBullet GetExplosiveBulletAction();
     public delegate ExplosiveAreaIndicator GetExplosiveAreaIndicatorAction();
     public delegate ICollectible GetICollectibleAction();
+    public delegate VisualEffect GetVisualEffectAction();
 }

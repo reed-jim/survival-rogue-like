@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using ReedJim.RPG.Stat;
 using UnityEngine;
+using UnityEngine.VFX;
 using static CustomDelegate;
 
 public class CollisionHandler : MonoBehaviour
@@ -16,6 +17,7 @@ public class CollisionHandler : MonoBehaviour
     public static event Action<int, CharacterStat> applyDamageEvent;
     public static event GetCharacterStatAction<int> getAttackerStatAction;
     public static event Action<int> characterHitEvent;
+    public static GetVisualEffectAction getVisualEffectEvent;
     #endregion
 
     private void Awake()
@@ -72,6 +74,12 @@ public class CollisionHandler : MonoBehaviour
             applyDamageEvent?.Invoke(gameObject.GetInstanceID(), characterStat);
 
             characterHitEvent?.Invoke(gameObject.GetInstanceID());
+
+            VisualEffect visualEffect = getVisualEffectEvent?.Invoke();
+
+            visualEffect.gameObject.SetActive(true);
+            visualEffect.transform.position = transform.position + transform.forward;
+            visualEffect.Play();
         }
 
         // if (CommonUtil.IsNull(_hitByMeleeAttackObject))

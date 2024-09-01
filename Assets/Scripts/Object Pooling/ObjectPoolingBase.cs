@@ -27,6 +27,8 @@ public class ObjectPoolingBase : MonoBehaviour
         for (int i = 0; i < poolSize; i++)
         {
             _poolObjects[i] = Instantiate(prefab, poolContainer);
+
+            _poolObjects[i].SetActive(false);
         }
     }
 
