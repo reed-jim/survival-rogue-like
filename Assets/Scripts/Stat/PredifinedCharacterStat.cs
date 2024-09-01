@@ -12,12 +12,12 @@ namespace ReedJim.RPG.Stat
         public CharacterStat GetBaseCharacterStat()
         {
             CharacterStat baseStat = new CharacterStat();
-
+            
             foreach (var item in statComponents)
             {
                 baseStat.SetStatBaseValue(item.Key, item.BaseStatComponent.BaseValue);
             }
-
+            
             return baseStat;
         }
     }

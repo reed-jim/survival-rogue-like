@@ -16,9 +16,16 @@ namespace ReedJim.RPG.Stat
         public BaseStatComponent BaseStatComponent => baseStatComponent;
     }
 
-    public class CharacterStat : MonoBehaviour
+    public class CharacterStat
     {
-        [SerializeField] private Dictionary<string, IStatComponent> statComponents;
+        [SerializeField] protected Dictionary<string, IStatComponent> statComponents;
+
+        public Dictionary<string, IStatComponent> StatComponents => statComponents;
+
+        public CharacterStat()
+        {
+            statComponents = new Dictionary<string, IStatComponent>();
+        }
 
         public void AddStatComponent(string statComponentName, IStatComponent statComponent)
         {
@@ -60,8 +67,21 @@ namespace ReedJim.RPG.Stat
 
         public void SetStatBaseValue(string statComponentName, float amount)
         {
-            statComponents[statComponentName].BaseValue = amount;
-            statComponents[statComponentName].Value = amount;
+            if (statComponents.ContainsKey(statComponentName))
+            {
+                statComponents[statComponentName].BaseValue = amount;
+                statComponents[statComponentName].Value = amount;
+            }
+            else
+            {
+                BaseStatComponent baseStatComponent = new BaseStatComponent
+                {
+                    Value = amount,
+                    BaseValue = amount
+                };
+
+                statComponents.Add(statComponentName, baseStatComponent);
+            }
         }
 
         public void ResetStat(string statComponentName)
@@ -81,7 +101,7 @@ namespace ReedJim.RPG.Stat
             DataUtility.Save(Constants.STAT_DATA_FILE_NAME, key, this);
         }
 
-        public CharacterStat Load(string key, CharacterStat baseStat)
+        public static CharacterStat Load(string key, CharacterStat baseStat)
         {
             return DataUtility.Load(Constants.STAT_DATA_FILE_NAME, key, baseStat);
         }

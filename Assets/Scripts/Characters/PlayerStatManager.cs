@@ -30,7 +30,9 @@ public class PlayerStatManager : CharacterStatManager
 
     protected override void InitializeStat()
     {
-        _playerStat = PlayerStat.Load();
+        CharacterStat characterStat = CharacterStat.Load(Constants.PLAYER_TAG, baseStat.GetBaseCharacterStat());
+
+        _playerStat = new PlayerStat(characterStat);
 
         Tween.Delay(0.5f).OnComplete(() =>
         {

@@ -8,17 +8,29 @@ public class PhotonManager : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
 
+    #region PRIVATE FIELD
+    private PhotonView _photonView;
+    #endregion
+
     #region ACTION
     public static event Action<Transform> followPlayerEvent;
     #endregion
 
-    private void Start()
+    private void Awake()
     {
         GameObject player = PhotonNetwork.Instantiate(prefab.name, prefab.transform.position, Quaternion.identity);
 
-        if (player.GetComponent<PhotonView>().IsMine)
+        _photonView = player.GetComponent<PhotonView>();
+    }
+
+    private void Start()
+    {
+        if (_photonView != null)
         {
-            followPlayerEvent?.Invoke(player.transform);
+            if (_photonView.IsMine)
+            {
+                followPlayerEvent?.Invoke(transform);
+            }
         }
     }
 }

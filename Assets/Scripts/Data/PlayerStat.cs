@@ -15,8 +15,10 @@ public class PlayerStat : CharacterStat
         set => exp = value;
     }
 
-    public PlayerStat()
+    public PlayerStat(CharacterStat characterStat)
     {
+        statComponents = characterStat.StatComponents;
+        
         // Level = 1;
         // HP = 100;
         // MaxHP = 100;
@@ -26,10 +28,10 @@ public class PlayerStat : CharacterStat
         // CriticalMultiplier = 2;
     }
 
-    public static PlayerStat Load()
-    {
-        return DataUtility.Load(Constants.STAT_DATA_FILE_NAME, Constants.PLAYER_TAG, new PlayerStat());
-    }
+    // public static PlayerStat Load()
+    // {
+    //     return DataUtility.Load(Constants.STAT_DATA_FILE_NAME, Constants.PLAYER_TAG, new PlayerStat());
+    // }
 
     public void EarnExp(float earnedExp, out bool isLeveledUp)
     {

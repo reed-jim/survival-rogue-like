@@ -3115,6 +3115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meleeAttackCollider: {fileID: 1490798671485314889}
   meshRenderer: {fileID: 3563162751393120598}
+  baseStat: {fileID: 11400000, guid: f56f3d5add2dd0f4ab2ffacaa7cdf8ad, type: 2}
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
   speedMultiplier: 2
   offsetToPlayer: {x: 3, y: 0, z: 3}
@@ -3171,7 +3172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b315c3a76130a741bf9d2b11035b16b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseStat: {fileID: 11400000, guid: fa6a4b7a823240e4c8ac2fcfdb37f707, type: 2}
+  baseStat: {fileID: 11400000, guid: f56f3d5add2dd0f4ab2ffacaa7cdf8ad, type: 2}
 --- !u!114 &1629421385899482550
 MonoBehaviour:
   m_ObjectHideFlags: 0

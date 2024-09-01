@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterStatManager : MonoBehaviour
 {
     [Header("STAT")]
-    [SerializeField] private CharacterStatData baseStat;
+    [SerializeField] protected PredifinedCharacterStat baseStat;
 
     #region PRIVATE FIELD
     protected CharacterStat _stat;
@@ -72,7 +72,7 @@ public class CharacterStatManager : MonoBehaviour
 
         Tween.Delay(0.5f).OnComplete(() =>
         {
-            _stat = new CharacterStat().Load(gameObject.name, baseStat.CharacterStat);
+            _stat = CharacterStat.Load(gameObject.name, baseStat.GetBaseCharacterStat());
 
             addCharacterStatToListEvent?.Invoke(gameObject.GetInstanceID(), Stat);
         });

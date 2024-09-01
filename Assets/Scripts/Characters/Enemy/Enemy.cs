@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     protected Transform player;
 
     [Header("STAT")]
-    [SerializeField] private EnemyStat stat;
+    private EnemyStat stat;
     [SerializeField] private PredifinedCharacterStat baseStat;
 
     [Header("UI")]
@@ -65,14 +65,7 @@ public class Enemy : MonoBehaviour
 
         _dissolveMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
 
-        stat = new EnemyStat().Load("Enemy", baseStat.GetBaseCharacterStat());
-
-        stat = new EnemyStat()
-        {
-            Level = 1,
-            HP = 100,
-            Damage = 10
-        };
+        stat = EnemyStat.Load("Enemy", baseStat.GetBaseCharacterStat()) as EnemyStat;
 
         _index = transform.GetSiblingIndex();
     }
