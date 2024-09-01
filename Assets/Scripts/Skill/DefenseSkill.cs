@@ -1,4 +1,5 @@
 using System.Text;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "skill", menuName = "ScriptableObjects/RPG/DefenseSkill")]
@@ -10,12 +11,13 @@ public class DefenseSkill : ScriptableObject, IModifierSkill
 
     public CharacterStat GetBonusStat()
     {
-        return new CharacterStat()
-        {
-            HP = hp,
-            Armor = armor,
-            BlockChance = blockChance
-        };
+        CharacterStat bonusStat = new CharacterStat();
+
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.Health, hp);
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.Armor, armor);
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.BlockChance, blockChance);
+
+        return bonusStat;
     }
 
     public string GetDescription()

@@ -1,169 +1,170 @@
 using UnityEngine;
 
-[System.Serializable]
-public class CharacterStat : ISaveLoad
+namespace ReedJim.Deprecated.Stat
 {
-    [SerializeField] private int level;
-    [SerializeField] private float hp;
-    [SerializeField] private float maxHp = 100;
-    [SerializeField] private float armor;
-    [SerializeField] private float blockChance;
-    [SerializeField] private float damage;
-    [SerializeField] private float damageModifier;
-    [SerializeField] private float criticalChance;
-    [SerializeField] private float criticalDamage;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float attackSpeed;
-    [SerializeField] protected float reloadTime = 1;
-    [SerializeField] private float movementSpeed;
-
-    [SerializeField] private float takenDamageMultiplier;
-    [SerializeField] private float takenDamageCriticalChance;
-    [SerializeField] private float takenDamageCriticalMultiplier;
-
-    [SerializeField] private float percentDirectDamage;
-    [SerializeField] private float percentHealthExecuted;
-
-    public delegate CharacterStat GetCharacterStatAction();
-
-    public float HP
+    [System.Serializable]
+    public class CharacterStat : ISaveLoad
     {
-        get => hp;
-        set => hp = value;
-    }
+        [SerializeField] private int level;
+        [SerializeField] private float hp;
+        [SerializeField] private float maxHp = 100;
+        [SerializeField] private float armor;
+        [SerializeField] private float blockChance;
+        [SerializeField] private float damage;
+        [SerializeField] private float damageModifier;
+        [SerializeField] private float criticalChance;
+        [SerializeField] private float criticalDamage;
+        [SerializeField] private float attackRange;
+        [SerializeField] private float attackSpeed;
+        [SerializeField] protected float reloadTime = 1;
+        [SerializeField] private float movementSpeed;
 
-    public float MaxHP
-    {
-        get => maxHp;
-        set => maxHp = value;
-    }
+        [SerializeField] private float takenDamageMultiplier;
+        [SerializeField] private float takenDamageCriticalChance;
+        [SerializeField] private float takenDamageCriticalMultiplier;
 
-    public float Damage
-    {
-        get => damage;
-        set => damage = value;
-    }
+        [SerializeField] private float percentDirectDamage;
+        [SerializeField] private float percentHealthExecuted;
 
-    public float DamageMultiplier
-    {
-        get => damageModifier;
-        set => damageModifier = value;
-    }
+        public float HP
+        {
+            get => hp;
+            set => hp = value;
+        }
 
-    public float CriticalChance
-    {
-        get => criticalChance;
-        set => criticalChance = value;
-    }
-    public float CriticalMultiplier
-    {
-        get => criticalDamage;
-        set => criticalDamage = value;
-    }
+        public float MaxHP
+        {
+            get => maxHp;
+            set => maxHp = value;
+        }
 
-    public float Armor
-    {
-        get => armor;
-        set => armor = value;
-    }
+        public float Damage
+        {
+            get => damage;
+            set => damage = value;
+        }
 
-    public float BlockChance
-    {
-        get => blockChance;
-        set => blockChance = value;
-    }
+        public float DamageMultiplier
+        {
+            get => damageModifier;
+            set => damageModifier = value;
+        }
 
-    public int Level
-    {
-        get => level;
-        set => level = value;
-    }
+        public float CriticalChance
+        {
+            get => criticalChance;
+            set => criticalChance = value;
+        }
+        public float CriticalMultiplier
+        {
+            get => criticalDamage;
+            set => criticalDamage = value;
+        }
 
-    public float AttackRange
-    {
-        get => attackRange;
-        set => attackRange = value;
-    }
+        public float Armor
+        {
+            get => armor;
+            set => armor = value;
+        }
 
-    public float AttackSpeed
-    {
-        get => attackSpeed;
-        set => attackSpeed = value;
-    }
+        public float BlockChance
+        {
+            get => blockChance;
+            set => blockChance = value;
+        }
 
-    public float ReloadTime
-    {
-        get => reloadTime;
-        set => reloadTime = value;
-    }
+        public int Level
+        {
+            get => level;
+            set => level = value;
+        }
 
-    public float MovementSpeed
-    {
-        get => movementSpeed;
-        set => movementSpeed = value;
-    }
+        public float AttackRange
+        {
+            get => attackRange;
+            set => attackRange = value;
+        }
 
-    public float TakenDamageMultiplier
-    {
-        get => takenDamageMultiplier;
-        set => takenDamageMultiplier = value;
-    }
+        public float AttackSpeed
+        {
+            get => attackSpeed;
+            set => attackSpeed = value;
+        }
 
-    public float TakenDamageCriticalChance
-    {
-        get => takenDamageCriticalChance;
-        set => takenDamageCriticalChance = value;
-    }
+        public float ReloadTime
+        {
+            get => reloadTime;
+            set => reloadTime = value;
+        }
 
-    public float TakenDamageCriticalMultiplier
-    {
-        get => takenDamageCriticalMultiplier;
-        set => takenDamageCriticalMultiplier = value;
-    }
+        public float MovementSpeed
+        {
+            get => movementSpeed;
+            set => movementSpeed = value;
+        }
 
-    public float PercentDirectDamage
-    {
-        get => percentDirectDamage;
-        set => percentDirectDamage = value;
-    }
+        public float TakenDamageMultiplier
+        {
+            get => takenDamageMultiplier;
+            set => takenDamageMultiplier = value;
+        }
 
-    public float PercentHealthExecuted
-    {
-        get => percentHealthExecuted;
-        set => percentHealthExecuted = value;
-    }
+        public float TakenDamageCriticalChance
+        {
+            get => takenDamageCriticalChance;
+            set => takenDamageCriticalChance = value;
+        }
 
-    public static CharacterStat operator +(CharacterStat currentStat, CharacterStat bonusStat)
-    {
-        CharacterStat modifiedStat = currentStat;
+        public float TakenDamageCriticalMultiplier
+        {
+            get => takenDamageCriticalMultiplier;
+            set => takenDamageCriticalMultiplier = value;
+        }
 
-        modifiedStat.HP += bonusStat.HP;
-        modifiedStat.Armor += bonusStat.Armor;
-        modifiedStat.BlockChance += bonusStat.BlockChance;
-        modifiedStat.Damage += bonusStat.Damage;
-        modifiedStat.DamageMultiplier += bonusStat.DamageMultiplier;
-        modifiedStat.CriticalChance += bonusStat.CriticalChance;
-        modifiedStat.CriticalMultiplier += bonusStat.CriticalMultiplier;
+        public float PercentDirectDamage
+        {
+            get => percentDirectDamage;
+            set => percentDirectDamage = value;
+        }
 
-        modifiedStat.MovementSpeed += bonusStat.MovementSpeed;
+        public float PercentHealthExecuted
+        {
+            get => percentHealthExecuted;
+            set => percentHealthExecuted = value;
+        }
 
-        modifiedStat.TakenDamageMultiplier += bonusStat.TakenDamageMultiplier;
-        modifiedStat.TakenDamageCriticalChance += bonusStat.TakenDamageCriticalChance;
-        modifiedStat.TakenDamageCriticalMultiplier += bonusStat.TakenDamageCriticalMultiplier;
+        public static CharacterStat operator +(CharacterStat currentStat, CharacterStat bonusStat)
+        {
+            CharacterStat modifiedStat = currentStat;
 
-        modifiedStat.PercentDirectDamage += bonusStat.PercentDirectDamage;
-        modifiedStat.PercentHealthExecuted += bonusStat.PercentHealthExecuted;
+            modifiedStat.HP += bonusStat.HP;
+            modifiedStat.Armor += bonusStat.Armor;
+            modifiedStat.BlockChance += bonusStat.BlockChance;
+            modifiedStat.Damage += bonusStat.Damage;
+            modifiedStat.DamageMultiplier += bonusStat.DamageMultiplier;
+            modifiedStat.CriticalChance += bonusStat.CriticalChance;
+            modifiedStat.CriticalMultiplier += bonusStat.CriticalMultiplier;
 
-        return modifiedStat;
-    }
+            modifiedStat.MovementSpeed += bonusStat.MovementSpeed;
 
-    public void Save(string key)
-    {
-        DataUtility.Save(Constants.STAT_DATA_FILE_NAME, key, this);
-    }
+            modifiedStat.TakenDamageMultiplier += bonusStat.TakenDamageMultiplier;
+            modifiedStat.TakenDamageCriticalChance += bonusStat.TakenDamageCriticalChance;
+            modifiedStat.TakenDamageCriticalMultiplier += bonusStat.TakenDamageCriticalMultiplier;
 
-    public T Load<T>(string key, T baseStat)
-    {
-        return DataUtility.Load(Constants.STAT_DATA_FILE_NAME, key, baseStat);
+            modifiedStat.PercentDirectDamage += bonusStat.PercentDirectDamage;
+            modifiedStat.PercentHealthExecuted += bonusStat.PercentHealthExecuted;
+
+            return modifiedStat;
+        }
+
+        public void Save(string key)
+        {
+            DataUtility.Save(Constants.STAT_DATA_FILE_NAME, key, this);
+        }
+
+        public T Load<T>(string key, T baseStat)
+        {
+            return DataUtility.Load(Constants.STAT_DATA_FILE_NAME, key, baseStat);
+        }
     }
 }

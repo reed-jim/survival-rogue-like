@@ -1,3 +1,4 @@
+using ReedJim.RPG.Stat;
 using UnityEngine;
 
 public class CustomDelegate

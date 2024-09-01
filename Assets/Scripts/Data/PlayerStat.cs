@@ -1,4 +1,5 @@
 using System;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 
 [System.Serializable]
@@ -16,13 +17,13 @@ public class PlayerStat : CharacterStat
 
     public PlayerStat()
     {
-        Level = 1;
-        HP = 100;
-        MaxHP = 100;
-        Damage = 20;
-        DamageMultiplier = 1;
-        CriticalChance = 0.5f;
-        CriticalMultiplier = 2;
+        // Level = 1;
+        // HP = 100;
+        // MaxHP = 100;
+        // Damage = 20;
+        // DamageMultiplier = 1;
+        // CriticalChance = 0.5f;
+        // CriticalMultiplier = 2;
     }
 
     public static PlayerStat Load()
@@ -38,7 +39,7 @@ public class PlayerStat : CharacterStat
 
         if (exp > GetRequiredExpForNextLevel())
         {
-            Level++;
+            ModifyStat(StatComponentNameConstant.Level, new FlatStatModifier(), 1);
 
             exp = 0;
 
@@ -55,35 +56,44 @@ public class PlayerStat : CharacterStat
 
     public float GetExpFromKillEnemy(int enemyLevel)
     {
-        return 45 * (Level + enemyLevel - 1);
+        return 45 * (GetStatValue(StatComponentNameConstant.Level) + enemyLevel - 1);
     }
 
     public float GetRequiredExpForNextLevel()
     {
-        return 100 * Level + 5 * Level * (Level - 1);
+        int level = (int)GetStatValue(StatComponentNameConstant.Level);
+
+        return 100 * level + 5 * level * (level - 1);
     }
 
     public static PlayerStat operator +(PlayerStat currentStat, CharacterStat bonusStat)
     {
-        PlayerStat modifiedStat = currentStat;
+        PlayerStat newStat = currentStat;
 
-        modifiedStat.HP += bonusStat.HP;
-        modifiedStat.Armor += bonusStat.Armor;
-        modifiedStat.BlockChance += bonusStat.BlockChance;
-        modifiedStat.Damage += bonusStat.Damage;
-        modifiedStat.DamageMultiplier += bonusStat.DamageMultiplier;
-        modifiedStat.CriticalChance += bonusStat.CriticalChance;
-        modifiedStat.CriticalMultiplier += bonusStat.CriticalMultiplier;
+        FlatStatModifier flatStatModifier = new FlatStatModifier();
 
-        modifiedStat.MovementSpeed += bonusStat.MovementSpeed;
+        foreach (var key in newStat.GetStatKeys())
+        {
+            newStat.ModifyStat(key, flatStatModifier, bonusStat.GetStatBaseValue(key));
+        }
 
-        modifiedStat.TakenDamageMultiplier += bonusStat.TakenDamageMultiplier;
-        modifiedStat.TakenDamageCriticalChance += bonusStat.TakenDamageCriticalChance;
-        modifiedStat.TakenDamageCriticalMultiplier += bonusStat.TakenDamageCriticalMultiplier;
+        // modifiedStat.HP += bonusStat.HP;
+        // modifiedStat.Armor += bonusStat.Armor;
+        // modifiedStat.BlockChance += bonusStat.BlockChance;
+        // modifiedStat.Damage += bonusStat.Damage;
+        // modifiedStat.DamageMultiplier += bonusStat.DamageMultiplier;
+        // modifiedStat.CriticalChance += bonusStat.CriticalChance;
+        // modifiedStat.CriticalMultiplier += bonusStat.CriticalMultiplier;
 
-        modifiedStat.PercentDirectDamage += bonusStat.PercentDirectDamage;
-        modifiedStat.PercentHealthExecuted += bonusStat.PercentHealthExecuted;
+        // modifiedStat.MovementSpeed += bonusStat.MovementSpeed;
 
-        return modifiedStat;
+        // modifiedStat.TakenDamageMultiplier += bonusStat.TakenDamageMultiplier;
+        // modifiedStat.TakenDamageCriticalChance += bonusStat.TakenDamageCriticalChance;
+        // modifiedStat.TakenDamageCriticalMultiplier += bonusStat.TakenDamageCriticalMultiplier;
+
+        // modifiedStat.PercentDirectDamage += bonusStat.PercentDirectDamage;
+        // modifiedStat.PercentHealthExecuted += bonusStat.PercentHealthExecuted;
+
+        return newStat;
     }
 }

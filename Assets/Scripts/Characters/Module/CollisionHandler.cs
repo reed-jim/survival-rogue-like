@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 using static CustomDelegate;
 
@@ -65,7 +66,7 @@ public class CollisionHandler : MonoBehaviour
 
             if (characterStat != null)
             {
-                damage = characterStat.Damage;
+                damage = characterStat.GetStatValue(StatComponentNameConstant.Damage);
             }
 
             applyDamageEvent?.Invoke(gameObject.GetInstanceID(), characterStat);
@@ -99,7 +100,7 @@ public class CollisionHandler : MonoBehaviour
 
             if (characterStat != null)
             {
-                damage = characterStat.Damage;
+                damage = characterStat.GetStatValue(StatComponentNameConstant.Damage);
             }
 
             applyDamageEvent?.Invoke(gameObject.GetInstanceID(), characterStat);

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using PrimeTween;
 using System;
+using ReedJim.RPG.Stat;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Enemy : MonoBehaviour
 
     [Header("STAT")]
     [SerializeField] private EnemyStat stat;
+    [SerializeField] private PredifinedCharacterStat baseStat;
 
     [Header("UI")]
     private CharacterUI _characterUI;
@@ -62,6 +64,8 @@ public class Enemy : MonoBehaviour
         _materialPropertyBlock = new MaterialPropertyBlock();
 
         _dissolveMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
+
+        stat = new EnemyStat().Load("Enemy", baseStat.GetBaseCharacterStat());
 
         stat = new EnemyStat()
         {
@@ -208,7 +212,7 @@ public class Enemy : MonoBehaviour
 
         // _characterUI.SetHP(prevHP, stat.HP, maxHp: 100);
 
-        if (stat.HP <= 0)
+        if (stat.GetStatValue(StatComponentNameConstant.Health) <= 0)
         {
             Die();
         }
@@ -239,7 +243,7 @@ public class Enemy : MonoBehaviour
     {
         enemyHitEvent?.Invoke(_index);
 
-        if (stat.HP <= 0)
+        if (stat.GetStatValue(StatComponentNameConstant.Health) <= 0)
         {
             Die();
         }

@@ -1,4 +1,5 @@
 using System.Text;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "skill", menuName = "ScriptableObjects/RPG/OffensiveSkill")]
@@ -12,14 +13,15 @@ public class OffensiveSkill : ScriptableObject, IModifierSkill
 
     public CharacterStat GetBonusStat()
     {
-        return new CharacterStat()
-        {
-            DamageMultiplier = damageMultiplier,
-            CriticalChance = criticalChance,
-            CriticalMultiplier = criticalDamageMultiplier,
-            PercentDirectDamage = percentDirectDamage,
-            PercentHealthExecuted = percentHealthExecuted
-        };
+        CharacterStat bonusStat = new CharacterStat();
+
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.DamageMultiplier, damageMultiplier);
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.CriticalChance, criticalChance);
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.CriticalMultiplier, criticalDamageMultiplier);
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.PercentDirectDamage, percentDirectDamage);
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.PercentHealthExecuted, percentHealthExecuted);
+
+        return bonusStat;
     }
 
     public string GetDescription()

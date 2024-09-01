@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using PrimeTween;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 
 public class PlayerStatManager : CharacterStatManager
@@ -35,17 +36,23 @@ public class PlayerStatManager : CharacterStatManager
         {
             addPlayerStatToListEvent?.Invoke(gameObject.GetInstanceID(), _playerStat);
 
-            InvokeUpdateHPBarEvent(_playerStat.MaxHP);
+            IStatComponent health = _playerStat.GetStat(StatComponentNameConstant.Health);
+
+            InvokeUpdateHPBarEvent(health.BaseValue);
         });
     }
 
     protected override void MinusHP(int damage)
     {
-        _playerStat.HP -= damage;
+        MinusStatModifier minusStatModifier = new MinusStatModifier();
+
+        _playerStat.ModifyStat(StatComponentNameConstant.Health, minusStatModifier, damage);
     }
 
     protected override void InvokeUpdateHPBarEvent(float prevHp)
     {
-        setPlayerHpEvent?.Invoke(Stat.HP, Stat.MaxHP);
+        IStatComponent health = _playerStat.GetStat(StatComponentNameConstant.Health);
+
+        setPlayerHpEvent?.Invoke(health.Value, health.BaseValue);
     }
 }

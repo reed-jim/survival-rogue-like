@@ -9,10 +9,10 @@ public class PlayerController : MonoBehaviour
     [Header("MANAGEMENT")]
     private bool _isAllowRotating = true;
 
-    #region ACTION
-    public static CharacterStat.GetCharacterStatAction getStatEvent;
-    public static event Action<float> playerGotHitEvent;
-    #endregion
+    // #region ACTION
+    // public static CustomDelegate.GetCharacterStatAction getStatEvent;
+    // public static event Action<float> playerGotHitEvent;
+    // #endregion
 
     #region LIFE CYCLE
     private void Awake()

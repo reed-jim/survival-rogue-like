@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/RPG/CharacterStatData")]

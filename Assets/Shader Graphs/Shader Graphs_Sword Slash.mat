@@ -65,7 +65,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Scale: 1
-    - _Slash: 0.99977297
+    - _Slash: 1
     m_Colors:
     - _Color1: {r: 0, g: 0, b: 0, a: 0}
     - _Color2: {r: 0.3301887, g: 0.022832155, b: 0, a: 1}

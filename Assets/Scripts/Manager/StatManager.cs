@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 
 public class StatManager : MonoBehaviour
@@ -75,7 +76,9 @@ public class StatManager : MonoBehaviour
     {
         _playerStat += modifierStat;
 
-        setPlayerHpEvent?.Invoke(_playerStat.HP, _playerStat.MaxHP);
+        IStatComponent health = _playerStat.GetStat(StatComponentNameConstant.Health);
+
+        setPlayerHpEvent?.Invoke(health.Value, health.BaseValue);
     }
 
     // [SerializeField] private PlayerStat playerStat;

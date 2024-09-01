@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 
 public class StatusEffectDebuff : IModifierSkill
@@ -11,13 +12,14 @@ public class StatusEffectDebuff : IModifierSkill
 
     public CharacterStat GetBonusStat()
     {
-        return new CharacterStat()
-        {
-            DamageMultiplier = damageMultiplier,
-            TakenDamageMultiplier = takenDamageMultiplier,
-            TakenDamageCriticalChance = takenDamageCriticalChance,
-            TakenDamageCriticalMultiplier = takenDamageCriticalMultiplier
-        };
+        CharacterStat bonusStat = new CharacterStat();
+
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.DamageMultiplier, damageMultiplier);
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.TakenDamageMultiplier, takenDamageMultiplier);
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.TakenDamageCriticalChance, takenDamageCriticalChance);
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.TakenDamageCriticalMultiplier, takenDamageCriticalMultiplier);
+
+        return bonusStat;
     }
 
     public string GetDescription()

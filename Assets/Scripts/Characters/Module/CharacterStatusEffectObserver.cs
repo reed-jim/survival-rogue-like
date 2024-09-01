@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 
 public class CharacterStatusEffectObserver : MonoBehaviour
@@ -45,13 +46,10 @@ public class CharacterStatusEffectObserver : MonoBehaviour
         {
             foreach (var damagingStatusEffect in damagingStatusEffects)
             {
-                CharacterStat damageStat = new CharacterStat()
-                {
-                    Damage = damagingStatusEffect.GetDamagePerSecond(),
-                    DamageMultiplier = 1,
-                    PercentDirectDamage = 0
-                };
-                
+                CharacterStat damageStat = new CharacterStat();
+
+                damageStat.SetStatBaseValue(StatComponentNameConstant.Damage, damagingStatusEffect.GetDamagePerSecond());
+
                 applyDamageEvent?.Invoke(gameObject.GetInstanceID(), damageStat);
             }
 

@@ -1,6 +1,6 @@
 using System;
 using PrimeTween;
-using Unity.VisualScripting;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 
 public class CharacterStatManager : MonoBehaviour
@@ -82,15 +82,16 @@ public class CharacterStatManager : MonoBehaviour
     {
         if (gameObject.GetInstanceID() == instanceId)
         {
-            int intDamage = DamageCalculator.GetDamage(attackerStat, _stat);
+            int intDamage = new DamageCalculator().GetDamage(attackerStat, _stat);
 
-            float prevHp = Stat.HP;
+            // float prevHp = Stat.HP;
+            float prevHp = Stat.GetStatValue(StatComponentNameConstant.Health);
 
             MinusHP(intDamage);
 
             InvokeUpdateHPBarEvent(prevHp);
 
-            if (Stat.HP <= 0)
+            if (Stat.GetStatValue(StatComponentNameConstant.Health) <= 0)
             {
                 characterDieEvent?.Invoke(instanceId);
             }
@@ -99,19 +100,19 @@ public class CharacterStatManager : MonoBehaviour
 
     protected virtual void MinusHP(int damage)
     {
-        _stat.HP -= damage;
+        _stat.ModifyStat(StatComponentNameConstant.Health, new MinusStatModifier(), damage);
     }
 
     protected virtual void InvokeUpdateHPBarEvent(float prevHp)
     {
-        setHpEvent?.Invoke(gameObject.GetInstanceID(), prevHp, Stat.HP, 100);
+        setHpEvent?.Invoke(gameObject.GetInstanceID(), prevHp, Stat.GetStatValue(StatComponentNameConstant.Health), 100);
     }
 
     private void OnEnemySpawnEvent(int instanceId)
     {
         if (instanceId == gameObject.GetInstanceID())
         {
-            InvokeUpdateHPBarEvent(_stat.MaxHP);
+            InvokeUpdateHPBarEvent(Stat.GetStatBaseValue(StatComponentNameConstant.Health));
         }
     }
 }
