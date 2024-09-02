@@ -352,7 +352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4200857310063366439
 Transform:
   m_ObjectHideFlags: 0
@@ -382,6 +382,7 @@ Transform:
   - {fileID: 196810105145189152}
   - {fileID: 2465143591974609320}
   - {fileID: 3890053583846492823}
+  - {fileID: 7037112675142357246}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3555957574497672741
@@ -451,6 +452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerShooterController: {fileID: 0}
+  hammer: {fileID: 7037112675142357246}
   sworldSlashMaterial: {fileID: 2100000, guid: 54d7db9c7ab001c46857936a950eb6ba, type: 2}
   swordSlashTemp: {fileID: 5322455070979128862}
   swordCollider: {fileID: 857065895730568604}
@@ -609,6 +611,8 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+  - SynchronizeType: 0
+    LayerIndex: 1
 --- !u!1 &2728179381840527061
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,6 +645,39 @@ Transform:
   - {fileID: 375838164914286435}
   - {fileID: 8633962095885874976}
   - {fileID: 8418841588038515400}
+  m_Father: {fileID: 4200857310063366439}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2776423903015523567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7037112675142357246}
+  m_Layer: 3
+  m_Name: Hammer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7037112675142357246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2776423903015523567}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 185679613365355002}
+  - {fileID: 4599945479979561853}
   m_Father: {fileID: 4200857310063366439}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3042760625798294936
@@ -12231,6 +12268,100 @@ Transform:
   - {fileID: 6695510942084253053}
   m_Father: {fileID: 1784921388764992338}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &367346708575806993
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7037112675142357246}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+        type: 3}
+      propertyPath: m_Name
+      value: Low Poly Weapon Pack - by Kickin It Studios.fbx_Arming_Sword
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2269a56d5ffc5db4db9264dc6d72c3e4, type: 3}
+--- !u!4 &185679613365355002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2269a56d5ffc5db4db9264dc6d72c3e4,
+    type: 3}
+  m_PrefabInstance: {fileID: 367346708575806993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &374235009099203787
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12900,6 +13031,100 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1281480029374063317}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4061388659073815702
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7037112675142357246}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.3333328
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.333333
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.333333
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_Name
+      value: Low Poly Weapon Pack - by Kickin It Studios.fbx_Anvil_Hammer
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2ff39615c2723254ca83bb5c560f5253,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2ff39615c2723254ca83bb5c560f5253, type: 3}
+--- !u!4 &4599945479979561853 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2ff39615c2723254ca83bb5c560f5253,
+    type: 3}
+  m_PrefabInstance: {fileID: 4061388659073815702}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4979927297833485135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12911,17 +13136,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 4a272777a77f8b54e81b660610a67ed0,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4a272777a77f8b54e81b660610a67ed0,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4a272777a77f8b54e81b660610a67ed0,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4a272777a77f8b54e81b660610a67ed0,
         type: 3}

@@ -112,7 +112,12 @@ public class CharacterStatManager : MonoBehaviour
     {
         if (instanceId == gameObject.GetInstanceID())
         {
-            InvokeUpdateHPBarEvent(Stat.GetStatBaseValue(StatComponentNameConstant.Health));
+            IStatComponent health = Stat.GetStat(StatComponentNameConstant.Health);
+
+            if (health.Value != health.BaseValue)
+            {
+                InvokeUpdateHPBarEvent(health.Value);
+            }
         }
     }
 }

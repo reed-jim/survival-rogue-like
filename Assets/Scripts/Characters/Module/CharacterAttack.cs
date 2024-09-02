@@ -23,17 +23,24 @@ public class CharacterAttack : MonoBehaviour
     {
         _tweens = new List<Tween>();
 
+        Enemy.enemyAttackEvent += MeleeAttack;
+
         meleeAttackCollider.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
-
+        Enemy.enemyAttackEvent -= MeleeAttack;
     }
     #endregion
 
-    public void MeleeAttack()
+    public void MeleeAttack(int instanceId)
     {
+        if (instanceId != gameObject.GetInstanceID())
+        {
+            return;
+        }
+
         setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", 1);
         setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
 

@@ -78,7 +78,7 @@ public class CollisionHandler : MonoBehaviour
             VisualEffect visualEffect = getVisualEffectEvent?.Invoke();
 
             visualEffect.gameObject.SetActive(true);
-            visualEffect.transform.position = transform.position + transform.forward;
+            visualEffect.transform.position = transform.position + 0.0f * transform.forward;
             visualEffect.Play();
         }
 

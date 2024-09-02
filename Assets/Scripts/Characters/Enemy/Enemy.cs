@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
     public static event Action<int> enemyHitEvent;
     public static event Action<int> characterHitEvent;
     public static event Action<int> enemyDieEvent;
-    public static event Action enemyAttackEvent;
+    public static event Action<int> enemyAttackEvent;
     public static event Action<int, string, float> setCharacterAnimationFloatProperty;
     #endregion
 
@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
         _characterStateManager = GetComponent<CharacterStateManager>();
         _materialPropertyBlock = new MaterialPropertyBlock();
 
-        _dissolveMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
+        _dissolveMaterial = transform.GetChild(0).GetComponent<Renderer>().material;
 
         stat = EnemyStat.Load("Enemy", baseStat.GetBaseCharacterStat()) as EnemyStat;
 
@@ -72,8 +72,6 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        _characterUI.ShowHpBar();
-
         Reset();
     }
 
@@ -145,6 +143,8 @@ public class Enemy : MonoBehaviour
 
         transform.LookAt(player);
 
+        transform.eulerAngles = TransformUtil.GetMaintainedXEulerAngle(transform);
+
         _rigidBody.velocity = speedMultiplier * (player.position - transform.position).normalized;
 
         setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
@@ -175,7 +175,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Attack()
     {
-        enemyAttackEvent?.Invoke();
+        enemyAttackEvent?.Invoke(gameObject.GetInstanceID());
     }
 
 

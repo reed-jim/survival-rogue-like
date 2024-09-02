@@ -41,4 +41,9 @@ public static class TransformUtil
             })
         );
     }
+
+    public static Vector3 GetMaintainedXEulerAngle(Transform target, float initialValue = 0)
+    {
+        return new Vector3(initialValue, target.eulerAngles.y, target.eulerAngles.z);
+    }
 }

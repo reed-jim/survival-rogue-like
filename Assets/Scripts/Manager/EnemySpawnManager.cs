@@ -39,14 +39,14 @@ public class EnemySpawnManager : MonoBehaviour
     {
         // wait for enemy to be set up
         yield return new WaitForSeconds(1f);
-        
+
         while (true)
         {
             for (int i = 0; i < maxEnemySpawnConcurrently; i++)
             {
                 if (!enemies[_currentEnemyIndex].activeSelf)
                 {
-                    enemies[_currentEnemyIndex].transform.position = GetRandomPositionCircular();
+                    enemies[_currentEnemyIndex].transform.position = GetRandomPositionCircular(enemies[_currentEnemyIndex].transform.position);
                     enemies[_currentEnemyIndex].SetActive(true);
 
                     spawnEnemyEvent?.Invoke(enemies[_currentEnemyIndex].GetInstanceID());
@@ -71,13 +71,13 @@ public class EnemySpawnManager : MonoBehaviour
         int[] allDirections = new int[] { 1, -1 };
 
         position.x = player.transform.position.x + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(15, 30);
-        position.y = 1.3f;
+        position.y = transform.position.y;
         position.z = player.transform.position.y + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(15, 30);
 
         return position;
     }
 
-    private Vector3 GetRandomPositionCircular()
+    private Vector3 GetRandomPositionCircular(Vector3 currentPosition)
     {
         Vector3 position = new Vector3();
 
@@ -86,7 +86,7 @@ public class EnemySpawnManager : MonoBehaviour
         float radius = 30;
 
         position.x = player.transform.position.x + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(15, 30);
-        position.y = 1.3f;
+        position.y = currentPosition.y;
         position.z = allDirections[UnityEngine.Random.Range(0, 2)] * Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(position.x, 2));
 
         return position;
