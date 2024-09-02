@@ -25,7 +25,14 @@ public class CharacterMovement : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
 
+        PlayerAttack.enableRotatingEvent += EnableRotating;
+
         _initialPositionY = transform.position.y;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerAttack.enableRotatingEvent -= EnableRotating;
     }
 
     private void Update()
@@ -175,5 +182,13 @@ public class CharacterMovement : MonoBehaviour
         }
 
         _isAllowRotating = true;
+    }
+
+    private void EnableRotating(int instanceId, bool isRotating)
+    {
+        if (instanceId == gameObject.GetInstanceID())
+        {
+            _isAllowRotating = isRotating;
+        }
     }
 }

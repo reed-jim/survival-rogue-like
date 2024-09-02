@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using PrimeTween;
 using UnityEditor.Animations;
@@ -30,6 +31,10 @@ public class PlayerAttack : MonoBehaviour
     private Tween _waitForEndAttackAnimationTween;
     private List<Tween> _tweens;
     private bool _isEnableInput = true;
+    #endregion
+
+    #region ACTION
+    public static event Action<int, bool> enableRotatingEvent;
     #endregion
 
     #region LIFE CYCLE
@@ -126,22 +131,20 @@ public class PlayerAttack : MonoBehaviour
             _isAttacking = true;
         }
 
-        if (_animator.GetInteger("State") != 1)
-        {
-            _animator.SetInteger("State", 1);
-        }
+        _animator.SetInteger("State", 1);
+
+        enableRotatingEvent?.Invoke(gameObject.GetInstanceID(), false);
 
         _waitForEndAttackAnimationTween = Tween.Delay(_actualAttackAnimationDuration).OnComplete(() =>
         {
             _animator.SetInteger("State", 0);
+
+            enableRotatingEvent?.Invoke(gameObject.GetInstanceID(), true);
+
+            _isAttacking = false;
         });
 
         PlaySwordSlash();
-
-        _tweens.Add(Tween.Delay(0.5f).OnComplete(() =>
-        {
-            _isAttacking = false;
-        }));
 
         _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
         {

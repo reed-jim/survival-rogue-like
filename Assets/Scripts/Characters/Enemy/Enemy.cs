@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
     [Header("MODULE")]
     private CharacterStateManager _characterStateManager;
     private CharacterRagdoll _characterRagdoll;
+    private ICharacterVision characterVision;
 
     #region ACTION
     public static event Action hitEvent;
@@ -89,7 +90,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        FindPlayer();
+        characterVision.FindEnemy();
     }
     #endregion
 
@@ -114,42 +115,6 @@ public class Enemy : MonoBehaviour
         }));
     }
 
-    private void FindPlayer()
-    {
-        if (_characterStateManager.State == CharacterState.ATTACK)
-        {
-            return;
-        }
-
-        if (_characterStateManager.State == CharacterState.DIE)
-        {
-            _rigidBody.velocity = Vector3.zero;
-
-            return;
-        }
-
-        _rigidBody.velocity = Vector3.zero;
-
-        if
-        (
-            Mathf.Abs(transform.position.x - player.position.x) < offsetToPlayer.x &&
-            Mathf.Abs(transform.position.z - player.position.z) < offsetToPlayer.z
-        )
-        {
-            Attack();
-
-            return;
-        }
-
-        transform.LookAt(player);
-
-        transform.eulerAngles = TransformUtil.GetMaintainedXEulerAngle(transform);
-
-        _rigidBody.velocity = speedMultiplier * (player.position - transform.position).normalized;
-
-        setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", Math.Abs(Math.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
-    }
-
     private void Die(int instanceId)
     {
         if (instanceId == gameObject.GetInstanceID())
@@ -171,95 +136,5 @@ public class Enemy : MonoBehaviour
         _characterStateManager.State = CharacterState.DIE;
 
         _characterRagdoll.EnableRagdoll(true);
-    }
-
-    protected virtual void Attack()
-    {
-        enemyAttackEvent?.Invoke(gameObject.GetInstanceID());
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private void OnHit(Vector3 hitPosition)
-    {
-        // float prevHP = stat.HP;
-
-        enemyHitEvent?.Invoke(_index);
-        characterHitEvent?.Invoke(gameObject.GetInstanceID());
-
-        // stat.MinusHP(playerStat.Damage);
-
-        // _characterUI.SetHP(prevHP, stat.HP, maxHp: 100);
-
-        if (stat.GetStatValue(StatComponentNameConstant.Health) <= 0)
-        {
-            Die();
-        }
-        else
-        {
-            if (_hitEffectTween.isAlive)
-            {
-                _hitEffectTween.Stop();
-            }
-
-            float startScale = transform.localScale.x;
-
-            _hitEffectTween = Tween.Scale(transform, 1.1f * startScale, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.15f);
-
-            CommonUtil.OnHitColorEffect(meshRenderer, _materialPropertyBlock,
-                new Color(0.4f, 0.4f, 0.4f, 1), new Color(1, 0.4f, 0.4f, 1), 0.2f, _tweens);
-        }
-
-        // _tweens.Add(Tween.Delay(1).OnComplete(() => _isIgnorePhysic = false));
-
-        // _isIgnorePhysic = true;
-
-        hitEvent?.Invoke();
-        playHitFxEvent?.Invoke(hitPosition);
-    }
-
-    private void OnBulletHit(Vector3 hitPosition)
-    {
-        enemyHitEvent?.Invoke(_index);
-
-        if (stat.GetStatValue(StatComponentNameConstant.Health) <= 0)
-        {
-            Die();
-        }
-        else
-        {
-            if (_hitEffectTween.isAlive)
-            {
-                _hitEffectTween.Stop();
-            }
-
-            float startScale = transform.localScale.x;
-
-            _hitEffectTween = Tween.Scale(transform, 1.1f * startScale, cycles: 2, cycleMode: CycleMode.Yoyo, duration: 0.1f);
-
-            CommonUtil.OnHitColorEffect(meshRenderer, _materialPropertyBlock,
-                new Color(0.4f, 0.4f, 0.4f, 1), new Color(1, 0.4f, 0.4f, 1), 0.1f, _tweens);
-        }
-
-        // _tweens.Add(Tween.Delay(1).OnComplete(() => _isIgnorePhysic = false));
-
-        // _isIgnorePhysic = true;
-
-        hitEvent?.Invoke();
-        playBulletHitFxEvent?.Invoke(hitPosition);
     }
 }

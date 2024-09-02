@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using PrimeTween;
 using UnityEngine;
 
-public class CharacterVision : MonoBehaviour
+public class CharacterVision : MonoBehaviour, ICharacterVision
 {
     [Header("CUSTOMIZE")]
     [SerializeField] private float radiusCheck;
@@ -27,7 +27,7 @@ public class CharacterVision : MonoBehaviour
         FindEnemy();
     }
 
-    private void FindEnemy()
+    public void FindEnemy()
     {
         if (_isInCountdownCheckAttackEnemy)
         {
