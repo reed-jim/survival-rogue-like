@@ -1887,8 +1887,11 @@ GameObject:
   - component: {fileID: 7375328945079559599}
   - component: {fileID: 8925531647022240840}
   - component: {fileID: 7016352032930002342}
+  - component: {fileID: 7649423333427107238}
+  - component: {fileID: 2025721784498553805}
   - component: {fileID: 8715806200104676877}
   - component: {fileID: 1230600974406349393}
+  - component: {fileID: 4442071305876251691}
   m_Layer: 7
   m_Name: Enemy - Zombie Melee
   m_TagString: Player
@@ -2065,6 +2068,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberCollectibleSpawn: 3
+--- !u!114 &7649423333427107238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6898723522597223981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d4122fa6efb444a9dc0908f3bed553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRuntime: {fileID: 0}
+  speedMultiplier: 0
+  offsetToPlayer: {x: 0, y: 0, z: 0}
+--- !u!114 &2025721784498553805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6898723522597223981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11478a3944b5880489880fb1a0dc06c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
+  offsetToPlayer: {x: 1, y: 0, z: 1}
 --- !u!95 &8715806200104676877
 Animator:
   serializedVersion: 5
@@ -2113,6 +2145,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!195 &4442071305876251691
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6898723522597223981}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 3
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7047372761545950951
 GameObject:
   m_ObjectHideFlags: 0

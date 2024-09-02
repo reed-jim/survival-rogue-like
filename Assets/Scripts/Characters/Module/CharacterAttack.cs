@@ -23,14 +23,14 @@ public class CharacterAttack : MonoBehaviour
     {
         _tweens = new List<Tween>();
 
-        Enemy.enemyAttackEvent += MeleeAttack;
+        CharacterNavigation.enemyAttackEvent += MeleeAttack;
 
         meleeAttackCollider.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
-        Enemy.enemyAttackEvent -= MeleeAttack;
+        CharacterNavigation.enemyAttackEvent -= MeleeAttack;
     }
     #endregion
 

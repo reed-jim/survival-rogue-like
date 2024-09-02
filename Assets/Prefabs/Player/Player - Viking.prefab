@@ -11264,11 +11264,11 @@ GameObject:
   - component: {fileID: 2468654369673602368}
   - component: {fileID: 3812634056207863421}
   - component: {fileID: 7151789681628974495}
-  - component: {fileID: 2651237155596518567}
-  - component: {fileID: 797785790977378683}
   - component: {fileID: 5371047925353655979}
   - component: {fileID: 1668890721453019275}
   - component: {fileID: 6446652511774103870}
+  - component: {fileID: 2651237155596518567}
+  - component: {fileID: 797785790977378683}
   m_Layer: 3
   m_Name: Player - Viking
   m_TagString: Player
@@ -11411,54 +11411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae132d942cd4054c8d2ee3657cc8c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &2651237155596518567
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7168422765234239651}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: f9e052a0f57859e40aff5a474273b92f, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9bdf3102c90b1a04d80ffe13c8e16c95, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!54 &797785790977378683
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7168422765234239651}
-  serializedVersion: 4
-  m_Mass: 100
-  m_Drag: 1
-  m_AngularDrag: 1
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!114 &5371047925353655979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11528,6 +11480,54 @@ MonoBehaviour:
     LayerIndex: 0
   - SynchronizeType: 0
     LayerIndex: 1
+--- !u!95 &2651237155596518567
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168422765234239651}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: f9e052a0f57859e40aff5a474273b92f, type: 3}
+  m_Controller: {fileID: 9100000, guid: 9bdf3102c90b1a04d80ffe13c8e16c95, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!54 &797785790977378683
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168422765234239651}
+  serializedVersion: 4
+  m_Mass: 100
+  m_Drag: 1
+  m_AngularDrag: 1
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &7340984046084066663
 GameObject:
   m_ObjectHideFlags: 0

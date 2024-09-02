@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        characterVision.FindEnemy();
+        // characterVision.FindEnemy();
     }
     #endregion
 

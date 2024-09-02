@@ -11,7 +11,7 @@ public class CharacterAnimation : MonoBehaviour
         CharacterMovement.setSpeedPropertyAnimation += SetSpeedPropertyAnimation;
         CharacterAttack.setCharacterAnimationIntProperty += SetIntPropertyAnimation;
         CharacterAttack.setCharacterAnimationFloatProperty += SetFloatPropertyAnimation;
-        Enemy.setCharacterAnimationFloatProperty += SetFloatPropertyAnimation;
+        CharacterNavigation.setCharacterAnimationFloatProperty += SetFloatPropertyAnimation;
     }
 
     private void OnDestroy()
@@ -19,7 +19,7 @@ public class CharacterAnimation : MonoBehaviour
         CharacterMovement.setSpeedPropertyAnimation -= SetSpeedPropertyAnimation;
         CharacterAttack.setCharacterAnimationIntProperty -= SetIntPropertyAnimation;
         CharacterAttack.setCharacterAnimationFloatProperty -= SetFloatPropertyAnimation;
-        Enemy.setCharacterAnimationFloatProperty -= SetFloatPropertyAnimation;
+        CharacterNavigation.setCharacterAnimationFloatProperty -= SetFloatPropertyAnimation;
     }
 
     private void SetAnimationState(int state)

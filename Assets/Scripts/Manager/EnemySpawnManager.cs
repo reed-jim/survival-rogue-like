@@ -89,6 +89,9 @@ public class EnemySpawnManager : MonoBehaviour
         position.y = currentPosition.y;
         position.z = allDirections[UnityEngine.Random.Range(0, 2)] * Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(position.x, 2));
 
+        // DEBUG
+        position /= 2;
+
         return position;
     }
 }
