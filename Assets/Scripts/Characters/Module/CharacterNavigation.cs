@@ -44,22 +44,27 @@ public class CharacterNavigation : MonoBehaviour
 
     private IEnumerator Navigating()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(1f);
+        WaitForSeconds waitForSeconds = new WaitForSeconds(0.1f);
 
         while (true)
         {
             if (gameObject.activeSelf && _player != null)
             {
-
                 if
                 (
                     Mathf.Abs(transform.position.x - _player.position.x) > offsetToPlayer.x ||
                     Mathf.Abs(transform.position.z - _player.position.z) > offsetToPlayer.z
                 )
                 {
+                    _navMeshAgent.isStopped = false;
+                    
                     _navMeshAgent.SetDestination(_player.position + offsetToPlayer);
 
                     setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", Mathf.InverseLerp(0, 1, _navMeshAgent.velocity.magnitude));
+
+                    yield return new WaitForSeconds(0.1f);
+
+                    _navMeshAgent.isStopped = true;
                 }
                 else
                 {

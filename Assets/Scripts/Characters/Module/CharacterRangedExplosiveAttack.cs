@@ -12,8 +12,8 @@ public class CharacterRangedExplosiveAttack : CharacterRangedAttack
         return getExplosiveBulletEvent?.Invoke();
     }
 
-    protected override void ShootBullet(Rigidbody bullet, Transform target, Vector3 shotPosition)
-    {
-        base.ShootBullet(bullet, target, shotPosition);
-    }
+    // protected override void ShootBullet(Rigidbody bullet, Transform target, Vector3 shotPosition)
+    // {
+    //     base.ShootBullet(bullet, target, shotPosition);
+    // }
 }

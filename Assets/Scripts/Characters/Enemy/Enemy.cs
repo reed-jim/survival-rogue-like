@@ -6,10 +6,6 @@ using ReedJim.RPG.Stat;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("COLLIDER")]
-    [SerializeField] private Collider meleeAttackCollider;
-
-    [SerializeField] Renderer meshRenderer;
     protected Transform player;
 
     [Header("STAT")]
@@ -97,8 +93,6 @@ public class Enemy : MonoBehaviour
     private void Reset()
     {
         _characterRagdoll.EnableRagdoll(false);
-
-        meleeAttackCollider.gameObject.SetActive(false);
 
         _characterUI.Reset();
 

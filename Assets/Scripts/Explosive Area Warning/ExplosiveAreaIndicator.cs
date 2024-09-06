@@ -24,8 +24,6 @@ public class ExplosiveAreaIndicator : MonoBehaviour
         _tweens = new List<Tween>();
         _explosiveAreaRenderer = explosiveArea.GetComponent<SpriteRenderer>();
         _lazyExplosiveAreaRenderer = lazyExplosiveArea.GetComponent<SpriteRenderer>();
-
-        explosiveArea.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -44,7 +42,7 @@ public class ExplosiveAreaIndicator : MonoBehaviour
             _isBusy = true;
         }
 
-        explosiveArea.gameObject.SetActive(true);
+        gameObject.SetActive(true);
 
         float scaleMultiplier = 2 * radius / _explosiveAreaRenderer.bounds.size.x;
 
@@ -64,6 +62,8 @@ public class ExplosiveAreaIndicator : MonoBehaviour
             {
                 _tweens.Add(Tween.Alpha(_explosiveAreaRenderer, 0, duration: hideDuration));
                 _tweens.Add(Tween.Alpha(_lazyExplosiveAreaRenderer, 0, duration: hideDuration));
+
+                gameObject.SetActive(false);
             })
         );
     }

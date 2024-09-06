@@ -6,6 +6,7 @@ public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
 {
     [Header("CUSTOMIZE")]
     [SerializeField] private float forceMultiplier;
+    [SerializeField] private float directionYMultiplier;
 
     public static event GetBulletAction getBulletEvent;
 
@@ -52,8 +53,13 @@ public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
         return getBulletEvent?.Invoke();
     }
 
-    protected virtual void ShootBullet(Rigidbody bullet, Transform target, Vector3 shotPosition)
-    {
-        bullet.AddForce(forceMultiplier * (target.position - shotPosition));
-    }
+    // protected virtual void ShootBullet(Rigidbody bullet, Transform target, Vector3 shotPosition)
+    // {
+    //     Vector3 direction = target.position - shotPosition;
+
+    //     direction.y = directionYMultiplier;
+    //     Debug.Log(forceMultiplier * direction);
+
+    //     bullet.AddForce(forceMultiplier * direction, ForceMode.Impulse);
+    // }
 }

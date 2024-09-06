@@ -1664,8 +1664,11 @@ GameObject:
   - component: {fileID: 4244919553838738971}
   - component: {fileID: 3847584611410852965}
   - component: {fileID: 7722647779765103221}
+  - component: {fileID: -932532640433406929}
   - component: {fileID: 6435640270316140514}
   - component: {fileID: 9158139800372062772}
+  - component: {fileID: -169455157027432347}
+  - component: {fileID: -5841104321983707941}
   m_Layer: 7
   m_Name: Enemy - Zombie Explosive Ranged
   m_TagString: Player
@@ -1704,8 +1707,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775414057d8e4c94dbcdeb3f2b18d7ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeAttackCollider: {fileID: 0}
-  meshRenderer: {fileID: 0}
   baseStat: {fileID: 11400000, guid: f56f3d5add2dd0f4ab2ffacaa7cdf8ad, type: 2}
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
   speedMultiplier: 14
@@ -1752,7 +1753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b315c3a76130a741bf9d2b11035b16b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseStat: {fileID: 0}
+  baseStat: {fileID: 11400000, guid: f56f3d5add2dd0f4ab2ffacaa7cdf8ad, type: 2}
 --- !u!114 &5669767900314482889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1831,7 +1832,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15804d702efc738439aacb492e9032b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceMultiplier: 35
+  forceMultiplier: 20
+  directionYMultiplier: 1
+--- !u!114 &-932532640433406929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785288437737151558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11478a3944b5880489880fb1a0dc06c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
+  offsetToPlayer: {x: 5, y: 0, z: 5}
 --- !u!95 &6435640270316140514
 Animator:
   serializedVersion: 5
@@ -1841,8 +1857,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6785288437737151558}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 049a08c6c92e4db4a91a776227678966, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9bdf3102c90b1a04d80ffe13c8e16c95, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 122eb3baa43d5814faa8acee7444d04e, type: 3}
+  m_Controller: {fileID: 9100000, guid: 97497b138e920ac479d2fc72b4e434e4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1880,6 +1896,44 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!195 &-169455157027432347
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785288437737151558}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 0
+  m_Height: 2
+  m_BaseOffset: 3
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 1
+--- !u!208 &-5841104321983707941
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785288437737151558}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 2, y: 5, z: 2}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6919722156406270105
 GameObject:
   m_ObjectHideFlags: 0

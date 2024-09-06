@@ -85,12 +85,11 @@ public class EnemySpawnManager : MonoBehaviour
 
         float radius = 30;
 
-        position.x = player.transform.position.x + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(15, 30);
-        position.y = currentPosition.y;
-        position.z = allDirections[UnityEngine.Random.Range(0, 2)] * Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(position.x, 2));
+        float randomDistanceXToPlayer = UnityEngine.Random.Range(15, 30);
 
-        // DEBUG
-        position /= 2;
+        position.x = player.transform.position.x + allDirections[UnityEngine.Random.Range(0, 2)] * randomDistanceXToPlayer;
+        position.y = currentPosition.y;
+        position.z = allDirections[UnityEngine.Random.Range(0, 2)] * Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(randomDistanceXToPlayer, 2));
 
         return position;
     }

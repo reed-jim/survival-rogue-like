@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81db737b7763521469d1fa3013306701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceMultiplier: 40
+  forceMultiplier: 70
   maxExistingTime: 5
   bulletTrail: {fileID: 2677207036229600766}
   explosiveArea: {fileID: 3653995576978212050}
