@@ -28,10 +28,26 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        GameObject otherGameObject = other.collider.gameObject;
+        // GameObject otherGameObject = other.collider.gameObject;
+        GameObject otherGameObject = other.gameObject;
+        
+        if (collideTags.Contains(otherGameObject.tag))
+        {
+            ICollide collidable = otherGameObject.GetComponent<ICollide>();
 
-        HandleOnCollisionExplosive(otherGameObject);
-        HandleOnBeingMeleeAttacked(otherGameObject);
+            // if (collidable == null)
+            // {
+            //     collidable = otherGameObject.transform.parent.GetComponent<ICollide>();
+            // }
+
+            if (collidable != null)
+            {
+                collidable.HandleOnCollide(gameObject);
+            }
+        }
+
+        // HandleOnCollisionExplosive(otherGameObject);
+        // HandleOnBeingMeleeAttacked(otherGameObject);
     }
 
     private void HandleOnCollisionExplosive(GameObject otherGameObject)

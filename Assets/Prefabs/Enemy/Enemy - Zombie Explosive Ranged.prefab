@@ -1848,6 +1848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
   offsetToPlayer: {x: 5, y: 0, z: 5}
+  delayAfterCatchedPlayer: 2
 --- !u!95 &6435640270316140514
 Animator:
   serializedVersion: 5

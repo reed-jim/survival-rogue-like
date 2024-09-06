@@ -11,6 +11,7 @@ public class CharacterNavigation : MonoBehaviour
 
     [Header("CUSTOMIZE")]
     [SerializeField] private Vector3 offsetToPlayer;
+    [SerializeField] private float delayAfterCatchedPlayer;
 
     #region PRIVATE FIELD
     private NavMeshAgent _navMeshAgent;
@@ -36,15 +37,16 @@ public class CharacterNavigation : MonoBehaviour
 
     private void Update()
     {
-        if (gameObject.activeSelf && _player != null)
-        {
-            transform.LookAt(_player);
-        }
+        // if (gameObject.activeSelf && _player != null)
+        // {
+        //     transform.LookAt(_player);
+        // }
     }
 
     private IEnumerator Navigating()
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.1f);
+        WaitForSeconds waitDelayAfterCatchedPlayer = new WaitForSeconds(delayAfterCatchedPlayer);
 
         while (true)
         {
@@ -56,19 +58,21 @@ public class CharacterNavigation : MonoBehaviour
                     Mathf.Abs(transform.position.z - _player.position.z) > offsetToPlayer.z
                 )
                 {
-                    _navMeshAgent.isStopped = false;
-                    
                     _navMeshAgent.SetDestination(_player.position + offsetToPlayer);
 
                     setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", Mathf.InverseLerp(0, 1, _navMeshAgent.velocity.magnitude));
-
-                    yield return new WaitForSeconds(0.1f);
-
-                    _navMeshAgent.isStopped = true;
                 }
                 else
                 {
                     enemyAttackEvent?.Invoke(gameObject.GetInstanceID());
+
+                    _navMeshAgent.isStopped = true;
+
+                    setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
+
+                    yield return waitDelayAfterCatchedPlayer;
+
+                    _navMeshAgent.isStopped = false;
                 }
 
                 // if (_navMeshAgent.hasPath)

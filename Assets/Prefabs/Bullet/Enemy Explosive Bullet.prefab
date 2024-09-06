@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2443749600093512963}
   m_Layer: 0
   m_Name: Model
-  m_TagString: Player Bullet
+  m_TagString: Enemy Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 373421580852754956}
   m_Layer: 0
   m_Name: Explosive Area Collider
-  m_TagString: Player Bullet
+  m_TagString: Enemy Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,8 +170,8 @@ GameObject:
   - component: {fileID: 5140598814852057359}
   - component: {fileID: 7041639118598316266}
   m_Layer: 0
-  m_Name: Explosive Bullet
-  m_TagString: Untagged
+  m_Name: Enemy Explosive Bullet
+  m_TagString: Enemy Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 2677207036229600766}
   m_Layer: 0
   m_Name: Trail
-  m_TagString: Untagged
+  m_TagString: Enemy Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -423,6 +423,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Explosive Fx
+      objectReference: {fileID: 0}
+    - target: {fileID: 725748389856807714, guid: 4bda94453d2ca7444a0fff05b2d425f5,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy Bullet
       objectReference: {fileID: 0}
     - target: {fileID: 725748389856807726, guid: 4bda94453d2ca7444a0fff05b2d425f5,
         type: 3}

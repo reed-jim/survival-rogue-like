@@ -18,7 +18,7 @@ public class DamageCalculator : IDamageCalculator
         float attackerPercentHealthExecuted = attacker.GetStatValue(StatComponentNameConstant.PercentHealthExecuted);
 
         IStatComponent targetHealth = attacker.GetStat(StatComponentNameConstant.Health);
-
+        
         float targetArmor = target.GetStatValue(StatComponentNameConstant.Armor);
 
         float finalDamage = 0;
