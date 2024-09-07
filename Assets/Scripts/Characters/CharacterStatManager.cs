@@ -48,7 +48,7 @@ public class CharacterStatManager : MonoBehaviour
     private void RegisterEvent()
     {
         // CharacterDamageObserver.applyDamageEvent += TakeDamage;
-        CollisionHandler.applyDamageEvent += TakeDamage;
+        MeleeWeapon.applyDamageEvent += TakeDamage;
         Bullet.applyDamageEvent += TakeDamage;
         CharacterStatusEffectObserver.applyDamageEvent += TakeDamage;
         EnemySpawnManager.spawnEnemyEvent += OnEnemySpawnEvent;
@@ -57,7 +57,7 @@ public class CharacterStatManager : MonoBehaviour
     private void UnregisterEvent()
     {
         // CharacterDamageObserver.applyDamageEvent -= TakeDamage;
-        CollisionHandler.applyDamageEvent -= TakeDamage;
+        MeleeWeapon.applyDamageEvent -= TakeDamage;
         Bullet.applyDamageEvent -= TakeDamage;
         CharacterStatusEffectObserver.applyDamageEvent -= TakeDamage;
         EnemySpawnManager.spawnEnemyEvent -= OnEnemySpawnEvent;
@@ -84,7 +84,7 @@ public class CharacterStatManager : MonoBehaviour
     {
         if (gameObject.GetInstanceID() == instanceId)
         {
-            int intDamage = new DamageCalculator().GetDamage(attackerStat, _stat);
+            int intDamage = new DamageCalculator().GetDamage(attackerStat, Stat);
 
             // float prevHp = Stat.HP;
             float prevHp = Stat.GetStatValue(StatComponentNameConstant.Health);
@@ -102,7 +102,7 @@ public class CharacterStatManager : MonoBehaviour
 
     protected virtual void MinusHP(int damage)
     {
-        _stat.ModifyStat(StatComponentNameConstant.Health, new MinusStatModifier(), damage);
+        Stat.ModifyStat(StatComponentNameConstant.Health, new MinusStatModifier(), damage);
     }
 
     protected virtual void InvokeUpdateHPBarEvent(float prevHp)

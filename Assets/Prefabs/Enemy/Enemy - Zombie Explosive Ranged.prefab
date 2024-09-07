@@ -1671,7 +1671,7 @@ GameObject:
   - component: {fileID: -5841104321983707941}
   m_Layer: 7
   m_Name: Enemy - Zombie Explosive Ranged
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1929,7 +1929,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 2, y: 5, z: 2}
+  m_Extents: {x: 3, y: 5, z: 3}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1

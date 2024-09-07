@@ -10,15 +10,16 @@ public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId, ICol
     [SerializeField] protected float forceMultiplier;
     [SerializeField] private float maxExistingTime;
 
-    [Header("MANAGEMENT")]
+    #region PRIVATE FIELD
     [SerializeField] protected TrailRenderer bulletTrail;
     protected Rigidbody _rigidBody;
     protected int _attackerInstanceId;
+    #endregion
 
     #region ACTION
     public static event Action<int, CharacterStat> applyDamageEvent;
-    public static event GetCharacterStatAction<int> getAttackerStatAction;
     public static event Action<int> characterHitEvent;
+    public static event GetCharacterStatAction<int> getAttackerStatAction;
     #endregion
 
     protected virtual void Awake()

@@ -64,6 +64,8 @@ public class CharacterNavigation : MonoBehaviour
                 }
                 else
                 {
+                    transform.LookAt(_player);
+                    
                     enemyAttackEvent?.Invoke(gameObject.GetInstanceID());
 
                     _navMeshAgent.isStopped = true;
