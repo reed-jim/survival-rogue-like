@@ -1,33 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PrimeTween;
 using UnityEngine;
 
-public class MeleeCharacterVision : MonoBehaviour, ICharacterVision
+public class MeleeCharacterVision : BaseCharacterVision, ICharacterVision
 {
     [Header("MODULE")]
-    private Rigidbody _rigidBody;
     private CharacterStateManager _characterStateManager;
 
-    [Header("SCRIPTABLE OBJECT")]
-    [SerializeField] private PlayerRuntime playerRuntime;
-
     [Header("CUSTOMIZE")]
-    [SerializeField] private float speedMultiplier;
-    [SerializeField] private Vector3 offsetToPlayer;
-
-    #region PRIVATE FIELD
-    private Transform _player;
-    #endregion
-
-    #region ACTION
-    public static event Action<int> enemyAttackEvent;
-    public static event Action<int, string, float> setCharacterAnimationFloatProperty;
-    #endregion
+    [SerializeField] private float radiusCheck;
+    [SerializeField] private LayerMask layerMaskCheck;
 
     private void Awake()
     {
-        _rigidBody = GetComponent<Rigidbody>();
         _characterStateManager = GetComponent<CharacterStateManager>();
     }
 
@@ -40,35 +27,14 @@ public class MeleeCharacterVision : MonoBehaviour, ICharacterVision
 
         if (_characterStateManager.State == CharacterState.DIE)
         {
-            _rigidBody.velocity = Vector3.zero;
-
             return;
         }
 
-        _rigidBody.velocity = Vector3.zero;
+        Collider[] colliders = Physics.OverlapSphere(transform.position, radiusCheck, layerMaskCheck);
 
-        if
-        (
-            Mathf.Abs(transform.position.x - _player.position.x) < offsetToPlayer.x &&
-            Mathf.Abs(transform.position.z - _player.position.z) < offsetToPlayer.z
-        )
+        if (colliders.Length > 0)
         {
-            InvokeAttackEvent();
-
-            return;
+            InvokeAttackEnemyEvent(gameObject.GetInstanceID(), colliders[0].transform);
         }
-
-        transform.LookAt(_player);
-
-        transform.eulerAngles = TransformUtil.GetMaintainedXEulerAngle(transform);
-
-        _rigidBody.velocity = speedMultiplier * (_player.position - transform.position).normalized;
-
-        setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", Mathf.Abs(Mathf.Max(_rigidBody.velocity.x, _rigidBody.velocity.z)));
-    }
-
-    private void InvokeAttackEvent()
-    {
-        enemyAttackEvent?.Invoke(gameObject.GetInstanceID());
     }
 }

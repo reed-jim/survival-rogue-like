@@ -19,7 +19,7 @@ public class CharacterNavigation : MonoBehaviour
     #endregion
 
     #region ACTION
-    public static event Action<int> enemyAttackEvent;
+    // public static event Action<int> enemyAttackEvent;
     public static event Action<int, string, float> setCharacterAnimationFloatProperty;
     #endregion
 
@@ -64,9 +64,9 @@ public class CharacterNavigation : MonoBehaviour
                 }
                 else
                 {
-                    transform.LookAt(_player);
-                    
-                    enemyAttackEvent?.Invoke(gameObject.GetInstanceID());
+                    // transform.LookAt(_player);
+
+                    // enemyAttackEvent?.Invoke(gameObject.GetInstanceID());
 
                     _navMeshAgent.isStopped = true;
 

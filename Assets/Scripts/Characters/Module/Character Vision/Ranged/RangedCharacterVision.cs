@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using PrimeTween;
 using UnityEngine;
 
-public class CharacterVision : MonoBehaviour, ICharacterVision
+public class RangedCharacterVision : BaseCharacterVision, ICharacterVision
 {
     [Header("CUSTOMIZE")]
     [SerializeField] private float radiusCheck;
@@ -14,8 +14,6 @@ public class CharacterVision : MonoBehaviour, ICharacterVision
     private List<Tween> _tweens;
     private bool _isInCountdownCheckAttackEnemy;
     #endregion  
-
-    public static event Action<int, Transform> attackEnemyEvent;
 
     private void Awake()
     {
@@ -33,7 +31,7 @@ public class CharacterVision : MonoBehaviour, ICharacterVision
 
         if (colliders.Length > 0)
         {
-            attackEnemyEvent?.Invoke(gameObject.GetInstanceID(), colliders[0].transform);
+            InvokeAttackEnemyEvent(gameObject.GetInstanceID(), colliders[0].transform);
 
             _isInCountdownCheckAttackEnemy = true;
 

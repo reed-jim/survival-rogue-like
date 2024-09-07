@@ -12,12 +12,12 @@ public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
 
     private void Awake()
     {
-        CharacterVision.attackEnemyEvent += RangedAttack;
+        BaseCharacterVision.attackEnemyEvent += RangedAttack;
     }
 
     private void OnDestroy()
     {
-        CharacterVision.attackEnemyEvent -= RangedAttack;
+        BaseCharacterVision.attackEnemyEvent -= RangedAttack;
     }
 
     public void Attack()

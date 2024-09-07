@@ -24,16 +24,13 @@ public class Enemy : MonoBehaviour
 
     [Header("MANAGEMENT")]
     protected List<Tween> _tweens;
-    private Tween _hitEffectTween;
-    private Rigidbody _rigidBody;
-    MaterialPropertyBlock _materialPropertyBlock;
     private Material _dissolveMaterial;
     private int _index;
 
     [Header("MODULE")]
     private CharacterStateManager _characterStateManager;
+    private ICharacterVision _characterVision;
     private CharacterRagdoll _characterRagdoll;
-    private ICharacterVision characterVision;
 
     #region ACTION
     public static event Action hitEvent;
@@ -53,12 +50,11 @@ public class Enemy : MonoBehaviour
         _tweens = new List<Tween>();
 
         CharacterStatManager.characterDieEvent += Die;
-
-        _rigidBody = GetComponent<Rigidbody>();
+        _characterStateManager = GetComponent<CharacterStateManager>();
+        _characterVision = GetComponent<ICharacterVision>();
         _characterUI = GetComponent<CharacterUI>();
         _characterRagdoll = GetComponent<CharacterRagdoll>();
-        _characterStateManager = GetComponent<CharacterStateManager>();
-        _materialPropertyBlock = new MaterialPropertyBlock();
+
 
         _dissolveMaterial = transform.GetChild(0).GetComponent<Renderer>().material;
 
@@ -79,14 +75,14 @@ public class Enemy : MonoBehaviour
         enemySpawnedEvent?.Invoke(stat);
     }
 
+    private void Update()
+    {
+        _characterVision.FindEnemy();
+    }
+
     private void OnDestroy()
     {
         CharacterStatManager.characterDieEvent -= Die;
-    }
-
-    private void Update()
-    {
-        // characterVision.FindEnemy();
     }
     #endregion
 

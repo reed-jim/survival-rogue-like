@@ -394,8 +394,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyContainer: {fileID: 958509770}
-  enemyPrefab: {fileID: 6898723522597223981, guid: 6c86ad04607869e458f5c4fce2f8b1ea,
-    type: 3}
+  enemyPrefabs:
+  - {fileID: 6898723522597223981, guid: 6c86ad04607869e458f5c4fce2f8b1ea, type: 3}
+  - {fileID: 6898723522597223981, guid: 6c86ad04607869e458f5c4fce2f8b1ea, type: 3}
   enemies: []
   player: {fileID: 2478445494248917083}
   maxEnemy: 50

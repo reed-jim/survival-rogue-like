@@ -1884,10 +1884,10 @@ GameObject:
   - component: {fileID: 6196028578684969257}
   - component: {fileID: 5864310367609275896}
   - component: {fileID: 5262570559539068651}
+  - component: {fileID: 3042251425945777131}
   - component: {fileID: 7375328945079559599}
   - component: {fileID: 8925531647022240840}
   - component: {fileID: 7016352032930002342}
-  - component: {fileID: 7649423333427107238}
   - component: {fileID: 2025721784498553805}
   - component: {fileID: 8715806200104676877}
   - component: {fileID: 1230600974406349393}
@@ -2029,6 +2029,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2454fc85f88cc4f40845db8cc48331dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3042251425945777131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6898723522597223981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d4122fa6efb444a9dc0908f3bed553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radiusCheck: 1
+  layerMaskCheck:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &7375328945079559599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2067,21 +2083,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberCollectibleSpawn: 3
---- !u!114 &7649423333427107238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6898723522597223981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67d4122fa6efb444a9dc0908f3bed553, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerRuntime: {fileID: 0}
-  speedMultiplier: 0
-  offsetToPlayer: {x: 0, y: 0, z: 0}
 --- !u!114 &2025721784498553805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2155,7 +2156,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

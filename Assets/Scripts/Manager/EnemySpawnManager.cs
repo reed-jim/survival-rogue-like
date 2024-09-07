@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemySpawnManager : MonoBehaviour
 {
     [SerializeField] private Transform enemyContainer;
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject[] enemyPrefabs;
 
     [SerializeField] private GameObject[] enemies;
 
@@ -27,7 +27,7 @@ public class EnemySpawnManager : MonoBehaviour
 
         for (int i = 0; i < enemies.Length; i++)
         {
-            enemies[i] = Instantiate(enemyPrefab, enemyContainer);
+            enemies[i] = Instantiate(GetRandomEnemyPrefab(), enemyContainer);
             enemies[i].name = $"Enemy {i}";
             enemies[i].SetActive(false);
         }
@@ -92,5 +92,19 @@ public class EnemySpawnManager : MonoBehaviour
         position.z = allDirections[UnityEngine.Random.Range(0, 2)] * Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(randomDistanceXToPlayer, 2));
 
         return position;
+    }
+
+    private GameObject GetRandomEnemyPrefab()
+    {
+        int randomNumber = UnityEngine.Random.Range(0, 10);
+
+        if (randomNumber < 5)
+        {
+            return enemyPrefabs[1];
+        }
+        else
+        {
+            return enemyPrefabs[0];
+        }
     }
 }
