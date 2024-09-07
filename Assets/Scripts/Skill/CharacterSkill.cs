@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 
 public class CharacterSkill : MonoBehaviour
 {
+    [SerializeField] private List<IActiveSkill> activeSkills;
     [SerializeField] private List<DamageOverTimeSkill> damageSkills;
 
     #region ACTION
@@ -17,10 +18,13 @@ public class CharacterSkill : MonoBehaviour
     #region LIFE CYCLE
     private void Awake()
     {
+        activeSkills = new List<IActiveSkill>();
         damageSkills = new List<DamageOverTimeSkill>();
 
         CollisionHandler.characterHitEvent += ApplyEffect;
         LevelingUI.addSkillEvent += OnSkillAdded;
+
+        StartCoroutine(CastingActiveSkills());
     }
 
     private void OnDestroy()
@@ -54,5 +58,23 @@ public class CharacterSkill : MonoBehaviour
         }
 
         applyDamagingStatusEffect?.Invoke(instanceId, statusEffectDamagings);
+    }
+
+    private IEnumerator CastingActiveSkills()
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(0.1f);
+
+        while (true)
+        {
+            foreach (var activeSkill in activeSkills)
+            {
+                if (!activeSkill.IsInCountdown())
+                {
+                    activeSkill.Cast();
+                }
+            }
+
+            yield return waitForSeconds;
+        }
     }
 }
