@@ -42,7 +42,7 @@ MonoBehaviour:
       baseValue: 0
   - key: AttackSpeed
     baseStatComponent:
-      baseValue: 0
+      baseValue: 5
   - key: ReloadTime
     baseStatComponent:
       baseValue: 0

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,10 +15,10 @@ public class CharacterNavigation : MonoBehaviour
     #region PRIVATE FIELD
     private NavMeshAgent _navMeshAgent;
     private Transform _player;
+    private bool _isNearTarget;
     #endregion
 
     #region ACTION
-    // public static event Action<int> enemyAttackEvent;
     public static event Action<int, string, float> setCharacterAnimationFloatProperty;
     #endregion
 
@@ -35,16 +34,10 @@ public class CharacterNavigation : MonoBehaviour
         StartCoroutine(Navigating());
     }
 
-    private void Update()
-    {
-        // if (gameObject.activeSelf && _player != null)
-        // {
-        //     transform.LookAt(_player);
-        // }
-    }
-
     private IEnumerator Navigating()
     {
+        Vector3 distanceToTarget = new Vector3();
+
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.1f);
         WaitForSeconds waitDelayAfterCatchedPlayer = new WaitForSeconds(delayAfterCatchedPlayer);
 
@@ -52,10 +45,32 @@ public class CharacterNavigation : MonoBehaviour
         {
             if (gameObject.activeSelf && _player != null)
             {
+                distanceToTarget.x = Mathf.Abs(transform.position.x - _player.position.x);
+                distanceToTarget.z = Mathf.Abs(transform.position.z - _player.position.z);
+
+                // avoid frequent checking target
+                if (_isNearTarget)
+                {
+                    if
+                    (
+                        distanceToTarget.x > 1.5f * offsetToPlayer.x ||
+                        distanceToTarget.z > 1.5f * offsetToPlayer.z
+                    )
+                    {
+                        _isNearTarget = false;
+                    }
+                    else
+                    {
+                        yield return waitForSeconds;
+
+                        continue;
+                    }
+                }
+
                 if
                 (
-                    Mathf.Abs(transform.position.x - _player.position.x) > offsetToPlayer.x ||
-                    Mathf.Abs(transform.position.z - _player.position.z) > offsetToPlayer.z
+                    distanceToTarget.x > offsetToPlayer.x ||
+                    distanceToTarget.z > offsetToPlayer.z
                 )
                 {
                     _navMeshAgent.SetDestination(_player.position + offsetToPlayer);
@@ -64,10 +79,6 @@ public class CharacterNavigation : MonoBehaviour
                 }
                 else
                 {
-                    // transform.LookAt(_player);
-
-                    // enemyAttackEvent?.Invoke(gameObject.GetInstanceID());
-
                     _navMeshAgent.isStopped = true;
 
                     setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
@@ -75,19 +86,9 @@ public class CharacterNavigation : MonoBehaviour
                     yield return waitDelayAfterCatchedPlayer;
 
                     _navMeshAgent.isStopped = false;
-                }
 
-                // if (_navMeshAgent.hasPath)
-                // {
-                //     if (_navMeshAgent.remainingDistance > 1)
-                //     {
-                //         _navMeshAgent.SetDestination(_player.position + offsetToPlayer);
-                //     }
-                // }
-                // else
-                // {
-                //     _navMeshAgent.SetDestination(_player.position + offsetToPlayer);
-                // }
+                    _isNearTarget = true;
+                }
             }
 
             yield return waitForSeconds;

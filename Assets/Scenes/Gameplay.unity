@@ -399,7 +399,7 @@ MonoBehaviour:
   - {fileID: 6898723522597223981, guid: 6c86ad04607869e458f5c4fce2f8b1ea, type: 3}
   enemies: []
   player: {fileID: 2478445494248917083}
-  maxEnemy: 50
+  maxEnemy: 1
   maxEnemySpawnConcurrently: 1
 --- !u!4 &40226467
 Transform:
