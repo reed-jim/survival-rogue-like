@@ -18,16 +18,16 @@ namespace ReedJim.RPG.Stat
 
     public class CharacterStat
     {
-        [SerializeField] protected Dictionary<string, IStatComponent> statComponents;
+        [SerializeField] protected Dictionary<string, BaseStatComponent> statComponents;
 
-        public Dictionary<string, IStatComponent> StatComponents => statComponents;
+        public Dictionary<string, BaseStatComponent> StatComponents => statComponents;
 
         public CharacterStat()
         {
-            statComponents = new Dictionary<string, IStatComponent>();
+            statComponents = new Dictionary<string, BaseStatComponent>();
         }
 
-        public void AddStatComponent(string statComponentName, IStatComponent statComponent)
+        public void AddStatComponent(string statComponentName, BaseStatComponent statComponent)
         {
             if (statComponents.ContainsKey(statComponentName))
             {

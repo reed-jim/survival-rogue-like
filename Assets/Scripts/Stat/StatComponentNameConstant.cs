@@ -9,6 +9,16 @@ public static class StatComponentNameConstant
     {
         get => "Level";
     }
+
+    public static string Experience
+    {
+        get => "Experience";
+    }
+
+    public static string SkillPoint
+    {
+        get => "SkillPoint";
+    }
     #endregion
 
     #region DEFENSE

@@ -20,11 +20,13 @@ public static class DataUtility
 
         if (json.ContainsKey(key))
         {
-            json[key] = JsonUtility.ToJson(data);
+            json[key] = JsonConvert.SerializeObject(data);
+            // json[key] = JsonUtility.ToJson(data);
         }
         else
         {
-            json.Add(key, JsonUtility.ToJson(data));
+            json.Add(key, JsonConvert.SerializeObject(data));
+            // json.Add(key, JsonUtility.ToJson(data));
         }
 
         File.WriteAllText(filePath, json.ToString());

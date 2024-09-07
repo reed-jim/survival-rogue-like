@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PrimeTween;
 using System;
 using ReedJim.RPG.Stat;
+using ExitGames.Client.Photon.StructWrapping;
 
 public class Enemy : MonoBehaviour
 {
@@ -22,15 +23,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float speedMultiplier;
     [SerializeField] private Vector3 offsetToPlayer;
 
-    [Header("MANAGEMENT")]
-    protected List<Tween> _tweens;
-    private Material _dissolveMaterial;
-    private int _index;
-
     [Header("MODULE")]
     private CharacterStateManager _characterStateManager;
     private ICharacterVision _characterVision;
     private CharacterRagdoll _characterRagdoll;
+
+    #region PRIVATE FIELD
+    protected List<Tween> _tweens;
+    private Material _dissolveMaterial;
+    private List<Collider> _colliders;
+    #endregion
 
     #region ACTION
     public static event Action hitEvent;
@@ -41,6 +43,7 @@ public class Enemy : MonoBehaviour
     public static event Action<int> characterHitEvent;
     public static event Action<int> enemyDieEvent;
     public static event Action<int> enemyAttackEvent;
+    public static event Action<int, string, int> setCharacterAnimationIntProperty;
     public static event Action<int, string, float> setCharacterAnimationFloatProperty;
     #endregion
 
@@ -55,12 +58,11 @@ public class Enemy : MonoBehaviour
         _characterUI = GetComponent<CharacterUI>();
         _characterRagdoll = GetComponent<CharacterRagdoll>();
 
-
         _dissolveMaterial = transform.GetChild(0).GetComponent<Renderer>().material;
 
         stat = EnemyStat.Load("Enemy", baseStat.GetBaseCharacterStat()) as EnemyStat;
 
-        _index = transform.GetSiblingIndex();
+        FindAllColliders();
     }
 
     private void OnEnable()
@@ -121,10 +123,36 @@ public class Enemy : MonoBehaviour
 
         enemyDieEvent?.Invoke(gameObject.GetInstanceID());
 
+        setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", Constants.ANIMATION_DIE_STATE);
         setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
+
+        DisableAllColliders();
 
         _characterStateManager.State = CharacterState.DIE;
 
-        _characterRagdoll.EnableRagdoll(true);
+        // _characterRagdoll.EnableRagdoll(true);
+    }
+
+    private void FindAllColliders()
+    {
+        _colliders = new List<Collider>();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Collider collider = transform.GetChild(i).GetComponent<Collider>();
+
+            if (collider != null)
+            {
+                _colliders.Add(collider);
+            }
+        }
+    }
+
+    private void DisableAllColliders()
+    {
+        foreach (var item in _colliders)
+        {
+            item.gameObject.SetActive(false);
+        }
     }
 }

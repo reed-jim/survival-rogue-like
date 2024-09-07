@@ -52,7 +52,7 @@ public class CharacterAttack : MonoBehaviour
 
         transform.LookAt(enemy);
 
-        setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", 1);
+        setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", Constants.ANIMATION_ATTACK_STATE);
         setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
 
         _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
@@ -64,10 +64,10 @@ public class CharacterAttack : MonoBehaviour
                 meleeAttackCollider.gameObject.SetActive(false);
             }));
         }));
-        
+
         _tweens.Add(Tween.Delay(GetActualAttackAnimationDuration()).OnComplete(() =>
         {
-            setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", 0);
+            setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", Constants.ANIMATION_MOVEMENT_STATE);
         }));
 
         _tweens.Add(Tween.Delay(_characterStatManager.Stat.GetStatValue(StatComponentNameConstant.AttackSpeed)).OnComplete(() =>

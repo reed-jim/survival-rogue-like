@@ -66,7 +66,7 @@ public class StatManager : MonoBehaviour
 
         _playerStat.EarnExp(_playerStat.GetExpFromKillEnemy(enemyLevel), out isLeveledUp);
 
-        updateExpProgressBarEvent?.Invoke(_playerStat.EXP, _playerStat.GetRequiredExpForNextLevel());
+        updateExpProgressBarEvent?.Invoke(_playerStat.GetStatValue(StatComponentNameConstant.Experience), _playerStat.GetRequiredExpForNextLevel());
 
         if (isLeveledUp)
         {

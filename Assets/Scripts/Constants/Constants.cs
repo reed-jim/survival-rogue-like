@@ -9,4 +9,10 @@ public static class Constants
     public static string PLAYER_BULLET_TAG = "Player Bullet";
 
     public static string STAT_DATA_FILE_NAME = "stat_data";
+
+    #region ANIMATION
+    public static int ANIMATION_MOVEMENT_STATE = 0;
+    public static int ANIMATION_ATTACK_STATE = 1;
+    public static int ANIMATION_DIE_STATE = 2;
+    #endregion
 }

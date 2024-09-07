@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Player - Viking
   m_EditorClassIdentifier: 
   statComponents:
+  - key: Experience
+    baseStatComponent:
+      baseValue: 0
   - key: Level
     baseStatComponent:
       baseValue: 1
+  - key: SkillPoint
+    baseStatComponent:
+      baseValue: 0
   - key: Health
     baseStatComponent:
       baseValue: 100
@@ -36,7 +42,7 @@ MonoBehaviour:
       baseValue: 0
   - key: CriticalMultiplier
     baseStatComponent:
-      baseValue: 0
+      baseValue: 2
   - key: AttackRange
     baseStatComponent:
       baseValue: 0

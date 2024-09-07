@@ -230,14 +230,12 @@ public class PlayerAttack : MonoBehaviour
     {
         swordSlashTemp.gameObject.SetActive(true);
 
-        Tween.Delay(0.4f * _actualAttackAnimationDuration).OnComplete(() =>
+        Tween.Delay(0.6f * _actualAttackAnimationDuration).OnComplete(() =>
         {
             Tween.Custom(0, 1, duration: 0.9f * _actualAttackAnimationDuration, onValueChange: newVal => sworldSlashMaterial.SetFloat("_Slash", newVal));
         });
 
         // Tween.Custom(0, 1, duration: _actualAttackAnimationDuration, onValueChange: newVal => sworldSlashMaterial.SetFloat("_Slash", newVal));
-
-
 
         Sequence.Create()
             .Chain(Tween.Custom(0, -90, duration: 0.1f, onValueChange: newVal =>
