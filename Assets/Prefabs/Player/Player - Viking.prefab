@@ -5154,7 +5154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillStat: {fileID: 11400000, guid: a4403638cad7afa4f9fefead553a4ca5, type: 2}
-  meteor: {fileID: 0}
+  player: {fileID: 7168422765234239651}
 --- !u!1 &2416368060982832144
 GameObject:
   m_ObjectHideFlags: 0

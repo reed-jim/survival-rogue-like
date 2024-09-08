@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using PrimeTween;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 using static CustomDelegate;
 
-public class Meteor : MonoBehaviour
+public class Meteor : MonoBehaviour, ICollide
 {
     [Header("EXPLOSIVE")]
     [SerializeField] private GameObject explosiveArea;
@@ -18,10 +20,14 @@ public class Meteor : MonoBehaviour
 
     #region PRIVATE FIELD
     private Rigidbody _rigidBody;
+    private CharacterStat _skillStat;
     #endregion
 
     #region ACTION
     public static GetExplosiveAreaIndicatorAction getExplosiveAreaIndicatorAction;
+    public static event Action<int, CharacterStat> applyDamageEvent;
+    public static event Action<int> characterHitEvent;
+    public static event GetCharacterStatAction<int> getAttackerStatAction;
     #endregion
 
     private void Awake()
@@ -99,4 +105,18 @@ public class Meteor : MonoBehaviour
             }
         }
     }
+
+    public void SetStat(CharacterStat stat)
+    {
+        _skillStat = stat;
+    }
+
+    #region ICollider IMPLEMENT
+    public void HandleOnCollide(GameObject other)
+    {
+        applyDamageEvent?.Invoke(other.GetInstanceID(), _skillStat);
+
+        characterHitEvent?.Invoke(other.GetInstanceID());
+    }
+    #endregion
 }

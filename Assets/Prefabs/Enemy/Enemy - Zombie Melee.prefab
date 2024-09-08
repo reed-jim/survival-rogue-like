@@ -2005,6 +2005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collideTags:
   - Sword
+  - Player Bullet
 --- !u!114 &5864310367609275896
 MonoBehaviour:
   m_ObjectHideFlags: 0

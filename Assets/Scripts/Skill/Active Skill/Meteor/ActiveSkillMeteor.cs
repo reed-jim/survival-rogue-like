@@ -6,7 +6,7 @@ using static CustomDelegate;
 
 public class ActiveSkillMeteor : BaseActiveSkill, IActiveSkill
 {
-    [SerializeField] private GameObject meteor;
+    [SerializeField] private GameObject player;
 
     #region ACTION
     public static event GetMeteorAction getMeteorAction;
@@ -15,11 +15,13 @@ public class ActiveSkillMeteor : BaseActiveSkill, IActiveSkill
     #region IActiveSkill Implement
     public void Cast()
     {
-        meteor = getMeteorAction?.Invoke().gameObject;
+        Meteor meteor = getMeteorAction?.Invoke();
 
         meteor.gameObject.SetActive(true);
 
-        meteor.transform.position = new Vector3(0, 10, 0);
+        meteor.transform.position = player.transform.position + new Vector3(Random.Range(5, 10), 10, Random.Range(5, 10));
+
+        meteor.SetStat(Stat);
 
         IsCountdown = true;
 
