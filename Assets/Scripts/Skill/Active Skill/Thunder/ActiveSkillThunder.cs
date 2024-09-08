@@ -8,6 +8,7 @@ public class ActiveSkillThunder : BaseActiveSkill, IActiveSkill
     [SerializeField] private Transform player;
     [SerializeField] private ChainLighning chainLighning;
 
+    #region IActiveSkill Implement
     public void Cast()
     {
         chainLighning.gameObject.SetActive(true);
@@ -20,8 +21,34 @@ public class ActiveSkillThunder : BaseActiveSkill, IActiveSkill
             .OnComplete(() => IsCountdown = false);
     }
 
+    public bool IsUnlocked()
+    {
+        return IsSkillUnlocked;
+    }
+
     public bool IsInCountdown()
     {
         return IsCountdown;
+    }
+    #endregion
+
+    public void AddSkill()
+    {
+        IsSkillUnlocked = true;
+    }
+
+    public string GetDescription()
+    {
+        return "Lightning Chain";
+    }
+
+    public string GetName()
+    {
+        return "Lightning Chain";
+    }
+
+    public int GetTier()
+    {
+        throw new System.NotImplementedException();
     }
 }

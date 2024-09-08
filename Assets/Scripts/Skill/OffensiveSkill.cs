@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using ReedJim.RPG.Stat;
 using UnityEngine;
@@ -10,6 +11,10 @@ public class OffensiveSkill : ScriptableObject, IModifierSkill
     [SerializeField] private float criticalDamageMultiplier;
     [SerializeField] private float percentDirectDamage;
     [SerializeField] private float percentHealthExecuted;
+
+    #region ACTION
+    public static event Action<CharacterStat> updatePlayerStat;
+    #endregion
 
     public CharacterStat GetBonusStat()
     {
@@ -64,5 +69,10 @@ public class OffensiveSkill : ScriptableObject, IModifierSkill
     public int GetTier()
     {
         return 1;
+    }
+
+    public void AddSkill()
+    {
+        updatePlayerStat?.Invoke(GetBonusStat());
     }
 }

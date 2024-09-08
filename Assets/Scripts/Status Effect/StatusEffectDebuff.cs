@@ -10,6 +10,11 @@ public class StatusEffectDebuff : IModifierSkill
     [SerializeField] private float takenDamageCriticalChance;
     [SerializeField] private float takenDamageCriticalMultiplier;
 
+    public void AddSkill()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public CharacterStat GetBonusStat()
     {
         CharacterStat bonusStat = new CharacterStat();

@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class StatusEffectBuff : IModifierSkill
 {
+    public void AddSkill()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public CharacterStat GetBonusStat()
     {
         throw new System.NotImplementedException();
@@ -23,17 +28,5 @@ public class StatusEffectBuff : IModifierSkill
     public int GetTier()
     {
         throw new System.NotImplementedException();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

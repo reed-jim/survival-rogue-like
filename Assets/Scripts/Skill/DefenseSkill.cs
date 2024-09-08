@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using ReedJim.RPG.Stat;
 using UnityEngine;
@@ -8,6 +9,10 @@ public class DefenseSkill : ScriptableObject, IModifierSkill
     [SerializeField] private int hp;
     [SerializeField] private int armor;
     [SerializeField] private float blockChance;
+
+    #region ACTION
+    public static event Action<CharacterStat> updatePlayerStat;
+    #endregion
 
     public CharacterStat GetBonusStat()
     {
@@ -20,6 +25,7 @@ public class DefenseSkill : ScriptableObject, IModifierSkill
         return bonusStat;
     }
 
+    #region ISkill Implement
     public string GetDescription()
     {
         StringBuilder description = new StringBuilder();
@@ -46,6 +52,13 @@ public class DefenseSkill : ScriptableObject, IModifierSkill
     {
         return name;
     }
+
+    public void AddSkill()
+    {
+        updatePlayerStat?.Invoke(GetBonusStat());
+    }
+
+    #endregion
 
     public int GetTier()
     {

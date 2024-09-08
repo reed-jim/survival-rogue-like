@@ -4998,6 +4998,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c111cafb18bd0a14581a767db0880f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1668915885130253227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5450553039698951352}
+  - component: {fileID: 6784710893976051113}
+  m_Layer: 0
+  m_Name: Chain Lightning (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5450553039698951352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668915885130253227}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1352685191162323248}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6784710893976051113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668915885130253227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9bc37435e055a44a8b18ce9a5abe8cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillStat: {fileID: 11400000, guid: a4403638cad7afa4f9fefead553a4ca5, type: 2}
+  player: {fileID: 548508742936269805}
+  chainLighning: {fileID: 0}
 --- !u!1 &1889090839071045559
 GameObject:
   m_ObjectHideFlags: 0
@@ -11185,6 +11232,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1352685191162323248}
+  - component: {fileID: 2596097794303804232}
   m_Layer: 0
   m_Name: Active Skill Container
   m_TagString: Untagged
@@ -11207,8 +11255,22 @@ Transform:
   m_Children:
   - {fileID: 8529777293478130662}
   - {fileID: 4028121181035185321}
+  - {fileID: 5450553039698951352}
   m_Father: {fileID: 548508742936269805}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2596097794303804232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6947949001325928838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06cb862dceb591248a063b9ef180a79f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillContainer: {fileID: 11400000, guid: 63adb602eef772447b4018d5bf5757d0, type: 2}
 --- !u!1 &6993412755669549753
 GameObject:
   m_ObjectHideFlags: 0
@@ -11465,6 +11527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1dbae41aa45ab4f95b727f67ad8239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeSkillContainer: {fileID: 2596097794303804232}
   damageSkills: []
 --- !u!114 &8557551621394123292
 MonoBehaviour:

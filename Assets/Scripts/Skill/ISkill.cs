@@ -6,4 +6,5 @@ public interface ISkill : ITier
 {
     public string GetDescription();
     public string GetName();
+    public void AddSkill();
 }

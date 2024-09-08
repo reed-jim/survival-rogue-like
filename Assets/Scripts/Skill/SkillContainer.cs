@@ -60,13 +60,3 @@ public class SkillContainer : ScriptableObject
         #endif
     }
 }
-
-public class Example : MonoBehaviour
-{
-    public static Example instance;
-
-    void Start()
-    {
-        Example.instance = this;
-    }
-}

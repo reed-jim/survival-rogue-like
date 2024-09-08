@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 public class CharacterSkill : MonoBehaviour
 {
-    [SerializeField] private List<IActiveSkill> activeSkills;
+    [SerializeField] private ActiveSkillContainer activeSkillContainer;
     [SerializeField] private List<DamageOverTimeSkill> damageSkills;
 
     #region ACTION
@@ -18,11 +18,11 @@ public class CharacterSkill : MonoBehaviour
     #region LIFE CYCLE
     private void Awake()
     {
-        activeSkills = new List<IActiveSkill>();
         damageSkills = new List<DamageOverTimeSkill>();
 
         CollisionHandler.characterHitEvent += ApplyEffect;
         LevelingUI.addSkillEvent += OnSkillAdded;
+        DamageOverTimeSkill.addSkillEvent += AddDamageOverTimeSkill;
 
         StartCoroutine(CastingActiveSkills());
     }
@@ -31,21 +31,29 @@ public class CharacterSkill : MonoBehaviour
     {
         CollisionHandler.characterHitEvent -= ApplyEffect;
         LevelingUI.addSkillEvent -= OnSkillAdded;
+        DamageOverTimeSkill.addSkillEvent -= AddDamageOverTimeSkill;
     }
     #endregion
 
     private void OnSkillAdded(ISkill skill)
     {
-        if (skill is IModifierSkill)
-        {
-            IModifierSkill modifierSkill = skill as IModifierSkill;
+        skill.AddSkill();
 
-            updatePlayerStat?.Invoke(modifierSkill.GetBonusStat());
-        }
-        else if (skill is DamageOverTimeSkill)
-        {
-            damageSkills.Add((DamageOverTimeSkill)skill);
-        }
+        // if (skill is IModifierSkill)
+        // {
+        //     IModifierSkill modifierSkill = skill as IModifierSkill;
+
+        //     updatePlayerStat?.Invoke(modifierSkill.GetBonusStat());
+        // }
+        // else if (skill is DamageOverTimeSkill)
+        // {
+        //     damageSkills.Add((DamageOverTimeSkill)skill);
+        // }
+    }
+
+    private void AddDamageOverTimeSkill(DamageOverTimeSkill skill)
+    {
+        damageSkills.Add(skill);
     }
 
     private void ApplyEffect(int instanceId)
@@ -66,11 +74,14 @@ public class CharacterSkill : MonoBehaviour
 
         while (true)
         {
-            foreach (var activeSkill in activeSkills)
+            if (activeSkillContainer.ActiveSkills != null)
             {
-                if (!activeSkill.IsInCountdown())
+                foreach (var activeSkill in activeSkillContainer.ActiveSkills)
                 {
-                    activeSkill.Cast();
+                    if (activeSkill.IsUnlocked() && !activeSkill.IsInCountdown())
+                    {
+                        activeSkill.Cast();
+                    }
                 }
             }
 

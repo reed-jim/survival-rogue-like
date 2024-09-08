@@ -13,4 +13,8 @@ public class CustomDelegate
     public delegate ExplosiveAreaIndicator GetExplosiveAreaIndicatorAction();
     public delegate ICollectible GetICollectibleAction();
     public delegate VisualEffect GetVisualEffectAction();
+
+    #region ACTIVE SKILL
+    public delegate Meteor GetMeteorAction();
+    #endregion
 }

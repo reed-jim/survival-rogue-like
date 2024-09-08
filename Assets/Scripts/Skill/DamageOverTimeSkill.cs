@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "skill", menuName = "ScriptableObjects/RPG/DamageSkill")]
@@ -6,6 +7,10 @@ public class DamageOverTimeSkill : ScriptableObject, ISkill
     [SerializeField] private StatusEffectDamaging statusEffectDamaging;
 
     public StatusEffectDamaging StatusEffectDamaging => statusEffectDamaging;
+
+    #region Action
+    public static event Action<DamageOverTimeSkill> addSkillEvent;
+    #endregion
 
     // public float TotalDamage
     // {
@@ -31,6 +36,11 @@ public class DamageOverTimeSkill : ScriptableObject, ISkill
 
     public int GetTier()
     {
-        return Random.Range(1, 5);
+        return 1;
+    }
+
+    public void AddSkill()
+    {
+        addSkillEvent?.Invoke(this);
     }
 }

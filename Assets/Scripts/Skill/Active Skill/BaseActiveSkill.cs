@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using ReedJim.RPG.Stat;
@@ -9,8 +10,15 @@ public class BaseActiveSkill : MonoBehaviour
     [SerializeField] private PredifinedCharacterStat skillStat;
 
     #region PRIVATE FIELD
+    private bool _isUnlocked;
     private bool _isCountdown;
     #endregion
+
+    public bool IsSkillUnlocked
+    {
+        get => _isUnlocked;
+        set => _isUnlocked = value;
+    }
 
     public bool IsCountdown
     {
