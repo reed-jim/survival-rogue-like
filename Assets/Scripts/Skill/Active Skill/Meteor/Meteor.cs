@@ -71,7 +71,7 @@ public class Meteor : MonoBehaviour, ICollide
 
         bulletModel.SetActive(false);
         explosiveArea.SetActive(true);
-
+        
         Tween.Delay(0.2f).OnComplete(() => explosiveArea.SetActive(false));
 
         _rigidBody.velocity = Vector3.zero;
