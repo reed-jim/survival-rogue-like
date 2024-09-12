@@ -74,9 +74,9 @@ public class Parallax : MonoBehaviour
             {
                 parallaxItems[i].Target.position -= speedMultiplier * (1 / parallaxItems[i].VirtualDistanceToViewer) * Vector3.right;
 
-                if (parallaxItems[i].Target.position.x < -23)
+                if (parallaxItems[i].Target.position.x < -35)
                 {
-                    parallaxItems[i].Target.position = new Vector3(23, parallaxItems[i].Target.position.y, parallaxItems[i].Target.position.z);
+                    parallaxItems[i].Target.position = new Vector3(35, parallaxItems[i].Target.position.y, parallaxItems[i].Target.position.z);
                 }
             }
 
