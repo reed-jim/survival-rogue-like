@@ -5,6 +5,9 @@ using UnityEngine.VFX;
 public class CustomDelegate
 {
     public delegate bool BoolAction();
+    public delegate Vector3 GetVector3Action();
+    public delegate GameObject GetGameObjectAction();
+    public delegate Transform GetTransformAction();
     public delegate Rigidbody GetRigidbodyAction();
     public delegate CharacterStat GetCharacterStatAction<in T>(T arg);
     public delegate IProjectile GetIProjectileAction();
