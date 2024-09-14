@@ -35,11 +35,13 @@ namespace Puzzle.Merge
         private void RegisterEvents()
         {
             InputManager.moveBlockEvent += Move;
+            BlockSpawner.moveBlockEvent += MoveToTile;
         }
 
         private void UnregisterEvents()
         {
             InputManager.moveBlockEvent -= Move;
+            BlockSpawner.moveBlockEvent -= MoveToTile;
         }
 
         private void Move(int instanceID, Vector3 direction)
@@ -54,7 +56,15 @@ namespace Puzzle.Merge
             }
         }
 
-        private Vector2 GetCurrentTile(Vector3 direction)
+        private void MoveToTile(int instanceID, Vector2Int startTile, Vector3 direction)
+        {
+            if (instanceID == _cachedInstanceId)
+            {
+                Move(startTile, direction);
+            }
+        }
+
+        private Vector2 GetCurrentTile()
         {
             int originalLayer = gameObject.layer;
 
@@ -67,7 +77,6 @@ namespace Puzzle.Merge
                 ITile tile = hit.collider.GetComponent<ITile>();
 
                 currentTileCoordinator = new Vector2(tile.X, tile.Y);
-
             }
 
             gameObject.layer = originalLayer;
@@ -75,9 +84,9 @@ namespace Puzzle.Merge
             return currentTileCoordinator;
         }
 
-        private Vector2 GetNextTile(Vector3 direction)
+        private Vector2 GetNextTile(Vector2 currentTile, Vector3 direction)
         {
-            Vector2 nextTileCoordinator = GetCurrentTile(direction);
+            Vector2 nextTileCoordinator = currentTile;
 
             if (direction == Vector3.forward)
             {
@@ -99,13 +108,56 @@ namespace Puzzle.Merge
             return nextTileCoordinator;
         }
 
-        private void Move(Vector3 direction)
+        private Vector2 GetNextTile(Vector3 direction)
+        {
+            Vector2 nextTileCoordinator = GetCurrentTile();
+
+            if (direction == Vector3.forward)
+            {
+                nextTileCoordinator.y = boardProperty.MaxRow - 1;
+            }
+            else if (direction == Vector3.right)
+            {
+                nextTileCoordinator.x = boardProperty.MaxColumn - 1;
+            }
+            else if (direction == Vector3.back)
+            {
+                nextTileCoordinator.y = 0;
+            }
+            else
+            {
+                nextTileCoordinator.x = 0;
+            }
+
+            return nextTileCoordinator;
+        }
+
+        private Vector3 GetDestination(Vector2 currentTile, Vector3 direction)
+        {
+            Vector3 endPosition = TileMapUtil.GetPositionFromCoordinator(GetNextTile(currentTile, direction), boardProperty.FirstTilePosition, boardProperty.TileDistance);
+
+            endPosition.y = transform.position.y;
+
+            return endPosition;
+        }
+
+        private Vector3 GetDestination(Vector3 direction)
         {
             Vector3 endPosition = TileMapUtil.GetPositionFromCoordinator(GetNextTile(direction), boardProperty.FirstTilePosition, boardProperty.TileDistance);
 
             endPosition.y = transform.position.y;
 
-            Tween.Position(transform, endPosition, duration: 1f / speedMultiplier);
+            return endPosition;
+        }
+
+        private void Move(Vector2 currentTile, Vector3 direction)
+        {
+            Tween.Position(transform, GetDestination(currentTile, direction), duration: 1f / speedMultiplier);
+        }
+
+        private void Move(Vector3 direction)
+        {
+            Tween.Position(transform, GetDestination(direction), duration: 1f / speedMultiplier);
         }
     }
 }

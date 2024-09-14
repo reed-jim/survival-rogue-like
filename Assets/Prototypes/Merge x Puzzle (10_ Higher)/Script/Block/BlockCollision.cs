@@ -2,60 +2,63 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockCollision : MonoBehaviour
+namespace Puzzle.Merge
 {
-    [Header("COMPONENT")]
-    [SerializeField] private Rigidbody blockRigidbody;
-    [SerializeField] private MeshRenderer blockRenderer;
-
-    [Header("CUSTOMIZE")]
-    [SerializeField] private float maxRaycastDistance;
-
-    #region PRIVATE FIELD
-    private int _cachedInstanceId;
-    #endregion
-
-    private void Awake()
+    public class BlockCollision : MonoBehaviour
     {
-        BlockSpawner.snapBlockEvent += Snap;
+        [Header("COMPONENT")]
+        [SerializeField] private Rigidbody blockRigidbody;
+        [SerializeField] private MeshRenderer blockRenderer;
 
-        _cachedInstanceId = gameObject.GetInstanceID();
-    }
+        [Header("CUSTOMIZE")]
+        [SerializeField] private float maxRaycastDistance;
 
-    private void OnDestroy()
-    {
-        BlockSpawner.snapBlockEvent -= Snap;
-    }
+        #region PRIVATE FIELD
+        private int _cachedInstanceId;
+        #endregion
 
-    private void OnTriggerEnter(Collider other)
-    {
-        // blockRigidbody.velocity = Vector3.zero;
-
-        // Snap();
-    }
-
-    private void Snap()
-    {
-        int originalLayer = gameObject.layer;
-
-        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, maxRaycastDistance))
+        private void Awake()
         {
-            if (hit.collider.GetComponent<ITile>() != null)
-            {
-                transform.position = new Vector3(hit.collider.transform.position.x, hit.point.y + 0.6f * blockRenderer.bounds.size.y, hit.collider.transform.position.z);
-            }
+            BlockSpawner.snapBlockEvent += Snap;
+
+            _cachedInstanceId = gameObject.GetInstanceID();
         }
 
-        gameObject.layer = originalLayer;
-    }
-
-    private void Snap(int instanceId)
-    {
-        if (instanceId == _cachedInstanceId)
+        private void OnDestroy()
         {
-            Snap();
+            BlockSpawner.snapBlockEvent -= Snap;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            // blockRigidbody.velocity = Vector3.zero;
+
+            // Snap();
+        }
+
+        private void Snap()
+        {
+            int originalLayer = gameObject.layer;
+
+            gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, maxRaycastDistance))
+            {
+                if (hit.collider.GetComponent<ITile>() != null)
+                {
+                    transform.position = new Vector3(hit.collider.transform.position.x, hit.point.y + 0.6f * blockRenderer.bounds.size.y, hit.collider.transform.position.z);
+                }
+            }
+
+            gameObject.layer = originalLayer;
+        }
+
+        private void Snap(int instanceId)
+        {
+            if (instanceId == _cachedInstanceId)
+            {
+                Snap();
+            }
         }
     }
 }

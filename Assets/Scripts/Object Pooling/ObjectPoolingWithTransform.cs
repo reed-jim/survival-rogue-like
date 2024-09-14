@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPoolingWithTransform : ObjectPoolingWithOneComponent<Transform>
+namespace Puzzle.Merge
 {
-    protected override void Awake()
+    public class ObjectPoolingWithTransform : ObjectPoolingWithOneComponent<Transform>
     {
-        base.Awake();
+        protected override void Awake()
+        {
+            base.Awake();
 
-        BlockSpawner.getTransformEvent += GetComponentFromPool;
-    }
+            BlockSpawner.getTransformEvent += GetComponentFromPool;
+        }
 
-    private void OnDestroy()
-    {
-        BlockSpawner.getTransformEvent -= GetComponentFromPool;
+        private void OnDestroy()
+        {
+            BlockSpawner.getTransformEvent -= GetComponentFromPool;
+        }
     }
 }

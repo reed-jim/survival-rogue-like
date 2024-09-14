@@ -18,8 +18,24 @@ public class BoardProperty : ScriptableObject
         get => maxColumn; set => maxColumn = value;
     }
 
-    public int MaxTile => maxRow * maxColumn;
-    public Vector2 TileSize { get; set; }
+    public Vector3 TileSize { get; set; }
     public Vector3 TileDistance { get; set; }
     public Vector3 FirstTilePosition { get; set; }
+
+    public int MaxTile => maxRow * maxColumn;
+    public Vector3 BoardSize
+    {
+        get
+        {
+            return new Vector3(
+                (MaxColumn * TileDistance.x) + TileSize.x,
+                TileSize.y,
+                (MaxRow * TileDistance.z) + TileSize.z
+            );
+        }
+    }
+    public float MinPositionX => FirstTilePosition.x;
+    public float MaxPositionX => FirstTilePosition.x - 0.5f * TileSize.x + BoardSize.x;
+    public float MinPositionZ => FirstTilePosition.z;
+    public float MaxPositionZ => FirstTilePosition.z - 0.5f * TileSize.z + BoardSize.z;
 }
