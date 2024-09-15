@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace Puzzle.Merge
@@ -26,6 +27,7 @@ namespace Puzzle.Merge
         [Header("COLOR")]
         [SerializeField] private Color colorOne;
         [SerializeField] private Color colorTwo;
+        [SerializeField] private Color[] colors;
 
         #region PRIVATE FIELD
         private MeshFilter _tileMeshFilter;
@@ -38,9 +40,9 @@ namespace Puzzle.Merge
 
             BlockSpawner.getSpawnPositionEvent += GetSpawnPosition;
 
-            Init();
+            // Init();
 
-            Generate();
+            // Generate();
         }
 
         private void OnDestroy()
@@ -48,12 +50,11 @@ namespace Puzzle.Merge
             BlockSpawner.getSpawnPositionEvent -= GetSpawnPosition;
         }
 
-        private void Init()
+        public void Init()
         {
             _maxTile = maxRow * maxColumn;
 
             SpawnTile();
-            // SpawnWall();
         }
 
         private void SpawnTile()
@@ -62,9 +63,28 @@ namespace Puzzle.Merge
 
             for (int i = 0; i < _maxTile; i++)
             {
+                int x = i % maxColumn;
+                int y = (i - x) / maxColumn;
+
                 tiles[i] = Instantiate(tilePrefab, tileContainer);
+                tiles[i].name = $"Tile {y} - {x}";
 
                 tiles[i].GetComponent<InstanceMaterialPropertyBlock>().Init();
+            }
+        }
+
+        public void ClearTile()
+        {
+            List<GameObject> children = new List<GameObject>();
+
+            for (int i = 0; i < tileContainer.childCount; i++)
+            {
+                children.Add(tileContainer.GetChild(i).gameObject);
+            }
+
+            foreach (var item in children)
+            {
+                DestroyImmediate(item);
             }
         }
 
@@ -78,7 +98,7 @@ namespace Puzzle.Merge
             }
         }
 
-        private void Generate()
+        public void Generate()
         {
             Vector3 tileSize = tilePrefab.transform.localScale;
 
@@ -100,7 +120,8 @@ namespace Puzzle.Merge
 
                     int tileRichness = ColorUtil.GetRandomNumber();
 
-                    tiles[index].GetComponent<InstanceMaterialPropertyBlock>().SetColor(ColorUtil.GetGradientColor(colorOne, colorTwo, tileRichness / 100f));
+                    // tiles[index].GetComponent<InstanceMaterialPropertyBlock>().SetColor(ColorUtil.GetGradientColor(colorOne, colorTwo, tileRichness / 100f));
+                    tiles[index].GetComponent<InstanceMaterialPropertyBlock>().SetColor(colors[Random.Range(0, colors.Length)]);
 
                     ITile tileComponent = tiles[index].GetComponent<ITile>();
 
@@ -189,6 +210,33 @@ namespace Puzzle.Merge
         private Vector3 GetSpawnPosition()
         {
             return tiles[0].transform.position;
+        }
+    }
+
+    [CustomEditor(typeof(BoardGenerator))]
+    public class BoardGeneratorEditor : Editor
+    {
+        BoardGenerator _boardGenerator;
+
+        private void OnEnable()
+        {
+            _boardGenerator = (BoardGenerator)target;
+        }
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            if (GUILayout.Button("Generate Board"))
+            {
+                _boardGenerator.Init();
+                _boardGenerator.Generate();
+            }
+
+            if (GUILayout.Button("Clear Tile"))
+            {
+                _boardGenerator.ClearTile();
+            }
         }
     }
 }

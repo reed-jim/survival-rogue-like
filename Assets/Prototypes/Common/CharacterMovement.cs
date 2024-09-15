@@ -8,21 +8,29 @@ namespace Prototypes.Common
     {
         [SerializeField] private Rigidbody characterRigidbody;
         [SerializeField] private float speedMultiplier;
+        [SerializeField] private float autoBrakeMultiplier;
 
-        // private void Awake()
-        // {
-        //     JoystickController.controlPlayerEvent += Control;
-        // }
+        private void Awake()
+        {
+            JoystickController.controlPlayerEvent += Control;
+        }
 
-        // private void OnDestroy()
-        // {
-        //     JoystickController.controlPlayerEvent -= Control;
-        // }
+        private void OnDestroy()
+        {
+            JoystickController.controlPlayerEvent -= Control;
+        }
 
-        // private void Update()
-        // {
-        //     Control();
-        // }
+        private void Update()
+        {
+            AutoBrake();
+        }
+
+        private void AutoBrake()
+        {
+            Vector3 reverseForce = -1 * autoBrakeMultiplier * characterRigidbody.velocity;
+
+            characterRigidbody.velocity += reverseForce;
+        }
 
         // temp, this should be in a seperate module
         private void Control()

@@ -6,6 +6,7 @@ public class InstanceMaterialPropertyBlock : MonoBehaviour
 {
     [Header("CUSTOMIZE")]
     [SerializeField] private Color color;
+    [SerializeField] private string colorReference;
 
     private Renderer _renderer;
     private MaterialPropertyBlock _propertyBlock;
@@ -33,7 +34,7 @@ public class InstanceMaterialPropertyBlock : MonoBehaviour
 
     public void SetColor(Color color)
     {
-        _propertyBlock.SetColor("_Color", color);
+        _propertyBlock.SetColor(colorReference, color);
 
         _renderer.SetPropertyBlock(_propertyBlock);
     }
