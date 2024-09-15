@@ -44,8 +44,10 @@ public class CharacterObjectiveHolder : MonoBehaviour
 
         }
 
-        setCharacterObjectiveHold?.Invoke(0);
-
         earnObjectiveEvent?.Invoke(_numberObjectiveHolding);
+
+        _numberObjectiveHolding = 0;
+
+        setCharacterObjectiveHold?.Invoke(0);
     }
 }

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Puzzle.Merge;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -8,12 +7,19 @@ public class LevelSpawner : MonoBehaviour
 {
     private void Awake()
     {
-        LoadLevelAsset();
+        WinLevelScreen.nextLevelEvent += NextLevel;
+
+        LoadLevelAsset("Level 1");
     }
 
-    private void LoadLevelAsset()
+    private void OnDestroy()
     {
-        AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>("Level 1");
+        WinLevelScreen.nextLevelEvent -= NextLevel;
+    }
+
+    private void LoadLevelAsset(string level)
+    {
+        AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(level);
 
         using (var helper = new AddressablesHelper(handle))
         {
@@ -45,6 +51,13 @@ public class LevelSpawner : MonoBehaviour
         {
             Debug.LogError("Failed to load prefab.");
         }
+    }
+
+    private async void NextLevel()
+    {
+        DestroyImmediate(transform.GetChild(0).gameObject);
+
+        LoadLevelAsset("Level 2");
     }
 }
 

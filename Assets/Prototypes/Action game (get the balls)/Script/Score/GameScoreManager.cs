@@ -15,6 +15,7 @@ namespace Prototypes.Merge
 
         #region ACTION
         public static event Action<int, int> setScoreEvent;
+        public static event System.Action winLevelEvent;
         #endregion
 
         private void Awake()
@@ -32,6 +33,11 @@ namespace Prototypes.Merge
             _score += additionalScore;
 
             setScoreEvent?.Invoke(_score, requiredScore);
+
+            if (_score >= requiredScore)
+            {
+                winLevelEvent?.Invoke();
+            }
         }
     }
 }
