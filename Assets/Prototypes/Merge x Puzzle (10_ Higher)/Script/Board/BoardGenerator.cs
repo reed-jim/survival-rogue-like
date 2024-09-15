@@ -1,6 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Puzzle.Merge
@@ -30,19 +31,14 @@ namespace Puzzle.Merge
         [SerializeField] private Color[] colors;
 
         #region PRIVATE FIELD
-        private MeshFilter _tileMeshFilter;
         private int _maxTile;
         #endregion
 
+        public bool IsPaintMode;
+
         private void Awake()
         {
-            _tileMeshFilter = tilePrefab.GetComponent<MeshFilter>();
-
             BlockSpawner.getSpawnPositionEvent += GetSpawnPosition;
-
-            // Init();
-
-            // Generate();
 
             GetTiles();
 
@@ -100,16 +96,6 @@ namespace Puzzle.Merge
             }
         }
 
-        private void SpawnWall()
-        {
-            walls = new GameObject[4];
-
-            for (int i = 0; i < 4; i++)
-            {
-                walls[i] = Instantiate(wallPrefab, wallContainer);
-            }
-        }
-
         public void Generate()
         {
             Vector3 tileSize = tilePrefab.transform.localScale;
@@ -149,28 +135,6 @@ namespace Puzzle.Merge
             boardProperty.TileSize = tileSize;
             boardProperty.TileDistance = tileDistance * tileSize;
             boardProperty.FirstTilePosition = tiles[0].transform.position;
-
-            // Vector2 boardSize;
-
-            // boardSize.x = maxColumn * tileSize.x + (maxColumn - 1) * (tileDistance - 1) * tileSize.x;
-            // boardSize.y = maxRow * tileSize.z + (maxRow - 1) * (tileDistance - 1) * tileSize.z;
-
-            // for (int i = 0; i < walls.Length; i++)
-            // {
-            //     if (i % 2 == 0)
-            //     {
-            //         walls[i].transform.localScale = new Vector3(boardSize.x, 10, 1);
-            //     }
-            //     else
-            //     {
-            //         walls[i].transform.localScale = new Vector3(1, 10, boardSize.y);
-            //     }
-            // }
-
-            // walls[0].transform.position = new Vector3(0, 0, 0.51f * (boardSize.y + walls[0].transform.localScale.z));
-            // walls[1].transform.position = new Vector3(0.51f * (boardSize.x + walls[1].transform.localScale.x), 0, 0);
-            // walls[2].transform.position = new Vector3(0, 0, -0.51f * (boardSize.y + walls[2].transform.localScale.z));
-            // walls[3].transform.position = new Vector3(-0.51f * (boardSize.x + walls[3].transform.localScale.x), 0, 0);
         }
 
         private void SetTileColors()
@@ -243,10 +207,56 @@ namespace Puzzle.Merge
     {
         BoardGenerator _boardGenerator;
 
+        private bool isClicking = false;
+
+        private void OnSceneGUI()
+        {
+            if (_boardGenerator.IsPaintMode)
+            {
+                if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
+                {
+                    Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.collider.GetComponent<ITile>() != null)
+                        {
+                            hit.collider.gameObject.SetActive(false);
+                        }
+                    }
+                }
+            }
+        }
+
         private void OnEnable()
         {
             _boardGenerator = (BoardGenerator)target;
         }
+
+        // private void OnDisable()
+        // {
+        //     SceneView.duringSceneGui -= OnSceneGUI;
+        // }
+
+        // private void OnSceneGUI(SceneView sceneView)
+        // {
+        //     if (PrefabStageUtility.GetCurrentPrefabStage() != null)
+        //     {
+        //         Event e = Event.current;
+
+        //         if (e.type == EventType.MouseDown && e.button == 0) // Left mouse button
+        //         {
+        //             isClicking = true;
+        //             PaintDisable(e.mousePosition, sceneView.camera);
+        //             e.Use(); // Consume the event
+        //         }
+        //         else if (e.type == EventType.MouseUp && e.button == 0) // Left mouse button
+        //         {
+        //             isClicking = false;
+        //         }
+        //     }
+        // }
 
         public override void OnInspectorGUI()
         {
@@ -261,6 +271,21 @@ namespace Puzzle.Merge
             if (GUILayout.Button("Clear Tile"))
             {
                 _boardGenerator.ClearTile();
+            }
+
+            _boardGenerator.IsPaintMode = GUILayout.Toggle(_boardGenerator.IsPaintMode, "Is Paint Mode");
+        }
+
+        private void PaintDisable(Vector2 mousePosition, Camera camera)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hit.collider.GetComponent<ITile>() != null)
+                {
+                    hit.collider.gameObject.SetActive(false);
+                }
             }
         }
     }
