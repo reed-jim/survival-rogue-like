@@ -36,9 +36,16 @@ namespace Prototypes.Action
 
         private void SetObjectiveHold(int number)
         {
-            objectiveHoldText.gameObject.SetActive(true);
+            if (number == 0)
+            {
+                objectiveHoldText.gameObject.SetActive(false);
+            }
+            else
+            {
+                objectiveHoldText.gameObject.SetActive(true);
 
-            objectiveHoldText.text = $"{number}";
+                objectiveHoldText.text = $"{number}";
+            }
         }
     }
 }

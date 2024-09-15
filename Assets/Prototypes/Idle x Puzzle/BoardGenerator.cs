@@ -44,8 +44,6 @@ public class BoardGenerator : MonoBehaviour
         for (int i = 0; i < _maxTile; i++)
         {
             tiles[i] = Instantiate(tilePrefab, tileContainer);
-
-            tiles[i].GetComponent<InstanceMaterialPropertyBlock>().Init();
         }
     }
 

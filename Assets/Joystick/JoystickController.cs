@@ -117,17 +117,20 @@ public class JoystickController : MonoBehaviour
 
         joystick.gameObject.SetActive(true);
 
-        if (_fadeInJoystickTween.isAlive)
-        {
-            _fadeInJoystickTween.Stop();
-        }
+        // if (_fadeInJoystickTween.isAlive)
+        // {
+        //     _fadeInJoystickTween.Stop();
+        // }
 
-        if (_fadeOutJoystickTween.isAlive)
-        {
-            _fadeOutJoystickTween.Stop();
-        }
+        // if (_fadeOutJoystickTween.isAlive)
+        // {
+        //     _fadeOutJoystickTween.Stop();
+        // }
 
-        _fadeInJoystickTween = Tween.Alpha(_joystickImage, 1, duration: 0.2f);
+        // if (_joystickImage.color.a != 1)
+        // {
+        //     _fadeInJoystickTween = Tween.Alpha(_joystickImage, 1, duration: 0.2f);
+        // }
     }
 
     // THERE IS BETTER WAY TO DO THIS: use rotation
@@ -171,11 +174,19 @@ public class JoystickController : MonoBehaviour
 
     private void FadeOutJoystick()
     {
-        if (_fadeOutJoystickTween.isAlive)
-        {
-            _fadeOutJoystickTween.Stop();
-        }
+        // if (_fadeInJoystickTween.isAlive)
+        // {
+        //     _fadeInJoystickTween.Stop();
+        // }
 
-        _fadeInJoystickTween = Tween.Alpha(_joystickImage, 1, duration: 0.2f);
+        // if (_fadeOutJoystickTween.isAlive)
+        // {
+        //     _fadeOutJoystickTween.Stop();
+        // }
+
+        // if (_joystickImage.color.a != 0)
+        // {
+        //     _fadeOutJoystickTween = Tween.Alpha(_joystickImage, 0, duration: 0.2f);
+        // }
     }
 }

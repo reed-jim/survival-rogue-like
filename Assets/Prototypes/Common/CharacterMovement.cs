@@ -29,6 +29,8 @@ namespace Prototypes.Common
         {
             Vector3 reverseForce = -1 * autoBrakeMultiplier * characterRigidbody.velocity;
 
+            reverseForce.y = 0;
+
             characterRigidbody.velocity += reverseForce;
         }
 
@@ -60,7 +62,7 @@ namespace Prototypes.Common
 
         private void Control(Vector2 normalizedDirection)
         {
-            characterRigidbody.velocity = speedMultiplier * new Vector3(normalizedDirection.x, 0, normalizedDirection.y);
+            characterRigidbody.velocity = speedMultiplier * new Vector3(normalizedDirection.x, characterRigidbody.velocity.y, normalizedDirection.y);
         }
     }
 }

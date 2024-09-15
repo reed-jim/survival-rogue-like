@@ -117,7 +117,7 @@ public static class UIUtil
     #endregion
 
     #region TEXT
-    public static void SetTextSize(TextMeshProUGUI target, float size)
+    public static void SetTextSize(TMP_Text target, float size)
     {
         target.fontSize = size;
         target.rectTransform.sizeDelta = new Vector2(target.preferredWidth, target.preferredHeight);

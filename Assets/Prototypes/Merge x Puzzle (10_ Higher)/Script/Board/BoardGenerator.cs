@@ -43,6 +43,10 @@ namespace Puzzle.Merge
             // Init();
 
             // Generate();
+
+            GetTiles();
+
+            SetTileColors();
         }
 
         private void OnDestroy()
@@ -57,6 +61,16 @@ namespace Puzzle.Merge
             SpawnTile();
         }
 
+        private void GetTiles()
+        {
+            tiles = new GameObject[tileContainer.childCount];
+
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                tiles[i] = tileContainer.GetChild(i).gameObject;
+            }
+        }
+
         private void SpawnTile()
         {
             tiles = new GameObject[_maxTile];
@@ -68,8 +82,6 @@ namespace Puzzle.Merge
 
                 tiles[i] = Instantiate(tilePrefab, tileContainer);
                 tiles[i].name = $"Tile {y} - {x}";
-
-                tiles[i].GetComponent<InstanceMaterialPropertyBlock>().Init();
             }
         }
 
@@ -111,7 +123,7 @@ namespace Puzzle.Merge
                     Vector3 position = new Vector3();
 
                     position.x = -(((maxColumn - 1) / 2f) * tileDistance * tileSize.x) + tileDistance * j * tileSize.x;
-                    position.y = 0.5f * tileSize.y;
+                    position.y = -0.5f * tileSize.y;
                     position.z = -(((maxRow - 1) / 2f) * tileDistance * tileSize.z) + tileDistance * i * tileSize.z;
 
                     tiles[index].transform.position = position;
@@ -159,6 +171,19 @@ namespace Puzzle.Merge
             // walls[1].transform.position = new Vector3(0.51f * (boardSize.x + walls[1].transform.localScale.x), 0, 0);
             // walls[2].transform.position = new Vector3(0, 0, -0.51f * (boardSize.y + walls[2].transform.localScale.z));
             // walls[3].transform.position = new Vector3(-0.51f * (boardSize.x + walls[3].transform.localScale.x), 0, 0);
+        }
+
+        private void SetTileColors()
+        {
+            for (int i = 0; i < maxRow; i++)
+            {
+                for (int j = 0; j < maxColumn; j++)
+                {
+                    int index = j + maxColumn * i;
+
+                    tiles[index].GetComponent<InstanceMaterialPropertyBlock>().SetColor(ColorUtil.GetGradientColor(colorOne, colorTwo, (float)index / tiles.Length));
+                }
+            }
         }
 
         private void FillOut(int iteratorIndex, int numFill, int x, int y, bool[] isTileChecked)
