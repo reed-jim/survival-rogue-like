@@ -1,3 +1,4 @@
+using System;
 using Puzzle.Merge;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -8,6 +9,11 @@ public class LevelSpawner : MonoBehaviour
     [Header("DEBUG")]
     [SerializeField] private bool isDebug;
     [SerializeField] private int level;
+
+    #region ACTION
+    public static event Action startLevelEvent;
+    #endregion
+
     private void Awake()
     {
         WinLevelScreen.nextLevelEvent += NextLevel;
@@ -40,6 +46,8 @@ public class LevelSpawner : MonoBehaviour
                     GameObject prefab = operationHandle.Result;
 
                     Instantiate(prefab, transform);
+
+                    startLevelEvent?.Invoke();
                 }
                 else
                 {

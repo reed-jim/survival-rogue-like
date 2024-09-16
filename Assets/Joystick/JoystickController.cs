@@ -40,7 +40,10 @@ public class JoystickController : MonoBehaviour
         _touchPoints = new List<Vector2>();
 
         BuildUI();
+    }
 
+    private void OnEnable()
+    {
         StartCoroutine(ControlJoystick());
     }
 

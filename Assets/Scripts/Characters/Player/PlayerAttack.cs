@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using PrimeTween;
+#if UNITY_EDITOR
 using UnityEditor.Animations;
+#endif
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -156,6 +158,7 @@ public class PlayerAttack : MonoBehaviour
 
     private float GetActualAttackAnimationDuration()
     {
+#if UNITY_EDITOR
         AnimatorController runtimeAnimatorController = _animator.runtimeAnimatorController as AnimatorController;
 
         AnimatorControllerLayer[] acLayers = runtimeAnimatorController.layers;
@@ -176,6 +179,9 @@ public class PlayerAttack : MonoBehaviour
         }
 
         return attackState.motion.averageDuration / attackState.speed;
+#else
+        return 1;
+#endif
     }
 
     // private IEnumerator Shooting()

@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using ExitGames.Client.Photon.StructWrapping;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace Puzzle.Merge
@@ -202,6 +200,7 @@ namespace Puzzle.Merge
         }
     }
 
+#if UNITY_EDITOR
     [CustomEditor(typeof(BoardGenerator))]
     public class BoardGeneratorEditor : Editor
     {
@@ -238,30 +237,6 @@ namespace Puzzle.Merge
             _boardGenerator = (BoardGenerator)target;
         }
 
-        // private void OnDisable()
-        // {
-        //     SceneView.duringSceneGui -= OnSceneGUI;
-        // }
-
-        // private void OnSceneGUI(SceneView sceneView)
-        // {
-        //     if (PrefabStageUtility.GetCurrentPrefabStage() != null)
-        //     {
-        //         Event e = Event.current;
-
-        //         if (e.type == EventType.MouseDown && e.button == 0) // Left mouse button
-        //         {
-        //             isClicking = true;
-        //             PaintDisable(e.mousePosition, sceneView.camera);
-        //             e.Use(); // Consume the event
-        //         }
-        //         else if (e.type == EventType.MouseUp && e.button == 0) // Left mouse button
-        //         {
-        //             isClicking = false;
-        //         }
-        //     }
-        // }
-
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -293,4 +268,5 @@ namespace Puzzle.Merge
             }
         }
     }
+#endif
 }
