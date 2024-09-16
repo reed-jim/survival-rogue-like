@@ -5,11 +5,21 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class LevelSpawner : MonoBehaviour
 {
+    [Header("DEBUG")]
+    [SerializeField] private bool isDebug;
+    [SerializeField] private int level;
     private void Awake()
     {
         WinLevelScreen.nextLevelEvent += NextLevel;
 
-        LoadLevelAsset("Level 1");
+        if (isDebug)
+        {
+            LoadLevelAsset($"Level {level}");
+        }
+        else
+        {
+            LoadLevelAsset("Level 1");
+        }
     }
 
     private void OnDestroy()

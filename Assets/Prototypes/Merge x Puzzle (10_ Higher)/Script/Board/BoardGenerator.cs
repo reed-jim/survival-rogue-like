@@ -213,9 +213,11 @@ namespace Puzzle.Merge
         {
             if (_boardGenerator.IsPaintMode)
             {
-                if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
+                Event e = Event.current;
+
+                if (e.type == EventType.MouseDown && e.button == 0)
                 {
-                    Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+                    Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
                     RaycastHit hit;
 
                     if (Physics.Raycast(ray, out hit))
@@ -223,6 +225,8 @@ namespace Puzzle.Merge
                         if (hit.collider.GetComponent<ITile>() != null)
                         {
                             hit.collider.gameObject.SetActive(false);
+
+                            e.Use();
                         }
                     }
                 }
