@@ -1904,7 +1904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDebug: 1
-  level: 2
+  level: 3
 --- !u!4 &1141099605
 Transform:
   m_ObjectHideFlags: 0

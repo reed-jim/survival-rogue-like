@@ -210,10 +210,11 @@ namespace Puzzle.Merge
 
         private void OnSceneGUI()
         {
+            // gizmoz is required
             if (_boardGenerator.IsPaintMode)
             {
                 Event e = Event.current;
-
+                
                 if (e.type == EventType.MouseDown && e.button == 0)
                 {
                     Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);

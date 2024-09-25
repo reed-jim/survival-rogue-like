@@ -27,6 +27,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d6c838f1a00a2c48bb148f263f4c53e
+    m_Address: Assets/Prototypes/Common/Material/Cracked_Concrete_26.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 05ad12f1344e07f46b4dd4a0fa13d258
+    m_Address: Level 3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ec0b5c66999ad0744ba6b97835275dd6, type: 2}
   m_SchemaSet:

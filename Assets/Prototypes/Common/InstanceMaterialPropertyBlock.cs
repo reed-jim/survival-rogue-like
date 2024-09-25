@@ -13,6 +13,13 @@ public class InstanceMaterialPropertyBlock : BaseInstanceMaterialPropertyBlock
         SetColor(color);
     }
 
+    private void ManuallyAssignShader()
+    {
+        Shader urpLitShader = Shader.Find("Universal Render Pipeline/Lit");
+
+        _renderer.material.shader = urpLitShader;
+    }
+
     public void SetColor(Color color)
     {
         Init();
