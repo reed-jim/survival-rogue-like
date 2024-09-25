@@ -55,6 +55,7 @@ MonoBehaviour:
   characterRigidbody: {fileID: 7418404881279181970}
   speedMultiplier: 0.02
   autoBrakeMultiplier: 0.01
+  playerRuntime: {fileID: 11400000, guid: bc001c6bc7056254999bbc5f8654aa0d, type: 2}
 --- !u!114 &5323654898438167169
 MonoBehaviour:
   m_ObjectHideFlags: 0

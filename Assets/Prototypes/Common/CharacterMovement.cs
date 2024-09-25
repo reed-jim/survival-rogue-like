@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Prototypes.Common
@@ -10,9 +8,13 @@ namespace Prototypes.Common
         [SerializeField] private float speedMultiplier;
         [SerializeField] private float autoBrakeMultiplier;
 
+        [SerializeField] private Action.PlayerRuntime playerRuntime;
+
         private void Awake()
         {
             JoystickController.controlPlayerEvent += Control;
+
+            playerRuntime.Player = transform;
         }
 
         private void OnDestroy()
