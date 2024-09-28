@@ -4720,6 +4720,7 @@ MonoBehaviour:
   colors:
   - {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 0}
   IsPaintMode: 1
+  path: {fileID: 0}
 --- !u!1 &2627771884654070559
 GameObject:
   m_ObjectHideFlags: 0

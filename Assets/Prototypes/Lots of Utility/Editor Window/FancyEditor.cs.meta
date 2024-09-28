@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 302200dddf3e96d4bb524757e198fa88
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - font: {instanceID: 0}
+  - buttonNormalBackground: {instanceID: 0}
+  - buttonHoverBackground: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -35,6 +35,7 @@ namespace Puzzle.Merge
         public bool IsPaintMode;
         public LineRenderer path;
 
+        public GameObject[] Tiles => tiles;
         public Vector3 TileDistance => tileDistance * tilePrefab.transform.localScale;
 
         private void Awake()
@@ -220,34 +221,6 @@ namespace Puzzle.Merge
             {
                 Event e = Event.current;
 
-                if (e.type == EventType.MouseDown && e.button == 0)
-                {
-                    Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
-                    RaycastHit hit;
-
-                    if (Physics.Raycast(ray, out hit))
-                    {
-                        int x = Mathf.RoundToInt(hit.point.x / _boardGenerator.TileDistance.x);
-                        int z = Mathf.RoundToInt(hit.point.z / _boardGenerator.TileDistance.z);
-
-                        Vector3 position = new Vector3();
-
-                        position.x = (x - 0.5f) * _boardGenerator.TileDistance.x;
-                        position.z = (z - 0.5f) * _boardGenerator.TileDistance.z;
-
-                        Debug.Log(hit.point.x + "/" + _boardGenerator.TileDistance.x);
-                        Debug.Log(hit.point.x / _boardGenerator.TileDistance.x);
-                        Debug.Log(x + "/" + z);
-
-                        pathPoints.Add(position);
-
-                        _boardGenerator.path.positionCount = pathPoints.Count;
-                        _boardGenerator.path.SetPositions(pathPoints.ToArray());
-
-                        e.Use();
-                    }
-                }
-
                 // if (e.type == EventType.MouseDown && e.button == 0)
                 // {
                 //     Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
@@ -255,14 +228,42 @@ namespace Puzzle.Merge
 
                 //     if (Physics.Raycast(ray, out hit))
                 //     {
-                //         if (hit.collider.GetComponent<ITile>() != null)
-                //         {
-                //             hit.collider.gameObject.SetActive(false);
+                //         int x = Mathf.RoundToInt(hit.point.x / _boardGenerator.TileDistance.x);
+                //         int z = Mathf.RoundToInt(hit.point.z / _boardGenerator.TileDistance.z);
 
-                //             e.Use();
-                //         }
+                //         Vector3 position = new Vector3();
+
+                //         position.x = (x - 0.5f) * _boardGenerator.TileDistance.x;
+                //         position.z = (z - 0.5f) * _boardGenerator.TileDistance.z;
+
+                //         Debug.Log(hit.point.x + "/" + _boardGenerator.TileDistance.x);
+                //         Debug.Log(hit.point.x / _boardGenerator.TileDistance.x);
+                //         Debug.Log(x + "/" + z);
+
+                //         pathPoints.Add(position);
+
+                //         _boardGenerator.path.positionCount = pathPoints.Count;
+                //         _boardGenerator.path.SetPositions(pathPoints.ToArray());
+
+                //         e.Use();
                 //     }
                 // }
+
+                if (e.type == EventType.MouseDown && e.button == 0)
+                {
+                    Ray ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.collider.GetComponent<ITile>() != null)
+                        {
+                            hit.collider.gameObject.SetActive(false);
+
+                            e.Use();
+                        }
+                    }
+                }
             }
         }
 
