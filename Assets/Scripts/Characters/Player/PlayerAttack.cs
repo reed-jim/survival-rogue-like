@@ -23,6 +23,7 @@ public class PlayerAttack : MonoBehaviour
 
     [Header("FX")]
     [SerializeField] private ParticleSystem swordSlash;
+    [SerializeField] private ParticleSystem swordTrail;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float delayTimeAttackHit;
@@ -146,7 +147,8 @@ public class PlayerAttack : MonoBehaviour
             _isAttacking = false;
         });
 
-        PlaySwordSlash();
+        PlaySwordTrail();
+        // PlaySwordSlash();
 
         _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
         {
@@ -231,6 +233,16 @@ public class PlayerAttack : MonoBehaviour
 
     //     playerShooterController.Shoot(hit.point, transform);
     // }
+
+    private void PlaySwordTrail()
+    {
+        swordTrail?.Play();
+
+        Tween.Delay(0.2f * _actualAttackAnimationDuration).OnComplete(() =>
+        {
+            swordTrail?.Stop();
+        });
+    }
 
     private void PlaySwordSlash()
     {
