@@ -4,10 +4,6 @@ using static CustomDelegate;
 
 public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
 {
-    [Header("CUSTOMIZE")]
-    [SerializeField] private float forceMultiplier;
-    [SerializeField] private float directionYMultiplier;
-
     public static event GetBulletAction getBulletEvent;
 
     private void Awake()

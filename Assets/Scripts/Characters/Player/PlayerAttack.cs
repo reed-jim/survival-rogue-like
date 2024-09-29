@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Dreamteck.Splines;
 using PrimeTween;
 #if UNITY_EDITOR
 using UnityEditor.Animations;
@@ -24,6 +26,7 @@ public class PlayerAttack : MonoBehaviour
     [Header("FX")]
     [SerializeField] private ParticleSystem swordSlash;
     [SerializeField] private ParticleSystem swordTrail;
+    [SerializeField] private SplineFollower swordSlashSplineFollower;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float delayTimeAttackHit;
@@ -49,7 +52,7 @@ public class PlayerAttack : MonoBehaviour
 
         LevelingUI.enableInput += EnableInput;
 
-        swordCollider.enabled = false;
+        // swordCollider.enabled = false;
 
         swordSlash.gameObject.SetActive(false);
 
@@ -134,7 +137,7 @@ public class PlayerAttack : MonoBehaviour
             _isAttacking = true;
         }
 
-        _animator.SetInteger("State", 1);
+        // _animator.SetInteger("State", 1);
 
         enableRotatingEvent?.Invoke(gameObject.GetInstanceID(), false);
 
@@ -148,7 +151,6 @@ public class PlayerAttack : MonoBehaviour
         });
 
         PlaySwordTrail();
-        // PlaySwordSlash();
 
         _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
         {
@@ -238,10 +240,49 @@ public class PlayerAttack : MonoBehaviour
     {
         swordTrail?.Play();
 
-        Tween.Delay(0.2f * _actualAttackAnimationDuration).OnComplete(() =>
+        // Tween.Delay(0.2f * _actualAttackAnimationDuration).OnComplete(() =>
+        // {
+        //     swordTrail?.Stop();
+        // });
+
+        // Tween.Delay(0.1f).OnComplete(() =>
+        // {
+        //     swordTrail?.Stop();
+        // });
+
+        StartCoroutine(MoveAlongSpline());
+
+        IEnumerator MoveAlongSpline()
         {
-            swordTrail?.Stop();
-        });
+            WaitForSeconds waitForSeconds = new WaitForSeconds(3f * Time.deltaTime);
+
+            bool isTrailStop = false;
+            float progress = 0;
+
+            float deltaProgress = Time.deltaTime / 0.2f;
+
+            while (progress < 1)
+            {
+                swordSlashSplineFollower.Move((double)deltaProgress);
+
+                progress += deltaProgress;
+
+                if (progress > 0.4f && !isTrailStop)
+                {
+                    swordTrail?.Stop();
+
+                    isTrailStop = true;
+                }
+
+                yield return waitForSeconds;
+            }
+        }
+
+        // Tween.Custom(0, 1, duration: 0.8f, onValueChange: newVal => swordSlashSplineFollower.Move((double)0.05))
+        // .OnComplete(() =>
+        // {
+        //     swordTrail?.Stop();
+        // });
     }
 
     private void PlaySwordSlash()

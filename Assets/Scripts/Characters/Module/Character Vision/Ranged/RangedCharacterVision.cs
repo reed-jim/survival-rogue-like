@@ -20,6 +20,11 @@ public class RangedCharacterVision : BaseCharacterVision, ICharacterVision
         _tweens = new List<Tween>();
     }
 
+    private void Update()
+    {
+        FindEnemy();
+    }
+
     public void FindEnemy()
     {
         if (_isInCountdownCheckAttackEnemy)
@@ -36,7 +41,7 @@ public class RangedCharacterVision : BaseCharacterVision, ICharacterVision
             _isInCountdownCheckAttackEnemy = true;
 
             _tweens.Add(
-                Tween.Delay(3f).OnComplete(() => _isInCountdownCheckAttackEnemy = false)
+                Tween.Delay(0.5f).OnComplete(() => _isInCountdownCheckAttackEnemy = false)
             );
         }
     }

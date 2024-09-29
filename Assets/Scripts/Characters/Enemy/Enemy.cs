@@ -77,10 +77,10 @@ public class Enemy : MonoBehaviour
         enemySpawnedEvent?.Invoke(stat);
     }
 
-    private void Update()
-    {
-        _characterVision.FindEnemy();
-    }
+    // private void Update()
+    // {
+    //     _characterVision.FindEnemy();
+    // }
 
     private void OnDestroy()
     {

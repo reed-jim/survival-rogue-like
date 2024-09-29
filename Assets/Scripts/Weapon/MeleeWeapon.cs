@@ -8,6 +8,9 @@ using static CustomDelegate;
 
 public class MeleeWeapon : MonoBehaviour, ICollide
 {
+    [Header("WEAPON HOLDER")]
+    [SerializeField] private GameObject weaponHolder;
+
     #region PRIVATE FIELD
     protected int _attackerInstanceId;
     #endregion
@@ -21,7 +24,7 @@ public class MeleeWeapon : MonoBehaviour, ICollide
 
     private void Awake()
     {
-        _attackerInstanceId = transform.parent.gameObject.GetInstanceID();
+        _attackerInstanceId = weaponHolder.GetInstanceID();
     }
 
     protected CharacterStat GetAttackerStat()
