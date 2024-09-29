@@ -10,10 +10,12 @@ public class ObjectPoolingWithVisualEffect : ObjectPoolingWithOneComponent<Visua
         base.Awake();
 
         CollisionHandler.getVisualEffectEvent += GetComponentFromPool;
+        MeleeWeapon.getVisualEffectEvent += GetComponentFromPool;
     }
 
     private void OnDestroy()
     {
         CollisionHandler.getVisualEffectEvent -= GetComponentFromPool;
+        MeleeWeapon.getVisualEffectEvent -= GetComponentFromPool;
     }
 }

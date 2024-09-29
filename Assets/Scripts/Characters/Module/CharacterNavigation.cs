@@ -57,6 +57,8 @@ public class CharacterNavigation : MonoBehaviour
                         distanceToTarget.z > 1.5f * offsetToPlayer.z
                     )
                     {
+                        _navMeshAgent.isStopped = false;
+
                         _isNearTarget = false;
                     }
                     else
@@ -79,15 +81,17 @@ public class CharacterNavigation : MonoBehaviour
                 }
                 else
                 {
-                    _navMeshAgent.isStopped = true;
-
                     setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
 
-                    yield return waitDelayAfterCatchedPlayer;
-
-                    _navMeshAgent.isStopped = false;
+                    _navMeshAgent.isStopped = true;
 
                     _isNearTarget = true;
+
+                    // yield return waitDelayAfterCatchedPlayer;
+
+                    // _navMeshAgent.isStopped = false;
+
+                    // _isNearTarget = true;
                 }
             }
 

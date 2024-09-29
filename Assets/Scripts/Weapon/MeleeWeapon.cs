@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ReedJim.RPG.Stat;
 using UnityEngine;
+using UnityEngine.VFX;
 using static CustomDelegate;
 
 public class MeleeWeapon : MonoBehaviour, ICollide
@@ -15,6 +16,7 @@ public class MeleeWeapon : MonoBehaviour, ICollide
     public static event Action<int, CharacterStat> applyDamageEvent;
     public static event Action<int> characterHitEvent;
     public static event GetCharacterStatAction<int> getAttackerStatAction;
+    public static GetVisualEffectAction getVisualEffectEvent;
     #endregion
 
     private void Awake()
@@ -33,6 +35,12 @@ public class MeleeWeapon : MonoBehaviour, ICollide
         applyDamageEvent?.Invoke(other.GetInstanceID(), GetAttackerStat());
 
         characterHitEvent?.Invoke(other.GetInstanceID());
+
+        VisualEffect visualEffect = getVisualEffectEvent?.Invoke();
+
+        visualEffect.gameObject.SetActive(true);
+        visualEffect.transform.position = other.transform.position;
+        visualEffect.Play();
     }
     #endregion
 }
