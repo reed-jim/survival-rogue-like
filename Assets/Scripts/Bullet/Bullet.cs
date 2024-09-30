@@ -62,7 +62,19 @@ public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId, ICol
 
         transform.position = shotPosition;
 
-        _rigidBody.AddForce(forceMultiplier * (target.position - shotPosition));
+        _rigidBody.AddForce(forceMultiplier * (AvoidTooNearTarget(target.position, shotPosition) - shotPosition).normalized, ForceMode.Impulse);
+    }
+
+    private Vector3 AvoidTooNearTarget(Vector3 targetPosition, Vector3 shotPosition)
+    {
+        if (Vector3.Distance(targetPosition, shotPosition) < 2)
+        {
+            return targetPosition *= 5;
+        }
+        else
+        {
+            return targetPosition;
+        }
     }
 
     public int GetParentInstanceId()
