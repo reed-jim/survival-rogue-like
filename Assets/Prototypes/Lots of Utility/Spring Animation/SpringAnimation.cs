@@ -133,6 +133,60 @@ public class SpringAnimation : MonoBehaviour
         }
     }
 
+    public static IEnumerator SpringColorAnimation
+    (
+        MaterialPropertyBlock materialPropertyBlock,
+        Color colorRange,
+        int numberStep,
+        float durationEachStep
+    )
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
+
+        int step = 0;
+        bool isSetUpForNewCycle = false;
+
+        Color initialColor = materialPropertyBlock.GetColor("_Color");
+
+        Color startColor = Color.white;
+        Color endColor = Color.white;
+        Color deltaColor = Color.white;
+
+        while (step <= numberStep)
+        {
+            if (!isSetUpForNewCycle)
+            {
+                int remainingStep = numberStep - step;
+
+                endColor = initialColor + ((float)remainingStep / numberStep) * colorRange;
+
+                if (step % 2 != 0)
+                {
+                    endColor = initialColor - ((float)remainingStep / numberStep) * colorRange;
+                }
+
+                startColor = materialPropertyBlock.GetColor("_Color");
+
+                deltaColor = (endColor - startColor) / (durationEachStep / 0.02f);
+
+                isSetUpForNewCycle = true;
+            }
+
+            if (materialPropertyBlock.GetColor("_Color") != endColor)
+            {
+                materialPropertyBlock.SetColor("_Color", materialPropertyBlock.GetColor("_Color") + deltaColor);
+            }
+            else
+            {
+                isSetUpForNewCycle = false;
+
+                step++;
+            }
+
+            yield return waitForSeconds;
+        }
+    }
+
     public static IEnumerator SpringPositionAnimation
     (
         Transform target,

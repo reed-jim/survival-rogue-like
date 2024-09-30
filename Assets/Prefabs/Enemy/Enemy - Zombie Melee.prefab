@@ -1889,6 +1889,7 @@ GameObject:
   - component: {fileID: 8925531647022240840}
   - component: {fileID: 7016352032930002342}
   - component: {fileID: 2025721784498553805}
+  - component: {fileID: 4699484420191077340}
   - component: {fileID: 8715806200104676877}
   - component: {fileID: 1230600974406349393}
   - component: {fileID: 4442071305876251691}
@@ -2100,6 +2101,20 @@ MonoBehaviour:
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
   offsetToPlayer: {x: 1.5, y: 0, z: 1.5}
   delayAfterCatchedPlayer: 1
+--- !u!114 &4699484420191077340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6898723522597223981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31ccaf5840bfa1242b80f1541cd3681a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorReference: _Albedo
+  _renderer: {fileID: 5636225545270954466}
 --- !u!95 &8715806200104676877
 Animator:
   serializedVersion: 5
@@ -2679,6 +2694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c111cafb18bd0a14581a767db0880f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponHolder: {fileID: 0}
 --- !u!65 &1550528190759088932
 BoxCollider:
   m_ObjectHideFlags: 0
