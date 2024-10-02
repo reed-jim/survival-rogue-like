@@ -28,8 +28,6 @@ public class ActiveSkillContainer : MonoBehaviour
 
     private void AddActiveSkillsToContainer()
     {
-        skillContainer.AllSkills.Clear();
-
         skillContainer.AllSkills.AddRange(activeSkills);
     }
 }

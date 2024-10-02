@@ -52,7 +52,14 @@ namespace ReedJim.RPG.Stat
 
         public float GetStatValue(string statComponentName)
         {
-            return statComponents[statComponentName].Value;
+            if (statComponents.ContainsKey(statComponentName))
+            {
+                return statComponents[statComponentName].Value;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public float GetStatBaseValue(string statComponentName)

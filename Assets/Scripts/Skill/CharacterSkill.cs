@@ -21,6 +21,7 @@ public class CharacterSkill : MonoBehaviour
         damageSkills = new List<DamageOverTimeSkill>();
 
         CollisionHandler.characterHitEvent += ApplyEffect;
+        Bullet.characterHitEvent += ApplyEffect;
         LevelingUI.addSkillEvent += OnSkillAdded;
         DamageOverTimeSkill.addSkillEvent += AddDamageOverTimeSkill;
 
@@ -30,6 +31,7 @@ public class CharacterSkill : MonoBehaviour
     private void OnDestroy()
     {
         CollisionHandler.characterHitEvent -= ApplyEffect;
+        Bullet.characterHitEvent -= ApplyEffect;
         LevelingUI.addSkillEvent -= OnSkillAdded;
         DamageOverTimeSkill.addSkillEvent -= AddDamageOverTimeSkill;
     }

@@ -49,6 +49,7 @@ public class CharacterStatusEffectObserver : MonoBehaviour
                 CharacterStat damageStat = new CharacterStat();
 
                 damageStat.SetStatBaseValue(StatComponentNameConstant.Damage, damagingStatusEffect.GetDamagePerSecond());
+                damageStat.SetStatBaseValue(StatComponentNameConstant.DamageMultiplier, 1);
 
                 applyDamageEvent?.Invoke(gameObject.GetInstanceID(), damageStat);
             }

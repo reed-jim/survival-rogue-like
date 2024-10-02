@@ -98,8 +98,10 @@ public class LevelingUI : MonoBehaviour
     {
         for (int i = 0; i < selectUpgradeTexts.Length; i++)
         {
-            // _skillsToChoose[i] = RandomSkillMachine.GetRandomSkill(skillContainer);
-            _skillsToChoose[i] = skillContainer.AllSkills[i];
+            _skillsToChoose[i] = RandomSkillMachine.GetRandomSkill(skillContainer);
+
+            // test purpose
+            // _skillsToChoose[i] = skillContainer.AllSkills[i];
 
             skillNameTexts[i].text = _skillsToChoose[i].GetName();
             selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();
