@@ -64,4 +64,5 @@ Material:
     m_Colors:
     - _Albedo: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColor: {r: 2.9960785, g: 0.2716622, b: 0, a: 1}
+    - _Override_Color: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using PrimeTween;
 using UnityEngine;
 
@@ -36,12 +37,16 @@ public class RangedCharacterVision : BaseCharacterVision, ICharacterVision
 
         if (colliders.Length > 0)
         {
-            InvokeAttackEnemyEvent(gameObject.GetInstanceID(), colliders[0].transform);
+            Collider nearestOne = colliders
+                .OrderBy(collider => Vector3.Distance(transform.position, collider.transform.position))
+                .FirstOrDefault();
+
+            InvokeAttackEnemyEvent(gameObject.GetInstanceID(), nearestOne.transform);
 
             _isInCountdownCheckAttackEnemy = true;
 
             _tweens.Add(
-                Tween.Delay(0.5f).OnComplete(() => _isInCountdownCheckAttackEnemy = false)
+                Tween.Delay(0.8f).OnComplete(() => _isInCountdownCheckAttackEnemy = false)
             );
         }
     }

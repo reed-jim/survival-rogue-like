@@ -5085,7 +5085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efce7d5f2441e2c46b068fd4660960f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceMultiplier: 0.2
+  forceMultiplier: 0.25
   maxExistingTime: 20
   bulletTrail: {fileID: 3171870887037112540}
 --- !u!33 &5783575262091496794

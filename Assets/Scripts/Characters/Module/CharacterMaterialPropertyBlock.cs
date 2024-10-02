@@ -7,6 +7,7 @@ public class CharacterMaterialPropertyBlock : MonoBehaviour
 {
     [Header("CUSTOMIZE")]
     [SerializeField] private string colorReference;
+    [SerializeField] private float hitEffectDuration;
 
     [SerializeField] private Renderer _renderer;
     private MaterialPropertyBlock _propertyBlock;
@@ -55,17 +56,19 @@ public class CharacterMaterialPropertyBlock : MonoBehaviour
 
         if (instanceId == gameObject.GetInstanceID())
         {
-            Tween.Custom(Color.white, Color.red, duration: 0.2f, onValueChange: newVal => SetColor(newVal))
+            float hdrIntensity = 3;
+
+            Tween.Custom(Color.white, Color.red, duration: hitEffectDuration, onValueChange: newVal => SetColor(hdrIntensity * newVal))
             .OnComplete(() =>
             {
-                Tween.Custom(Color.red, Color.white, duration: 0.2f, onValueChange: newVal => SetColor(newVal))
+                Tween.Custom(Color.red, Color.white, duration: hitEffectDuration, onValueChange: newVal => SetColor(newVal))
                 .OnComplete(() =>
                 {
                     _isColorEffectActive = false;
                 });
             });
-        }
 
-        _isColorEffectActive = true;
+            _isColorEffectActive = true;
+        }
     }
 }

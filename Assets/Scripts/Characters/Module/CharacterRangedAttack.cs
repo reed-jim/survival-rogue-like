@@ -4,6 +4,8 @@ using static CustomDelegate;
 
 public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
 {
+    [SerializeField] private Transform shootingSphere;
+
     public static event GetBulletAction getBulletEvent;
 
     private void Awake()
@@ -28,7 +30,15 @@ public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
         {
             IProjectile bullet = GetProjectile();
 
-            Vector3 shotPosition = transform.position + new Vector3(0, 2, 0);
+            Vector3 shotPosition = shootingSphere.position;
+
+            // // only shoot if target is in front of shooting sphere
+            // if ((target.position.x - shootingSphere.position.x) / (transform.position.x - shootingSphere.position.x) > 0)
+            // {
+            //     return;
+            // }
+
+            StartCoroutine(SpringAnimation.SpringScaleAnimation(shootingSphere, 0.2f * Vector3.one, 0.1f, 4, 0.1f));
 
             bullet.Shoot(target, shotPosition, attackInstanceId: gameObject.GetInstanceID());
 
