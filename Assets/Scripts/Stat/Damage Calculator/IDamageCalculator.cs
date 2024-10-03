@@ -10,4 +10,6 @@ public interface IDamageCalculator
         CharacterStat attacker,
         CharacterStat target
     );
+
+    public bool IsCritical(int finalDamage, CharacterStat attackerStat);
 }

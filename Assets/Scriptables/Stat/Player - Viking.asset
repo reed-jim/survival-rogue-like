@@ -39,7 +39,7 @@ MonoBehaviour:
       baseValue: 1
   - key: CriticalChance
     baseStatComponent:
-      baseValue: 0
+      baseValue: 0.3
   - key: CriticalMultiplier
     baseStatComponent:
       baseValue: 2

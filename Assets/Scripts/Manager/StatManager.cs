@@ -26,7 +26,8 @@ public class StatManager : MonoBehaviour
         MeleeWeapon.getAttackerStatAction += GetStat;
         Bullet.getAttackerStatAction += GetStat;
         CollectibleExperienceShard.earnPlayerExperienceEvent += EarnPlayerExpKillingEnemy;
-        CharacterSkill.updatePlayerStat += UpdatePlayerStat;
+        OffensiveSkill.updatePlayerStat += UpdatePlayerStat;
+        DefenseSkill.updatePlayerStat += UpdatePlayerStat;
     }
 
     private void OnDestroy()
@@ -36,7 +37,8 @@ public class StatManager : MonoBehaviour
         MeleeWeapon.getAttackerStatAction -= GetStat;
         Bullet.getAttackerStatAction -= GetStat;
         CollectibleExperienceShard.earnPlayerExperienceEvent -= EarnPlayerExpKillingEnemy;
-        CharacterSkill.updatePlayerStat -= UpdatePlayerStat;
+        OffensiveSkill.updatePlayerStat -= UpdatePlayerStat;
+        DefenseSkill.updatePlayerStat -= UpdatePlayerStat;
     }
     #endregion
 

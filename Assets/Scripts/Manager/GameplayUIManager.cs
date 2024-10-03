@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using PrimeTween;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class GameplayUIManager : MonoBehaviour
     [SerializeField] private Slider playerHpProgressBar;
     [SerializeField] private Slider playerLazyHpProgressBar;
     [SerializeField] private Slider expProgressBar;
+    [SerializeField] private TMP_Text playerHP;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float playerHpBarDuration;
@@ -57,6 +59,8 @@ public class GameplayUIManager : MonoBehaviour
 
         _playerHpBarTween = Tween.Custom(prevValue, currentValue, duration: playerHpBarDuration, onValueChange: newVal => playerHpProgressBar.value = newVal);
         _lazyPlayerHpBarTween = Tween.Custom(prevValue, currentValue, duration: playerLazyHpBarDuration, onValueChange: newVal => playerLazyHpProgressBar.value = newVal);
+
+        playerHP.text = $"{currentHp}/{maxHp}";
     }
 
     private void UpdateExpProgressBar(float currentExp, float maxExp)

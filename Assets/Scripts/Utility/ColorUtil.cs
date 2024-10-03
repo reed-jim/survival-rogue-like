@@ -4,6 +4,11 @@ using UnityEngine;
 
 public static class ColorUtil
 {
+    public static Color WithAlpha(Color color, float alpha)
+    {
+        return new Color(color.r, color.g, color.b, alpha);
+    }
+
     public static Color GetGradientColor(Color color1, Color color2, float percent)
     {
         return Color.Lerp(color1, color2, percent);

@@ -39,7 +39,9 @@ public class DamageCalculator : IDamageCalculator
         // float finalCriticalChance = attacker.CriticalChance - reducedCriticalChance;
         float finalCriticalChance = attackerCriticalChance;
 
-        bool isCritical = Random.Range(0, 100) / 100f < finalCriticalChance;
+        float randomNumber = Random.Range(0, 100) / 100f;
+
+        bool isCritical = randomNumber < finalCriticalChance;
 
         if (isCritical)
         {
@@ -65,18 +67,38 @@ public class DamageCalculator : IDamageCalculator
         // finalDamage *= (1 - wardSave);
 
         // EXECUTED
-        if (targetHealth.Value - finalDamage < attackerPercentHealthExecuted * targetHealth.BaseValue)
+        if (attackerPercentHealthExecuted > 0)
         {
-            finalDamage = targetHealth.BaseValue;
+            if (targetHealth.Value - finalDamage < attackerPercentHealthExecuted * targetHealth.BaseValue)
+            {
+                finalDamage = targetHealth.BaseValue;
+            }
         }
 
         return (int)finalDamage;
+    }
+
+    public bool IsCritical(int finalDamage, CharacterStat attackerStat)
+    {
+        if (finalDamage > attackerStat.GetStatValue(StatComponentNameConstant.Damage))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 
 public class DirectDamageCalculator : IDamageCalculator
 {
     public int GetDamage(CharacterStat attacker, CharacterStat target)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool IsCritical(int finalDamage, CharacterStat attackerStat)
     {
         throw new System.NotImplementedException();
     }

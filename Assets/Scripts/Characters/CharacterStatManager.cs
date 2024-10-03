@@ -21,6 +21,7 @@ public class CharacterStatManager : MonoBehaviour
     public static event Action<int, float, float, float> setHpEvent;
     public static event Action<int, CharacterStat> addCharacterStatToListEvent;
     public static event Action<int> characterDieEvent;
+    public static event Action<int> showCriticalDamageEvent;
     #endregion
 
     private void Awake()
@@ -86,7 +87,14 @@ public class CharacterStatManager : MonoBehaviour
     {
         if (gameObject.GetInstanceID() == instanceId)
         {
-            int intDamage = new DamageCalculator().GetDamage(attackerStat, Stat);
+            DamageCalculator basicDamageCalculator = new DamageCalculator();
+
+            int intDamage = basicDamageCalculator.GetDamage(attackerStat, Stat);
+
+            if (basicDamageCalculator.IsCritical(intDamage, attackerStat))
+            {
+                showCriticalDamageEvent?.Invoke(instanceId);
+            }
 
             // float prevHp = Stat.HP;
             float prevHp = Stat.GetStatValue(StatComponentNameConstant.Health);

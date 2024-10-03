@@ -14,6 +14,7 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private RectTransform container;
     [SerializeField] private Slider hpBar;
     [SerializeField] private TMP_Text damageText;
+    [SerializeField] private RectTransform criticalDamageIcon;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float scaleDownDuration;
@@ -26,6 +27,9 @@ public class CharacterUI : MonoBehaviour
         _tweens = new List<Tween>();
 
         CharacterStatManager.setHpEvent += SetHP;
+        CharacterStatManager.showCriticalDamageEvent += HighlightCriticalDamage;
+
+        criticalDamageIcon.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -43,6 +47,7 @@ public class CharacterUI : MonoBehaviour
     private void OnDestroy()
     {
         CharacterStatManager.setHpEvent -= SetHP;
+        CharacterStatManager.showCriticalDamageEvent -= HighlightCriticalDamage;
     }
 
     public void Reset()
@@ -118,8 +123,18 @@ public class CharacterUI : MonoBehaviour
                 damageText.gameObject.SetActive(false);
 
                 damageText.rectTransform.localPosition = currentDamageTextPosition;
-                damageText.color = Color.white;
+                damageText.color = ColorUtil.WithAlpha(damageText.color, 1);
+
+                criticalDamageIcon.gameObject.SetActive(false);
             }));
         }));
+    }
+
+    private void HighlightCriticalDamage(int instanceId)
+    {
+        if (instanceId == gameObject.GetInstanceID())
+        {
+            criticalDamageIcon.gameObject.SetActive(true);
+        }
     }
 }
