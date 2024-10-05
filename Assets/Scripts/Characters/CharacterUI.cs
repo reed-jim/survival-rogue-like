@@ -21,6 +21,8 @@ public class CharacterUI : MonoBehaviour
 
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
+    private bool _isInAnimation;
+    private float _cumulativeDamage;
 
     private void Awake()
     {
@@ -103,11 +105,24 @@ public class CharacterUI : MonoBehaviour
         damageText.text = $"{damage}";
         damageText.gameObject.SetActive(true);
 
+        if (_isInAnimation)
+        {
+            _cumulativeDamage += damage;
+
+            damageText.text = $"{_cumulativeDamage}";
+
+            return;
+        }
+        else
+        {
+            _cumulativeDamage = damage;
+        }
+
         Vector3 currentDamageTextPosition = damageText.rectTransform.localPosition;
 
-        _tweens.Add(Tween.LocalPositionY(damageText.rectTransform, currentDamageTextPosition.y + 2f, duration: 0.3f));
+        _tweens.Add(Tween.LocalPositionY(damageText.rectTransform, currentDamageTextPosition.y + 1.5f, duration: 0.3f));
 
-        _tweens.Add(Tween.Delay(0.3f).OnComplete(() =>
+        _tweens.Add(Tween.Delay(1f).OnComplete(() =>
         {
             _tweens.Add(
                 Tween.Custom(1, 0, duration: 0.3f, onValueChange: newVal =>
@@ -126,8 +141,12 @@ public class CharacterUI : MonoBehaviour
                 damageText.color = ColorUtil.WithAlpha(damageText.color, 1);
 
                 criticalDamageIcon.gameObject.SetActive(false);
+
+                _isInAnimation = false;
             }));
         }));
+
+        _isInAnimation = true;
     }
 
     private void HighlightCriticalDamage(int instanceId)
