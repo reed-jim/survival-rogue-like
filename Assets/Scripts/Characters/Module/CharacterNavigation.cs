@@ -29,7 +29,6 @@ public class CharacterNavigation : MonoBehaviour
     private void Awake()
     {
         FlockAvoidance.avoidNeighbourEvent += StopNavigating;
-        StatusEffectCrowdControl.applyStunEffectEvent += StopNavigating;
 
         _tweens = new List<Tween>();
 
@@ -46,7 +45,6 @@ public class CharacterNavigation : MonoBehaviour
     private void OnDestroy()
     {
         FlockAvoidance.avoidNeighbourEvent -= StopNavigating;
-        StatusEffectCrowdControl.applyStunEffectEvent -= StopNavigating;
 
         CommonUtil.StopAllTweens(_tweens);
     }

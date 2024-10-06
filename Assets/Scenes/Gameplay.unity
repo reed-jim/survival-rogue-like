@@ -395,8 +395,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyContainer: {fileID: 958509770}
   enemyPrefabs:
-  - {fileID: 6898723522597223981, guid: 6c86ad04607869e458f5c4fce2f8b1ea, type: 3}
-  - {fileID: 6898723522597223981, guid: 6c86ad04607869e458f5c4fce2f8b1ea, type: 3}
+  - {fileID: 6785288437737151558, guid: 047b6737dba131d4d921438050a486fe, type: 3}
+  - {fileID: 6785288437737151558, guid: 047b6737dba131d4d921438050a486fe, type: 3}
   enemies: []
   player: {fileID: 2478445494248917083}
   maxEnemy: 50
@@ -8174,7 +8174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edaf1f89cb4d9dd46b328f1766001695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4604694175001444412, guid: 8e4e7613033cdca43ba8961651a626dd, type: 3}
+  prefab: {fileID: 4604694175001444412, guid: 73881adf756e3794886c6f63a4e08cae, type: 3}
   poolContainer: {fileID: 2019180537}
   poolSize: 10
 --- !u!1 &2069948144
@@ -8605,7 +8605,7 @@ PrefabInstance:
     - target: {fileID: 3192911297063845200, guid: a83e823ed3570b44a97087b272d5e37e,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5371047925353655979, guid: a83e823ed3570b44a97087b272d5e37e,
         type: 3}
