@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class CharacterPickingMagnet : MonoBehaviour
 {
-    Awa
+    private void Awake() {
+        
+    }
 }
