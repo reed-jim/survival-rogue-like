@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,9 +15,11 @@ public class CharacterNavigation : MonoBehaviour
     [SerializeField] private float delayAfterCatchedPlayer;
 
     #region PRIVATE FIELD
+    private List<Tween> _tweens;
     private NavMeshAgent _navMeshAgent;
     private Transform _player;
     private bool _isNearTarget;
+    private bool _isAvoidAllies;
     #endregion
 
     #region ACTION
@@ -24,6 +28,10 @@ public class CharacterNavigation : MonoBehaviour
 
     private void Awake()
     {
+        FlockAvoidance.avoidNeighbourEvent += StopNavigating;
+
+        _tweens = new List<Tween>();
+
         _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
@@ -32,6 +40,13 @@ public class CharacterNavigation : MonoBehaviour
         _player = playerRuntime.player;
 
         StartCoroutine(Navigating());
+    }
+
+    private void OnDestroy()
+    {
+        FlockAvoidance.avoidNeighbourEvent -= StopNavigating;
+
+        CommonUtil.StopAllTweens(_tweens);
     }
 
     private IEnumerator Navigating()
@@ -49,6 +64,13 @@ public class CharacterNavigation : MonoBehaviour
                 distanceToTarget.z = Mathf.Abs(transform.position.z - _player.position.z);
 
                 // avoid frequent checking target
+                if (_isAvoidAllies)
+                {
+                    yield return waitForSeconds;
+
+                    continue;
+                }
+
                 if (_isNearTarget)
                 {
                     if
@@ -57,7 +79,6 @@ public class CharacterNavigation : MonoBehaviour
                         distanceToTarget.z > 3f * offsetToPlayer.z
                     )
                     {
-                        Debug.Log("stop");
                         _navMeshAgent.isStopped = false;
 
                         _isNearTarget = false;
@@ -76,7 +97,7 @@ public class CharacterNavigation : MonoBehaviour
                     distanceToTarget.z > offsetToPlayer.z
                 )
                 {
-                    _navMeshAgent.SetDestination(_player.position + (_player.position - transform.position));
+                    _navMeshAgent.SetDestination(_player.position + 0.05f * (transform.position - _player.position));
 
                     setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", Mathf.InverseLerp(0, 1, _navMeshAgent.velocity.magnitude));
                 }
@@ -97,6 +118,31 @@ public class CharacterNavigation : MonoBehaviour
             }
 
             yield return waitForSeconds;
+        }
+    }
+
+    private void StopNavigating(int instanceId)
+    {
+        if (instanceId == gameObject.GetInstanceID())
+        {
+            if (!_navMeshAgent.isStopped)
+            {
+                _navMeshAgent.isStopped = true;
+            }
+
+            setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
+
+            _isAvoidAllies = true;
+
+            _tweens.Add(Tween.Delay(3f).OnComplete(() =>
+            {
+                _isAvoidAllies = false;
+
+                if (!_isNearTarget)
+                {
+                    _navMeshAgent.isStopped = false;
+                }
+            }));
         }
     }
 }

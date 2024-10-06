@@ -1892,6 +1892,7 @@ GameObject:
   - component: {fileID: 7016352032930002342}
   - component: {fileID: 2025721784498553805}
   - component: {fileID: 4699484420191077340}
+  - component: {fileID: 8026328862829666025}
   - component: {fileID: 8715806200104676877}
   - component: {fileID: 1230600974406349393}
   - component: {fileID: 4442071305876251691}
@@ -2119,6 +2120,22 @@ MonoBehaviour:
   colorReference: _Albedo
   hitEffectDuration: 0.15
   _renderer: {fileID: 5636225545270954466}
+--- !u!114 &8026328862829666025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6898723522597223981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30e0dec822ae3304dbfa524dbc9735c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radiusCheck: 1
+  layerMaskCheck:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!95 &8715806200104676877
 Animator:
   serializedVersion: 5
