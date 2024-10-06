@@ -15,6 +15,7 @@ public class LevelingUI : MonoBehaviour
     private TMP_Text[] skillNameTexts;
     private TMP_Text[] selectUpgradeTexts;
     private TMP_Text[] rarityTexts;
+    [SerializeField] private Image fadeBackground;
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private SkillContainer skillContainer;
@@ -48,7 +49,9 @@ public class LevelingUI : MonoBehaviour
 
         showUpgradePanelButton.onClick.AddListener(ShowUpgradePanel);
 
-        // Tween.Delay(1).OnComplete(() => ShowUpgradePanel());
+        fadeBackground.gameObject.SetActive(false);
+
+        Tween.Delay(1).OnComplete(() => ShowUpgradePanel());
     }
 
     private void OnDestroy()
@@ -69,17 +72,21 @@ public class LevelingUI : MonoBehaviour
         for (int i = 0; i < selectUpgradeButtons.Length; i++)
         {
             selectUpgradeRTs[i] = selectUpgradeButtons[i].GetComponent<RectTransform>();
-            skillNameTexts[i] = selectUpgradeButtons[i].transform.GetChild(0).GetComponent<TMP_Text>();
-            selectUpgradeTexts[i] = selectUpgradeButtons[i].transform.GetChild(1).GetComponent<TMP_Text>();
-            rarityTexts[i] = selectUpgradeButtons[i].transform.GetChild(2).GetComponent<TMP_Text>();
+            skillNameTexts[i] = selectUpgradeButtons[i].transform.GetChild(1).GetComponent<TMP_Text>();
+            selectUpgradeTexts[i] = selectUpgradeButtons[i].transform.GetChild(2).GetComponent<TMP_Text>();
+            rarityTexts[i] = selectUpgradeButtons[i].transform.GetChild(3).GetComponent<TMP_Text>();
 
-            selectUpgradeRTs[i].sizeDelta = new Vector2(0.25f * _canvasSize.x, 0.7f * _canvasSize.y);
+            selectUpgradeRTs[i].sizeDelta = new Vector2(0.3f * _canvasSize.x, 0.6f * _canvasSize.y);
             selectUpgradeRTs[i].localPosition = new Vector2((i - 1) * 1.1f * selectUpgradeRTs[i].sizeDelta.x, 0);
 
-            skillNameTexts[i].rectTransform.localPosition = new Vector2(0, 0.35f * selectUpgradeRTs[i].sizeDelta.y);
-            rarityTexts[i].rectTransform.localPosition = new Vector2(0, 0.2f * selectUpgradeRTs[i].sizeDelta.y);
+            skillNameTexts[i].rectTransform.localPosition = new Vector2(0, 0.4f * selectUpgradeRTs[i].sizeDelta.y);
+            rarityTexts[i].rectTransform.localPosition = new Vector2(0, 0.25f * selectUpgradeRTs[i].sizeDelta.y);
 
-            skillNameTexts[i].fontSize = 0.02f * _canvasSize.x;
+            UIUtil.SetSize(skillNameTexts[i].rectTransform, 0.8f * selectUpgradeRTs[i].sizeDelta.x, 0.2f * selectUpgradeRTs[i].sizeDelta.y);
+            UIUtil.SetSize(selectUpgradeTexts[i].rectTransform, skillNameTexts[i].rectTransform.sizeDelta);
+            UIUtil.SetSize(rarityTexts[i].rectTransform, skillNameTexts[i].rectTransform.sizeDelta);
+
+            skillNameTexts[i].fontSize = 0.03f * _canvasSize.x;
             selectUpgradeTexts[i].fontSize = 0.02f * _canvasSize.x;
             rarityTexts[i].fontSize = 0.02f * _canvasSize.x;
 
@@ -133,6 +140,9 @@ public class LevelingUI : MonoBehaviour
         enableInput?.Invoke(false);
 
         Time.timeScale = 0;
+
+
+        fadeBackground.gameObject.SetActive(true);
     }
 
     private void HideUpgradeSlot()
@@ -153,5 +163,8 @@ public class LevelingUI : MonoBehaviour
 
             Time.timeScale = 1;
         }
+
+        Tween.Color(fadeBackground, ColorUtil.WithAlpha(fadeBackground.color, 0), duration: 0.3f)
+        .OnComplete(() => fadeBackground.gameObject.SetActive(false));
     }
 }
