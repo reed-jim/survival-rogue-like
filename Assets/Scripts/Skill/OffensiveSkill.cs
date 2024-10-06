@@ -68,7 +68,7 @@ public class OffensiveSkill : ScriptableObject, IModifierSkill
 
     public int GetTier()
     {
-        return 1;
+        return UnityEngine.Random.Range(0, 5);
     }
 
     public void AddSkill()

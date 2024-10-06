@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IProjectile
 {
     public void Shoot(Transform target, Vector3 shotPosition, int attackInstanceId);
+    public GameObject GameObject { get; }
 }

@@ -29,7 +29,7 @@ public class CollisionHandler : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         GameObject otherGameObject = other.collider.gameObject;
-        
+
         if (collideTags.Contains(otherGameObject.tag))
         {
             ICollide collidable = otherGameObject.GetComponent<ICollide>();

@@ -7,10 +7,12 @@ public class ObjectPoolingWithIProjectile : ObjectPoolingWithOneComponent<IProje
     protected override void Awake()
     {
         base.Awake();
+
+        CharacterRangedAttack.getIProjectileEvent += GetComponentFromPool;
     }
 
     private void OnDestroy()
     {
-
+        CharacterRangedAttack.getIProjectileEvent -= GetComponentFromPool;
     }
 }

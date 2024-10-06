@@ -49,6 +49,6 @@ public class ActiveSkillThunder : BaseActiveSkill, IActiveSkill
 
     public int GetTier()
     {
-        throw new System.NotImplementedException();
+        return 0;
     }
 }

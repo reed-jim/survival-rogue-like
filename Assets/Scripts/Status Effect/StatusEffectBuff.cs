@@ -27,6 +27,6 @@ public class StatusEffectBuff : IModifierSkill
 
     public int GetTier()
     {
-        throw new System.NotImplementedException();
+        return 0;
     }
 }

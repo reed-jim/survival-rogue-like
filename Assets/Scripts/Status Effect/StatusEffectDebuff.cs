@@ -39,6 +39,6 @@ public class StatusEffectDebuff : IModifierSkill
 
     public int GetTier()
     {
-        throw new System.NotImplementedException();
+        return 0;
     }
 }

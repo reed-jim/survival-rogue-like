@@ -1865,6 +1865,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 123395af1d2291d4ab5398d3bbba43e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  expectedProjectileTag: Enemy Bullet
+  expectedProjectileLayer: Enemy
   shootingSphere: {fileID: 4009188452568244949}
 --- !u!114 &-932532640433406929
 MonoBehaviour:

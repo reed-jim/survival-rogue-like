@@ -14,6 +14,7 @@ public class LevelingUI : MonoBehaviour
     private RectTransform[] selectUpgradeRTs;
     private TMP_Text[] skillNameTexts;
     private TMP_Text[] selectUpgradeTexts;
+    private TMP_Text[] rarityTexts;
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private SkillContainer skillContainer;
@@ -61,6 +62,7 @@ public class LevelingUI : MonoBehaviour
         selectUpgradeRTs = new RectTransform[selectUpgradeButtons.Length];
         skillNameTexts = new TMP_Text[selectUpgradeButtons.Length];
         selectUpgradeTexts = new TMP_Text[selectUpgradeButtons.Length];
+        rarityTexts = new TMP_Text[selectUpgradeButtons.Length];
 
         _showUpgradePanelButtonRT = showUpgradePanelButton.GetComponent<RectTransform>();
 
@@ -69,14 +71,17 @@ public class LevelingUI : MonoBehaviour
             selectUpgradeRTs[i] = selectUpgradeButtons[i].GetComponent<RectTransform>();
             skillNameTexts[i] = selectUpgradeButtons[i].transform.GetChild(0).GetComponent<TMP_Text>();
             selectUpgradeTexts[i] = selectUpgradeButtons[i].transform.GetChild(1).GetComponent<TMP_Text>();
+            rarityTexts[i] = selectUpgradeButtons[i].transform.GetChild(2).GetComponent<TMP_Text>();
 
             selectUpgradeRTs[i].sizeDelta = new Vector2(0.25f * _canvasSize.x, 0.7f * _canvasSize.y);
             selectUpgradeRTs[i].localPosition = new Vector2((i - 1) * 1.1f * selectUpgradeRTs[i].sizeDelta.x, 0);
 
             skillNameTexts[i].rectTransform.localPosition = new Vector2(0, 0.35f * selectUpgradeRTs[i].sizeDelta.y);
+            rarityTexts[i].rectTransform.localPosition = new Vector2(0, 0.2f * selectUpgradeRTs[i].sizeDelta.y);
 
             skillNameTexts[i].fontSize = 0.02f * _canvasSize.x;
             selectUpgradeTexts[i].fontSize = 0.02f * _canvasSize.x;
+            rarityTexts[i].fontSize = 0.02f * _canvasSize.x;
 
             selectUpgradeRTs[i].gameObject.SetActive(false);
         }
@@ -105,6 +110,7 @@ public class LevelingUI : MonoBehaviour
 
             skillNameTexts[i].text = _skillsToChoose[i].GetName();
             selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();
+            rarityTexts[i].text = ((RarityTier)_skillsToChoose[i].GetTier()).ToString();
         }
     }
 

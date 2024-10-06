@@ -22,6 +22,11 @@ public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId, ICol
     public static event GetCharacterStatAction<int> getAttackerStatAction;
     #endregion
 
+    public GameObject GameObject
+    {
+        get => gameObject;
+    }
+
     protected virtual void Awake()
     {
         _rigidBody = GetComponent<Rigidbody>();

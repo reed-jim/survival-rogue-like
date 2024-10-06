@@ -13,6 +13,16 @@ public enum StatType
     CRITICAL_DAMAGE
 }
 
+public enum RarityTier
+{
+    COMMON,
+    UNCOMMON,
+    RARE,
+    EPIC,
+    MYTHIC,
+    LEGENDARY
+}
+
 public class Enums
 {
 

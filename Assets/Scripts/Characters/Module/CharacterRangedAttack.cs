@@ -4,9 +4,11 @@ using static CustomDelegate;
 
 public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
 {
+    [SerializeField] private string expectedProjectileTag;
+    [SerializeField] private string expectedProjectileLayer;
     [SerializeField] private Transform shootingSphere;
 
-    public static event GetBulletAction getBulletEvent;
+    public static event GetIProjectileAction getIProjectileEvent;
 
     private void Awake()
     {
@@ -29,6 +31,9 @@ public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
         if (instanceId == gameObject.GetInstanceID())
         {
             IProjectile bullet = GetProjectile();
+
+            bullet.GameObject.tag = expectedProjectileTag;
+            bullet.GameObject.layer = LayerMask.NameToLayer(expectedProjectileLayer);;
 
             Vector3 shotPosition = shootingSphere.position;
 
@@ -56,7 +61,7 @@ public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
 
     protected virtual IProjectile GetProjectile()
     {
-        return getBulletEvent?.Invoke();
+        return getIProjectileEvent?.Invoke();
     }
 
     // protected virtual void ShootBullet(Rigidbody bullet, Transform target, Vector3 shotPosition)

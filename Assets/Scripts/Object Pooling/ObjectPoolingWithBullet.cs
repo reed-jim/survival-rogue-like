@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class ObjectPoolingWithBullet : ObjectPoolingWithOneComponent<Bullet>
 {
-    protected override void Awake()
-    {
-        base.Awake();
+    // protected override void Awake()
+    // {
+    //     base.Awake();
 
-        CharacterRangedAttack.getBulletEvent += GetComponentFromPool;
-    }
+    //     CharacterRangedAttack.getBulletEvent += GetComponentFromPool;
+    // }
 
-    private void OnDestroy()
-    {
-        CharacterRangedAttack.getBulletEvent -= GetComponentFromPool;
-    }
+    // private void OnDestroy()
+    // {
+    //     CharacterRangedAttack.getBulletEvent -= GetComponentFromPool;
+    // }
 }

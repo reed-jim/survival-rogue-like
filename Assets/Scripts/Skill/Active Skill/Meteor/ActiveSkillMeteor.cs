@@ -52,7 +52,7 @@ public class ActiveSkillMeteor : BaseActiveSkill, IActiveSkill
 
     public int GetTier()
     {
-        throw new System.NotImplementedException();
+        return 1;
     }
 
     public void AddSkill()
