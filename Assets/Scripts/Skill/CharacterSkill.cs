@@ -9,6 +9,7 @@ public class CharacterSkill : MonoBehaviour
 {
     [SerializeField] private ActiveSkillContainer activeSkillContainer;
     [SerializeField] private List<DamageOverTimeSkill> damageSkills;
+    [SerializeField] private List<IStatusEffect> statusEffectFromSkills;
 
     #region ACTION
     public static event Action<int, StatusEffectDamaging[]> applyDamagingStatusEffect;
@@ -60,14 +61,23 @@ public class CharacterSkill : MonoBehaviour
 
     private void ApplyEffect(int instanceId)
     {
-        StatusEffectDamaging[] statusEffectDamagings = new StatusEffectDamaging[damageSkills.Count];
+        // StatusEffectDamaging[] statusEffectDamagings = new StatusEffectDamaging[damageSkills.Count];
 
-        for (int i = 0; i < statusEffectDamagings.Length; i++)
+        // for (int i = 0; i < statusEffectDamagings.Length; i++)
+        // {
+        //     statusEffectDamagings[i] = damageSkills[i].StatusEffectDamaging;
+        // }
+
+        // applyDamagingStatusEffect?.Invoke(instanceId, statusEffectDamagings);
+
+        statusEffectFromSkills = new List<IStatusEffect>();
+
+        statusEffectFromSkills.Add(new StatusEffectCrowdControl());
+
+        foreach (var statusEffect in statusEffectFromSkills)
         {
-            statusEffectDamagings[i] = damageSkills[i].StatusEffectDamaging;
+            statusEffect.ApplyStatusEffect(instanceId);
         }
-
-        applyDamagingStatusEffect?.Invoke(instanceId, statusEffectDamagings);
     }
 
     private IEnumerator CastingActiveSkills()
