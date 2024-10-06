@@ -274,7 +274,8 @@ public class SpringAnimation : MonoBehaviour
         Vector3 amplitude,
         float dampenRate,
         int numberStep,
-        float durationEachStep
+        float durationEachStep,
+        Action onCompletedAction = null
     )
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
@@ -321,6 +322,8 @@ public class SpringAnimation : MonoBehaviour
 
             yield return waitForSeconds;
         }
+
+        onCompletedAction?.Invoke();
 
         void NextStep()
         {

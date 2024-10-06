@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterOnHitHandler : MonoBehaviour
 {
-    private Coroutine _onHitEffectCoroutine;
+    private bool _isInAnimation;
 
     private void Awake()
     {
@@ -18,9 +18,17 @@ public class CharacterOnHitHandler : MonoBehaviour
 
     private void OnHit(int instanceId)
     {
-        if (instanceId == gameObject.GetInstanceID() && _onHitEffectCoroutine == null)
+        if (instanceId == gameObject.GetInstanceID() && !_isInAnimation)
         {
-            _onHitEffectCoroutine = StartCoroutine(SpringAnimation.SpringScaleAnimation(transform, 0.05f * Vector3.one, 1f, 4, 0.1f));
+            StartCoroutine
+            (
+                SpringAnimation.SpringScaleAnimation
+                (
+                    transform, 0.02f * Vector3.one, 1f, 4, 0.1f, onCompletedAction: () => _isInAnimation = false
+                )
+            );
+
+            _isInAnimation = true;
         }
     }
 }

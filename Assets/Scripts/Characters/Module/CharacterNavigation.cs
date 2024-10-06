@@ -73,6 +73,8 @@ public class CharacterNavigation : MonoBehaviour
 
                 if (_isNearTarget)
                 {
+                    // transform.LookAt(_player);
+
                     if
                     (
                         distanceToTarget.x > 3f * offsetToPlayer.x ||
@@ -97,7 +99,7 @@ public class CharacterNavigation : MonoBehaviour
                     distanceToTarget.z > offsetToPlayer.z
                 )
                 {
-                    _navMeshAgent.SetDestination(_player.position + 0.05f * (transform.position - _player.position));
+                    _navMeshAgent.SetDestination(_player.position + 0.5f * (transform.position - _player.position));
 
                     setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", Mathf.InverseLerp(0, 1, _navMeshAgent.velocity.magnitude));
                 }
