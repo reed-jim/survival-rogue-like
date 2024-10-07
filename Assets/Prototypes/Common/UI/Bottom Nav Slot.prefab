@@ -53,7 +53,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 7290757623353802267}
-  routeName: Character
+  routeName: {fileID: 1117598127464065247}
+  _routeData: {fileID: 0}
 --- !u!222 &5636232970983737809
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -82,7 +83,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 653a83ff66f47c345befdf8e1f411d99, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9c01b16cd8900c64c8c0ca6cc054f0fe, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -203,8 +204,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Nav Slot
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
-  m_sharedMaterial: {fileID: 7374927986402738804, guid: c1482dbce654844b9ba1c753cbea5d80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 71f387b317c13a844b1d9a54022e1a2e, type: 2}
+  m_sharedMaterial: {fileID: -3971335385540722319, guid: 71f387b317c13a844b1d9a54022e1a2e,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -228,8 +230,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
