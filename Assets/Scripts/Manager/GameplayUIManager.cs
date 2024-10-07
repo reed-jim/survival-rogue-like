@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class GameplayUIManager : MonoBehaviour
 {
+    [SerializeField] private RectTransform canvas;
+    [SerializeField] private RectTransform playerHpProgressBarRT;
+    [SerializeField] private RectTransform playerLazyHpProgressBarRT;
+    [SerializeField] private RectTransform expProgressBarRT;
     [SerializeField] private Slider playerHpProgressBar;
     [SerializeField] private Slider playerLazyHpProgressBar;
     [SerializeField] private Slider expProgressBar;
@@ -17,6 +21,7 @@ public class GameplayUIManager : MonoBehaviour
     [SerializeField] private float playerLazyHpBarDuration;
 
     #region PRIVATE FIELD
+    private Vector2 _canvasSize;
     private Tween _playerHpBarTween;
     private Tween _lazyPlayerHpBarTween;
     private Tween _updateExpBarTween;
@@ -27,6 +32,10 @@ public class GameplayUIManager : MonoBehaviour
         StatManager.updateExpProgressBarEvent += UpdateExpProgressBar;
         PlayerStatManager.setPlayerHpEvent += UpdatePlayerHpBar;
         StatManager.setPlayerHpEvent += UpdatePlayerHpBar;
+
+        _canvasSize = canvas.sizeDelta;
+
+        GenerateUI();
     }
 
     private void OnDestroy()
@@ -38,6 +47,20 @@ public class GameplayUIManager : MonoBehaviour
         _playerHpBarTween.Stop();
         _lazyPlayerHpBarTween.Stop();
         _updateExpBarTween.Stop();
+    }
+
+    private void GenerateUI()
+    {
+        UIUtil.SetSize(expProgressBarRT, 0.8f * _canvasSize.x, 0.025f * _canvasSize.y);
+        UIUtil.SetLocalPositionY(expProgressBarRT, 0.35f * _canvasSize.y);
+
+        UIUtil.SetSize(playerHpProgressBarRT, 0.5f * _canvasSize.x, 0.025f * _canvasSize.y);
+        UIUtil.SetLocalPosition(playerHpProgressBarRT,
+            -0.5f * (expProgressBarRT.sizeDelta.x - playerHpProgressBarRT.sizeDelta.x),
+            expProgressBarRT.localPosition.y + 0.6f * (expProgressBarRT.sizeDelta.y + playerHpProgressBarRT.sizeDelta.y));
+
+        UIUtil.SetSize(playerLazyHpProgressBarRT, playerHpProgressBarRT.sizeDelta);
+        UIUtil.SetLocalPosition(playerLazyHpProgressBarRT, playerHpProgressBarRT.localPosition);
     }
 
     private void UpdatePlayerHpBar(float currentHp, float maxHp)

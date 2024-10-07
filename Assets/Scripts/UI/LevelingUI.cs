@@ -76,22 +76,29 @@ public class LevelingUI : MonoBehaviour
             selectUpgradeTexts[i] = selectUpgradeButtons[i].transform.GetChild(2).GetComponent<TMP_Text>();
             rarityTexts[i] = selectUpgradeButtons[i].transform.GetChild(3).GetComponent<TMP_Text>();
 
-            selectUpgradeRTs[i].sizeDelta = new Vector2(0.3f * _canvasSize.x, 0.6f * _canvasSize.y);
-            selectUpgradeRTs[i].localPosition = new Vector2((i - 1) * 1.1f * selectUpgradeRTs[i].sizeDelta.x, 0);
+            float distanceBetween = 0.02f * _canvasSize.x;
+
+            UIUtil.SetSize(selectUpgradeRTs[i], (_canvasSize.x - (selectUpgradeButtons.Length + 1) * distanceBetween) / selectUpgradeButtons.Length, 0.5f * _canvasSize.y);
+
+            // selectUpgradeRTs[i].sizeDelta =
+            //     new Vector2((_canvasSize.x - (selectUpgradeButtons.Length + 1) * distanceBetween) / selectUpgradeButtons.Length, 0.5f * _canvasSize.y);
+            selectUpgradeRTs[i].localPosition = new Vector2((i - 1) * (selectUpgradeRTs[i].sizeDelta.x + distanceBetween), 0);
 
             skillNameTexts[i].rectTransform.localPosition = new Vector2(0, 0.4f * selectUpgradeRTs[i].sizeDelta.y);
             rarityTexts[i].rectTransform.localPosition = new Vector2(0, 0.25f * selectUpgradeRTs[i].sizeDelta.y);
 
-            UIUtil.SetSize(skillNameTexts[i].rectTransform, 0.8f * selectUpgradeRTs[i].sizeDelta.x, 0.2f * selectUpgradeRTs[i].sizeDelta.y);
+            UIUtil.SetSize(skillNameTexts[i].rectTransform, 0.9f * selectUpgradeRTs[i].sizeDelta.x, 0.2f * selectUpgradeRTs[i].sizeDelta.y);
             UIUtil.SetSize(selectUpgradeTexts[i].rectTransform, skillNameTexts[i].rectTransform.sizeDelta);
             UIUtil.SetSize(rarityTexts[i].rectTransform, skillNameTexts[i].rectTransform.sizeDelta);
 
-            skillNameTexts[i].fontSize = 0.03f * _canvasSize.x;
-            selectUpgradeTexts[i].fontSize = 0.02f * _canvasSize.x;
-            rarityTexts[i].fontSize = 0.02f * _canvasSize.x;
+            skillNameTexts[i].fontSize = 0.04f * _canvasSize.x;
+            selectUpgradeTexts[i].fontSize = 0.03f * _canvasSize.x;
+            rarityTexts[i].fontSize = 0.03f * _canvasSize.x;
 
             selectUpgradeRTs[i].gameObject.SetActive(false);
         }
+
+        UIUtil.SetSize(fadeBackground.rectTransform, _canvasSize);
 
         _showUpgradePanelButtonRT.sizeDelta = new Vector2(0.2f * _canvasSize.y, 0.1f * _canvasSize.y);
         _showUpgradePanelButtonRT.localPosition = new Vector2(0, -0.35f * _canvasSize.y);

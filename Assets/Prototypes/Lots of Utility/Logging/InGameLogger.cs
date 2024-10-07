@@ -42,13 +42,13 @@ public class InGameLogger : MonoBehaviour
         Application.logMessageReceived -= DisplayLog;
     }
 
-    private void SampleLog()
-    {
-        for (int i = 0; i < 9; i++)
-        {
-            DebugUtil.DistinctLog($"Sample Log {i}");
-        }
-    }
+    // private void SampleLog()
+    // {
+    //     for (int i = 0; i < 9; i++)
+    //     {
+    //         DebugUtil.DistinctLog($"Sample Log {i}");
+    //     }
+    // }
 
     private void GenerateUI()
     {

@@ -26,6 +26,7 @@ public class CharacterMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
 
         PlayerAttack.enableRotatingEvent += EnableRotating;
+        JoystickController.controlPlayerEvent += Move;
 
         _initialPositionY = transform.position.y;
     }
@@ -33,36 +34,69 @@ public class CharacterMovement : MonoBehaviour
     private void OnDestroy()
     {
         PlayerAttack.enableRotatingEvent -= EnableRotating;
+        JoystickController.controlPlayerEvent -= Move;
     }
+
+    // private void Update()
+    // {
+    //     if (Input.GetKey(KeyCode.W))
+    //     {
+    //         WalkFoward();
+
+    //         // if (_isAttacking == false)
+    //         // {
+    //         //     WalkFoward();
+    //         // }
+    //     }
+    //     else
+    //     {
+    //         if (_speed > 0)
+    //         {
+    //             _speed -= deltaSpeed;
+    //         }
+    //         else
+    //         {
+    //             _speed = 0;
+    //         }
+    //     }
+
+    //     _rigidbody.velocity = speedMultiplier * _speed * transform.forward;
+
+    //     setSpeedPropertyAnimation?.Invoke(gameObject.GetInstanceID(), _speed);
+
+    //     FaceToMouseCursor();
+    // }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.W))
-        {
-            WalkFoward();
-
-            // if (_isAttacking == false)
-            // {
-            //     WalkFoward();
-            // }
-        }
-        else
+        if (!Input.GetMouseButton(0))
         {
             if (_speed > 0)
             {
-                _speed -= deltaSpeed;
+                _speed -= 3f * deltaSpeed;
             }
             else
             {
                 _speed = 0;
             }
-        }
 
-        _rigidbody.velocity = speedMultiplier * _speed * transform.forward;
+            setSpeedPropertyAnimation?.Invoke(gameObject.GetInstanceID(), _speed);
+        }
+    }
+    #endregion
+
+    #region MOBILE
+    private void Move(Vector2 inputDirection)
+    {
+        WalkFoward();
+
+        Vector3 moveDirection = new Vector3(-inputDirection.y, 0, inputDirection.x);
+
+        _rigidbody.velocity = speedMultiplier * _speed * moveDirection.normalized;
+
+        transform.LookAt(moveDirection);
 
         setSpeedPropertyAnimation?.Invoke(gameObject.GetInstanceID(), _speed);
-
-        FaceToMouseCursor();
     }
     #endregion
 
