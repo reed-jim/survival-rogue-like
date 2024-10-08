@@ -73,12 +73,14 @@ public class CharacterMovement : MonoBehaviour
         {
             if (_speed > 0)
             {
-                _speed -= 3f * deltaSpeed;
+                _speed -= 0.5f * deltaSpeed;
             }
             else
             {
                 _speed = 0;
             }
+
+            _rigidbody.velocity = speedMultiplier * _speed * transform.forward;
 
             setSpeedPropertyAnimation?.Invoke(gameObject.GetInstanceID(), _speed);
         }

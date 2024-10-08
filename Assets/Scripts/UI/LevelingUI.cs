@@ -15,6 +15,7 @@ public class LevelingUI : MonoBehaviour
     private TMP_Text[] skillNameTexts;
     private TMP_Text[] selectUpgradeTexts;
     private TMP_Text[] rarityTexts;
+    [SerializeField] private Button rerollSkillButton;
     [SerializeField] private Image fadeBackground;
 
     [Header("SCRIPTABLE OBJECT")]
@@ -48,6 +49,7 @@ public class LevelingUI : MonoBehaviour
         }
 
         showUpgradePanelButton.onClick.AddListener(ShowUpgradePanel);
+        rerollSkillButton.onClick.AddListener(Reroll);
 
         fadeBackground.gameObject.SetActive(false);
 
@@ -126,6 +128,11 @@ public class LevelingUI : MonoBehaviour
             selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();
             rarityTexts[i].text = ((RarityTier)_skillsToChoose[i].GetTier()).ToString();
         }
+    }
+
+    private void Reroll()
+    {
+        ShowUpgrades();
     }
 
     private void OnPlayerLeveledUp()

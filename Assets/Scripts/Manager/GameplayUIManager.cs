@@ -52,12 +52,17 @@ public class GameplayUIManager : MonoBehaviour
     private void GenerateUI()
     {
         UIUtil.SetSize(expProgressBarRT, 0.8f * _canvasSize.x, 0.025f * _canvasSize.y);
-        UIUtil.SetLocalPositionY(expProgressBarRT, 0.35f * _canvasSize.y);
+        UIUtil.SetLocalPositionY(expProgressBarRT, 0.4f * _canvasSize.y);
 
-        UIUtil.SetSize(playerHpProgressBarRT, 0.5f * _canvasSize.x, 0.025f * _canvasSize.y);
+        UIUtil.SetSize(playerHpProgressBarRT, expProgressBarRT.sizeDelta.x, 0.025f * _canvasSize.y);
         UIUtil.SetLocalPosition(playerHpProgressBarRT,
-            -0.5f * (expProgressBarRT.sizeDelta.x - playerHpProgressBarRT.sizeDelta.x),
+            0,
             expProgressBarRT.localPosition.y + 0.6f * (expProgressBarRT.sizeDelta.y + playerHpProgressBarRT.sizeDelta.y));
+
+        // UIUtil.SetSize(playerHpProgressBarRT, 0.5f * _canvasSize.x, 0.025f * _canvasSize.y);
+        // UIUtil.SetLocalPosition(playerHpProgressBarRT,
+        //     -0.5f * (expProgressBarRT.sizeDelta.x - playerHpProgressBarRT.sizeDelta.x),
+        //     expProgressBarRT.localPosition.y + 0.6f * (expProgressBarRT.sizeDelta.y + playerHpProgressBarRT.sizeDelta.y));
 
         UIUtil.SetSize(playerLazyHpProgressBarRT, playerHpProgressBarRT.sizeDelta);
         UIUtil.SetLocalPosition(playerLazyHpProgressBarRT, playerHpProgressBarRT.localPosition);

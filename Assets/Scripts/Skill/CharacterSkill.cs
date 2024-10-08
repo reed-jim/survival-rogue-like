@@ -9,7 +9,7 @@ public class CharacterSkill : MonoBehaviour
 {
     [SerializeField] private ActiveSkillContainer activeSkillContainer;
     [SerializeField] private List<DamageOverTimeSkill> damageSkills;
-    [SerializeField] private List<IStatusEffect> statusEffectFromSkills;
+    [SerializeField] private List<IStatusEffect> statusEffects;
 
     #region ACTION
     public static event Action<int, StatusEffectDamaging[]> applyDamagingStatusEffect;
@@ -20,11 +20,13 @@ public class CharacterSkill : MonoBehaviour
     private void Awake()
     {
         damageSkills = new List<DamageOverTimeSkill>();
+        statusEffects = new List<IStatusEffect>();
 
         CollisionHandler.characterHitEvent += ApplyEffect;
         Bullet.characterHitEvent += ApplyEffect;
         LevelingUI.addSkillEvent += OnSkillAdded;
         DamageOverTimeSkill.addSkillEvent += AddDamageOverTimeSkill;
+        ModifedSkillWithStatusEffect.addStatusEffectToSkillEvent += AddStatusEffectAbility;
 
         StartCoroutine(CastingActiveSkills());
     }
@@ -35,6 +37,7 @@ public class CharacterSkill : MonoBehaviour
         Bullet.characterHitEvent -= ApplyEffect;
         LevelingUI.addSkillEvent -= OnSkillAdded;
         DamageOverTimeSkill.addSkillEvent -= AddDamageOverTimeSkill;
+        ModifedSkillWithStatusEffect.addStatusEffectToSkillEvent -= AddStatusEffectAbility;
     }
     #endregion
 
@@ -59,6 +62,11 @@ public class CharacterSkill : MonoBehaviour
         damageSkills.Add(skill);
     }
 
+    private void AddStatusEffectAbility(IStatusEffect statusEffect)
+    {
+        statusEffects.Add(statusEffect);
+    }
+
     private void ApplyEffect(int instanceId)
     {
         // StatusEffectDamaging[] statusEffectDamagings = new StatusEffectDamaging[damageSkills.Count];
@@ -70,11 +78,7 @@ public class CharacterSkill : MonoBehaviour
 
         // applyDamagingStatusEffect?.Invoke(instanceId, statusEffectDamagings);
 
-        statusEffectFromSkills = new List<IStatusEffect>();
-
-        statusEffectFromSkills.Add(new StatusEffectCrowdControl());
-
-        foreach (var statusEffect in statusEffectFromSkills)
+        foreach (var statusEffect in statusEffects)
         {
             statusEffect.ApplyStatusEffect(instanceId);
         }

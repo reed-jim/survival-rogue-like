@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatusEffectCrowdControl : IStatusEffect
+[CreateAssetMenu(menuName = "ScriptableObjects/RPG/StatusEffectCrowdControl")]
+public class StatusEffectCrowdControl : ScriptableObject
 {
-    public static event Action<int> applyStunEffectEvent;
+    [SerializeField] protected float duration;
 
-    public void ApplyStatusEffect(int instanceId)
-    {
-        applyStunEffectEvent?.Invoke(instanceId);
-    }
+    // public static event Action<int> applyStunEffectEvent;
+
+    // public void ApplyStatusEffect(int instanceId)
+    // {
+    //     applyStunEffectEvent?.Invoke(instanceId);
+    // }
 }
