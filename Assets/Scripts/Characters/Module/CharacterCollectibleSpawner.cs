@@ -31,13 +31,15 @@ public class CharacterCollectibleSpawner : MonoBehaviour
                 {
                     if (i % 2 == 0)
                     {
-                        spawnPosition.x += 1.5f;
+                        spawnPosition.x += 0.2f * Random.Range(0, 10);
                     }
                     else
                     {
-                        spawnPosition.z += 1.5f;
+                        spawnPosition.z += 0.2f * Random.Range(0, 10);
                     }
                 }
+
+                spawnPosition.y += 1;
 
                 ICollectible collectible = getICollectibleEvent?.Invoke();
 

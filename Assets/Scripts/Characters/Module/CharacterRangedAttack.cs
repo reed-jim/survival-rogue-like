@@ -8,6 +8,8 @@ public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
     [SerializeField] private string expectedProjectileLayer;
     [SerializeField] private Transform shootingSphere;
 
+    private bool _isShootingSphereEffectInProgress;
+
     public static event GetIProjectileAction getIProjectileEvent;
 
     private void Awake()
@@ -33,7 +35,7 @@ public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
             IProjectile bullet = GetProjectile();
 
             bullet.GameObject.tag = expectedProjectileTag;
-            bullet.GameObject.layer = LayerMask.NameToLayer(expectedProjectileLayer);;
+            bullet.GameObject.layer = LayerMask.NameToLayer(expectedProjectileLayer); ;
 
             Vector3 shotPosition = shootingSphere.position;
 
@@ -43,7 +45,16 @@ public class CharacterRangedAttack : MonoBehaviour, ICharacterAttack
             //     return;
             // }
 
-            StartCoroutine(SpringAnimation.SpringScaleAnimation(shootingSphere, 0.2f * Vector3.one, 0.1f, 4, 0.1f));
+            if (!_isShootingSphereEffectInProgress)
+            {
+                StartCoroutine(SpringAnimation.SpringScaleAnimation(shootingSphere, 0.2f * Vector3.one, 0.1f, 4, 0.1f, onCompletedAction: () =>
+                {
+                    _isShootingSphereEffectInProgress = false;
+                }));
+
+                _isShootingSphereEffectInProgress = true;
+            }
+
 
             bullet.Shoot(target, shotPosition, attackInstanceId: gameObject.GetInstanceID());
 

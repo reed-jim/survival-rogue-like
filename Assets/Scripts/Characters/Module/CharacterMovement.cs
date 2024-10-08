@@ -106,7 +106,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (_speed <= 1)
         {
-            _speed += deltaSpeed;
+            _speed += 2 * deltaSpeed;
         }
         else
         {

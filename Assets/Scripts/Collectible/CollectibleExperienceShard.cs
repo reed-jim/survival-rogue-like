@@ -38,8 +38,8 @@ public class CollectibleExperienceShard : MonoBehaviour, ICollectible
 
         collectibleCollider.enabled = false;
 
-        _tweens.Add(Tween.PositionY(transform, transform.position.y + 3, duration: 0.3f));
-        _tweens.Add(Tween.Scale(transform, 0, duration: 0.3f)
+        _tweens.Add(Tween.PositionY(transform, transform.position.y + 5, duration: 0.4f));
+        _tweens.Add(Tween.Scale(transform, 0, duration: 0.4f)
         .OnComplete(() => gameObject.SetActive(false)));
     }
 
