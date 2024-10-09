@@ -73,7 +73,7 @@ public class CharacterMovement : MonoBehaviour
         {
             if (_speed > 0)
             {
-                _speed -= 0.5f * deltaSpeed;
+                _speed -= 1f * deltaSpeed;
             }
             else
             {
@@ -106,7 +106,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (_speed <= 1)
         {
-            _speed += 2 * deltaSpeed;
+            _speed += 4 * deltaSpeed;
         }
         else
         {

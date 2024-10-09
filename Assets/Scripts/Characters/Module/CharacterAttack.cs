@@ -12,6 +12,9 @@ public class CharacterAttack : MonoBehaviour
     [Header("COLLIDER")]
     [SerializeField] private Collider meleeAttackCollider;
 
+    [Header("FX")]
+    [SerializeField] private ParticleSystem weaponTrailFx;
+
     [Header("CUSTOMIZE")]
     [SerializeField] private float delayTimeAttackHit;
 
@@ -58,20 +61,29 @@ public class CharacterAttack : MonoBehaviour
         setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", Constants.ANIMATION_ATTACK_STATE);
         setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
 
+        weaponTrailFx.Play();
+
         _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
         {
             meleeAttackCollider.gameObject.SetActive(true);
 
-            _tweens.Add(Tween.Delay(0.02f).OnComplete(() =>
-            {
-                meleeAttackCollider.gameObject.SetActive(false);
-            }));
+            // _tweens.Add(Tween.Delay(0.02f).OnComplete(() =>
+            // {
+            //     meleeAttackCollider.gameObject.SetActive(false);
+            // }));
         }));
 
-        _tweens.Add(Tween.Delay(GetActualAttackAnimationDuration()).OnComplete(() =>
+        Tween.Delay(0.5f).OnComplete(() =>
         {
-            setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", Constants.ANIMATION_MOVEMENT_STATE);
-        }));
+            _tweens.Add(Tween.Delay(GetActualAttackAnimationDuration() - 0.5f).OnComplete(() =>
+            {
+                setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", Constants.ANIMATION_MOVEMENT_STATE);
+
+                meleeAttackCollider.gameObject.SetActive(false);
+            }));
+
+            weaponTrailFx.Stop();
+        });
 
         _tweens.Add(Tween.Delay(_characterStatManager.Stat.GetStatValue(StatComponentNameConstant.AttackSpeed)).OnComplete(() =>
         {
@@ -83,6 +95,22 @@ public class CharacterAttack : MonoBehaviour
 
     private float GetActualAttackAnimationDuration()
     {
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+
+        Debug.Log(stateInfo.length);
+
+        float duration = stateInfo.length;
+
+        return duration;
+
+        // if (stateInfo.IsName(clip.name))
+        // {
+        //     float duration = clip.length;
+        //     Debug.Log("Current animation duration: " + duration);
+
+        //     return duration;
+        // }
+
 #if UNITY_EDITOR
         AnimatorController runtimeAnimatorController = _animator.runtimeAnimatorController as AnimatorController;
 
@@ -102,6 +130,8 @@ public class CharacterAttack : MonoBehaviour
                 }
             }
         }
+
+        Debug.Log(attackState.motion.averageDuration / attackState.speed);
 
         return attackState.motion.averageDuration / attackState.speed;
 #else
