@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class RangedCharacterVision : BaseCharacterVision, ICharacterVision
 {
+    [SerializeField] private CharacterStatManager characterStatManager;
+
     [Header("CUSTOMIZE")]
     [SerializeField] private float radiusCheck;
     [SerializeField] private LayerMask layerMaskCheck;
@@ -45,8 +47,12 @@ public class RangedCharacterVision : BaseCharacterVision, ICharacterVision
 
             _isInCountdownCheckAttackEnemy = true;
 
+            float attackSpeed = characterStatManager.Stat.GetStat(StatComponentNameConstant.AttackSpeed).Value;
+
+            float countdown = 1 / attackSpeed;
+
             _tweens.Add(
-                Tween.Delay(0.8f).OnComplete(() => _isInCountdownCheckAttackEnemy = false)
+                Tween.Delay(countdown).OnComplete(() => _isInCountdownCheckAttackEnemy = false)
             );
         }
     }

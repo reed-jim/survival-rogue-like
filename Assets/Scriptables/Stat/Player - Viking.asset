@@ -33,7 +33,7 @@ MonoBehaviour:
       baseValue: 0
   - key: Damage
     baseStatComponent:
-      baseValue: 20
+      baseValue: 3
   - key: DamageMultiplier
     baseStatComponent:
       baseValue: 1
@@ -48,7 +48,7 @@ MonoBehaviour:
       baseValue: 0
   - key: AttackSpeed
     baseStatComponent:
-      baseValue: 0
+      baseValue: 5
   - key: ReloadTime
     baseStatComponent:
       baseValue: 0

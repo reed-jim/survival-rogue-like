@@ -9036,11 +9036,6 @@ PrefabInstance:
       propertyPath: playerShooterController
       value: 
       objectReference: {fileID: 1231552030}
-    - target: {fileID: 3192911297063845200, guid: a83e823ed3570b44a97087b272d5e37e,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5371047925353655979, guid: a83e823ed3570b44a97087b272d5e37e,
         type: 3}
       propertyPath: sceneViewId

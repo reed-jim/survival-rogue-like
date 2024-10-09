@@ -12347,6 +12347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ed1016a06638e40af7ee28a8c32252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterStatManager: {fileID: 1411307404970209441}
   radiusCheck: 10
   layerMaskCheck:
     serializedVersion: 2

@@ -120,7 +120,7 @@ public class CharacterUI : MonoBehaviour
 
         Vector3 currentDamageTextPosition = damageText.rectTransform.localPosition;
 
-        _tweens.Add(Tween.LocalPositionY(damageText.rectTransform, currentDamageTextPosition.y + 1.5f, duration: 0.3f));
+        _tweens.Add(Tween.LocalPositionY(damageText.rectTransform, currentDamageTextPosition.y + 0.5f, duration: 0.3f));
 
         _tweens.Add(Tween.Delay(1f).OnComplete(() =>
         {
