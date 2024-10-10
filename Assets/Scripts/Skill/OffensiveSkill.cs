@@ -4,7 +4,7 @@ using ReedJim.RPG.Stat;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "skill", menuName = "ScriptableObjects/RPG/OffensiveSkill")]
-public class OffensiveSkill : ScriptableObject, IModifierSkill
+public class OffensiveSkill : BaseSkill, IModifierSkill
 {
     [SerializeField] private float damageMultiplier;
     [SerializeField] private float criticalChance;
@@ -29,7 +29,7 @@ public class OffensiveSkill : ScriptableObject, IModifierSkill
         return bonusStat;
     }
 
-    public string GetDescription()
+    public override string GetDescription()
     {
         StringBuilder description = new StringBuilder();
 
@@ -61,17 +61,17 @@ public class OffensiveSkill : ScriptableObject, IModifierSkill
         return description.ToString();
     }
 
-    public string GetName()
+    public override string GetName()
     {
         return name;
     }
 
-    public int GetTier()
+    public override int GetTier()
     {
         return UnityEngine.Random.Range(0, 5);
     }
 
-    public void AddSkill()
+    public override void AddSkill()
     {
         updatePlayerStat?.Invoke(GetBonusStat());
     }

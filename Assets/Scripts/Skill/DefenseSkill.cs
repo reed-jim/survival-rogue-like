@@ -4,7 +4,7 @@ using ReedJim.RPG.Stat;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "skill", menuName = "ScriptableObjects/RPG/DefenseSkill")]
-public class DefenseSkill : ScriptableObject, IModifierSkill
+public class DefenseSkill : BaseSkill, IModifierSkill
 {
     [SerializeField] private int hp;
     [SerializeField] private int armor;
@@ -26,7 +26,7 @@ public class DefenseSkill : ScriptableObject, IModifierSkill
     }
 
     #region ISkill Implement
-    public string GetDescription()
+    public override string GetDescription()
     {
         StringBuilder description = new StringBuilder();
 
@@ -48,19 +48,19 @@ public class DefenseSkill : ScriptableObject, IModifierSkill
         return description.ToString();
     }
 
-    public string GetName()
+    public override string GetName()
     {
         return name;
     }
 
-    public void AddSkill()
+    public override void AddSkill()
     {
         updatePlayerStat?.Invoke(GetBonusStat());
     }
 
     #endregion
 
-    public int GetTier()
+    public override int GetTier()
     {
         return 1;
     }

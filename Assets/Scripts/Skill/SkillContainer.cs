@@ -9,9 +9,12 @@ using UnityEngine;
 public class SkillContainer : ScriptableObject
 {
     [SerializeField] private bool clickThisToAutoAssignSkillToThisContainer;
-    [SerializeField] private List<ISkill> allSkills;
+    [SerializeField] private List<BaseSkill> allSkills;
 
-    public List<ISkill> AllSkills => allSkills;
+    public List<BaseSkill> AllSkills
+    {
+        get => allSkills; set => allSkills = value;
+    }
     public int NumberOfSkill => allSkills.Count;
 
     private void OnValidate()
@@ -23,7 +26,7 @@ public class SkillContainer : ScriptableObject
         //     return;
         // }
 
-        allSkills = new List<ISkill>();
+        allSkills = new List<BaseSkill>();
 
         DirectoryInfo directoryInfo = new DirectoryInfo("Assets/Scriptables/Skill/All Skills");
 
@@ -48,15 +51,18 @@ public class SkillContainer : ScriptableObject
         LoadAsset(paths);
     }
 
-    private async void LoadAsset(List<string> paths)
+    private void LoadAsset(List<string> paths)
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         foreach (var path in paths)
         {
-            ISkill skill = (ISkill)AssetDatabase.LoadAssetAtPath(path, typeof(ISkill));
+            BaseSkill skill = (BaseSkill)AssetDatabase.LoadAssetAtPath(path, typeof(BaseSkill));
 
-            allSkills.Add(skill);
+            if (skill != null)
+            {
+                allSkills.Add(skill);
+            }
         }
-        #endif
+#endif
     }
 }

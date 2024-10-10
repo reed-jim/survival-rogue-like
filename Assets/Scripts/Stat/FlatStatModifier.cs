@@ -8,6 +8,7 @@ public class FlatStatModifier : IStatModifier
     public void ModifyValue(IStatComponent statComponent, float amount)
     {
         statComponent.Value += amount;
+        statComponent.BaseValue = statComponent.Value;
     }
 }
 

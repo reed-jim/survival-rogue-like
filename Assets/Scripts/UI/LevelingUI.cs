@@ -53,7 +53,7 @@ public class LevelingUI : MonoBehaviour
 
         fadeBackground.gameObject.SetActive(false);
 
-        // Tween.Delay(1).OnComplete(() => ShowUpgradePanel());
+        Tween.Delay(1).OnComplete(() => ShowUpgradePanel());
     }
 
     private void OnDestroy()

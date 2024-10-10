@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae53d9215a9c97d44a1a61d71ff5bc00, type: 3}
   m_Name: Skill Container
   m_EditorClassIdentifier: 
-  clickThisToAutoAssignSkillToThisContainer: 0
+  clickThisToAutoAssignSkillToThisContainer: 1
+  allSkills:
+  - {fileID: 11400000, guid: 30e1eefc003080c41bb95438a134d3b4, type: 2}
+  - {fileID: 11400000, guid: e305eaccc58ede24aaf758f7c267dbd7, type: 2}
+  - {fileID: 11400000, guid: 5926bfc044a13204ca3808f81c4b9eb4, type: 2}
+  - {fileID: 11400000, guid: e8cf452d590a2f84c8d2d9e49e806d64, type: 2}
+  - {fileID: 11400000, guid: 4b92b1efd7bd982418f54a2164a61b3a, type: 2}
+  - {fileID: 11400000, guid: 857a4538921d1d54f89697ac08976f81, type: 2}
+  - {fileID: 11400000, guid: 9b18b3b799fd21e4abfe6cdd24a48fde, type: 2}
+  - {fileID: 11400000, guid: 1f0cd5cb73477dd439db9ff16425df2d, type: 2}
+  - {fileID: 11400000, guid: bc9e0d0c60f5b59428e3c47e8692b77d, type: 2}

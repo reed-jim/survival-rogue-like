@@ -117,7 +117,7 @@ public class CharacterStatManager : MonoBehaviour
 
     protected virtual void InvokeUpdateHPBarEvent(float prevHp)
     {
-        setHpEvent?.Invoke(gameObject.GetInstanceID(), prevHp, Stat.GetStatValue(StatComponentNameConstant.Health), 100);
+        setHpEvent?.Invoke(gameObject.GetInstanceID(), prevHp, Stat.GetStatValue(StatComponentNameConstant.Health), Stat.GetStatBaseValue(StatComponentNameConstant.Health));
     }
 
     private void OnEnemySpawnEvent(int instanceId)

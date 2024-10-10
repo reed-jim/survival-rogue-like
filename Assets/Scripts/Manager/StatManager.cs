@@ -28,6 +28,7 @@ public class StatManager : MonoBehaviour
         CollectibleExperienceShard.earnPlayerExperienceEvent += EarnPlayerExpKillingEnemy;
         OffensiveSkill.updatePlayerStat += UpdatePlayerStat;
         DefenseSkill.updatePlayerStat += UpdatePlayerStat;
+        GameTimeCounter.scaleEnemyPowerOverTimeEvent += ScaleEnemyPowerOverTime;
     }
 
     private void OnDestroy()
@@ -39,6 +40,7 @@ public class StatManager : MonoBehaviour
         CollectibleExperienceShard.earnPlayerExperienceEvent -= EarnPlayerExpKillingEnemy;
         OffensiveSkill.updatePlayerStat -= UpdatePlayerStat;
         DefenseSkill.updatePlayerStat -= UpdatePlayerStat;
+        GameTimeCounter.scaleEnemyPowerOverTimeEvent -= ScaleEnemyPowerOverTime;
     }
     #endregion
 
@@ -80,119 +82,31 @@ public class StatManager : MonoBehaviour
     {
         _playerStat += modifierStat;
 
+        InvokeUpdatePlayerHealthUI();
+    }
+
+    private void InvokeUpdatePlayerHealthUI()
+    {
         IStatComponent health = _playerStat.GetStat(StatComponentNameConstant.Health);
 
         setPlayerHpEvent?.Invoke(health.Value, health.BaseValue);
     }
 
-    // [SerializeField] private PlayerStat playerStat;
+    private void ScaleEnemyPowerOverTime(float timeElapsed)
+    {
+        foreach (var item in _characterStats.Values)
+        {
+            float baseValue = item.GetStatBaseValue(StatComponentNameConstant.Health);
+            float currentValue = item.GetStatValue(StatComponentNameConstant.Health);
 
-    // [Header("SCRIPTABLE OBJECT")]
-    // [SerializeField] private PlayerStatObserver playerStatObserver;
+            if (currentValue < baseValue)
+            {
+                continue;
+            }
 
-    // [Header("MANAGEMENT")]
-    // private List<EnemyStat> _enemyStats;
-    // private List<int> _enemySpawnTimes;
+            FlatStatModifier flatStatModifier = new FlatStatModifier();
 
-    // public static event Action<float, float> updatePlayerHpBarEvent;
-    // public static event Action<float, float> updateExpProgressBarEvent;
-
-    // public static event Action<int, float> updateEnemyUIEvent;
-    // public static event Action showUpgradePanelEvent;
-
-    // private void Awake()
-    // {
-    //     Enemy.enemySpawnedEvent += OnEnemySpawned;
-    //     Enemy.enemyHitEvent += OnEnemyHit;
-    //     Enemy.enemyDieEvent += EarnPlayerExpKillingEnemy;
-    //     Enemy.playerGotHitEvent += OnPlayerHit;
-    //     Enemy.resetEnemyEvent += ResetEnemy;
-    //     PlayerController.getStatEvent += GetPlayerStat;
-    //     PlayerController.playerGotHitEvent += OnPlayerHit;
-    //     LevelingUI.upgradePlayerStatEvent += UpgradePlayerStat;
-
-    //     PlayerStat starterPlayerStat = new PlayerStat()
-    //     {
-    //         Level = 1,
-    //         HP = 100,
-    //         Damage = 15,
-    //         AttackRange = 12,
-    //         ReloadTime = 1
-    //     };
-
-    //     playerStat = DataUtility.Load(defaultValue: starterPlayerStat);
-
-    //     playerStatObserver.PlayerStat = playerStat;
-
-    //     _enemyStats = new List<EnemyStat>();
-    //     _enemySpawnTimes = new List<int>();
-    // }
-
-    // private void TestDamageOverTime()
-    // {
-
-    // }
-
-    // private void OnDestroy()
-    // {
-    //     Enemy.enemySpawnedEvent -= OnEnemySpawned;
-    //     Enemy.enemyHitEvent -= OnEnemyHit;
-    //     Enemy.enemyDieEvent -= EarnPlayerExpKillingEnemy;
-    //     Enemy.playerGotHitEvent -= OnPlayerHit;
-    //     Enemy.resetEnemyEvent -= ResetEnemy;
-    //     PlayerController.getStatEvent -= GetPlayerStat;
-    //     PlayerController.playerGotHitEvent -= OnPlayerHit;
-    //     LevelingUI.upgradePlayerStatEvent -= UpgradePlayerStat;
-    // }
-
-    // private void OnEnemySpawned(EnemyStat enemyStat)
-    // {
-    //     _enemyStats.Add(enemyStat);
-    //     _enemySpawnTimes.Add(0);
-    // }
-
-    // private void OnEnemyHit(int enemyIndex)
-    // {
-    //     _enemyStats[enemyIndex].MinusHP(playerStat.Damage);
-
-    //     updateEnemyUIEvent?.Invoke(enemyIndex, playerStat.Damage);
-    // }
-
-    // private void ResetEnemy(int enemyIndex)
-    // {
-    //     if (enemyIndex < _enemyStats.Count)
-    //     {
-    //         _enemySpawnTimes[enemyIndex]++;
-
-    //         _enemyStats[enemyIndex].GetStronger(_enemySpawnTimes[enemyIndex]);
-    //     }
-    // }
-
-    // private void OnPlayerHit(float damage)
-    // {
-    //     playerStat.MinusHP(damage);
-
-    //     updatePlayerHpBarEvent?.Invoke(playerStat.HP, playerStat.GetMaxHp());
-    // }
-
-    // private void UpgradePlayerStat(StatType statType, float value)
-    // {
-    //     if (statType == StatType.HP)
-    //     {
-    //         playerStat.HP += value;
-    //     }
-    //     else if (statType == StatType.DAMAGE)
-    //     {
-    //         playerStat.Damage += value;
-    //     }
-    //     else if (statType == StatType.ATTACK_SPEED)
-    //     {
-    //         playerStat.AttackSpeed += value;
-    //     }
-    // }
-
-    // private PlayerStat GetPlayerStat()
-    // {
-    //     return playerStat;
-    // }
+            item.ModifyStat(StatComponentNameConstant.Health, flatStatModifier, 5 * Mathf.Pow(timeElapsed, 1.05f));
+        }
+    }
 }
