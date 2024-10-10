@@ -16,46 +16,50 @@ public class OffensiveSkill : BaseSkill, IModifierSkill
     public static event Action<CharacterStat> updatePlayerStat;
     #endregion
 
+    private int _currentTier = -1;
+
     public CharacterStat GetBonusStat()
     {
         CharacterStat bonusStat = new CharacterStat();
 
-        bonusStat.SetStatBaseValue(StatComponentNameConstant.DamageMultiplier, damageMultiplier);
-        bonusStat.SetStatBaseValue(StatComponentNameConstant.CriticalChance, criticalChance);
-        bonusStat.SetStatBaseValue(StatComponentNameConstant.CriticalMultiplier, criticalDamageMultiplier);
-        bonusStat.SetStatBaseValue(StatComponentNameConstant.PercentDirectDamage, percentDirectDamage);
-        bonusStat.SetStatBaseValue(StatComponentNameConstant.PercentHealthExecuted, percentHealthExecuted);
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.DamageMultiplier, damageMultiplier * (_currentTier + 1));
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.CriticalChance, criticalChance * (_currentTier + 1));
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.CriticalMultiplier, criticalDamageMultiplier * (_currentTier + 1));
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.PercentDirectDamage, percentDirectDamage * (_currentTier + 1));
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.PercentHealthExecuted, percentHealthExecuted * (_currentTier + 1));
 
         return bonusStat;
     }
 
     public override string GetDescription()
     {
+        _currentTier = GetTier();
+
         StringBuilder description = new StringBuilder();
 
         if (damageMultiplier > 0)
         {
-            description.Append($"Increases your damage modifier by an additional {damageMultiplier * 100}%. ");
+            description.Append($"Increases your damage modifier by an additional <color=#FF8282>{damageMultiplier * 100 * (_currentTier + 1)}%</color>. ");
         }
 
         if (criticalChance > 0)
         {
-            description.Append($"Increases your critical damage chance by an additional {criticalChance * 100}%. ");
+            description.Append($"Increases your critical damage chance by an additional <color=#FF8282>{criticalChance * 100 * (_currentTier + 1)}%</color>. ");
         }
 
         if (criticalDamageMultiplier > 0)
         {
-            description.Append($"Increases your critical damage modifier by an additional {criticalDamageMultiplier * 100}%.");
+            description.Append($"Increases your critical damage modifier by an additional {criticalDamageMultiplier * 100 * (_currentTier + 1)}%.");
         }
 
         if (percentDirectDamage > 0)
         {
-            description.Append($"{percentDirectDamage * 100}% of your damage will be direct damage.");
+            description.Append($"{percentDirectDamage * 100 * (_currentTier + 1)}% of your damage will be direct damage.");
         }
 
         if (percentHealthExecuted > 0)
         {
-            description.Append($"if enemies health are under {percentHealthExecuted * 100}% then executed them immediately");
+            description.Append($"if enemies health are under {percentHealthExecuted * 100 * (_currentTier + 1)}% then executed them immediately");
         }
 
         return description.ToString();
