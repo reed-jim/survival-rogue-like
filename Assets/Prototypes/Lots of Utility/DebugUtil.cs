@@ -16,6 +16,15 @@ public static class DebugUtil
         Debug.Log($"<color=#{ColorUtility.ToHtmlStringRGB(color)}>{message}</color>");
     }
 
+    public static void DistinctLog(object message)
+    {
+        Color textColor = new Color(1, 200f / 255, 160f / 255, 1);
+
+        string text = $"KING-ADVENTURE-DEBUG: {message}";
+
+        Debug.Log($"<color=#{ColorUtility.ToHtmlStringRGB(textColor)}>{text}</color>");
+    }
+
     public static void DistinctLog(string message)
     {
         Color textColor = new Color(1, 200f / 255, 160f / 255, 1);

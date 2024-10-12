@@ -50,6 +50,8 @@ public class CharacterUI : MonoBehaviour
     {
         CharacterStatManager.setHpEvent -= SetHP;
         CharacterStatManager.showCriticalDamageEvent -= HighlightCriticalDamage;
+
+        _cumulativeDamage = 0;
     }
 
     public void Reset()
@@ -105,48 +107,61 @@ public class CharacterUI : MonoBehaviour
         damageText.text = $"{damage}";
         damageText.gameObject.SetActive(true);
 
-        if (_isInAnimation)
+        // if (_isInAnimation)
+        // {
+        //     _cumulativeDamage += damage;
+
+        //     damageText.text = $"{_cumulativeDamage}";
+
+        //     return;
+        // }
+        // else
+        // {
+        //     _cumulativeDamage = damage;
+        // }
+
+        _cumulativeDamage += damage;
+
+        damageText.text = $"{_cumulativeDamage}";
+
+        if (!_isInAnimation)
         {
-            _cumulativeDamage += damage;
+            StartCoroutine(SpringAnimation.SpringScaleAnimation(damageText.rectTransform, 0.2f * Vector3.one, 0.1f, 4, 0.1f,
+                onCompletedAction: () => _isInAnimation = false));
 
-            damageText.text = $"{_cumulativeDamage}";
-
-            return;
+            _isInAnimation = true;
         }
-        else
-        {
-            _cumulativeDamage = damage;
-        }
 
-        Vector3 currentDamageTextPosition = damageText.rectTransform.localPosition;
 
-        _tweens.Add(Tween.LocalPositionY(damageText.rectTransform, currentDamageTextPosition.y + 0.5f, duration: 0.3f));
+        // Vector3 currentDamageTextPosition = damageText.rectTransform.localPosition;
 
-        _tweens.Add(Tween.Delay(1f).OnComplete(() =>
-        {
-            _tweens.Add(
-                Tween.Custom(1, 0, duration: 0.3f, onValueChange: newVal =>
-                {
-                    Color color = damageText.color;
+        // _tweens.Add(Tween.LocalPositionY(damageText.rectTransform, currentDamageTextPosition.y + 0.5f, duration: 0.3f));
 
-                    color.a = newVal;
+        // _tweens.Add(Tween.Delay(1f).OnComplete(() =>
+        // {
+        //     _tweens.Add(
+        //         Tween.Custom(1, 0, duration: 0.3f, onValueChange: newVal =>
+        //         {
+        //             Color color = damageText.color;
 
-                    damageText.color = color;
-                }
-                ).OnComplete(() =>
-            {
-                damageText.gameObject.SetActive(false);
+        //             color.a = newVal;
 
-                damageText.rectTransform.localPosition = currentDamageTextPosition;
-                damageText.color = ColorUtil.WithAlpha(damageText.color, 1);
+        //             damageText.color = color;
+        //         }
+        //         ).OnComplete(() =>
+        //     {
+        //         damageText.gameObject.SetActive(false);
 
-                criticalDamageIcon.gameObject.SetActive(false);
+        //         damageText.rectTransform.localPosition = currentDamageTextPosition;
+        //         damageText.color = ColorUtil.WithAlpha(damageText.color, 1);
 
-                _isInAnimation = false;
-            }));
-        }));
+        //         criticalDamageIcon.gameObject.SetActive(false);
 
-        _isInAnimation = true;
+        //         _isInAnimation = false;
+        //     }));
+        // }));
+
+        // _isInAnimation = true;
     }
 
     private void HighlightCriticalDamage(int instanceId)
