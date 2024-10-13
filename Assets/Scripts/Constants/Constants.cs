@@ -10,6 +10,8 @@ public static class Constants
 
     public static string STAT_DATA_FILE_NAME = "stat_data";
 
+    public static string PERMANENT_UPGRADE_STAT = "permanent_upgrade_stat";
+
     #region ANIMATION
     public static int ANIMATION_MOVEMENT_STATE = 0;
     public static int ANIMATION_ATTACK_STATE = 1;

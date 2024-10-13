@@ -9,7 +9,7 @@ public class PermanentUpgradeScreen : UIScreen
     [SerializeField] private RectTransform upgradeSlotContainer;
 
     [SerializeField] private PredifinedCharacterStat permanentUpgradeScriptable;
-    [SerializeField] private CharacterStat permanentUpgradeStat;
+    [SerializeField] private PermanentUpgradeStatObserver permanentUpgradeStatObserver;
 
     private int _slotCount;
     private RectTransform[] _upgradeSlots;
@@ -17,8 +17,8 @@ public class PermanentUpgradeScreen : UIScreen
 
     private void Spawn()
     {
-        permanentUpgradeStat = permanentUpgradeScriptable.GetBaseCharacterStat();
-        _slotCount = permanentUpgradeStat.StatComponents.Count;
+        permanentUpgradeStatObserver.PermanentUpgradeStat = permanentUpgradeScriptable.GetBaseCharacterStat();
+        _slotCount = permanentUpgradeStatObserver.PermanentUpgradeStat.StatComponents.Count;
 
         _upgradeSlots = new RectTransform[_slotCount];
         _permanentUpgradeSlots = new PermanentUpgradeSlot[_slotCount];
@@ -35,22 +35,30 @@ public class PermanentUpgradeScreen : UIScreen
     {
         Spawn();
 
-        UIUtil.SetSize(upgradeSlotContainer, 0.9f * _canvasSize.x, 0.2f * _canvasSize.y);
+        UIUtil.SetSize(upgradeSlotContainer, 0.9f * _canvasSize.x, 0.5f * _canvasSize.y);
         UIUtil.SetLocalPositionY(upgradeSlotContainer, 0.4f * (_canvasSize.y - upgradeSlotContainer.sizeDelta.y));
 
         for (int i = 0; i < _permanentUpgradeSlots.Length; i++)
         {
-            UIUtil.SetSizeKeepRatioY(_upgradeSlots[i], 0.9f * upgradeSlotContainer.sizeDelta.x / _slotCount);
-            UIUtil.SetLocalPositionX(_upgradeSlots[i], -0.4f * upgradeSlotContainer.sizeDelta.x + 1.1f * i * _upgradeSlots[i].sizeDelta.x);
+            UIUtil.SetSizeKeepRatioY(_upgradeSlots[i], 0.3f * upgradeSlotContainer.sizeDelta.x);
+
+            if (i % 2 == 0)
+            {
+                UIUtil.SetLocalPositionX(_upgradeSlots[i], -0.55f * _upgradeSlots[i].sizeDelta.x);
+            }
+            else
+            {
+                UIUtil.SetLocalPositionX(_upgradeSlots[i], 0.55f * _upgradeSlots[i].sizeDelta.x);
+            }
+
+            UIUtil.SetLocalPositionY(_upgradeSlots[i], 0.45f * (upgradeSlotContainer.sizeDelta.y - _upgradeSlots[i].sizeDelta.y) - (i / 2) * 1.1f * _upgradeSlots[i].sizeDelta.y);
         }
 
         int slotIndex = 0;
 
-        foreach (var item in permanentUpgradeStat.StatComponents.Values)
+        foreach (var item in permanentUpgradeStatObserver.PermanentUpgradeStat.StatComponents)
         {
-            float statValue = item.BaseValue;
-
-            _permanentUpgradeSlots[slotIndex].SetStatValue(statValue);
+            _permanentUpgradeSlots[slotIndex].Setup(item.Key, item.Value);
 
             slotIndex++;
         }

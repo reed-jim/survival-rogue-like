@@ -7898,6 +7898,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37462c3efb50e7b48bf905664da8794c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  permanentUpgradeStatObserver: {fileID: 11400000, guid: c647131c4843b524d946f8e450982340,
+    type: 2}
 --- !u!4 &1935071201
 Transform:
   m_ObjectHideFlags: 0
