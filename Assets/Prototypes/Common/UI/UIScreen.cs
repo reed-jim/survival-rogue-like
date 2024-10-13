@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIScreen : MonoBehaviour, IUIScreen, ISubcriber
 {
     [SerializeField] protected RectTransform canvas;
-    [SerializeField] private RectTransform container;
+    [SerializeField] protected RectTransform container;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private bool isDisableScreenFromStart;
