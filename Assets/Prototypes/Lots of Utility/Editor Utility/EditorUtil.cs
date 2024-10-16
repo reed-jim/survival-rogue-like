@@ -21,6 +21,43 @@ namespace Saferio.Util
         }
         #endregion
 
+        #region WITH STYLE
+        public static string StyledTextField(string label, string value, GUIStyle labelStyle, GUIStyle style, int height = 18)
+        {
+            GUILayout.Label(label, labelStyle, GUILayout.Height(height));
+
+            return EditorGUILayout.TextField(value, style, GUILayout.Height(height));
+        }
+
+        public static float StyledNumberField(string label, float value, GUIStyle labelStyle, GUIStyle style, int height = 18)
+        {
+            float inputValue = 0;
+
+            Row(() =>
+            {
+                GUILayout.Label(label, labelStyle, GUILayout.MinWidth(160), GUILayout.Height(height));
+
+                inputValue = EditorGUILayout.FloatField(value, style, GUILayout.Height(height));
+            });
+
+            return inputValue;
+        }
+
+        public static UnityEngine.Object StyledObjectField(string label, UnityEngine.Object value, GUIStyle labelStyle, int height = 18)
+        {
+            UnityEngine.Object output = new UnityEngine.Object();
+
+            Row(() =>
+            {
+                GUILayout.Label(label, labelStyle, GUILayout.MinWidth(160), GUILayout.Height(height));
+
+                output = EditorGUILayout.ObjectField(value, typeof(UnityEngine.Object), GUILayout.Height(height));
+            });
+
+            return output;
+        }
+        #endregion
+
         public static Color GetColorFromHex(string hex)
         {
             if (hex.Length < 6)

@@ -48,13 +48,17 @@ namespace Saferio.Util.SaferioTween
         {
             SaferioTweenManager saferioTweenManager = (SaferioTweenManager)target;
 
-            EditorGUILayout.LabelField("My List (Read-Only)", EditorStyles.boldLabel);
-            foreach (var item in saferioTweenManager.ListTween)
+            EditorGUI.BeginDisabledGroup(true);
+
+            if (saferioTweenManager.ListTween != null)
             {
-                EditorGUILayout.LabelField(item.ToString());
+                foreach (var item in saferioTweenManager.ListTween)
+                {
+                    EditorGUILayout.LabelField(item.ToString());
+                }
             }
 
-            DrawDefaultInspector();
+            EditorGUI.EndDisabledGroup();
         }
     }
 #endif

@@ -46,4 +46,44 @@ public static class TransformUtil
     {
         return new Vector3(initialValue, target.eulerAngles.y, target.eulerAngles.z);
     }
+
+    public static T? GetComponentFromParents<T>(Transform child) where T : class
+    {
+        Transform currentTransform = child.parent;
+
+        while (currentTransform != null)
+        {
+            T? component = currentTransform.GetComponent<T>();
+
+            DebugUtil.DistinctLog(component + "/" + (component == null));
+
+            if (component != null)
+            {
+                return component;
+            }
+
+            currentTransform = currentTransform.parent;
+        }
+
+        return null;
+    }
+
+    public static Canvas GetCanvasFromParents(RectTransform rectTransform)
+    {
+        Transform currentTransform = rectTransform;
+
+        while (currentTransform != null)
+        {
+            Canvas canvas = currentTransform.GetComponent<Canvas>();
+
+            if (canvas != null)
+            {
+                return canvas;
+            }
+
+            currentTransform = currentTransform.parent;
+        }
+
+        return null;
+    }
 }

@@ -483,6 +483,13 @@ public static class UIUtil
         target.sizeDelta = size;
     }
 
+    public static void SetSize(Button target, Vector2 size)
+    {
+        RectTransform rectTransform = target.GetComponent<RectTransform>();
+
+        rectTransform.sizeDelta = size;
+    }
+
     public static void SetSizeX(RectTransform target, float width)
     {
         target.sizeDelta = new Vector2(width, target.sizeDelta.x);

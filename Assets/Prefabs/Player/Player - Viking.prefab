@@ -12077,10 +12077,10 @@ GameObject:
   - component: {fileID: 5371047925353655979}
   - component: {fileID: 1668890721453019275}
   - component: {fileID: 6446652511774103870}
-  - component: {fileID: 2651237155596518567}
   - component: {fileID: 482588553054826855}
   - component: {fileID: 3192911297063845200}
   - component: {fileID: 6949955318109305408}
+  - component: {fileID: 2651237155596518567}
   - component: {fileID: 797785790977378683}
   m_Layer: 3
   m_Name: Player - Viking
@@ -12299,27 +12299,6 @@ MonoBehaviour:
     LayerIndex: 0
   - SynchronizeType: 0
     LayerIndex: 1
---- !u!95 &2651237155596518567
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7168422765234239651}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: f9e052a0f57859e40aff5a474273b92f, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9bdf3102c90b1a04d80ffe13c8e16c95, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &482588553054826855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12364,6 +12343,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ff41e701d79164592562c098e36db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &2651237155596518567
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7168422765234239651}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: f9e052a0f57859e40aff5a474273b92f, type: 3}
+  m_Controller: {fileID: 9100000, guid: 9bdf3102c90b1a04d80ffe13c8e16c95, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!54 &797785790977378683
 Rigidbody:
   m_ObjectHideFlags: 0
