@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a5ad61096e07f44a064bdfb2d707fb, type: 3}
+  m_Name: Equipment Slot Data Container
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 11400000, guid: ece91462b19292a4c97ca28879ea4045, type: 2}
+  - {fileID: 11400000, guid: 25365b6122289b344a7eff4b05dd33e1, type: 2}
+  - {fileID: 11400000, guid: ce1ea87813bfdd44ba8f3e5f50e2578c, type: 2}
+  - {fileID: 11400000, guid: 5c2868708772f914c9212721edd45f8c, type: 2}
+  - {fileID: 11400000, guid: ea5fb5b285f4aff418d243f81e53f707, type: 2}
+  - {fileID: 11400000, guid: 2157b7075fbf1b44aba2db8025c5b3da, type: 2}
+  - {fileID: 11400000, guid: d201d991206cd3c488cdfb00e8fbeedf, type: 2}
+  - {fileID: 11400000, guid: 11cada46bde31734c877eb7747417e86, type: 2}
+  - {fileID: 11400000, guid: 14c20c0df9c2ebe43b623f29f95451b6, type: 2}
+  - {fileID: 11400000, guid: 965a360be2a8a654c9eda6916763ed4b, type: 2}
+  - {fileID: 11400000, guid: 1165b6edf5df4614db84eb782d1114f4, type: 2}
+  - {fileID: 11400000, guid: 32d1d383fb903004ab250a62f2bc6551, type: 2}
