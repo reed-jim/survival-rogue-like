@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Permanent Upgrade Stat Observer", menuName = "ScriptableObjects/RPG/PermanentUpgradeStatObserver")]
 public class PermanentUpgradeStatObserver : ScriptableObject
 {
-    CharacterStat _permanentUpgradeStat;
+    private CharacterStat _permanentUpgradeStat;
 
     public CharacterStat PermanentUpgradeStat
     {

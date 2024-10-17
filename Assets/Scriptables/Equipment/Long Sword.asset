@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11f7f964aae653640b4b91f089e7235b, type: 3}
-  m_Name: New Equipment Slot Data 1
+  m_Name: Long Sword
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 1b605ce4efd3905d8b621544e1c932a1, type: 3}
+  skill: {fileID: 11400000, guid: e305eaccc58ede24aaf758f7c267dbd7, type: 2}
