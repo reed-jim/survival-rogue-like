@@ -835,32 +835,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1565839577853871791, guid: 9cc912236bab240488608f8ca087c3da,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2387313228350057841, guid: 9cc912236bab240488608f8ca087c3da,
-        type: 3}
-      propertyPath: itemPrefab
-      value: 
-      objectReference: {fileID: 8505946110332760973, guid: a0723bf2e51cd9b44bbcd8e1b0265ada,
-        type: 3}
-    - target: {fileID: 2387313228350057841, guid: 9cc912236bab240488608f8ca087c3da,
-        type: 3}
-      propertyPath: columnNumber
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2387313228350057841, guid: 9cc912236bab240488608f8ca087c3da,
-        type: 3}
-      propertyPath: itemDistance
-      value: 24
-      objectReference: {fileID: 0}
     - target: {fileID: 4363804716602227322, guid: 9cc912236bab240488608f8ca087c3da,
         type: 3}
       propertyPath: m_Name
       value: Character Screen
       objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1714769233}
     - target: {fileID: 5676310961571991862, guid: 9cc912236bab240488608f8ca087c3da,
         type: 3}
       propertyPath: canvas
