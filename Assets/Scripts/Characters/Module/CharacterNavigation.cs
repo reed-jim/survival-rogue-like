@@ -29,13 +29,14 @@ public class CharacterNavigation : MonoBehaviour
 
     #region ACTION
     public static event Action<int, string, float> setCharacterAnimationFloatProperty;
-    public static event Action targetFoundEvent;
+    public static event Action<int> targetFoundEvent;
     #endregion
 
     private void Awake()
     {
         FlockAvoidance.avoidNeighbourEvent += StopNavigating;
         SeekTargetNode.startSeekTargetBahaviourEvent += StartNavigatingWithTreeBehaviour;
+        CharacterStatManager.characterDieEvent += HandleOnCharacterDied;
 
         _tweens = new List<Tween>();
 
@@ -53,6 +54,7 @@ public class CharacterNavigation : MonoBehaviour
     {
         FlockAvoidance.avoidNeighbourEvent -= StopNavigating;
         SeekTargetNode.startSeekTargetBahaviourEvent -= StartNavigatingWithTreeBehaviour;
+        CharacterStatManager.characterDieEvent -= HandleOnCharacterDied;
 
         CommonUtil.StopAllTweens(_tweens);
     }
@@ -102,7 +104,7 @@ public class CharacterNavigation : MonoBehaviour
 
                     _navMeshAgent.isStopped = true;
 
-                    targetFoundEvent?.Invoke();
+                    targetFoundEvent?.Invoke(gameObject.GetInstanceID());
 
                     yield break;
                 }
@@ -208,6 +210,19 @@ public class CharacterNavigation : MonoBehaviour
                     _navMeshAgent.isStopped = false;
                 }
             }));
+        }
+    }
+
+    private void HandleOnCharacterDied(int instanceId)
+    {
+        if (instanceId == gameObject.GetInstanceID())
+        {
+            _navMeshAgent.isStopped = true;
+
+            if (_navigatingWithTreeBehaviour != null)
+            {
+                StopCoroutine(_navigatingWithTreeBehaviour);
+            }
         }
     }
 

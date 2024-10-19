@@ -8,8 +8,6 @@ namespace Saferio.TreeBehaviour
     {
         public bool Execute()
         {
-            DebugUtil.DistinctLog("attack node");
-
             return true;
         }
     }

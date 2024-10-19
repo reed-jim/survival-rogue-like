@@ -22,12 +22,14 @@ namespace Saferio.TreeBehaviour
 
         public void RegisterEvent()
         {
-            CharacterNavigation.targetFoundEvent += SetIsSeekingTarget;
+            CharacterNavigation.targetFoundEvent += StopSeekingTarget;
+            CharacterStatManager.characterDieEvent += StopSeekingTarget;
         }
 
         public void UnregisterEvent()
         {
-            CharacterNavigation.targetFoundEvent -= SetIsSeekingTarget;
+            CharacterNavigation.targetFoundEvent -= StopSeekingTarget;
+            CharacterStatManager.characterDieEvent -= StopSeekingTarget;
         }
 
         public bool Execute()
@@ -42,9 +44,20 @@ namespace Saferio.TreeBehaviour
             return _isSeekingTarget;
         }
 
-        private void SetIsSeekingTarget()
+        private void SetIsSeekingTarget(int instanceId)
         {
-            _isSeekingTarget = false;
+            if (instanceId == _instanceId)
+            {
+                _isSeekingTarget = false;
+            }
+        }
+
+        private void StopSeekingTarget(int instanceId)
+        {
+            if (instanceId == _instanceId)
+            {
+                _isSeekingTarget = false;
+            }
         }
     }
 }
