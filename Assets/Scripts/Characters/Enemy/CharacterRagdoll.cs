@@ -45,7 +45,7 @@ public class CharacterRagdoll : MonoBehaviour
 
         foreach (Collider item in ragdollColliders)
         {
-            item.enabled = false;
+            item.enabled = enableRagdoll;
         }
 
         foreach (var ragdollRigidBody in _ragdollRigibodies)

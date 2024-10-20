@@ -118,6 +118,11 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        if (_characterStateManager.State == CharacterState.DIE)
+        {
+            return;
+        }
+
         _characterUI.HideHpBar();
 
         enemyDieEvent?.Invoke(gameObject.GetInstanceID());
@@ -127,11 +132,11 @@ public class Enemy : MonoBehaviour
 
         SaferioTween.Delay(2f, onCompletedAction: () => Dissolve());
 
-        DisableAllColliders();
+        // DisableAllColliders();
 
         _characterStateManager.State = CharacterState.DIE;
 
-        // _characterRagdoll.EnableRagdoll(true);
+        _characterRagdoll.EnableRagdoll(true);
     }
 
     private void FindAllColliders()

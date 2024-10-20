@@ -22,12 +22,29 @@ public class FlockAvoidance : MonoBehaviour
     {
         Collider[] neighbors = Physics.OverlapSphere(transform.position, radiusCheck, layerMaskCheck);
 
+        bool isFoundSelf = true;
+
         if (neighbors.Length > 0)
         {
-            if (neighbors.Length == 1 && neighbors[0].transform.IsChildOf(transform))
+            foreach (var item in neighbors)
+            {
+                if (!item.transform.IsChildOf(transform))
+                {
+                    isFoundSelf = false;
+
+                    break;
+                }
+            }
+
+            if (isFoundSelf)
             {
                 return;
             }
+
+            // if (neighbors.Length == 1 && neighbors[0].transform.IsChildOf(transform))
+            // {
+            //     return;
+            // }
 
             avoidNeighbourEvent?.Invoke(gameObject.GetInstanceID());
 
