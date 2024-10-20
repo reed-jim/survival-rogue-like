@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using PrimeTween;
+using Saferio.Util.SaferioTween;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,8 +23,11 @@ public class CharacterUI : MonoBehaviour
 
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
+    private Tween colorTween;
     private bool _isInAnimation;
     private float _cumulativeDamage;
+
+    private Coroutine _scaleCoroutine;
 
     private void Awake()
     {
@@ -102,8 +107,29 @@ public class CharacterUI : MonoBehaviour
         // );
     }
 
+    IEnumerator TweenText(TMP_Text text, int start, int end)
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(Time.deltaTime);
+
+        int current = start;
+
+        while (current < end)
+        {
+            current += 1;
+
+            text.text = $"{current}";
+
+            yield return waitForSeconds;
+        }
+    }
+
     private void ShowDamage(float damage)
     {
+        if (_isInAnimation)
+        {
+            return;
+        }
+
         damageText.text = $"{damage}";
         damageText.gameObject.SetActive(true);
 
@@ -124,13 +150,53 @@ public class CharacterUI : MonoBehaviour
 
         damageText.text = $"{_cumulativeDamage}";
 
-        if (!_isInAnimation)
+        if (colorTween.isAlive)
         {
-            StartCoroutine(SpringAnimation.SpringScaleAnimation(damageText.rectTransform, 0.2f * Vector3.one, 0.1f, 4, 0.1f,
-                onCompletedAction: () => _isInAnimation = false));
+            colorTween.Stop();
+
+            damageText.color = damageText.color.WithAlpha(1);
+
+            StartCoroutine(TweenText(damageText, (int)(_cumulativeDamage - damage), (int)_cumulativeDamage));
+        }
+
+        colorTween = Tween.Delay(0.4f).OnComplete(() =>
+        {
+            Tween.Alpha(damageText, 0, duration: 0.5f).OnComplete(() =>
+            {
+                damageText.gameObject.SetActive(false);
+                damageText.color = damageText.color.WithAlpha(1);
+
+                _isInAnimation = false;
+            });
 
             _isInAnimation = true;
-        }
+        });
+
+        // if (!_isInAnimation)
+        // {
+        //     damageText.color = damageText.color.WithAlpha(1);
+
+        //     _tweens.Add(Tween.Alpha(damageText, 0, duration: 0.5f).OnComplete(() =>
+        //     {
+        //         damageText.gameObject.SetActive(false);
+        //         damageText.color = damageText.color.WithAlpha(1);
+
+        //         _isInAnimation = false;
+        //     }));
+        //     // _scaleCoroutine = StartCoroutine(SpringAnimation.SpringScaleAnimation(damageText.rectTransform, 0.2f * Vector3.one, 0.1f, 4, 0.1f,
+        //     //     onCompletedAction: () => _isInAnimation = false));
+
+        //     _isInAnimation = true;
+        // }
+        // else
+        // {
+        //     CommonUtil.StopAllTweens(_tweens);
+
+        //     damageText.gameObject.SetActive(true);
+        //     damageText.color = damageText.color.WithAlpha(1);
+
+        //     _isInAnimation = false;
+        // }
 
 
         // Vector3 currentDamageTextPosition = damageText.rectTransform.localPosition;
@@ -168,7 +234,14 @@ public class CharacterUI : MonoBehaviour
     {
         if (instanceId == gameObject.GetInstanceID())
         {
-            criticalDamageIcon.gameObject.SetActive(true);
+            // if (_scaleCoroutine != null)
+            // {
+            //     StopCoroutine(_scaleCoroutine);
+
+            //     Tween.Scale(damageText.rectTransform, 1.2f * damageText.rectTransform.localScale, duration: 0.2f);
+            // }
+
+            // criticalDamageIcon.gameObject.SetActive(true);
         }
     }
 }
