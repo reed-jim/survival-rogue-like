@@ -52,8 +52,6 @@ public class LevelingUI : MonoBehaviour
         rerollSkillButton.onClick.AddListener(Reroll);
 
         fadeBackground.gameObject.SetActive(false);
-
-        Tween.Delay(1).OnComplete(() => ShowUpgradePanel());
     }
 
     private void OnDestroy()

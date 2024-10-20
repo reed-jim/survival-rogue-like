@@ -97,8 +97,6 @@ public class CharacterAttack : MonoBehaviour
     {
         AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
 
-        Debug.Log(stateInfo.length);
-
         float duration = stateInfo.length;
 
         return duration;

@@ -135,6 +135,8 @@ public class PlayerAttack : MonoBehaviour
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(2f);
 
+        yield return waitForSeconds;
+
         while (true)
         {
             MeleeAttack();
@@ -192,7 +194,7 @@ public class PlayerAttack : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(Time.deltaTime);
 
         float angleRotated = 0;
-        float deltaAngle = 6;
+        float deltaAngle = 4;
 
         Vector3 lastAngle = fakeWhirlwindAttack.eulerAngles;
 
