@@ -26,6 +26,7 @@ public class CharacterUI : MonoBehaviour
     private Tween colorTween;
     private bool _isInAnimation;
     private float _cumulativeDamage;
+    private Vector3 _initialDamageTextScale;
 
     private Coroutine _scaleCoroutine;
 
@@ -35,8 +36,11 @@ public class CharacterUI : MonoBehaviour
 
         CharacterStatManager.setHpEvent += SetHP;
         CharacterStatManager.showCriticalDamageEvent += HighlightCriticalDamage;
+        CharacterStatManager.characterDieEvent += HideDamageText;
 
         criticalDamageIcon.gameObject.SetActive(false);
+
+        _initialDamageTextScale = damageText.rectTransform.localScale;
     }
 
     private void OnEnable()
@@ -55,6 +59,7 @@ public class CharacterUI : MonoBehaviour
     {
         CharacterStatManager.setHpEvent -= SetHP;
         CharacterStatManager.showCriticalDamageEvent -= HighlightCriticalDamage;
+        CharacterStatManager.characterDieEvent -= HideDamageText;
 
         _cumulativeDamage = 0;
     }
@@ -230,10 +235,25 @@ public class CharacterUI : MonoBehaviour
         // _isInAnimation = true;
     }
 
+    private void HideDamageText(int instanceId)
+    {
+        if (instanceId == gameObject.GetInstanceID())
+        {
+            Tween.Alpha(damageText, 0, duration: 0.5f).OnComplete(() =>
+            {
+                damageText.gameObject.SetActive(false);
+                damageText.color = damageText.color.WithAlpha(1);
+            });
+
+            lazyHpBar.Hide();
+        }
+    }
+
     private void HighlightCriticalDamage(int instanceId)
     {
         if (instanceId == gameObject.GetInstanceID())
         {
+            Tween.Scale(damageText.rectTransform, 1.5f * _initialDamageTextScale, duration: 0.2f);
             // if (_scaleCoroutine != null)
             // {
             //     StopCoroutine(_scaleCoroutine);

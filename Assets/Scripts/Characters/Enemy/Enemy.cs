@@ -4,6 +4,7 @@ using PrimeTween;
 using System;
 using ReedJim.RPG.Stat;
 using ExitGames.Client.Photon.StructWrapping;
+using Saferio.Util.SaferioTween;
 
 public class Enemy : MonoBehaviour
 {
@@ -117,14 +118,14 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        Dissolve();
-
         _characterUI.HideHpBar();
 
         enemyDieEvent?.Invoke(gameObject.GetInstanceID());
 
         setCharacterAnimationIntProperty?.Invoke(gameObject.GetInstanceID(), "State", Constants.ANIMATION_DIE_STATE);
         setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
+
+        SaferioTween.Delay(2f, onCompletedAction: () => Dissolve());
 
         DisableAllColliders();
 

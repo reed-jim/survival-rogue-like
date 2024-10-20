@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using PrimeTween;
+using Saferio.Util.SaferioTween;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,9 @@ public class LazyBar : MonoBehaviour
 {
     [SerializeField] private Slider bar;
     [SerializeField] private Slider lazyBar;
+
+    [SerializeField] private RectTransform barRT;
+    [SerializeField] private RectTransform lazyBarRT;
 
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
@@ -38,5 +42,24 @@ public class LazyBar : MonoBehaviour
                 }
             })
         );
+    }
+
+    public void Hide()
+    {
+        Vector3 initialScale = barRT.localScale;
+
+        SaferioTween.ScaleX(barRT, 0, 0.3f, onCompletedAction: () =>
+        {
+            barRT.localScale = initialScale;
+
+            barRT.gameObject.SetActive(false);
+        });
+
+        SaferioTween.ScaleX(lazyBarRT, 0, 0.3f, onCompletedAction: () =>
+        {
+            lazyBarRT.localScale = initialScale;
+
+            lazyBarRT.gameObject.SetActive(false);
+        });
     }
 }
