@@ -10,7 +10,8 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private PlayerShooterController playerShooterController;
+    [Header("FAKE WHIRL WIND")]
+    [SerializeField] private Transform fakeWhirlwindAttack;
 
     [Header("ANIMATION")]
     private float _actualAttackAnimationDuration;
@@ -57,15 +58,19 @@ public class PlayerAttack : MonoBehaviour
         swordSlash.gameObject.SetActive(false);
 
         _actualAttackAnimationDuration = GetActualAttackAnimationDuration();
+
+        StartCoroutine(AutoMeleeAttack());
+
+        swordTrail.Stop();
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && _isEnableInput && !UIUtil.IsClickOverUI())
-        {
-            MeleeAttack();
-        }
-    }
+    // private void Update()
+    // {
+    //     if (Input.GetMouseButtonDown(0) && _isEnableInput && !UIUtil.IsClickOverUI())
+    //     {
+    //         MeleeAttack();
+    //     }
+    // }
 
     private void OnDestroy()
     {
@@ -126,6 +131,18 @@ public class PlayerAttack : MonoBehaviour
         // _isAllowRotating = false;
     }
 
+    private IEnumerator AutoMeleeAttack()
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(2f);
+
+        while (true)
+        {
+            MeleeAttack();
+
+            yield return waitForSeconds;
+        }
+    }
+
     private void MeleeAttack()
     {
         if (_isAttacking)
@@ -137,7 +154,7 @@ public class PlayerAttack : MonoBehaviour
             _isAttacking = true;
         }
 
-        // _animator.SetInteger("State", 1);
+        _animator.SetInteger("State", 1);
 
         enableRotatingEvent?.Invoke(gameObject.GetInstanceID(), false);
 
@@ -150,14 +167,53 @@ public class PlayerAttack : MonoBehaviour
             _isAttacking = false;
         });
 
-        PlaySwordTrail();
+        FakeWhirlWideAttack();
+        // PlaySwordTrail();
 
-        _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
+        // swordTrail.Play();
+
+        // _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
+        // {
+        //     swordCollider.enabled = true;
+
+        //     _tweens.Add(Tween.Delay(0.15f).OnComplete(() => swordCollider.enabled = false));
+
+        //     swordTrail.Stop();
+        // }));
+    }
+
+    private void FakeWhirlWideAttack()
+    {
+        StartCoroutine(FakeWhirlWideAttacking());
+    }
+
+    private IEnumerator FakeWhirlWideAttacking()
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(Time.deltaTime);
+
+        float angleRotated = 0;
+        float deltaAngle = 6;
+
+        Vector3 lastAngle = fakeWhirlwindAttack.eulerAngles;
+
+        swordCollider.enabled = true;
+
+        swordTrail.Play();
+
+        while (angleRotated < 360)
         {
-            swordCollider.enabled = true;
+            fakeWhirlwindAttack.eulerAngles = lastAngle + new Vector3(0, deltaAngle, 0);
 
-            _tweens.Add(Tween.Delay(0.02f).OnComplete(() => swordCollider.enabled = false));
-        }));
+            angleRotated += deltaAngle;
+
+            lastAngle = fakeWhirlwindAttack.eulerAngles;
+
+            yield return waitForSeconds;
+        }
+
+        swordCollider.enabled = false;
+
+        swordTrail.Stop();
     }
 
     private float GetActualAttackAnimationDuration()

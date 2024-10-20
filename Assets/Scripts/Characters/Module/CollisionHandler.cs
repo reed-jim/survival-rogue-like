@@ -30,6 +30,33 @@ public class CollisionHandler : MonoBehaviour
     {
         GameObject otherGameObject = other.collider.gameObject;
 
+
+
+
+        Rigidbody rbA = GetComponent<Rigidbody>();
+        Rigidbody rbB = other.rigidbody;
+
+        if (rbB != null)
+        {
+            // Calculate the collision force
+            Vector3 collisionForce = other.relativeVelocity * rbB.mass;
+
+            // Check if the force exceeds the limit
+            if (collisionForce.magnitude > 1)
+            {
+                // Calculate the force to apply
+                Vector3 forceToApply = collisionForce.normalized * 1;
+
+                // Apply the limited force to the other rigidbody
+                // rbA.AddForce(-forceToApply, ForceMode.Impulse);
+            }
+        }
+
+        rbA.velocity = Vector3.zero;
+
+
+
+
         if (collideTags.Contains(otherGameObject.tag))
         {
             ICollide collidable = otherGameObject.GetComponent<ICollide>();
