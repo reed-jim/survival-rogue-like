@@ -54,8 +54,13 @@ public class CollisionHandler : MonoBehaviour
 
         rbA.velocity = Vector3.zero;
 
+        Vector3 force = 200 * (transform.position - otherGameObject.transform.position);
 
+        force.y = 50;
 
+        rbA.AddForce(force, ForceMode.Impulse);
+
+        Debug.Log(rbA.gameObject.name + "/" + force);
 
         if (collideTags.Contains(otherGameObject.tag))
         {
@@ -71,9 +76,6 @@ public class CollisionHandler : MonoBehaviour
                 collidable.HandleOnCollide(gameObject);
             }
         }
-
-        // HandleOnCollisionExplosive(otherGameObject);
-        // HandleOnBeingMeleeAttacked(otherGameObject);
     }
 
     private void HandleOnCollisionExplosive(GameObject otherGameObject)

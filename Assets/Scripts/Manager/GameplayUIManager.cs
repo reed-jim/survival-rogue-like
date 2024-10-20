@@ -88,7 +88,7 @@ public class GameplayUIManager : MonoBehaviour
         _playerHpBarTween = Tween.Custom(prevValue, currentValue, duration: playerHpBarDuration, onValueChange: newVal => playerHpProgressBar.value = newVal);
         _lazyPlayerHpBarTween = Tween.Custom(prevValue, currentValue, duration: playerLazyHpBarDuration, onValueChange: newVal => playerLazyHpProgressBar.value = newVal);
 
-        playerHP.text = $"{currentHp}/{maxHp}";
+        playerHP.text = $"{(int)currentHp}/{(int)maxHp}";
     }
 
     private void UpdateExpProgressBar(float currentExp, float maxExp)

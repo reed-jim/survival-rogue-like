@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PrimeTween;
 using Saferio.TreeBehaviour;
+using Saferio.Util.SaferioTween;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -201,15 +202,18 @@ public class CharacterNavigation : MonoBehaviour
 
             _isAvoidAllies = true;
 
-            _tweens.Add(Tween.Delay(3f).OnComplete(() =>
+            SaferioTween.Delay(2f, onCompletedAction: () =>
             {
                 _isAvoidAllies = false;
 
                 if (!_isNearTarget)
                 {
-                    _navMeshAgent.isStopped = false;
+                    if (_navMeshAgent.isActiveAndEnabled)
+                    {
+                        _navMeshAgent.isStopped = false;
+                    }
                 }
-            }));
+            });
         }
     }
 

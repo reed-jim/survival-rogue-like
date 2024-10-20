@@ -8,6 +8,7 @@ public class LevelingUI : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private RectTransform canvas;
+    [SerializeField] private RectTransform rerollButtonRT;
     [SerializeField] private Button showUpgradePanelButton;
     private RectTransform _showUpgradePanelButtonRT;
     [SerializeField] private Button[] selectUpgradeButtons;
@@ -102,6 +103,9 @@ public class LevelingUI : MonoBehaviour
 
         _showUpgradePanelButtonRT.sizeDelta = new Vector2(0.2f * _canvasSize.y, 0.1f * _canvasSize.y);
         _showUpgradePanelButtonRT.localPosition = new Vector2(0, -0.35f * _canvasSize.y);
+
+        UIUtil.SetSize(rerollButtonRT, 0.2f * _canvasSize.y, 0.08f * _canvasSize.y);
+        UIUtil.SetLocalPositionY(rerollButtonRT, -0.4f * _canvasSize.y);
 
         showUpgradePanelButton.gameObject.SetActive(false);
     }

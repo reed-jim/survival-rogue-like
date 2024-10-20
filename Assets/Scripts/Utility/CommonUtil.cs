@@ -8,7 +8,7 @@ using UnityEngine;
 public static class CommonUtil
 {
     public static void StopAllTweens(List<Tween> tweens) {
-
+        
     }
     
     public static void OnHitColorEffect(

@@ -172,6 +172,8 @@ public class CharacterUI : MonoBehaviour
                 damageText.color = damageText.color.WithAlpha(1);
 
                 _isInAnimation = false;
+
+                _cumulativeDamage = 0;
             });
 
             _isInAnimation = true;
