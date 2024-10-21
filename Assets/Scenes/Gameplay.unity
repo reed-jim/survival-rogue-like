@@ -8988,6 +8988,11 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1009310158444789368, guid: 2560e7f630ecd9148a9ab565e3889b6f,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1358402442224751197, guid: 2560e7f630ecd9148a9ab565e3889b6f,
         type: 3}
       propertyPath: m_LocalPosition.x

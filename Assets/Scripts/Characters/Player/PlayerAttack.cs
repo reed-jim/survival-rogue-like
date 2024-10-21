@@ -185,7 +185,7 @@ public class PlayerAttack : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(Time.deltaTime);
 
         float angleRotated = 0;
-        float deltaAngle = 4;
+        float deltaAngle = 12;
 
         swordCollider.enabled = true;
 

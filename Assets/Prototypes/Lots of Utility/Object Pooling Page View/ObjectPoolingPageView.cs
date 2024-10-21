@@ -1,5 +1,7 @@
 using System;
+#if UNITY_EDITOR
 using Saferio.Editor.Style;
+#endif
 using Saferio.Util;
 using TMPro;
 using UnityEditor;

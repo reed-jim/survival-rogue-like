@@ -55,7 +55,7 @@ public class CollisionHandler : MonoBehaviour
         }
         else
         {
-            SaferioTween.Delay(1f, onCompletedAction: () => _isJustCollided = false);
+            SaferioTween.Delay(0.5f, onCompletedAction: () => _isJustCollided = false);
 
             _isJustCollided = true;
         }
@@ -70,7 +70,7 @@ public class CollisionHandler : MonoBehaviour
 
             rbA.velocity = Vector3.zero;
 
-            Vector3 force = 10 * (transform.position - otherGameObject.transform.position);
+            Vector3 force = 75 * (transform.position - otherGameObject.transform.position);
 
             force.y = 0;
 

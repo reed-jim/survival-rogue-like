@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using System.Reflection;
 using UnityEngine;
 
@@ -52,6 +51,7 @@ public static class DebugUtil
         DistinctLog(message, textColor);
     }
 
+    #if UNITY_EDITOR
     public static void ClearLog()
     {
         var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
@@ -75,5 +75,5 @@ public static class DebugUtil
 
         DistinctLog("Console Clear!");
     }
+    #endif
 }
-#endif
