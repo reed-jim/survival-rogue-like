@@ -371,7 +371,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Sword And Shield Slash
-  m_Speed: 7
+  m_Speed: 10
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -4961490445795919964}

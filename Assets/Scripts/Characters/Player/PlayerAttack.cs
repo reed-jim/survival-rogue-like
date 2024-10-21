@@ -41,10 +41,12 @@ public class PlayerAttack : MonoBehaviour
 
     private bool _isTest;
     private Vector3 _lastAngle;
+    private Vector3 _initialAttackFxAngle;
     #endregion
 
     #region ACTION
     public static event Action<int, bool> enableRotatingEvent;
+    public static event Action<int> playAttackSFXEvent;
     #endregion
 
     #region LIFE CYCLE
@@ -57,6 +59,8 @@ public class PlayerAttack : MonoBehaviour
         _actualAttackAnimationDuration = GetActualAttackAnimationDuration();
 
         StartCoroutine(AutoMeleeAttack());
+
+        _initialAttackFxAngle = attackFx.transform.eulerAngles;
     }
 
     private void Update()
@@ -65,6 +69,8 @@ public class PlayerAttack : MonoBehaviour
         {
             swordCollider.transform.eulerAngles = _lastAngle;
         }
+
+        attackFx.transform.eulerAngles = _initialAttackFxAngle;
     }
 
     private void OnDestroy()
@@ -152,6 +158,8 @@ public class PlayerAttack : MonoBehaviour
         }
 
         _animator.SetInteger("State", 1);
+
+        playAttackSFXEvent?.Invoke(gameObject.GetInstanceID());
 
         enableRotatingEvent?.Invoke(gameObject.GetInstanceID(), false);
 

@@ -16,6 +16,7 @@ public class CollisionHandler : MonoBehaviour
 
     #region PRIVATE FIELD
     private bool _isJustCollided;
+    private bool _isCharacterDied;
     #endregion
 
     #region ACTION
@@ -28,19 +29,33 @@ public class CollisionHandler : MonoBehaviour
 
     private void Awake()
     {
+        CharacterStatManager.characterDieEvent += SetIsCharacterDie;
+
         _explodableObject = GetComponent<IExplodable>();
         _hitByMeleeAttackObject = GetComponent<IHitByMeleeAttack>();
+
+        _isCharacterDied = false;
+    }
+
+    private void OnDestroy()
+    {
+        CharacterStatManager.characterDieEvent -= SetIsCharacterDie;
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (_isCharacterDied)
+        {
+            return;
+        }
+
         if (_isJustCollided)
         {
             return;
         }
         else
         {
-            SaferioTween.Delay(0.2f, onCompletedAction: () => _isJustCollided = false);
+            SaferioTween.Delay(1f, onCompletedAction: () => _isJustCollided = false);
 
             _isJustCollided = true;
         }
@@ -140,6 +155,19 @@ public class CollisionHandler : MonoBehaviour
             }
         }
     }
+
+    private void SetIsCharacterDie(int instanceId)
+    {
+        if (instanceId == gameObject.GetInstanceID())
+        {
+            _isCharacterDied = true;
+        }
+    }
+
+
+
+
+
 
     private void HandleOnCollisionExplosive(GameObject otherGameObject)
     {
