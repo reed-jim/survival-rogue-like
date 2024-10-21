@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Dreamteck.Splines;
 using PrimeTween;
+using Saferio.Util.SaferioTween;
+
 #if UNITY_EDITOR
 using UnityEditor.Animations;
 #endif
@@ -11,23 +13,21 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [Header("FAKE WHIRL WIND")]
-    [SerializeField] private Transform fakeWhirlwindAttack;
+    [SerializeField] private Rigidbody fakeWhirlwindAttackRigidBody;
 
     [Header("ANIMATION")]
     private float _actualAttackAnimationDuration;
 
-    [Header("TEMP")]
-    [SerializeField] private Transform hammer;
-    [SerializeField] private Material sworldSlashMaterial;
-    [SerializeField] private GameObject swordSlashTemp;
+    // [Header("TEMP")]
+    // [SerializeField] private Transform hammer;
+    // [SerializeField] private Material sworldSlashMaterial;
+    // [SerializeField] private GameObject swordSlashTemp;
 
     [Header("COLLIDER")]
     [SerializeField] private Collider swordCollider;
 
     [Header("FX")]
-    [SerializeField] private ParticleSystem swordSlash;
-    [SerializeField] private ParticleSystem swordTrail;
-    [SerializeField] private SplineFollower swordSlashSplineFollower;
+    [SerializeField] private ParticleSystem attackFx;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float delayTimeAttackHit;
@@ -35,9 +35,12 @@ public class PlayerAttack : MonoBehaviour
     #region PRIVATE FIELD
     private Animator _animator;
     private bool _isAttacking;
-    private Tween _waitForEndAttackAnimationTween;
-    private List<Tween> _tweens;
     private bool _isEnableInput = true;
+
+
+
+    private bool _isTest;
+    private Vector3 _lastAngle;
     #endregion
 
     #region ACTION
@@ -47,30 +50,22 @@ public class PlayerAttack : MonoBehaviour
     #region LIFE CYCLE
     private void Awake()
     {
-        _tweens = new List<Tween>();
-
         _animator = GetComponent<Animator>();
 
         LevelingUI.enableInput += EnableInput;
 
-        // swordCollider.enabled = false;
-
-        swordSlash.gameObject.SetActive(false);
-
         _actualAttackAnimationDuration = GetActualAttackAnimationDuration();
 
         StartCoroutine(AutoMeleeAttack());
-
-        swordTrail.Stop();
     }
 
-    // private void Update()
-    // {
-    //     if (Input.GetMouseButtonDown(0) && _isEnableInput && !UIUtil.IsClickOverUI())
-    //     {
-    //         MeleeAttack();
-    //     }
-    // }
+    private void Update()
+    {
+        if (!_isTest)
+        {
+            swordCollider.transform.eulerAngles = _lastAngle;
+        }
+    }
 
     private void OnDestroy()
     {
@@ -85,51 +80,51 @@ public class PlayerAttack : MonoBehaviour
         _isEnableInput = isEnable;
     }
 
-    private void Attack()
-    {
-        if (_isAttacking)
-        {
-            return;
-        }
-        else
-        {
-            _isAttacking = true;
-        }
+    // private void Attack()
+    // {
+    //     if (_isAttacking)
+    //     {
+    //         return;
+    //     }
+    //     else
+    //     {
+    //         _isAttacking = true;
+    //     }
 
-        if (_animator.GetInteger("State") != 1)
-        {
-            _animator.SetInteger("State", 1);
-        }
+    //     if (_animator.GetInteger("State") != 1)
+    //     {
+    //         _animator.SetInteger("State", 1);
+    //     }
 
-        // _animator.SetInteger("AttackAnimation", _attackAnimation);
+    //     // _animator.SetInteger("AttackAnimation", _attackAnimation);
 
-        PlaySwordSlash();
+    //     PlaySwordSlash();
 
-        if (_waitForEndAttackAnimationTween.isAlive)
-        {
-            _waitForEndAttackAnimationTween.Stop();
-        }
+    //     if (_waitForEndAttackAnimationTween.isAlive)
+    //     {
+    //         _waitForEndAttackAnimationTween.Stop();
+    //     }
 
-        // _waitForEndAttackAnimationTween = Tween.Delay(attackAnimation.length).OnComplete(() =>
-        // {
-        //     SetState(0);
+    //     // _waitForEndAttackAnimationTween = Tween.Delay(attackAnimation.length).OnComplete(() =>
+    //     // {
+    //     //     SetState(0);
 
-        //     _tweens.Add(Tween.Delay(0.3f).OnComplete(() =>
-        //     {
-        //         _isAllowRotating = true;
-        //         _isAttacking = false;
-        //     }));
-        // });
+    //     //     _tweens.Add(Tween.Delay(0.3f).OnComplete(() =>
+    //     //     {
+    //     //         _isAllowRotating = true;
+    //     //         _isAttacking = false;
+    //     //     }));
+    //     // });
 
-        _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
-        {
-            swordCollider.enabled = true;
+    //     _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
+    //     {
+    //         swordCollider.enabled = true;
 
-            _tweens.Add(Tween.Delay(0.05f).OnComplete(() => swordCollider.enabled = false));
-        }));
+    //         _tweens.Add(Tween.Delay(0.05f).OnComplete(() => swordCollider.enabled = false));
+    //     }));
 
-        // _isAllowRotating = false;
-    }
+    //     // _isAllowRotating = false;
+    // }
 
     private IEnumerator AutoMeleeAttack()
     {
@@ -160,7 +155,7 @@ public class PlayerAttack : MonoBehaviour
 
         enableRotatingEvent?.Invoke(gameObject.GetInstanceID(), false);
 
-        _waitForEndAttackAnimationTween = Tween.Delay(_actualAttackAnimationDuration).OnComplete(() =>
+        SaferioTween.Delay(_actualAttackAnimationDuration, onCompletedAction: () =>
         {
             _animator.SetInteger("State", 0);
 
@@ -170,18 +165,6 @@ public class PlayerAttack : MonoBehaviour
         });
 
         FakeWhirlWideAttack();
-        // PlaySwordTrail();
-
-        // swordTrail.Play();
-
-        // _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
-        // {
-        //     swordCollider.enabled = true;
-
-        //     _tweens.Add(Tween.Delay(0.15f).OnComplete(() => swordCollider.enabled = false));
-
-        //     swordTrail.Stop();
-        // }));
     }
 
     private void FakeWhirlWideAttack()
@@ -194,28 +177,32 @@ public class PlayerAttack : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(Time.deltaTime);
 
         float angleRotated = 0;
-        float deltaAngle = 12;
-
-        Vector3 lastAngle = fakeWhirlwindAttack.eulerAngles;
+        float deltaAngle = 4;
 
         swordCollider.enabled = true;
 
-        swordTrail.Play();
+        attackFx.Play();
+
+        _isTest = true;
+
+        fakeWhirlwindAttackRigidBody.AddTorque(new Vector3(0, 100, 0), ForceMode.Impulse);
 
         while (angleRotated < 360)
         {
-            fakeWhirlwindAttack.eulerAngles = lastAngle + new Vector3(0, deltaAngle, 0);
-
             angleRotated += deltaAngle;
-
-            lastAngle = fakeWhirlwindAttack.eulerAngles;
 
             yield return waitForSeconds;
         }
 
+        fakeWhirlwindAttackRigidBody.angularVelocity = Vector3.zero;
+
+        _lastAngle = fakeWhirlwindAttackRigidBody.transform.eulerAngles;
+
         swordCollider.enabled = false;
 
-        swordTrail.Stop();
+        attackFx.Stop();
+
+        _isTest = false;
     }
 
     private float GetActualAttackAnimationDuration()
@@ -294,94 +281,94 @@ public class PlayerAttack : MonoBehaviour
     //     playerShooterController.Shoot(hit.point, transform);
     // }
 
-    private void PlaySwordTrail()
-    {
-        swordTrail?.Play();
+    // private void PlaySwordTrail()
+    // {
+    //     swordTrail?.Play();
 
-        // Tween.Delay(0.2f * _actualAttackAnimationDuration).OnComplete(() =>
-        // {
-        //     swordTrail?.Stop();
-        // });
+    //     // Tween.Delay(0.2f * _actualAttackAnimationDuration).OnComplete(() =>
+    //     // {
+    //     //     swordTrail?.Stop();
+    //     // });
 
-        // Tween.Delay(0.1f).OnComplete(() =>
-        // {
-        //     swordTrail?.Stop();
-        // });
+    //     // Tween.Delay(0.1f).OnComplete(() =>
+    //     // {
+    //     //     swordTrail?.Stop();
+    //     // });
 
-        StartCoroutine(MoveAlongSpline());
+    //     StartCoroutine(MoveAlongSpline());
 
-        IEnumerator MoveAlongSpline()
-        {
-            WaitForSeconds waitForSeconds = new WaitForSeconds(3f * Time.deltaTime);
+    //     IEnumerator MoveAlongSpline()
+    //     {
+    //         WaitForSeconds waitForSeconds = new WaitForSeconds(3f * Time.deltaTime);
 
-            bool isTrailStop = false;
-            float progress = 0;
+    //         bool isTrailStop = false;
+    //         float progress = 0;
 
-            float deltaProgress = Time.deltaTime / 0.2f;
+    //         float deltaProgress = Time.deltaTime / 0.2f;
 
-            while (progress < 1)
-            {
-                swordSlashSplineFollower.Move((double)deltaProgress);
+    //         while (progress < 1)
+    //         {
+    //             swordSlashSplineFollower.Move((double)deltaProgress);
 
-                progress += deltaProgress;
+    //             progress += deltaProgress;
 
-                if (progress > 0.4f && !isTrailStop)
-                {
-                    swordTrail?.Stop();
+    //             if (progress > 0.4f && !isTrailStop)
+    //             {
+    //                 swordTrail?.Stop();
 
-                    isTrailStop = true;
-                }
+    //                 isTrailStop = true;
+    //             }
 
-                yield return waitForSeconds;
-            }
-        }
+    //             yield return waitForSeconds;
+    //         }
+    //     }
 
-        // Tween.Custom(0, 1, duration: 0.8f, onValueChange: newVal => swordSlashSplineFollower.Move((double)0.05))
-        // .OnComplete(() =>
-        // {
-        //     swordTrail?.Stop();
-        // });
-    }
+    //     // Tween.Custom(0, 1, duration: 0.8f, onValueChange: newVal => swordSlashSplineFollower.Move((double)0.05))
+    //     // .OnComplete(() =>
+    //     // {
+    //     //     swordTrail?.Stop();
+    //     // });
+    // }
 
-    private void PlaySwordSlash()
-    {
-        swordSlashTemp.gameObject.SetActive(true);
+    // private void PlaySwordSlash()
+    // {
+    //     swordSlashTemp.gameObject.SetActive(true);
 
-        Tween.Delay(0.6f * _actualAttackAnimationDuration).OnComplete(() =>
-        {
-            Tween.Custom(0, 1, duration: 0.9f * _actualAttackAnimationDuration, onValueChange: newVal => sworldSlashMaterial.SetFloat("_Slash", newVal));
-        });
+    //     Tween.Delay(0.6f * _actualAttackAnimationDuration).OnComplete(() =>
+    //     {
+    //         Tween.Custom(0, 1, duration: 0.9f * _actualAttackAnimationDuration, onValueChange: newVal => sworldSlashMaterial.SetFloat("_Slash", newVal));
+    //     });
 
-        // Tween.Custom(0, 1, duration: _actualAttackAnimationDuration, onValueChange: newVal => sworldSlashMaterial.SetFloat("_Slash", newVal));
+    //     // Tween.Custom(0, 1, duration: _actualAttackAnimationDuration, onValueChange: newVal => sworldSlashMaterial.SetFloat("_Slash", newVal));
 
-        Sequence.Create()
-            .Chain(Tween.Custom(0, -90, duration: 0.1f, onValueChange: newVal =>
-            {
-                hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
-            }))
-            .Chain(Tween.Custom(-90, 90, duration: 0.25f, onValueChange: newVal =>
-            {
-                hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
-            }))
-            .Chain(Tween.Custom(90, 0, duration: 0.55f, onValueChange: newVal =>
-            {
-                hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
-            }));
+    //     Sequence.Create()
+    //         .Chain(Tween.Custom(0, -90, duration: 0.1f, onValueChange: newVal =>
+    //         {
+    //             hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
+    //         }))
+    //         .Chain(Tween.Custom(-90, 90, duration: 0.25f, onValueChange: newVal =>
+    //         {
+    //             hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
+    //         }))
+    //         .Chain(Tween.Custom(90, 0, duration: 0.55f, onValueChange: newVal =>
+    //         {
+    //             hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
+    //         }));
 
-        // Tween.Custom(0, 70, duration: 0.4f, cycles: 1, cycleMode: CycleMode.Yoyo, onValueChange: newVal =>
-        // {
-        //     hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
-        // })
-        // .OnComplete(() =>
-        // {
-        //     Tween.Custom(0, 70, duration: 0.5f, onValueChange: newVal =>
-        //     {
-        //         hammer.transform.eulerAngles = _prevHammerEulerAngle + new Vector3(0, newVal, 0);
+    //     // Tween.Custom(0, 70, duration: 0.4f, cycles: 1, cycleMode: CycleMode.Yoyo, onValueChange: newVal =>
+    //     // {
+    //     //     hammer.transform.localEulerAngles = new Vector3(0, newVal, 0);
+    //     // })
+    //     // .OnComplete(() =>
+    //     // {
+    //     //     Tween.Custom(0, 70, duration: 0.5f, onValueChange: newVal =>
+    //     //     {
+    //     //         hammer.transform.eulerAngles = _prevHammerEulerAngle + new Vector3(0, newVal, 0);
 
-        //         _prevHammerEulerAngle = hammer.transform.eulerAngles;
-        //     });
-        // });
+    //     //         _prevHammerEulerAngle = hammer.transform.eulerAngles;
+    //     //     });
+    //     // });
 
-        // swordSlash.Play();
-    }
+    //     // swordSlash.Play();
+    // }
 }

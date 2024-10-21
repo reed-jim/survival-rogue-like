@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ReedJim.RPG.Stat;
+using Saferio.Util.SaferioTween;
 using UnityEngine;
 using UnityEngine.VFX;
 using static CustomDelegate;
@@ -13,11 +14,16 @@ public class CollisionHandler : MonoBehaviour
     [Header("CUSTOMIZE")]
     [SerializeField] private string[] collideTags;
 
+    #region PRIVATE FIELD
+    private bool _isJustCollided;
+    #endregion
+
     #region ACTION
     public static event Action<int, CharacterStat> applyDamageEvent;
     public static event GetCharacterStatAction<int> getAttackerStatAction;
     public static event Action<int> characterHitEvent;
     public static GetVisualEffectAction getVisualEffectEvent;
+    public static event Action<int> disableNavMeshEvent;
     #endregion
 
     private void Awake()
@@ -26,9 +32,63 @@ public class CollisionHandler : MonoBehaviour
         _hitByMeleeAttackObject = GetComponent<IHitByMeleeAttack>();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_isJustCollided)
+        {
+            return;
+        }
+        else
+        {
+            SaferioTween.Delay(0.2f, onCompletedAction: () => _isJustCollided = false);
+
+            _isJustCollided = true;
+        }
+
+        GameObject otherGameObject = other.gameObject;
+
+        if (collideTags.Contains(otherGameObject.tag))
+        {
+            disableNavMeshEvent?.Invoke(GetInstanceID());
+
+            Rigidbody rbA = GetComponent<Rigidbody>();
+
+            rbA.velocity = Vector3.zero;
+
+            Vector3 force = 10 * (transform.position - otherGameObject.transform.position);
+
+            force.y = 0;
+
+            rbA.AddForce(force, ForceMode.Impulse);
+
+
+
+
+
+
+
+
+            ICollide collidable = otherGameObject.GetComponent<ICollide>();
+
+            if (collidable == null)
+            {
+                collidable = otherGameObject.transform.parent.GetComponent<ICollide>();
+            }
+
+            if (collidable != null)
+            {
+                collidable.HandleOnCollide(gameObject);
+            }
+        }
+    }
+
     private void OnCollisionEnter(Collision other)
     {
+        return;
+
         GameObject otherGameObject = other.collider.gameObject;
+
+
 
 
 
@@ -52,18 +112,21 @@ public class CollisionHandler : MonoBehaviour
             }
         }
 
-        rbA.velocity = Vector3.zero;
 
-        Vector3 force = 200 * (transform.position - otherGameObject.transform.position);
-
-        force.y = 50;
-
-        rbA.AddForce(force, ForceMode.Impulse);
-
-        Debug.Log(rbA.gameObject.name + "/" + force);
 
         if (collideTags.Contains(otherGameObject.tag))
         {
+            rbA.velocity = Vector3.zero;
+
+            Vector3 force = 20 * (transform.position - otherGameObject.transform.position);
+
+            force.y = 50;
+
+            rbA.AddForce(force, ForceMode.Impulse);
+
+
+
+
             ICollide collidable = otherGameObject.GetComponent<ICollide>();
 
             if (collidable == null)

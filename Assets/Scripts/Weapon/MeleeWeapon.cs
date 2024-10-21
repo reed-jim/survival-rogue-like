@@ -11,6 +11,9 @@ public class MeleeWeapon : MonoBehaviour, ICollide
     [Header("WEAPON HOLDER")]
     [SerializeField] private GameObject weaponHolder;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource hitSFX;
+
     #region PRIVATE FIELD
     protected int _attackerInstanceId;
     #endregion
@@ -44,6 +47,8 @@ public class MeleeWeapon : MonoBehaviour, ICollide
         visualEffect.gameObject.SetActive(true);
         visualEffect.transform.position = other.transform.position;
         visualEffect.Play();
+
+        hitSFX.Play();
     }
     #endregion
 }

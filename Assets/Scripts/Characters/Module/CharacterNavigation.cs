@@ -38,6 +38,7 @@ public class CharacterNavigation : MonoBehaviour
         FlockAvoidance.avoidNeighbourEvent += StopNavigating;
         SeekTargetNode.startSeekTargetBahaviourEvent += StartNavigatingWithTreeBehaviour;
         CharacterStatManager.characterDieEvent += HandleOnCharacterDied;
+        CollisionHandler.disableNavMeshEvent += DisableNavMesh;
 
         _tweens = new List<Tween>();
 
@@ -56,6 +57,7 @@ public class CharacterNavigation : MonoBehaviour
         FlockAvoidance.avoidNeighbourEvent -= StopNavigating;
         SeekTargetNode.startSeekTargetBahaviourEvent -= StartNavigatingWithTreeBehaviour;
         CharacterStatManager.characterDieEvent -= HandleOnCharacterDied;
+        CollisionHandler.disableNavMeshEvent -= DisableNavMesh;
 
         CommonUtil.StopAllTweens(_tweens);
     }
@@ -227,6 +229,16 @@ public class CharacterNavigation : MonoBehaviour
             {
                 StopCoroutine(_navigatingWithTreeBehaviour);
             }
+        }
+    }
+
+    private void DisableNavMesh(int instanceId)
+    {
+        if (instanceId == GetInstanceID())
+        {
+            _navMeshAgent.isStopped = true;
+
+            SaferioTween.Delay(1.5f, onCompletedAction: () => _navMeshAgent.isStopped = false);
         }
     }
 
