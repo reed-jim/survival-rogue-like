@@ -24,7 +24,7 @@ public class ExplosionActiveSkill : BaseActiveSkill, IActiveSkill
     {
         _casterInstanceId = playerRuntime.PlayerInstanceId;
 
-        EnergyExplosion explosion = ObjectPoolingEverything.GetFromPool(SaferioPrefabIdentifier.Explosion.ToString()).GetComponent<EnergyExplosion>();
+        EnergyExplosion explosion = ObjectPoolingEverything.GetFromPool(GetName()).GetComponent<EnergyExplosion>();
 
         explosion.SetStat(Stat);
 
@@ -60,7 +60,7 @@ public class ExplosionActiveSkill : BaseActiveSkill, IActiveSkill
 
     public override string GetName()
     {
-        return "Red Energy";
+        return name;
     }
 
     public override int GetTier()

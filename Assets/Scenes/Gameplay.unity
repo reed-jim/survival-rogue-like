@@ -8224,7 +8224,10 @@ MonoBehaviour:
   prefabsWithIdentifier:
   - prefab: {fileID: 2349053886691593380, guid: 45f0414d045791f44b34b1f5b76d4d3f,
       type: 3}
-    identifier: Explosion
+    identifier: Red Energy
+  - prefab: {fileID: 2349053886691593380, guid: 076960082b64c3d4e8da85b5b7c70903,
+      type: 3}
+    identifier: Magic Circle
 --- !u!4 &1948032649
 Transform:
   m_ObjectHideFlags: 0
@@ -9141,13 +9144,19 @@ PrefabInstance:
     - target: {fileID: 5990606060618165137, guid: 2560e7f630ecd9148a9ab565e3889b6f,
         type: 3}
       propertyPath: activeSkills.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5990606060618165137, guid: 2560e7f630ecd9148a9ab565e3889b6f,
         type: 3}
       propertyPath: activeSkills.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 8b3820db88fd8f749852429670b499e6,
+        type: 2}
+    - target: {fileID: 5990606060618165137, guid: 2560e7f630ecd9148a9ab565e3889b6f,
+        type: 3}
+      propertyPath: activeSkills.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ab30f92397c38f3448cb91bf7af8239a,
         type: 2}
     - target: {fileID: 5990621307413794601, guid: 2560e7f630ecd9148a9ab565e3889b6f,
         type: 3}

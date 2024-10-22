@@ -131,7 +131,7 @@ public class LevelingUI : MonoBehaviour
 
             // test purpose
             // _skillsToChoose[i] = skillContainer.AllSkills[i];
-
+            Debug.Log(skillNameTexts[i] + "/" + _skillsToChoose[i]);
             skillNameTexts[i].text = _skillsToChoose[i].GetName();
             selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();
             rarityTexts[i].text = ((RarityTier)_skillsToChoose[i].GetTier()).ToString();

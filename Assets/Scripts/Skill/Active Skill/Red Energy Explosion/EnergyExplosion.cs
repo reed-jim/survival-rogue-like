@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PrimeTween;
 using ReedJim.RPG.Stat;
+using Saferio.Util.SaferioTween;
 using UnityEngine;
 using static CustomDelegate;
 
@@ -70,9 +71,9 @@ public class EnergyExplosion : MonoBehaviour, ICollide
         explosionFx.Play();
 
         bulletModel.SetActive(false);
-        explosiveArea.SetActive(true);
 
-        Tween.Delay(0.2f).OnComplete(() => explosiveArea.SetActive(false));
+        SaferioTween.Delay(delayTimeAttackHit, onCompletedAction: () => explosiveArea.SetActive(true));
+        SaferioTween.Delay(delayTimeAttackHit + 0.2f, onCompletedAction: () => explosiveArea.SetActive(false));
 
         // _rigidBody.velocity = Vector3.zero;
         // _rigidBody.useGravity = false;
