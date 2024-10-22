@@ -26,6 +26,8 @@ public class SkillContainer : ScriptableObject
         //     return;
         // }
 
+        return;
+
         allSkills = new List<BaseSkill>();
 
         DirectoryInfo directoryInfo = new DirectoryInfo("Assets/Scriptables/Skill/All Skills");

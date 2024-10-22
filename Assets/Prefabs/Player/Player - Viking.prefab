@@ -5000,6 +5000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 0}
+  hitSFX: {fileID: 0}
 --- !u!1 &1416781184857915471
 GameObject:
   m_ObjectHideFlags: 0
@@ -5069,6 +5070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 7168422765234239651}
+  hitSFX: {fileID: 0}
 --- !u!33 &8896355576605416955
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5119,53 +5121,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &1668915885130253227
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5450553039698951352}
-  - component: {fileID: 6784710893976051113}
-  m_Layer: 0
-  m_Name: Chain Lightning (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5450553039698951352
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1668915885130253227}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1352685191162323248}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6784710893976051113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1668915885130253227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9bc37435e055a44a8b18ce9a5abe8cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillStat: {fileID: 11400000, guid: a4403638cad7afa4f9fefead553a4ca5, type: 2}
-  player: {fileID: 548508742936269805}
-  chainLighning: {fileID: 0}
 --- !u!1 &1889090839071045559
 GameObject:
   m_ObjectHideFlags: 0
@@ -5230,52 +5185,6 @@ Transform:
   - {fileID: 4438049218909066329}
   m_Father: {fileID: 7048833027235593319}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2105834232477752823
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8529777293478130662}
-  - component: {fileID: 2374340240365528594}
-  m_Layer: 0
-  m_Name: Meteor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8529777293478130662
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2105834232477752823}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1352685191162323248}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2374340240365528594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2105834232477752823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83a115baa46800f44914b4e6436bb5ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillStat: {fileID: 11400000, guid: a4403638cad7afa4f9fefead553a4ca5, type: 2}
-  player: {fileID: 7168422765234239651}
 --- !u!1 &2416368060982832144
 GameObject:
   m_ObjectHideFlags: 0
@@ -10219,6 +10128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 7168422765234239651}
+  hitSFX: {fileID: 0}
 --- !u!33 &7330063369335597382
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10776,6 +10686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 7168422765234239651}
+  hitSFX: {fileID: 0}
 --- !u!33 &6566296866824748534
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -11699,53 +11610,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2934287584284591051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6487438287126704001
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4028121181035185321}
-  - component: {fileID: 5859272250728113181}
-  m_Layer: 0
-  m_Name: Chain Lightning
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4028121181035185321
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6487438287126704001}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1352685191162323248}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5859272250728113181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6487438287126704001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9bc37435e055a44a8b18ce9a5abe8cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillStat: {fileID: 11400000, guid: a4403638cad7afa4f9fefead553a4ca5, type: 2}
-  player: {fileID: 548508742936269805}
-  chainLighning: {fileID: 0}
 --- !u!1 &6726807706336271882
 GameObject:
   m_ObjectHideFlags: 0
@@ -11861,10 +11725,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8529777293478130662}
-  - {fileID: 4028121181035185321}
-  - {fileID: 5450553039698951352}
+  m_Children: []
   m_Father: {fileID: 548508742936269805}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2596097794303804232
@@ -11879,6 +11740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cb862dceb591248a063b9ef180a79f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeSkills: []
   skillContainer: {fileID: 11400000, guid: 63adb602eef772447b4018d5bf5757d0, type: 2}
 --- !u!1 &6993412755669549753
 GameObject:
@@ -12183,14 +12045,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1520f31a95519e43917320ee365f245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerShooterController: {fileID: 0}
-  hammer: {fileID: 7166953871782551655}
-  sworldSlashMaterial: {fileID: 2100000, guid: 54d7db9c7ab001c46857936a950eb6ba, type: 2}
-  swordSlashTemp: {fileID: 8514807468518421949}
+  fakeWhirlwindAttackRigidBody: {fileID: 0}
   swordCollider: {fileID: 2808334444437412899}
-  swordSlash: {fileID: 7495365389948108044}
-  swordTrail: {fileID: 544582641967577527}
-  swordSlashSplineFollower: {fileID: 4587942421242401503}
+  attackFx: {fileID: 0}
   delayTimeAttackHit: 0.5
 --- !u!114 &2468654369673602368
 MonoBehaviour:
@@ -14307,12 +14164,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3826889033352884066}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &7495365389948108044 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6710139492206580334, guid: 95b8d3d65b5d7f1409c4ed1723887826,
-    type: 3}
-  m_PrefabInstance: {fileID: 3826889033352884066}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7495365389948108046 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6710139492206580332, guid: 95b8d3d65b5d7f1409c4ed1723887826,
@@ -15113,12 +14964,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b98f55e5f40c42249abba4036351fb78, type: 3}
---- !u!198 &544582641967577527 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4718224548566161494, guid: b98f55e5f40c42249abba4036351fb78,
-    type: 3}
-  m_PrefabInstance: {fileID: 5112781010454602209}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7370821679658746818 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2359416156681183779, guid: b98f55e5f40c42249abba4036351fb78,
@@ -15535,12 +15380,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a272777a77f8b54e81b660610a67ed0, type: 3}
---- !u!1 &8514807468518421949 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4a272777a77f8b54e81b660610a67ed0,
-    type: 3}
-  m_PrefabInstance: {fileID: 8857390342873221356}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9034639680021360391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4a272777a77f8b54e81b660610a67ed0,

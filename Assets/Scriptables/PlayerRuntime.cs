@@ -6,4 +6,5 @@ using UnityEngine;
 public class PlayerRuntime : ScriptableObject
 {
     public Transform player;
+    public int PlayerInstanceId;
 }

@@ -13,13 +13,26 @@ public class CharacterVision : MonoBehaviour, ICharacterVision
     #region PRIVATE FIELD
     private List<Tween> _tweens;
     private bool _isInCountdownCheckAttackEnemy;
+    private Transform _lastNearestTarget;
     #endregion  
 
     public static event Action<int, Transform> attackEnemyEvent;
 
     private void Awake()
     {
+        ExplosionActiveSkill.getEnemyPositionEvent += GetTargetPosition;
+
         _tweens = new List<Tween>();
+    }
+
+    private void Update()
+    {
+        FindEnemy();
+    }
+
+    private void OnDestroy()
+    {
+        ExplosionActiveSkill.getEnemyPositionEvent -= GetTargetPosition;
     }
 
     public void FindEnemy()
@@ -40,6 +53,18 @@ public class CharacterVision : MonoBehaviour, ICharacterVision
             _tweens.Add(
                 Tween.Delay(3f).OnComplete(() => _isInCountdownCheckAttackEnemy = false)
             );
+
+            _lastNearestTarget = colliders[0].transform;
         }
+    }
+
+    private Vector3 GetTargetPosition(int instanceId)
+    {
+        if (instanceId == gameObject.GetInstanceID() && _lastNearestTarget != null)
+        {
+            return _lastNearestTarget.position;
+        }
+
+        return Vector3.zero;
     }
 }

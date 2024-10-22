@@ -16,13 +16,13 @@ namespace Saferio.TreeBehaviour
 
             Selector selector = new Selector();
 
-            _seekTargetNode = new SeekTargetNode();
+            int instanceId = gameObject.GetInstanceID();
 
-            _seekTargetNode.SetInstanceId(gameObject.GetInstanceID());
+            _seekTargetNode = new SeekTargetNode(instanceId);
             _seekTargetNode.RegisterEvent();
 
             selector.AddChild(_seekTargetNode);
-            selector.AddChild(new AttackNode());
+            selector.AddChild(new AttackNode(instanceId));
 
             ((Selector)_root).AddChild(selector);
         }

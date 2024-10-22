@@ -67,6 +67,8 @@ public class CharacterNavigation : MonoBehaviour
         if (instanceId == gameObject.GetInstanceID())
         {
             _navigatingWithTreeBehaviour = StartCoroutine(NavigatingWithTreeBehaviour());
+
+            _navMeshAgent.isStopped = false;
         }
     }
 

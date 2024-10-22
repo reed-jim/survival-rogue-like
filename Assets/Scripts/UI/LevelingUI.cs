@@ -1,5 +1,6 @@
 using System;
 using PrimeTween;
+using Saferio.Util.SaferioTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,6 +54,11 @@ public class LevelingUI : MonoBehaviour
         rerollSkillButton.onClick.AddListener(Reroll);
 
         fadeBackground.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        SaferioTween.Delay(1f, onCompletedAction: () => ShowUpgradePanel());
     }
 
     private void OnDestroy()
@@ -157,6 +163,7 @@ public class LevelingUI : MonoBehaviour
 
         Time.timeScale = 0;
 
+        rerollButtonRT.gameObject.SetActive(true);
 
         fadeBackground.gameObject.SetActive(true);
     }

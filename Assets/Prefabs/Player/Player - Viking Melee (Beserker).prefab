@@ -29,10 +29,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3331841138217585577}
-  - {fileID: 6284702335714794195}
-  - {fileID: 5078598836081028831}
+  m_Children: []
   m_Father: {fileID: 1358402442224751197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5990606060618165137
@@ -47,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cb862dceb591248a063b9ef180a79f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeSkills: []
   skillContainer: {fileID: 11400000, guid: 63adb602eef772447b4018d5bf5757d0, type: 2}
 --- !u!1 &155389692911868521
 GameObject:
@@ -265,53 +263,6 @@ Transform:
   - {fileID: 5493818732596867687}
   m_Father: {fileID: 1380862847906092384}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1452986283696224572
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6284702335714794195}
-  - component: {fileID: 4318361571876834080}
-  m_Layer: 0
-  m_Name: Chain Lightning
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6284702335714794195
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1452986283696224572}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3012652897688135997}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4318361571876834080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1452986283696224572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9bc37435e055a44a8b18ce9a5abe8cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillStat: {fileID: 11400000, guid: a4403638cad7afa4f9fefead553a4ca5, type: 2}
-  player: {fileID: 1358402442224751197}
-  chainLighning: {fileID: 0}
 --- !u!1 &1516141824420613330
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,53 +1023,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.99999994, y: 0.99999994, z: 0.9999999}
   m_Center: {x: 0, y: 0.000000059604645, z: 0}
---- !u!1 &2687586589780222011
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5078598836081028831}
-  - component: {fileID: 1807305295229278326}
-  m_Layer: 0
-  m_Name: Chain Lightning (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5078598836081028831
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2687586589780222011}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3012652897688135997}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1807305295229278326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2687586589780222011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9bc37435e055a44a8b18ce9a5abe8cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillStat: {fileID: 11400000, guid: a4403638cad7afa4f9fefead553a4ca5, type: 2}
-  player: {fileID: 1358402442224751197}
-  chainLighning: {fileID: 0}
 --- !u!1 &2802578068334821595
 GameObject:
   m_ObjectHideFlags: 0
@@ -6024,52 +5928,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8055494061408956465}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2977471552005097423
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3331841138217585577}
-  - component: {fileID: 8845429817585123621}
-  m_Layer: 0
-  m_Name: Meteor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3331841138217585577
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2977471552005097423}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3012652897688135997}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8845429817585123621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2977471552005097423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83a115baa46800f44914b4e6436bb5ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skillStat: {fileID: 11400000, guid: a4403638cad7afa4f9fefead553a4ca5, type: 2}
-  player: {fileID: 5990621307413794601}
 --- !u!1 &3528912022174281810
 GameObject:
   m_ObjectHideFlags: 0

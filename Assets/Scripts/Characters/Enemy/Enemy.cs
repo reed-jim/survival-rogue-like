@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        _characterVision.FindEnemy();
+        // _characterVision.FindEnemy();
     }
 
     private void OnDestroy()

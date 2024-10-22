@@ -15,6 +15,11 @@ namespace Saferio.TreeBehaviour
         public static event Action startSeekTargetEvent;
         public static event Action<int> startSeekTargetBahaviourEvent;
 
+        public SeekTargetNode(int instanceId)
+        {
+            _instanceId = instanceId;
+        }
+
         public void SetInstanceId(int instanceId)
         {
             _instanceId = instanceId;
@@ -24,12 +29,14 @@ namespace Saferio.TreeBehaviour
         {
             CharacterNavigation.targetFoundEvent += StopSeekingTarget;
             CharacterStatManager.characterDieEvent += StopSeekingTarget;
+            AttackNode.enableCharacterNavigationEvent += EnableSeekingTarget;
         }
 
         public void UnregisterEvent()
         {
             CharacterNavigation.targetFoundEvent -= StopSeekingTarget;
             CharacterStatManager.characterDieEvent -= StopSeekingTarget;
+            AttackNode.enableCharacterNavigationEvent -= EnableSeekingTarget;
         }
 
         public bool Execute()
@@ -57,6 +64,16 @@ namespace Saferio.TreeBehaviour
             if (instanceId == _instanceId)
             {
                 _isSeekingTarget = false;
+            }
+        }
+
+        private void EnableSeekingTarget(int instanceId)
+        {
+            if (instanceId == _instanceId)
+            {
+                startSeekTargetBahaviourEvent?.Invoke(_instanceId);
+
+                _isSeekingTarget = true;
             }
         }
     }

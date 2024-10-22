@@ -7,9 +7,14 @@ using UnityEngine.Networking;
 
 public class CharacterSkill : MonoBehaviour
 {
-    [SerializeField] private ActiveSkillContainer activeSkillContainer;
+    // [SerializeField] private ActiveSkillContainer activeSkillContainer;
     [SerializeField] private List<DamageOverTimeSkill> damageSkills;
     [SerializeField] private List<IStatusEffect> statusEffects;
+    [SerializeField] private List<IActiveSkill> activeSkills;
+
+    #region PRIVATE FIELD
+    private Transform _lastNearestEnemy;
+    #endregion
 
     #region ACTION
     public static event Action<int, StatusEffectDamaging[]> applyDamagingStatusEffect;
@@ -19,14 +24,17 @@ public class CharacterSkill : MonoBehaviour
     #region LIFE CYCLE
     private void Awake()
     {
-        damageSkills = new List<DamageOverTimeSkill>();
-        statusEffects = new List<IStatusEffect>();
-
         CollisionHandler.characterHitEvent += ApplyEffect;
         Bullet.characterHitEvent += ApplyEffect;
         LevelingUI.addSkillEvent += OnSkillAdded;
         DamageOverTimeSkill.addSkillEvent += AddDamageOverTimeSkill;
         ModifedSkillWithStatusEffect.addStatusEffectToSkillEvent += AddStatusEffectAbility;
+        CharacterVision.attackEnemyEvent += OnEnemyFound;
+        BaseActiveSkill.addActiveSkillEvent += AddActiveSkill;
+
+        damageSkills = new List<DamageOverTimeSkill>();
+        statusEffects = new List<IStatusEffect>();
+        activeSkills = new List<IActiveSkill>();
 
         StartCoroutine(CastingActiveSkills());
     }
@@ -38,6 +46,8 @@ public class CharacterSkill : MonoBehaviour
         LevelingUI.addSkillEvent -= OnSkillAdded;
         DamageOverTimeSkill.addSkillEvent -= AddDamageOverTimeSkill;
         ModifedSkillWithStatusEffect.addStatusEffectToSkillEvent -= AddStatusEffectAbility;
+        CharacterVision.attackEnemyEvent -= OnEnemyFound;
+        BaseActiveSkill.addActiveSkillEvent -= AddActiveSkill;
     }
     #endregion
 
@@ -84,17 +94,22 @@ public class CharacterSkill : MonoBehaviour
         }
     }
 
+    private void AddActiveSkill(int instanceId, IActiveSkill activeSkill)
+    {
+        activeSkills.Add(activeSkill);
+    }
+
     private IEnumerator CastingActiveSkills()
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.1f);
 
         while (true)
         {
-            if (activeSkillContainer.ActiveSkills != null)
+            if (activeSkills != null)
             {
-                foreach (var activeSkill in activeSkillContainer.ActiveSkills)
+                foreach (var activeSkill in activeSkills)
                 {
-                    if (activeSkill.IsUnlocked() && !activeSkill.IsInCountdown())
+                    if (!activeSkill.IsInCountdown())
                     {
                         activeSkill.Cast();
                     }
@@ -102,6 +117,14 @@ public class CharacterSkill : MonoBehaviour
             }
 
             yield return waitForSeconds;
+        }
+    }
+
+    private void OnEnemyFound(int instanceId, Transform enemy)
+    {
+        if (instanceId == gameObject.GetInstanceID())
+        {
+            _lastNearestEnemy = enemy;
         }
     }
 }

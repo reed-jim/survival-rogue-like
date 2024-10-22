@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerRuntime.player = transform;
+        playerRuntime.PlayerInstanceId = gameObject.GetInstanceID();
     }
     #endregion
 }

@@ -159,7 +159,7 @@ public class CharacterUI : MonoBehaviour
         {
             colorTween.Stop();
 
-            damageText.color = damageText.color.WithAlpha(1);
+            damageText.color = ColorUtil.WithAlpha(damageText.color, 1);
 
             StartCoroutine(TweenText(damageText, (int)(_cumulativeDamage - damage), (int)_cumulativeDamage));
         }
@@ -169,7 +169,7 @@ public class CharacterUI : MonoBehaviour
             Tween.Alpha(damageText, 0, duration: 0.5f).OnComplete(() =>
             {
                 damageText.gameObject.SetActive(false);
-                damageText.color = damageText.color.WithAlpha(1);
+                damageText.color = ColorUtil.WithAlpha(damageText.color, 1);
 
                 _isInAnimation = false;
 
@@ -244,7 +244,7 @@ public class CharacterUI : MonoBehaviour
             Tween.Alpha(damageText, 0, duration: 0.5f).OnComplete(() =>
             {
                 damageText.gameObject.SetActive(false);
-                damageText.color = damageText.color.WithAlpha(1);
+                damageText.color = ColorUtil.WithAlpha(damageText.color, 1);
             });
 
             lazyHpBar.Hide();
