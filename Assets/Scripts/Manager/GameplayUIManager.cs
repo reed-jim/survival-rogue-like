@@ -15,6 +15,7 @@ public class GameplayUIManager : MonoBehaviour
     [SerializeField] private Slider playerLazyHpProgressBar;
     [SerializeField] private Slider expProgressBar;
     [SerializeField] private TMP_Text playerHP;
+    [SerializeField] private TMP_Text playerLevelText;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float playerHpBarDuration;
@@ -32,6 +33,7 @@ public class GameplayUIManager : MonoBehaviour
         StatManager.updateExpProgressBarEvent += UpdateExpProgressBar;
         PlayerStatManager.setPlayerHpEvent += UpdatePlayerHpBar;
         StatManager.setPlayerHpEvent += UpdatePlayerHpBar;
+        StatManager.updatePlayerLevelTextEvent += UpdateLevelText;
 
         _canvasSize = canvas.sizeDelta;
 
@@ -43,6 +45,7 @@ public class GameplayUIManager : MonoBehaviour
         StatManager.updateExpProgressBarEvent -= UpdateExpProgressBar;
         PlayerStatManager.setPlayerHpEvent -= UpdatePlayerHpBar;
         StatManager.setPlayerHpEvent -= UpdatePlayerHpBar;
+        StatManager.updatePlayerLevelTextEvent -= UpdateLevelText;
 
         _playerHpBarTween.Stop();
         _lazyPlayerHpBarTween.Stop();
@@ -99,5 +102,10 @@ public class GameplayUIManager : MonoBehaviour
         }
 
         _updateExpBarTween = Tween.Custom(expProgressBar.value, currentExp / maxExp, duration: 0.3f, onValueChange: newVal => expProgressBar.value = newVal);
+    }
+
+    private void UpdateLevelText(int level)
+    {
+        playerLevelText.text = $"Level {level}";
     }
 }

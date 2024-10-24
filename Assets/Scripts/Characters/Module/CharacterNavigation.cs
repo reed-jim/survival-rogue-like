@@ -64,7 +64,7 @@ public class CharacterNavigation : MonoBehaviour
 
     private void StartNavigatingWithTreeBehaviour(int instanceId)
     {
-        if (instanceId == gameObject.GetInstanceID())
+        if (instanceId == gameObject.GetInstanceID() && gameObject.activeSelf)
         {
             _navigatingWithTreeBehaviour = StartCoroutine(NavigatingWithTreeBehaviour());
 

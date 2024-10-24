@@ -35,7 +35,7 @@ public class LevelingUI : MonoBehaviour
     #region LIFE CYCLE
     private void Awake()
     {
-        StatManager.showUpgradePanelEvent += OnPlayerLeveledUp;
+        StatManager.showUpgradePanelEvent += ShowUpgradePanel;
 
         _canvasSize = canvas.sizeDelta;
 
@@ -63,7 +63,7 @@ public class LevelingUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        StatManager.showUpgradePanelEvent -= OnPlayerLeveledUp;
+        StatManager.showUpgradePanelEvent -= ShowUpgradePanel;
     }
     #endregion
 
@@ -129,9 +129,6 @@ public class LevelingUI : MonoBehaviour
         {
             _skillsToChoose[i] = RandomSkillMachine.GetRandomSkill(skillContainer);
 
-            // test purpose
-            // _skillsToChoose[i] = skillContainer.AllSkills[i];
-            Debug.Log(skillNameTexts[i] + "/" + _skillsToChoose[i]);
             skillNameTexts[i].text = _skillsToChoose[i].GetName();
             selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();
             rarityTexts[i].text = ((RarityTier)_skillsToChoose[i].GetTier()).ToString();

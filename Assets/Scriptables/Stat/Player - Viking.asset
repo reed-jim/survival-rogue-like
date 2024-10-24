@@ -33,7 +33,7 @@ MonoBehaviour:
       baseValue: 0
   - key: Damage
     baseStatComponent:
-      baseValue: 25
+      baseValue: 50
   - key: DamageMultiplier
     baseStatComponent:
       baseValue: 1

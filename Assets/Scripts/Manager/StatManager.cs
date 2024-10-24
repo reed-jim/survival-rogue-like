@@ -14,6 +14,7 @@ public class StatManager : MonoBehaviour
     public static event Action<float, float> updateExpProgressBarEvent;
     public static event Action showUpgradePanelEvent;
     public static event Action<float, float> setPlayerHpEvent;
+    public static event Action<int> updatePlayerLevelTextEvent;
     #endregion
 
     #region LIFE CYCLE
@@ -75,6 +76,8 @@ public class StatManager : MonoBehaviour
         if (isLeveledUp)
         {
             showUpgradePanelEvent?.Invoke();
+
+            updatePlayerLevelTextEvent?.Invoke((int)_playerStat.GetStatValue(StatComponentNameConstant.Level));
         }
     }
 

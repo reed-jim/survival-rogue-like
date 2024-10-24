@@ -15,6 +15,8 @@ public class EnemySpawnManager : MonoBehaviour
     [Header("CUSTOMIZE")]
     [SerializeField] private int maxEnemy;
     [SerializeField] private int maxEnemySpawnConcurrently;
+    [SerializeField] private float minDistanceSpawn;
+    [SerializeField] private float maxDistanceSpawn;
 
     [Header("MANAGEMENT")]
     private int _currentEnemyIndex;
@@ -70,9 +72,9 @@ public class EnemySpawnManager : MonoBehaviour
 
         int[] allDirections = new int[] { 1, -1 };
 
-        position.x = player.transform.position.x + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(15, 30);
+        position.x = player.transform.position.x + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(minDistanceSpawn, maxDistanceSpawn);
         position.y = transform.position.y;
-        position.z = player.transform.position.y + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(15, 30);
+        position.z = player.transform.position.y + allDirections[UnityEngine.Random.Range(0, 2)] * UnityEngine.Random.Range(minDistanceSpawn, maxDistanceSpawn);
 
         return position;
     }
