@@ -14,7 +14,7 @@ public class StatManager : MonoBehaviour
     public static event Action<float, float> updateExpProgressBarEvent;
     public static event Action showUpgradePanelEvent;
     public static event Action<float, float> setPlayerHpEvent;
-    public static event Action<int> updatePlayerLevelTextEvent;
+    public static event Action<int, float, float> updatePlayerLevelTextEvent;
     #endregion
 
     #region LIFE CYCLE
@@ -71,13 +71,18 @@ public class StatManager : MonoBehaviour
 
         _playerStat.EarnExp(_playerStat.GetExpFromKillEnemy(enemyLevel), out isLeveledUp);
 
-        updateExpProgressBarEvent?.Invoke(_playerStat.GetStatValue(StatComponentNameConstant.Experience), _playerStat.GetRequiredExpForNextLevel());
+        _playerStat.SetStatValue(StatComponentNameConstant.Experience, 0);
+
+        float currentExp = 0;
+        float requiredExp = _playerStat.GetRequiredExpForNextLevel();
+
+        updateExpProgressBarEvent?.Invoke(currentExp, requiredExp);
 
         if (isLeveledUp)
         {
             showUpgradePanelEvent?.Invoke();
 
-            updatePlayerLevelTextEvent?.Invoke((int)_playerStat.GetStatValue(StatComponentNameConstant.Level));
+            updatePlayerLevelTextEvent?.Invoke((int)_playerStat.GetStatValue(StatComponentNameConstant.Level), currentExp, requiredExp);
         }
     }
 

@@ -2080,6 +2080,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bar: {fileID: 1093514428759601201}
   lazyBar: {fileID: 3657853273142612234}
+  barRT: {fileID: 0}
+  lazyBarRT: {fileID: 0}
 --- !u!1 &4972009168735128376
 GameObject:
   m_ObjectHideFlags: 0
@@ -3113,8 +3115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775414057d8e4c94dbcdeb3f2b18d7ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeAttackCollider: {fileID: 1490798671485314889}
-  meshRenderer: {fileID: 3563162751393120598}
   baseStat: {fileID: 11400000, guid: f56f3d5add2dd0f4ab2ffacaa7cdf8ad, type: 2}
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
   speedMultiplier: 2
@@ -3135,6 +3135,7 @@ MonoBehaviour:
   container: {fileID: 3795092254270209180}
   hpBar: {fileID: 1093514428759601201}
   damageText: {fileID: 8847772238070330031}
+  criticalDamageIcon: {fileID: 0}
   scaleDownDuration: 0.5
 --- !u!114 &7843867010801606628
 MonoBehaviour:
@@ -3148,6 +3149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c69d8bf5e498834f9b24bcf68d7ddbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCollider: {fileID: 7030309486775946248}
   ragdollColliders:
   - {fileID: 6286195418578922601}
   - {fileID: 5678398405639861555}
@@ -3236,6 +3238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeAttackCollider: {fileID: 1490798671485314889}
+  weaponTrailFx: {fileID: 0}
+  delayTimeAttackHit: 0
 --- !u!114 &1610931674869492159
 MonoBehaviour:
   m_ObjectHideFlags: 0

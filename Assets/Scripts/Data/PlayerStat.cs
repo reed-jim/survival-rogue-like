@@ -43,7 +43,7 @@ public class PlayerStat : CharacterStat
     {
         int level = (int)GetStatValue(StatComponentNameConstant.Level);
 
-        return 100 * level + 5 * level * (level - 1);
+        return 100 * level + 200 * level * (level - 1);
     }
 
     public static PlayerStat operator +(PlayerStat currentStat, CharacterStat bonusStat)

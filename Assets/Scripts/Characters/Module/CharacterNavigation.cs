@@ -22,6 +22,7 @@ public class CharacterNavigation : MonoBehaviour
     private Transform _player;
     private bool _isNearTarget;
     private bool _isAvoidAllies;
+    private bool _isDead;
     #endregion
 
     #region COROUTINE
@@ -64,6 +65,11 @@ public class CharacterNavigation : MonoBehaviour
 
     private void StartNavigatingWithTreeBehaviour(int instanceId)
     {
+        if (_isDead)
+        {
+            return;
+        }
+
         if (instanceId == gameObject.GetInstanceID() && gameObject.activeSelf)
         {
             _navigatingWithTreeBehaviour = StartCoroutine(NavigatingWithTreeBehaviour());
@@ -231,6 +237,8 @@ public class CharacterNavigation : MonoBehaviour
             {
                 StopCoroutine(_navigatingWithTreeBehaviour);
             }
+
+            _isDead = true;
         }
     }
 

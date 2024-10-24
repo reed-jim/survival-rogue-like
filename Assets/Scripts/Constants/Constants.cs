@@ -17,4 +17,8 @@ public static class Constants
     public static int ANIMATION_ATTACK_STATE = 1;
     public static int ANIMATION_DIE_STATE = 2;
     #endregion
+
+    #region LAYER
+    public static string DEAD_LAYER = "Dead";
+    #endregion
 }
