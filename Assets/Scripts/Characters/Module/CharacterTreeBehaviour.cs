@@ -8,6 +8,7 @@ namespace Saferio.TreeBehaviour
     {
         private INode _root;
 
+        private IsDeadNode _isDeadNode;
         private SeekTargetNode _seekTargetNode;
 
         private void Awake()
@@ -18,13 +19,21 @@ namespace Saferio.TreeBehaviour
 
             int instanceId = gameObject.GetInstanceID();
 
+            _isDeadNode = new IsDeadNode(instanceId);
+            _isDeadNode.RegisterEvent();
+
             _seekTargetNode = new SeekTargetNode(instanceId);
             _seekTargetNode.RegisterEvent();
 
-            selector.AddChild(_seekTargetNode);
-            selector.AddChild(new AttackNode(instanceId));
+            selector.AddChild(_isDeadNode);
+
+            Selector layerTwoSelector = new Selector();
+
+            layerTwoSelector.AddChild(_seekTargetNode);
+            layerTwoSelector.AddChild(new AttackNode(instanceId));
 
             ((Selector)_root).AddChild(selector);
+            ((Selector)_root).AddChild(layerTwoSelector);
         }
 
         private void Update()
@@ -34,6 +43,7 @@ namespace Saferio.TreeBehaviour
 
         private void OnDestroy()
         {
+            _isDeadNode.UnregisterEvent();
             _seekTargetNode.UnregisterEvent();
         }
     }

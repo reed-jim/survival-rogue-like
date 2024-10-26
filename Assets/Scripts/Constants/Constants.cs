@@ -21,4 +21,8 @@ public static class Constants
     #region LAYER
     public static string DEAD_LAYER = "Dead";
     #endregion
+
+    #region OBJECT POOLING EVERYTHING
+    public static string HIT_SFX = "Hit_SFX";
+    #endregion
 }
