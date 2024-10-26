@@ -58,7 +58,7 @@ public class LevelingUI : MonoBehaviour
 
     private void Start()
     {
-        // SaferioTween.Delay(1f, onCompletedAction: () => ShowUpgradePanel());
+        SaferioTween.Delay(1f, onCompletedAction: () => ShowUpgradePanel());
     }
 
     private void OnDestroy()
