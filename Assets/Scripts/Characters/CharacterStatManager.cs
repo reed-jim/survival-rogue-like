@@ -53,6 +53,7 @@ public class CharacterStatManager : MonoBehaviour
         Meteor.applyDamageEvent += TakeDamage;
         Bullet.applyDamageEvent += TakeDamage;
         EnergyExplosion.applyDamageEvent += TakeDamage;
+        RotateBlade.applyDamageEvent += TakeDamage;
         CharacterStatusEffectObserver.applyDamageEvent += TakeDamage;
         EnemySpawnManager.spawnEnemyEvent += OnEnemySpawnEvent;
     }
@@ -64,6 +65,7 @@ public class CharacterStatManager : MonoBehaviour
         Meteor.applyDamageEvent -= TakeDamage;
         Bullet.applyDamageEvent -= TakeDamage;
         EnergyExplosion.applyDamageEvent -= TakeDamage;
+        RotateBlade.applyDamageEvent -= TakeDamage;
         CharacterStatusEffectObserver.applyDamageEvent -= TakeDamage;
         EnemySpawnManager.spawnEnemyEvent -= OnEnemySpawnEvent;
     }
