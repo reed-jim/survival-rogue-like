@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f7f964aae653640b4b91f089e7235b, type: 3}
   m_Name: Leather Armor
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 63ec11672f5f8fc5fa0bc44f23e0d56b, type: 3}
+  icon: {fileID: 21300000, guid: 7750fcabc27e4464c94dd37eabcdb89d, type: 3}
   skill: {fileID: 11400000, guid: 30e1eefc003080c41bb95438a134d3b4, type: 2}

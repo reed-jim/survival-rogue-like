@@ -30,14 +30,14 @@ public class CharacterScreen : UIScreen
 
             if (i % 2 == 0)
             {
-                UIUtil.SetLocalPositionX(_slot[i], 0.4f * (_canvasSize.x - _slot[i].sizeDelta.x));
+                UIUtil.SetLocalPositionX(_slot[i], 0.5f * (_canvasSize.x - _slot[i].sizeDelta.x) - SurvivoriumUIConstant.PADDING);
                 UIUtil.SetLocalPositionY(_slot[i], 0.4f * _canvasSize.y - (i / 2) * 1.3f * _slot[i].sizeDelta.y);
 
                 _UISlide.SlideIn(_slot[i], _slot[i].localPosition.x, 0.5f * (_canvasSize.x + _slot[i].sizeDelta.x));
             }
             else
             {
-                UIUtil.SetLocalPositionX(_slot[i], -0.4f * (_canvasSize.x - _slot[i].sizeDelta.x));
+                UIUtil.SetLocalPositionX(_slot[i], -0.5f * (_canvasSize.x - _slot[i].sizeDelta.x) + SurvivoriumUIConstant.PADDING);
                 UIUtil.SetLocalPositionY(_slot[i], 0.4f * _canvasSize.y - ((i - 1) / 2) * 1.3f * _slot[i].sizeDelta.y);
 
                 _UISlide.SlideIn(_slot[i], _slot[i].localPosition.x, -0.5f * (_canvasSize.x + _slot[i].sizeDelta.x));

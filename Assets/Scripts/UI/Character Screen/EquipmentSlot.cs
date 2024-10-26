@@ -27,7 +27,7 @@ public class EquipmentSlot : MonoBehaviour, ISaferioPageViewSlot
 
         icon.sprite = _equipmentSlotData.Icon;
 
-        UIUtil.SetSizeKeepRatioX(icon, 0.6f * _container.sizeDelta.y);
+        UIUtil.SetSizeKeepRatioX(icon, 0.5f * _container.sizeDelta.y);
 
         RegisterButton();
     }
