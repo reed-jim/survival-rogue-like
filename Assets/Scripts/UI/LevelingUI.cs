@@ -144,9 +144,15 @@ public class LevelingUI : MonoBehaviour
         {
             _skillsToChoose[i] = randomSkills[i];
 
+            int rarityTier = _skillsToChoose[i].GetTier();
+
+            RarityTier rarity = (RarityTier)rarityTier;
+
+            string rarityString = $"<color={SurvivoriumTheme.RARITY_COLORs[rarityTier]}>{rarity}</color>";
+
             skillNameTexts[i].text = _skillsToChoose[i].GetName();
+            rarityTexts[i].text = rarityString;
             selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();
-            rarityTexts[i].text = ((RarityTier)_skillsToChoose[i].GetTier()).ToString();
         }
     }
 

@@ -12,6 +12,7 @@ public class BaseActiveSkill : BaseSkill, IActiveSkill
     #region PRIVATE FIELD
     private bool _isUnlocked;
     private bool _isCountdown = false;
+    protected int _rarityTier;
     #endregion
 
     public static event Action<int, IActiveSkill> addActiveSkillEvent;

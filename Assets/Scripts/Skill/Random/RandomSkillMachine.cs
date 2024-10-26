@@ -6,7 +6,6 @@ public static class RandomSkillMachine
 {
     public static ISkill GetRandomSkill(SkillContainer skillContainer)
     {
-        Debug.Log(skillContainer.NumberOfSkill);
         return skillContainer.AllSkills[Random.Range(0, skillContainer.NumberOfSkill)];
     }
 

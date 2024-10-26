@@ -57,11 +57,13 @@ public class ExplosionActiveSkill : BaseActiveSkill, IActiveSkill
     {
         string description = $"{name}\n";
 
+        string rarityTierColor = SurvivoriumTheme.RARITY_COLORs[_rarityTier];
+
         foreach (var statComponent in Stat.StatComponents)
         {
             if (statComponent.Value.BaseValue > 0)
             {
-                description += $"<color=#fff>{statComponent.Key} - <color=#FF3232>{statComponent.Value.BaseValue}</color>\n";
+                description += $"<color=#fff>{statComponent.Key} - <color={rarityTierColor}>{statComponent.Value.BaseValue}</color>\n";
             }
         }
 
@@ -75,7 +77,9 @@ public class ExplosionActiveSkill : BaseActiveSkill, IActiveSkill
 
     public override int GetTier()
     {
-        return 1;
+        _rarityTier = UnityEngine.Random.Range(0, 5);
+
+        return _rarityTier;
     }
 
     public override void AddSkill()
