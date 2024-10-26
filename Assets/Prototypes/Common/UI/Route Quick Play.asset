@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Route Quick Play
   m_EditorClassIdentifier: 
   routeName: Quick Play
+  iconSprite: {fileID: 21300000, guid: c68838cd724d5cc4a89b38f46c68a7d1, type: 3}

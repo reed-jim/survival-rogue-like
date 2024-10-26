@@ -7,8 +7,10 @@ using UnityEngine.UI;
 
 public class NavBarSlot : MonoBehaviour
 {
+    [SerializeField] private RectTransform container;
     [SerializeField] private Button button;
     [SerializeField] private TMP_Text routeName;
+    [SerializeField] private Image icon;
 
     [Header("DATA")]
     [SerializeField] private RouteData _routeData;
@@ -25,6 +27,15 @@ public class NavBarSlot : MonoBehaviour
         _routeData = data;
 
         routeName.text = data.RouteName;
+
+        icon.sprite = data.IconSprite;
+
+        GenerateUI();
+    }
+
+    private void GenerateUI()
+    {
+        UIUtil.SetSizeKeepRatioY(icon.rectTransform, 0.4f * container.sizeDelta.x);
     }
 
     private void SwitchRoute()

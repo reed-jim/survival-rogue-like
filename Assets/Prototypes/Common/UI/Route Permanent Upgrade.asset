@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Route Permanent Upgrade
   m_EditorClassIdentifier: 
   routeName: PermanentUpgrade
+  iconSprite: {fileID: 21300000, guid: 12c7ee7a153b80e459933263e2a26be6, type: 3}

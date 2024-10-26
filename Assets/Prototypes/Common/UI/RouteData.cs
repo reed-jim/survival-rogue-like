@@ -6,6 +6,8 @@ using UnityEngine;
 public class RouteData : ScriptableObject
 {
     [SerializeField] private string routeName;
+    [SerializeField] private Sprite iconSprite;
 
     public string RouteName => routeName;
+    public Sprite IconSprite => iconSprite;
 }

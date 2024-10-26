@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Route Character
   m_EditorClassIdentifier: 
   routeName: Character
+  iconSprite: {fileID: 21300000, guid: 88af35d2d0b4e324dad1d706b38e1bda, type: 3}

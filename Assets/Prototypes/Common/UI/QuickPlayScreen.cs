@@ -19,7 +19,7 @@ public class QuickPlayScreen : UIScreen
         UIUtil.SetSize(playButtonRT, 0.4f * _canvasSize.x, 0.15f * _canvasSize.x);
         UIUtil.SetLocalPositionY(playButtonRT, -0.2f * _canvasSize.y);
 
-        gameNameText.fontSize = 0.04f * _canvasSize.y;
+        gameNameText.fontSize = 0.08f * _canvasSize.y;
         playText.fontSize = 0.03f * _canvasSize.y;
 
         RegisterButton();
