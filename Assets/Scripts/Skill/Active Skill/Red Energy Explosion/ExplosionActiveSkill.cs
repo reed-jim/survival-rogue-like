@@ -55,7 +55,17 @@ public class ExplosionActiveSkill : BaseActiveSkill, IActiveSkill
 
     public override string GetDescription()
     {
-        return "Red Energy";
+        string description = $"{name}\n";
+
+        foreach (var statComponent in Stat.StatComponents)
+        {
+            if (statComponent.Value.BaseValue > 0)
+            {
+                description += $"<color=#fff>{statComponent.Key} - <color=#FF3232>{statComponent.Value.BaseValue}</color>\n";
+            }
+        }
+
+        return description;
     }
 
     public override string GetName()

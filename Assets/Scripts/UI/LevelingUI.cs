@@ -125,9 +125,24 @@ public class LevelingUI : MonoBehaviour
 
     private void ShowUpgrades()
     {
-        for (int i = 0; i < selectUpgradeTexts.Length; i++)
+        // SkillContainer avoidDuplicateSkillContainer = skillContainer;
+
+        // for (int i = 0; i < selectUpgradeTexts.Length; i++)
+        // {
+        //     _skillsToChoose[i] = RandomSkillMachine.GetRandomSkill(avoidDuplicateSkillContainer);
+
+        //     skillNameTexts[i].text = _skillsToChoose[i].GetName();
+        //     selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();
+        //     rarityTexts[i].text = ((RarityTier)_skillsToChoose[i].GetTier()).ToString();
+
+        //     avoidDuplicateSkillContainer.AllSkills.Remove((BaseSkill)_skillsToChoose[i]);
+        // }
+
+        ISkill[] randomSkills = RandomSkillMachine.GetThreeRandomSkills(skillContainer);
+
+        for (int i = 0; i < randomSkills.Length; i++)
         {
-            _skillsToChoose[i] = RandomSkillMachine.GetRandomSkill(skillContainer);
+            _skillsToChoose[i] = randomSkills[i];
 
             skillNameTexts[i].text = _skillsToChoose[i].GetName();
             selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();

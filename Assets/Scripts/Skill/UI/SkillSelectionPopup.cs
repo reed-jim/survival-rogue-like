@@ -57,7 +57,7 @@ public class SkillSelectionPopup : MonoBehaviour, IUITransition
 
     private void SelectSkill(int slotIndex)
     {
-        Debug.Log(skillsToChoose[slotIndex].GetDescription());
+        
     }
 
     public void Hide()

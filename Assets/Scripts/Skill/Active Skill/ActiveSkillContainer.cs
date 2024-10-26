@@ -12,7 +12,7 @@ public class ActiveSkillContainer : MonoBehaviour
 
     private void Awake()
     {
-        AddActiveSkillsToContainer();
+        // AddActiveSkillsToContainer();
     }
 
     private void AddActiveSkillsToContainer()

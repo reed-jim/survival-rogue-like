@@ -17,6 +17,11 @@ public class SkillContainer : ScriptableObject
     }
     public int NumberOfSkill => allSkills.Count;
 
+    public SkillContainer()
+    {
+        allSkills = new List<BaseSkill>();
+    }
+
     private void OnValidate()
     {
         // if (allSkills != null)

@@ -13,24 +13,6 @@ MonoBehaviour:
   m_Name: Red Energy Stat
   m_EditorClassIdentifier: 
   statComponents:
-  - key: Experience
-    baseStatComponent:
-      baseValue: 0
-  - key: Level
-    baseStatComponent:
-      baseValue: 1
-  - key: SkillPoint
-    baseStatComponent:
-      baseValue: 0
-  - key: Health
-    baseStatComponent:
-      baseValue: 100
-  - key: Armor
-    baseStatComponent:
-      baseValue: 10
-  - key: BlockChance
-    baseStatComponent:
-      baseValue: 0
   - key: Damage
     baseStatComponent:
       baseValue: 50
@@ -42,17 +24,14 @@ MonoBehaviour:
       baseValue: 0
   - key: CriticalMultiplier
     baseStatComponent:
-      baseValue: 2
+      baseValue: 0
   - key: AttackRange
     baseStatComponent:
       baseValue: 0
   - key: AttackSpeed
     baseStatComponent:
-      baseValue: 5
-  - key: ReloadTime
-    baseStatComponent:
       baseValue: 0
-  - key: MovementSpeed
+  - key: ReloadTime
     baseStatComponent:
       baseValue: 0
   - key: PercentDirectDamage
