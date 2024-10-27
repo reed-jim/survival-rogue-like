@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cb5ef8585873749924177dc101632e, type: 3}
   m_Name: Equipment Skill Observer
   m_EditorClassIdentifier: 
+  _skillFromEquipments: []

@@ -29,7 +29,7 @@ namespace ReedJim.RPG.Stat
 
         public void AddStatComponent(string statComponentName, BaseStatComponent statComponent)
         {
-            if (statComponents.ContainsKey(statComponentName))
+            if (!statComponents.ContainsKey(statComponentName))
             {
                 statComponents.Add(statComponentName, statComponent);
             }

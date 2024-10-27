@@ -56,7 +56,9 @@ MonoBehaviour:
   container: {fileID: 7579688992055621216}
   iconBackground: {fileID: 6004360125741936056}
   icon: {fileID: 5007054905526476892}
-  valueText: {fileID: 5866282354912098048}
+  valueTextRT: {fileID: 5866282354912098048}
+  valueText: {fileID: 6274966330733445172}
+  statKey: 
 --- !u!222 &6288927519188251708
 CanvasRenderer:
   m_ObjectHideFlags: 0
