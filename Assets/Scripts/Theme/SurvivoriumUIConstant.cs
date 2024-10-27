@@ -4,5 +4,5 @@ using UnityEngine;
 
 public static class SurvivoriumUIConstant
 {
-    public static float PADDING = 92;
+    public static float PADDING = 48;
 }

@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f7f964aae653640b4b91f089e7235b, type: 3}
   m_Name: New Equipment Slot Data 6
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 45b0910c62b75f9c2af6014f6f29f8ab, type: 3}
+  icon: {fileID: 21300000, guid: abb70e74678f64c44905b8231bc0b17a, type: 3}
+  skill: {fileID: 0}
