@@ -110,6 +110,6 @@ public class EquipmentDetail : MonoBehaviour
 
     private void Equip()
     {
-        equipmentSkillObserver.Add(_data.Skill);
+        equipmentSkillObserver.Add(_data);
     }
 }

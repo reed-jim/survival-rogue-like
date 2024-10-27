@@ -25,4 +25,8 @@ public static class Constants
     #region OBJECT POOLING EVERYTHING
     public static string HIT_SFX = "Hit_SFX";
     #endregion
+
+    #region DATA
+    public static string EQUIPPED_ITEM_INDEXES_IN_CONTAINER_DATA = "equipped_item_indexes_in_container_data";
+    #endregion
 }

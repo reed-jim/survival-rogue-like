@@ -15,7 +15,10 @@ public class CharacterScreen : UIScreen
 
     [SerializeField] private StatDisplaySlot attackDisplaySlot;
     [SerializeField] private StatDisplaySlot hpDisplaySlot;
- 
+
+    [Header("SCRIPTABLE OBJECT")]
+    [SerializeField] private EquipmentSkillObserver equipmentSkillObserver;
+
     [Header("CUSTOMIZE")]
     [SerializeField] private int numSlot;
 
@@ -47,20 +50,25 @@ public class CharacterScreen : UIScreen
 
             if (i % 2 == 0)
             {
-                UIUtil.SetLocalPositionX(_slot[i], 0.5f * (equipmentContainer.sizeDelta.x - _slot[i].sizeDelta.x) - SurvivoriumUIConstant.PADDING);
+                UIUtil.SetLocalPositionX(_slot[i], -0.5f * (equipmentContainer.sizeDelta.x - _slot[i].sizeDelta.x) + SurvivoriumUIConstant.PADDING);
                 UIUtil.SetLocalPositionY(_slot[i], 0.5f * equipmentContainer.sizeDelta.y - (i / 2 + 0.5f) * 1.3f * _slot[i].sizeDelta.y);
 
                 _UISlide.SlideIn(_slot[i], _slot[i].localPosition.x, 0.5f * (_canvasSize.x + _slot[i].sizeDelta.x));
             }
             else
             {
-                UIUtil.SetLocalPositionX(_slot[i], -0.5f * (equipmentContainer.sizeDelta.x - _slot[i].sizeDelta.x) + SurvivoriumUIConstant.PADDING);
+                UIUtil.SetLocalPositionX(_slot[i], 0.5f * (equipmentContainer.sizeDelta.x - _slot[i].sizeDelta.x) - SurvivoriumUIConstant.PADDING);
                 UIUtil.SetLocalPositionY(_slot[i], 0.5f * equipmentContainer.sizeDelta.y - ((i - 1) / 2 + 0.5f) * 1.3f * _slot[i].sizeDelta.y);
 
                 _UISlide.SlideIn(_slot[i], _slot[i].localPosition.x, -0.5f * (_canvasSize.x + _slot[i].sizeDelta.x));
             }
+        }
 
-            _slot[i].GetComponent<EquipmentSlot>().Setup(i);
+        EquipmentSlotData[] savedEquippedItems = equipmentSkillObserver.LoadEquippedItems().ToArray();
+
+        for (int i = 0; i < savedEquippedItems.Length; i++)
+        {
+            _slot[i].GetComponent<EquippedItemSlot>().Setup(savedEquippedItems[i]);
         }
 
         attackDisplaySlot.Setup(statDisplayContainer, 0);

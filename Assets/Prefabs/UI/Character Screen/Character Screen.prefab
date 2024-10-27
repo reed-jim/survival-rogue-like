@@ -1088,6 +1088,8 @@ MonoBehaviour:
   inventoryContainer: {fileID: 8783289010552303145}
   attackDisplaySlot: {fileID: 3992860317234730781}
   hpDisplaySlot: {fileID: 228776680245059792}
+  equipmentSkillObserver: {fileID: 11400000, guid: bc2515bc63270964590fbb1626b8e4f2,
+    type: 2}
   numSlot: 6
 --- !u!1 &4440118806487928786
 GameObject:
@@ -2988,6 +2990,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8233328374233948037, guid: 9bda07d6a7121544495daa8d7b5275c1,
+        type: 3}
+      propertyPath: statKey
+      value: Damage
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3284,6 +3291,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8233328374233948037, guid: 9bda07d6a7121544495daa8d7b5275c1,
+        type: 3}
+      propertyPath: statKey
+      value: Health
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
