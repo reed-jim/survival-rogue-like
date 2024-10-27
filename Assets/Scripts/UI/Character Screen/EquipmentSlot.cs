@@ -9,25 +9,25 @@ public class EquipmentSlot : MonoBehaviour, ISaferioPageViewSlot
     [SerializeField] private Image icon;
     [SerializeField] private Button selectButton;
 
-    [SerializeField] private EquipmentSlotDataContainer equipmentSlotDataContainer;
+    [SerializeField] private EquipmentPool equipmentPool;
 
     private RectTransform _container;
 
-    private EquipmentSlotData _equipmentSlotData;
+    private OwnedEquipmentData _equipmentSlotData;
 
     #region ACTION
-    public static event Action<EquipmentSlotData> openEquipmentDetailEvent;
+    public static event Action<OwnedEquipmentData> openEquipmentDetailEvent;
     #endregion
 
     public void Setup(int slotIndex)
     {
-        _container = GetComponent<RectTransform>();
+        // _container = GetComponent<RectTransform>();
 
-        _equipmentSlotData = equipmentSlotDataContainer.Items[slotIndex];
+        // _equipmentSlotData = equipmentPool.EquipmentsData[slotIndex];
 
-        icon.sprite = _equipmentSlotData.Icon;
+        // icon.sprite = _equipmentSlotData.Icon;
 
-        UIUtil.SetSizeKeepRatioX(icon, 0.5f * _container.sizeDelta.y);
+        // UIUtil.SetSizeKeepRatioX(icon, 0.5f * _container.sizeDelta.y);
 
         RegisterButton();
     }

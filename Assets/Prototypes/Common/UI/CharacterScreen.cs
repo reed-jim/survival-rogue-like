@@ -64,11 +64,11 @@ public class CharacterScreen : UIScreen
             }
         }
 
-        EquipmentSlotData[] savedEquippedItems = equipmentSkillObserver.LoadEquippedItems().ToArray();
+        List<OwnedEquipmentData> ownedEquipmentsData = equipmentSkillObserver.LoadOwnedItems();
 
-        for (int i = 0; i < savedEquippedItems.Length; i++)
+        for (int i = 0; i < ownedEquipmentsData.Count; i++)
         {
-            _slot[i].GetComponent<EquippedItemSlot>().Setup(savedEquippedItems[i]);
+            _slot[i].GetComponent<EquippedItemSlot>().Setup(ownedEquipmentsData[i]);
         }
 
         attackDisplaySlot.Setup(statDisplayContainer, 0);

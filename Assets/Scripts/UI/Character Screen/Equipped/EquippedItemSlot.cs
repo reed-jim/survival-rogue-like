@@ -11,9 +11,13 @@ public class EquippedItemSlot : MonoBehaviour
 
     [SerializeField] private EquipmentSlotDataContainer equipmentSlotDataContainer;
 
-    private RectTransform _container;
+    [Header("SCRIPTABLE OBJECT")]
+    [SerializeField] private EquipmentVisualProvider equipmentVisualProvider;
 
+    #region PRIVATE FIELD
+    private RectTransform _container;
     private EquipmentSlotData _equipmentSlotData;
+    #endregion
 
     #region ACTION
     public static event Action<EquipmentSlotData> openEquipmentDetailEvent;
@@ -26,10 +30,10 @@ public class EquippedItemSlot : MonoBehaviour
         RegisterButton();
     }
 
-    public void Setup(EquipmentSlotData equipmentData)
+    public void Setup(OwnedEquipmentData equipmentData)
     {
         icon.gameObject.SetActive(true);
-        icon.sprite = equipmentData.Icon;
+        icon.sprite = equipmentVisualProvider.EquipmentSprites[equipmentData.IconIndex];
     }
 
     private void RegisterButton()

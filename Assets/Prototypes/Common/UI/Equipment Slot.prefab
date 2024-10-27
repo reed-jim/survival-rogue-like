@@ -59,6 +59,8 @@ MonoBehaviour:
   selectButton: {fileID: 7290757623353802267}
   equipmentSlotDataContainer: {fileID: 11400000, guid: dc59502b4bd02974fbe3d8aa86d64bac,
     type: 2}
+  equipmentVisualProvider: {fileID: 11400000, guid: b497387059a08ec46a2a7d94c593bd39,
+    type: 2}
 --- !u!222 &5636232970983737809
 CanvasRenderer:
   m_ObjectHideFlags: 0

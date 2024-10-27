@@ -8,16 +8,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Equipment Skill Observer", menuName = "ScriptableObjects/RPG/EquipmentSkillObserver")]
 public class EquipmentSkillObserver : ScriptableObject
 {
-    [SerializeField] private List<EquipmentSlotData> equippedItemDatum;
+    [SerializeField] private List<OwnedEquipmentData> equippedItemDatum;
+    [SerializeField] private List<OwnedEquipmentData> ownedItemDatum;
     [SerializeField] private List<BaseSkill> _skillFromEquipments;
 
     [SerializeField] private EquipmentSlotDataContainer equipmentSlotDataContainer;
 
-    public List<EquipmentSlotData> EquippedItemDatum
-    {
-        get => LoadEquippedItems();
-        // set => equippedItemDatum = value;
-    }
+    // public List<OwnedEquipmentData> EquippedItemDatum
+    // {
+    //     get => LoadEquippedItems();
+    //     // set => equippedItemDatum = value;
+    // }
 
     public List<BaseSkill> SkillFromEquipments
     {
@@ -28,14 +29,14 @@ public class EquipmentSkillObserver : ScriptableObject
     public static event Action<string, float> updateCharacterStatDisplayEvent;
     #endregion
 
-    public void Add(EquipmentSlotData equipmentData)
+    public void AddEquippedItem(OwnedEquipmentData ownedEquipmentData)
     {
         if (equippedItemDatum == null)
         {
-            equippedItemDatum = new List<EquipmentSlotData>();
+            equippedItemDatum = new List<OwnedEquipmentData>();
         }
 
-        equippedItemDatum.Add(equipmentData);
+        equippedItemDatum.Add(ownedEquipmentData);
 
         _skillFromEquipments = equippedItemDatum.Select(e => e.Skill).ToList();
 
@@ -44,38 +45,44 @@ public class EquipmentSkillObserver : ScriptableObject
         UpdateCharacterStat();
     }
 
-    public List<EquipmentSlotData> LoadEquippedItems()
+    public void AddOwnedItem(OwnedEquipmentData ownedEquipmentData)
     {
-        int[] indexes = DataUtility.Load<int[]>(Constants.STAT_DATA_FILE_NAME, Constants.EQUIPPED_ITEM_INDEXES_IN_CONTAINER_DATA, null);
-
-        List<EquipmentSlotData> equippedItems = new List<EquipmentSlotData>();
-
-        foreach (var index in indexes)
+        if (ownedItemDatum == null)
         {
-            equippedItems.Add(equipmentSlotDataContainer.Items[index]);
+            ownedItemDatum = new List<OwnedEquipmentData>();
         }
 
-        return equippedItems;
+        ownedItemDatum.Add(ownedEquipmentData);
+
+        _skillFromEquipments = ownedItemDatum.Select(e => e.Skill).ToList();
+
+        SaveEquippedItems();
+
+        UpdateCharacterStat();
+    }
+
+    // public List<EquipmentData> LoadEquippedItems()
+    // {
+    //     int[] indexes = DataUtility.Load<int[]>(Constants.STAT_DATA_FILE_NAME, Constants.EQUIPPED_ITEM_INDEXES_IN_CONTAINER_DATA, null);
+
+    //     List<EquipmentData> equippedItems = new List<EquipmentData>();
+
+    //     foreach (var index in indexes)
+    //     {
+    //         equippedItems.Add(equipmentSlotDataContainer.Items[index]);
+    //     }
+
+    //     return equippedItems;
+    // }
+
+    public List<OwnedEquipmentData> LoadOwnedItems()
+    {
+        return DataUtility.Load<List<OwnedEquipmentData>>(Constants.STAT_DATA_FILE_NAME, Constants.OWNED_EQUIPMENTS, null);
     }
 
     private void SaveEquippedItems()
     {
-        List<int> indexes = new List<int>();
-
-        foreach (var item in equippedItemDatum)
-        {
-            for (int i = 0; i < equipmentSlotDataContainer.Items.Length; i++)
-            {
-                if (item == equipmentSlotDataContainer.Items[i])
-                {
-                    indexes.Add(i);
-
-                    break;
-                }
-            }
-        }
-
-        DataUtility.Save(Constants.STAT_DATA_FILE_NAME, Constants.EQUIPPED_ITEM_INDEXES_IN_CONTAINER_DATA, indexes.ToArray());
+        DataUtility.Save(Constants.STAT_DATA_FILE_NAME, Constants.OWNED_EQUIPMENTS, ownedItemDatum.ToArray());
     }
 
     // public void Add(BaseSkill skill)

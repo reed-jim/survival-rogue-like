@@ -27,10 +27,11 @@ public class EquipmentDetail : MonoBehaviour
 
     [Header("SCRIPTABLE OBJECTS")]
     [SerializeField] private EquipmentSkillObserver equipmentSkillObserver;
+    [SerializeField] private EquipmentVisualProvider equipmentVisualProvider;
 
     #region PRIVATE FIELD
     private Vector2 _canvasSize;
-    private EquipmentSlotData _data;
+    private OwnedEquipmentData _data;
     #endregion
 
     private void Awake()
@@ -51,9 +52,9 @@ public class EquipmentDetail : MonoBehaviour
         EquipmentSlot.openEquipmentDetailEvent -= Show;
     }
 
-    public void Setup(EquipmentSlotData data)
+    public void Setup(OwnedEquipmentData data)
     {
-        icon.sprite = data.Icon;
+        icon.sprite = equipmentVisualProvider.EquipmentSprites[data.IconIndex];
     }
 
     private void RegisterButton()
@@ -90,13 +91,13 @@ public class EquipmentDetail : MonoBehaviour
         UIUtil.SetLocalPositionOfRectToAnotherRectVertically(equipButtonRT, container, 0, -0.5f);
     }
 
-    private void Show(EquipmentSlotData data)
+    private void Show(OwnedEquipmentData data)
     {
         gameObject.SetActive(true);
 
-        icon.sprite = data.Icon;
+        icon.sprite = equipmentVisualProvider.EquipmentSprites[data.IconIndex];;
 
-        equipmentName.text = data.name;
+        equipmentName.text = data.Name;
 
         description.text = data.Skill.GetDescription();
 
@@ -110,6 +111,6 @@ public class EquipmentDetail : MonoBehaviour
 
     private void Equip()
     {
-        equipmentSkillObserver.Add(_data);
+        equipmentSkillObserver.AddEquippedItem(_data);
     }
 }
