@@ -1313,6 +1313,51 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 323828623050409829}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2088239721
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2088239723}
+  - component: {fileID: 2088239722}
+  m_Layer: 0
+  m_Name: Saferio Tween Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2088239722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088239721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 673581ad998b8f4428a5b1fe4ad34c20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lists: []
+--- !u!4 &2088239723
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088239721}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &2095671998 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1734570203588540972, guid: 769246e64dfc84e4b9dbd68e177925bd,
@@ -1957,3 +2002,4 @@ SceneRoots:
   - {fileID: 222242502}
   - {fileID: 349743678}
   - {fileID: 41424668}
+  - {fileID: 2088239723}

@@ -13,6 +13,9 @@ public class CharacterScreen : UIScreen
     [SerializeField] private RectTransform statDisplayContainer;
     [SerializeField] private RectTransform inventoryContainer;
 
+    [SerializeField] private StatDisplaySlot attackDisplaySlot;
+    [SerializeField] private StatDisplaySlot hpDisplaySlot;
+ 
     [Header("CUSTOMIZE")]
     [SerializeField] private int numSlot;
 
@@ -28,8 +31,8 @@ public class CharacterScreen : UIScreen
 
         float padding = SurvivoriumUIConstant.PADDING;
 
-        UIUtil.SetSize(equipmentContainer, _canvasSize.x - 2 * padding, 0.3f * _canvasSize.y);
-        UIUtil.SetSize(statDisplayContainer, equipmentContainer.sizeDelta.x, 0.15f * _canvasSize.y);
+        UIUtil.SetSize(equipmentContainer, _canvasSize.x - 2 * padding, 0.35f * _canvasSize.y);
+        UIUtil.SetSize(statDisplayContainer, equipmentContainer.sizeDelta.x, 0.05f * _canvasSize.y);
         UIUtil.SetSize(inventoryContainer, equipmentContainer.sizeDelta);
 
         UIUtil.SetLocalPositionY(equipmentContainer, 0.5f * (_canvasSize.y - equipmentContainer.sizeDelta.y) - padding);
@@ -44,14 +47,14 @@ public class CharacterScreen : UIScreen
 
             if (i % 2 == 0)
             {
-                UIUtil.SetLocalPositionX(_slot[i], 0.5f * (_canvasSize.x - _slot[i].sizeDelta.x) - SurvivoriumUIConstant.PADDING);
+                UIUtil.SetLocalPositionX(_slot[i], 0.5f * (equipmentContainer.sizeDelta.x - _slot[i].sizeDelta.x) - SurvivoriumUIConstant.PADDING);
                 UIUtil.SetLocalPositionY(_slot[i], 0.5f * equipmentContainer.sizeDelta.y - (i / 2 + 0.5f) * 1.3f * _slot[i].sizeDelta.y);
 
                 _UISlide.SlideIn(_slot[i], _slot[i].localPosition.x, 0.5f * (_canvasSize.x + _slot[i].sizeDelta.x));
             }
             else
             {
-                UIUtil.SetLocalPositionX(_slot[i], -0.5f * (_canvasSize.x - _slot[i].sizeDelta.x) + SurvivoriumUIConstant.PADDING);
+                UIUtil.SetLocalPositionX(_slot[i], -0.5f * (equipmentContainer.sizeDelta.x - _slot[i].sizeDelta.x) + SurvivoriumUIConstant.PADDING);
                 UIUtil.SetLocalPositionY(_slot[i], 0.5f * equipmentContainer.sizeDelta.y - ((i - 1) / 2 + 0.5f) * 1.3f * _slot[i].sizeDelta.y);
 
                 _UISlide.SlideIn(_slot[i], _slot[i].localPosition.x, -0.5f * (_canvasSize.x + _slot[i].sizeDelta.x));
@@ -59,5 +62,8 @@ public class CharacterScreen : UIScreen
 
             _slot[i].GetComponent<EquipmentSlot>().Setup(i);
         }
+
+        attackDisplaySlot.Setup(statDisplayContainer, 0);
+        hpDisplaySlot.Setup(statDisplayContainer, 1);
     }
 }
