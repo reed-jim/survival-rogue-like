@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+
 #if UNITY_EDITOR
 using Saferio.Editor.Style;
 #endif
@@ -61,9 +63,11 @@ public class ObjectPoolingPageView : MonoBehaviour
     public int ColumnNumber => columnNumber;
     #endregion
 
-    private void Awake()
+    private async void Awake()
     {
         Spawn();
+
+        await Task.Delay(2);
         GenerateUI();
         RegisterButton();
 
@@ -86,7 +90,7 @@ public class ObjectPoolingPageView : MonoBehaviour
 
         _canvasSize = canvas.GetComponent<RectTransform>().sizeDelta;
 
-        UIUtil.SetSize(container, 0.9f * _canvasSize);
+        // UIUtil.SetSize(container, 0.9f * _canvasSize);
 
         Vector2 itemSize = Vector2.zero;
         Vector2 containerSize = container.sizeDelta;
@@ -126,13 +130,13 @@ public class ObjectPoolingPageView : MonoBehaviour
         UIUtil.SetLocalPositionY(pageInputRT, -0.5f * containerSize.y);
 
         UIUtil.SetSize(goToPageButton, 0.05f * containerSize.y, 0.05f * containerSize.y);
-        UIUtil.SetLocalPosition(goToPageButtonRT, 0.25f * _canvasSize.x, pageInputRT.localPosition.y);
+        UIUtil.SetLocalPosition(goToPageButtonRT, 0.25f * containerSize.x, pageInputRT.localPosition.y);
 
-        UIUtil.SetSize(nextPageButton, goToPageButtonRT.sizeDelta);
-        UIUtil.SetLocalPosition(nextPageButton.GetComponent<RectTransform>(), 0.4f * _canvasSize.x, goToPageButtonRT.localPosition.y);
+        UIUtil.SetSize(nextPageButton, 0.15f * containerSize.y, 0.15f * containerSize.y);
+        UIUtil.SetLocalPosition(nextPageButton.GetComponent<RectTransform>(), 0.4f * containerSize.x, goToPageButtonRT.localPosition.y);
 
-        UIUtil.SetSize(prevPageButton, goToPageButtonRT.sizeDelta);
-        UIUtil.SetLocalPosition(prevPageButton.GetComponent<RectTransform>(), -0.4f * _canvasSize.x, goToPageButtonRT.localPosition.y);
+        UIUtil.SetSize(prevPageButton, 0.15f * containerSize.y, 0.15f * containerSize.y);
+        UIUtil.SetLocalPosition(prevPageButton.GetComponent<RectTransform>(), -0.4f * containerSize.x, goToPageButtonRT.localPosition.y);
     }
 
     private void Spawn()
@@ -191,7 +195,7 @@ public class ObjectPoolingPageView : MonoBehaviour
         }
         catch (Exception e)
         {
-
+            
         }
     }
 

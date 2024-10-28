@@ -53,9 +53,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23eea89237b671f42a0f90239eb68659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  container: {fileID: 8505946110332760973}
+  iconRT: {fileID: 3767080326735430145}
   icon: {fileID: 2035871412450372160}
   selectButton: {fileID: 7277476479660161558}
-  equipmentSlotDataContainer: {fileID: 11400000, guid: dc59502b4bd02974fbe3d8aa86d64bac,
+  equipmentPool: {fileID: 11400000, guid: 4d1b30a3dd7ba9846b6b51ffbc917c46, type: 2}
+  equipmentSkillObserver: {fileID: 11400000, guid: bc2515bc63270964590fbb1626b8e4f2,
+    type: 2}
+  equipmentVisualProvider: {fileID: 11400000, guid: b497387059a08ec46a2a7d94c593bd39,
     type: 2}
 --- !u!222 &2796848269634298896
 CanvasRenderer:

@@ -6,14 +6,20 @@ using UnityEngine.UI;
 
 public class EquipmentSlot : MonoBehaviour, ISaferioPageViewSlot
 {
+    [SerializeField] private RectTransform container;
+    [SerializeField] private RectTransform iconRT;
+
     [SerializeField] private Image icon;
     [SerializeField] private Button selectButton;
 
+    [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private EquipmentPool equipmentPool;
+    [SerializeField] private EquipmentSkillObserver equipmentSkillObserver;
+    [SerializeField] private EquipmentVisualProvider equipmentVisualProvider;
 
-    private RectTransform _container;
-
+    #region PRIVATE FIELD
     private OwnedEquipmentData _equipmentSlotData;
+    #endregion
 
     #region ACTION
     public static event Action<OwnedEquipmentData> openEquipmentDetailEvent;
@@ -21,20 +27,39 @@ public class EquipmentSlot : MonoBehaviour, ISaferioPageViewSlot
 
     public void Setup(int slotIndex)
     {
-        // _container = GetComponent<RectTransform>();
-
-        // _equipmentSlotData = equipmentPool.EquipmentsData[slotIndex];
-
-        // icon.sprite = _equipmentSlotData.Icon;
-
-        // UIUtil.SetSizeKeepRatioX(icon, 0.5f * _container.sizeDelta.y);
-
         RegisterButton();
+
+        ResetState(slotIndex);
+    }
+
+    public void ResetState(int slotIndex)
+    {
+        if (slotIndex < equipmentSkillObserver.OwnedItemDatum.Count)
+        {
+            gameObject.SetActive(true);
+
+            int iconIndex = equipmentSkillObserver.OwnedItemDatum[slotIndex].IconIndex;
+
+            Sprite iconSprite = equipmentVisualProvider.EquipmentSprites[iconIndex];
+
+            icon.sprite = iconSprite;
+
+            UIUtil.SetSizeKeepRatioX(iconRT, 0.5f * container.sizeDelta.y);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void RegisterButton()
     {
         selectButton.onClick.AddListener(Select);
+    }
+
+    private void GenerateUI()
+    {
+
     }
 
     private void Select()

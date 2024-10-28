@@ -14,6 +14,11 @@ public class EquipmentSkillObserver : ScriptableObject
 
     [SerializeField] private EquipmentSlotDataContainer equipmentSlotDataContainer;
 
+    public List<OwnedEquipmentData> OwnedItemDatum
+    {
+        get => ownedItemDatum;
+    }
+
     // public List<OwnedEquipmentData> EquippedItemDatum
     // {
     //     get => LoadEquippedItems();
@@ -77,7 +82,9 @@ public class EquipmentSkillObserver : ScriptableObject
 
     public List<OwnedEquipmentData> LoadOwnedItems()
     {
-        return DataUtility.Load<List<OwnedEquipmentData>>(Constants.STAT_DATA_FILE_NAME, Constants.OWNED_EQUIPMENTS, null);
+        ownedItemDatum = DataUtility.Load<List<OwnedEquipmentData>>(Constants.STAT_DATA_FILE_NAME, Constants.OWNED_EQUIPMENTS, null);
+
+        return ownedItemDatum;
     }
 
     private void SaveEquippedItems()

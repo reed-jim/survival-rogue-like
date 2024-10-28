@@ -64,14 +64,19 @@ public class CharacterScreen : UIScreen
             }
         }
 
-        List<OwnedEquipmentData> ownedEquipmentsData = equipmentSkillObserver.LoadOwnedItems();
+        // List<OwnedEquipmentData> ownedEquipmentsData = equipmentSkillObserver.OwnedItemDatum;
 
-        for (int i = 0; i < ownedEquipmentsData.Count; i++)
-        {
-            _slot[i].GetComponent<EquippedItemSlot>().Setup(ownedEquipmentsData[i]);
-        }
+        // for (int i = 0; i < ownedEquipmentsData.Count; i++)
+        // {
+        //     _slot[i].GetComponent<EquippedItemSlot>().Setup(ownedEquipmentsData[i]);
+        // }
 
         attackDisplaySlot.Setup(statDisplayContainer, 0);
         hpDisplaySlot.Setup(statDisplayContainer, 1);
+    }
+
+    private void Reset()
+    {
+
     }
 }
