@@ -1579,6 +1579,11 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1714769233}
+    - target: {fileID: 2889723064317524797, guid: 67dbbdf19ae671343ba46466fb81da91,
+        type: 3}
+      propertyPath: chestRevealScreen
+      value: 
+      objectReference: {fileID: 7251860390387041314}
     - target: {fileID: 3215864806794205167, guid: 67dbbdf19ae671343ba46466fb81da91,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1984,11 +1989,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chest Reveal Screen
       objectReference: {fileID: 0}
-    - target: {fileID: 7147103531264823532, guid: 18ed85a77b530ce4ab6a5b305a974b32,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2000,6 +2000,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 7251860390387041310}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7251860390387041314 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 268127546110003646, guid: 18ed85a77b530ce4ab6a5b305a974b32,
+    type: 3}
+  m_PrefabInstance: {fileID: 7251860390387041310}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ebb3948f7315d742bbee80fc73c343d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7255262595433817138
 PrefabInstance:
   m_ObjectHideFlags: 0

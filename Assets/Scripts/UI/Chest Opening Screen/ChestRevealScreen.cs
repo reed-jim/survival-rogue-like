@@ -16,6 +16,7 @@ public class ChestRevealScreen : MonoBehaviour
     [SerializeField] private Image item;
     [SerializeField] private TMP_Text itemNameText;
     [SerializeField] private TMP_Text rarityText;
+    [SerializeField] private Button continueButton;
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private EquipmentPool equipmentPool;
@@ -29,6 +30,8 @@ public class ChestRevealScreen : MonoBehaviour
         _canvasSize = canvas.sizeDelta;
 
         GenerateUI();
+
+        continueButton.onClick.AddListener(Close);
     }
 
     private void OnEnable()
@@ -50,6 +53,8 @@ public class ChestRevealScreen : MonoBehaviour
         UIUtil.SetSize(rarityTextRT, 0.8f * _canvasSize.x, 0.05f * _canvasSize.y);
         UIUtil.SetLocalPositionOfRectToAnotherRectVertically(itemNameTextRT, itemRT, 0.6f, 0.6f);
         UIUtil.SetLocalPositionOfRectToAnotherRectVertically(rarityTextRT, itemNameTextRT, 0.6f, 0.6f);
+
+        UIUtil.SetLocalPositionOfRectToAnotherRectVertically(continueButton, container, 0.5f, -0.4f);
     }
 
     private void OpenChest()
@@ -78,5 +83,10 @@ public class ChestRevealScreen : MonoBehaviour
 
         itemNameText.text = $"{data.Name}";
         rarityText.text = $"{(RarityTier)data.Rarity}";
+    }
+
+    private void Close()
+    {
+        container.gameObject.SetActive(false);
     }
 }
