@@ -70,7 +70,11 @@ public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId, ICol
         // REMEMBER TO RESET THE VELOCITY BEFORE APPLY FORCE
         _rigidBody.velocity = Vector3.zero;
 
-        _rigidBody.AddForce(forceMultiplier * (target.position - shotPosition).normalized, ForceMode.Impulse);
+        Vector3 direction = (target.position - shotPosition).normalized;
+
+        direction.y = 0;
+
+        _rigidBody.AddForce(forceMultiplier * direction, ForceMode.Impulse);
 
         // _rigidBody.AddForce(forceMultiplier * (AvoidTooNearTarget(target.position, shotPosition) - shotPosition).normalized, ForceMode.Impulse);
     }

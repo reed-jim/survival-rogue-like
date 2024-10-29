@@ -569,7 +569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyContainer: {fileID: 958509770}
   enemyPrefabs:
-  - {fileID: 6898723522597223981, guid: 6c86ad04607869e458f5c4fce2f8b1ea, type: 3}
+  - {fileID: 6785288437737151558, guid: 047b6737dba131d4d921438050a486fe, type: 3}
   - {fileID: 6898723522597223981, guid: 6c86ad04607869e458f5c4fce2f8b1ea, type: 3}
   enemies: []
   player: {fileID: 2478445494248917083}
@@ -8733,7 +8733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b21b6b79ff64243a436b91d657a84c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4604694175001444412, guid: 8e4e7613033cdca43ba8961651a626dd, type: 3}
+  prefab: {fileID: 4604694175001444412, guid: 73881adf756e3794886c6f63a4e08cae, type: 3}
   poolContainer: {fileID: 2019180537}
   poolSize: 10
 --- !u!1 &2069948144
