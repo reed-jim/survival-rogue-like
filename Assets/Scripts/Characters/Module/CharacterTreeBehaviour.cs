@@ -27,13 +27,13 @@ namespace Saferio.TreeBehaviour
 
             selector.AddChild(_isDeadNode);
 
-            Selector layerTwoSelector = new Selector();
+            Sequence sequenceNode = new Sequence();
 
-            layerTwoSelector.AddChild(_seekTargetNode);
-            layerTwoSelector.AddChild(new AttackNode(instanceId));
+            sequenceNode.AddChild(_seekTargetNode);
+            sequenceNode.AddChild(new AttackNode(instanceId));
 
             ((Selector)_root).AddChild(selector);
-            ((Selector)_root).AddChild(layerTwoSelector);
+            ((Selector)_root).AddChild(sequenceNode);
         }
 
         private void Update()

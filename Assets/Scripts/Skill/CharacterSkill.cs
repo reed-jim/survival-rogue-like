@@ -26,7 +26,7 @@ public class CharacterSkill : MonoBehaviour
     {
         CollisionHandler.characterHitEvent += ApplyEffect;
         Bullet.characterHitEvent += ApplyEffect;
-        LevelingUI.addSkillEvent += OnSkillAdded;
+        SkillSelectionSlot.addSkillEvent += OnSkillAdded;
         DamageOverTimeSkill.addSkillEvent += AddDamageOverTimeSkill;
         ModifedSkillWithStatusEffect.addStatusEffectToSkillEvent += AddStatusEffectAbility;
         CharacterVision.attackEnemyEvent += OnEnemyFound;
@@ -43,7 +43,7 @@ public class CharacterSkill : MonoBehaviour
     {
         CollisionHandler.characterHitEvent -= ApplyEffect;
         Bullet.characterHitEvent -= ApplyEffect;
-        LevelingUI.addSkillEvent -= OnSkillAdded;
+        SkillSelectionSlot.addSkillEvent -= OnSkillAdded;
         DamageOverTimeSkill.addSkillEvent -= AddDamageOverTimeSkill;
         ModifedSkillWithStatusEffect.addStatusEffectToSkillEvent -= AddStatusEffectAbility;
         CharacterVision.attackEnemyEvent -= OnEnemyFound;

@@ -10,7 +10,7 @@ namespace Saferio.TreeBehaviour
         private int _instanceId;
 
         private bool _isBehaviourInProgress = false;
-        private bool _isSeekingTarget = true;
+        private bool _isTargetFound;
 
         public static event Action startSeekTargetEvent;
         public static event Action<int> startSeekTargetBahaviourEvent;
@@ -48,22 +48,22 @@ namespace Saferio.TreeBehaviour
                 _isBehaviourInProgress = true;
             }
 
-            return _isSeekingTarget;
+            return _isTargetFound;
         }
 
-        private void SetIsSeekingTarget(int instanceId)
-        {
-            if (instanceId == _instanceId)
-            {
-                _isSeekingTarget = false;
-            }
-        }
+        // private void SetIsSeekingTarget(int instanceId)
+        // {
+        //     if (instanceId == _instanceId)
+        //     {
+        //         _isSeekingTarget = false;
+        //     }
+        // }
 
         private void StopSeekingTarget(int instanceId)
         {
             if (instanceId == _instanceId)
             {
-                _isSeekingTarget = false;
+                _isTargetFound = true;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Saferio.TreeBehaviour
             {
                 startSeekTargetBahaviourEvent?.Invoke(_instanceId);
 
-                _isSeekingTarget = true;
+                _isTargetFound = false;
             }
         }
     }

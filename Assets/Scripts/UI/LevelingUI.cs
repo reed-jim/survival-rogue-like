@@ -9,16 +9,22 @@ public class LevelingUI : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private RectTransform canvas;
+    [SerializeField] private RectTransform container;
+    [SerializeField] private RectTransform skillSlotPrefab;
     [SerializeField] private RectTransform rerollButtonRT;
     [SerializeField] private Button showUpgradePanelButton;
     private RectTransform _showUpgradePanelButtonRT;
-    [SerializeField] private Button[] selectUpgradeButtons;
-    private RectTransform[] selectUpgradeRTs;
-    private TMP_Text[] skillNameTexts;
-    private TMP_Text[] selectUpgradeTexts;
-    private TMP_Text[] rarityTexts;
+    private SkillSelectionSlot[] _skillSelectionSlots;
+    // [SerializeField] private Button[] selectUpgradeButtons;
+    // private RectTransform[] selectUpgradeRTs;
+    // private TMP_Text[] skillNameTexts;
+    // private TMP_Text[] selectUpgradeTexts;
+    // private TMP_Text[] rarityTexts;
     [SerializeField] private Button rerollSkillButton;
     [SerializeField] private Image fadeBackground;
+
+    [Header("CUSTOMIZE")]
+    [SerializeField] private int numSkillSlot;
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private SkillContainer skillContainer;
@@ -36,19 +42,13 @@ public class LevelingUI : MonoBehaviour
     private void Awake()
     {
         StatManager.showUpgradePanelEvent += ShowUpgradePanel;
+        SkillSelectionSlot.closeSkillSelectionPopupEvent += HideSkillSelectionPopup;
 
         _canvasSize = canvas.sizeDelta;
 
-        _skillsToChoose = new ISkill[selectUpgradeButtons.Length];
+        _skillsToChoose = new ISkill[numSkillSlot];
 
         BuildUI();
-
-        for (int i = 0; i < selectUpgradeButtons.Length; i++)
-        {
-            int slot = i;
-
-            selectUpgradeButtons[i].onClick.AddListener(() => SelectUpgrade(slot));
-        }
 
         showUpgradePanelButton.onClick.AddListener(ShowUpgradePanel);
         rerollSkillButton.onClick.AddListener(Reroll);
@@ -64,45 +64,28 @@ public class LevelingUI : MonoBehaviour
     private void OnDestroy()
     {
         StatManager.showUpgradePanelEvent -= ShowUpgradePanel;
+        SkillSelectionSlot.closeSkillSelectionPopupEvent -= HideSkillSelectionPopup;
     }
     #endregion
 
     private void BuildUI()
     {
-        selectUpgradeRTs = new RectTransform[selectUpgradeButtons.Length];
-        skillNameTexts = new TMP_Text[selectUpgradeButtons.Length];
-        selectUpgradeTexts = new TMP_Text[selectUpgradeButtons.Length];
-        rarityTexts = new TMP_Text[selectUpgradeButtons.Length];
+        _skillSelectionSlots = new SkillSelectionSlot[numSkillSlot];
 
         _showUpgradePanelButtonRT = showUpgradePanelButton.GetComponent<RectTransform>();
 
-        for (int i = 0; i < selectUpgradeButtons.Length; i++)
+        for (int i = 0; i < numSkillSlot; i++)
         {
-            selectUpgradeRTs[i] = selectUpgradeButtons[i].GetComponent<RectTransform>();
-            skillNameTexts[i] = selectUpgradeButtons[i].transform.GetChild(1).GetComponent<TMP_Text>();
-            selectUpgradeTexts[i] = selectUpgradeButtons[i].transform.GetChild(2).GetComponent<TMP_Text>();
-            rarityTexts[i] = selectUpgradeButtons[i].transform.GetChild(3).GetComponent<TMP_Text>();
+            RectTransform skillSlot = Instantiate(skillSlotPrefab, container);
+
+            _skillSelectionSlots[i] = skillSlot.GetComponent<SkillSelectionSlot>();
 
             float distanceBetween = 0.02f * _canvasSize.x;
 
-            UIUtil.SetSize(selectUpgradeRTs[i], (_canvasSize.x - (selectUpgradeButtons.Length + 1) * distanceBetween) / selectUpgradeButtons.Length, 0.5f * _canvasSize.y);
+            UIUtil.SetSize(skillSlot, (_canvasSize.x - (numSkillSlot + 1) * distanceBetween) / numSkillSlot, 0.5f * _canvasSize.y);
+            UIUtil.SetLocalPositionX(skillSlot, (i - 1) * (skillSlot.sizeDelta.x + distanceBetween));
 
-            // selectUpgradeRTs[i].sizeDelta =
-            //     new Vector2((_canvasSize.x - (selectUpgradeButtons.Length + 1) * distanceBetween) / selectUpgradeButtons.Length, 0.5f * _canvasSize.y);
-            selectUpgradeRTs[i].localPosition = new Vector2((i - 1) * (selectUpgradeRTs[i].sizeDelta.x + distanceBetween), 0);
-
-            skillNameTexts[i].rectTransform.localPosition = new Vector2(0, 0.4f * selectUpgradeRTs[i].sizeDelta.y);
-            rarityTexts[i].rectTransform.localPosition = new Vector2(0, 0.25f * selectUpgradeRTs[i].sizeDelta.y);
-
-            UIUtil.SetSize(skillNameTexts[i].rectTransform, 0.9f * selectUpgradeRTs[i].sizeDelta.x, 0.2f * selectUpgradeRTs[i].sizeDelta.y);
-            UIUtil.SetSize(selectUpgradeTexts[i].rectTransform, skillNameTexts[i].rectTransform.sizeDelta);
-            UIUtil.SetSize(rarityTexts[i].rectTransform, skillNameTexts[i].rectTransform.sizeDelta);
-
-            skillNameTexts[i].fontSize = 0.04f * _canvasSize.x;
-            selectUpgradeTexts[i].fontSize = 0.03f * _canvasSize.x;
-            rarityTexts[i].fontSize = 0.03f * _canvasSize.x;
-
-            selectUpgradeRTs[i].gameObject.SetActive(false);
+            _skillSelectionSlots[i].GenerateUI();
         }
 
         UIUtil.SetSize(fadeBackground.rectTransform, _canvasSize);
@@ -114,45 +97,25 @@ public class LevelingUI : MonoBehaviour
         UIUtil.SetLocalPositionY(rerollButtonRT, -0.4f * _canvasSize.y);
 
         showUpgradePanelButton.gameObject.SetActive(false);
+        container.gameObject.SetActive(false);
     }
 
     private void SelectUpgrade(int slot)
     {
         addSkillEvent?.Invoke(_skillsToChoose[slot]);
 
-        HideUpgradeSlot();
+        HideSkillSelectionPopup();
     }
 
     private void ShowUpgrades()
     {
-        // SkillContainer avoidDuplicateSkillContainer = skillContainer;
-
-        // for (int i = 0; i < selectUpgradeTexts.Length; i++)
-        // {
-        //     _skillsToChoose[i] = RandomSkillMachine.GetRandomSkill(avoidDuplicateSkillContainer);
-
-        //     skillNameTexts[i].text = _skillsToChoose[i].GetName();
-        //     selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();
-        //     rarityTexts[i].text = ((RarityTier)_skillsToChoose[i].GetTier()).ToString();
-
-        //     avoidDuplicateSkillContainer.AllSkills.Remove((BaseSkill)_skillsToChoose[i]);
-        // }
-
         ISkill[] randomSkills = RandomSkillMachine.GetThreeRandomSkills(skillContainer);
 
         for (int i = 0; i < randomSkills.Length; i++)
         {
             _skillsToChoose[i] = randomSkills[i];
 
-            int rarityTier = _skillsToChoose[i].GetTier();
-
-            RarityTier rarity = (RarityTier)rarityTier;
-
-            string rarityString = $"<color={SurvivoriumTheme.RARITY_COLORs[rarityTier]}>{rarity}</color>";
-
-            skillNameTexts[i].text = _skillsToChoose[i].GetName();
-            rarityTexts[i].text = rarityString;
-            selectUpgradeTexts[i].text = _skillsToChoose[i].GetDescription();
+            _skillSelectionSlots[i].Setup(_skillsToChoose[i]);
         }
     }
 
@@ -168,10 +131,7 @@ public class LevelingUI : MonoBehaviour
 
     private void ShowUpgradePanel()
     {
-        for (int i = 0; i < selectUpgradeButtons.Length; i++)
-        {
-            selectUpgradeRTs[i].gameObject.SetActive(true);
-        }
+        container.gameObject.SetActive(true);
 
         ShowUpgrades();
 
@@ -186,24 +146,20 @@ public class LevelingUI : MonoBehaviour
         fadeBackground.gameObject.SetActive(true);
     }
 
-    private void HideUpgradeSlot()
+    private void HideSkillSelectionPopup()
     {
-        for (int i = 0; i < selectUpgradeButtons.Length; i++)
+        Vector3 startPosition = container.localPosition;
+
+        Tween.LocalPositionY(container, startPosition.y + _canvasSize.y, duration: 0.5f)
+        .OnComplete(() =>
         {
-            int index = i;
-            Vector3 startPosition = selectUpgradeRTs[i].localPosition;
+            container.localPosition = startPosition;
+            container.gameObject.SetActive(false);
 
-            Tween.LocalPositionY(selectUpgradeRTs[index], startPosition.y + _canvasSize.y, duration: 0.5f)
-            .OnComplete(() =>
-            {
-                selectUpgradeRTs[index].localPosition = startPosition;
-                selectUpgradeRTs[index].gameObject.SetActive(false);
+            enableInput?.Invoke(true);
+        });
 
-                enableInput?.Invoke(true);
-            });
-
-            Time.timeScale = 1;
-        }
+        Time.timeScale = 1;
 
         Tween.Color(fadeBackground, ColorUtil.WithAlpha(fadeBackground.color, 0), duration: 0.3f)
         .OnComplete(() => fadeBackground.gameObject.SetActive(false));
