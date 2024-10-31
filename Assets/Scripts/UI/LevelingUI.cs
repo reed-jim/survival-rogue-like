@@ -56,10 +56,10 @@ public class LevelingUI : MonoBehaviour
         fadeBackground.gameObject.SetActive(false);
     }
 
-    private void Start()
-    {
-        SaferioTween.Delay(1f, onCompletedAction: () => ShowUpgradePanel());
-    }
+    // private void Start()
+    // {
+    //     SaferioTween.Delay(1f, onCompletedAction: () => ShowUpgradePanel());
+    // }
 
     private void OnDestroy()
     {

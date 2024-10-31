@@ -56,7 +56,7 @@ public class PlayerAttack : MonoBehaviour
 
         LevelingUI.enableInput += EnableInput;
 
-        _actualAttackAnimationDuration = GetActualAttackAnimationDuration();
+        // _actualAttackAnimationDuration = GetActualAttackAnimationDuration();
 
         StartCoroutine(AutoMeleeAttack());
 

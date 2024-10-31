@@ -90,6 +90,8 @@ public class CharacterMovement : MonoBehaviour
     #region MOBILE
     private void Move(Vector2 inputDirection)
     {
+        return;
+
         WalkFoward();
 
         Vector3 moveDirection = new Vector3(-inputDirection.y, 0, inputDirection.x);

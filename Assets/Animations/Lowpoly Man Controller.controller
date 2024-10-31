@@ -221,7 +221,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 4eb040e384c0fba4b9b57ffe4907ced3,
+    m_Motion: {fileID: -203655887218126122, guid: 653b4c7ea710a7f44b5ef805dfe50af1,
       type: 3}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
@@ -230,30 +230,30 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 904d7c6e5deaa3042aebec7eac52ec0c,
+    m_Motion: {fileID: -203655887218126122, guid: 325c071ad8e753f40bf450ebaf9987a7,
       type: 3}
     m_Threshold: 0.5
-    m_Position: {x: 0, y: 0}
+    m_Position: {x: 0, y: 0.5}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 538594ba90a9a44448469ef62334e28f,
+    m_Motion: {fileID: -203655887218126122, guid: caab4699da5e79f40b98a9e9705b0316,
       type: 3}
     m_Threshold: 1
-    m_Position: {x: 0, y: 0}
-    m_TimeScale: 0.6
+    m_Position: {x: 0, y: 1}
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Speed
     m_Mirror: 0
-  m_BlendParameter: Speed
-  m_BlendParameterY: Blend
+  m_BlendParameter: SpeedX
+  m_BlendParameterY: SpeedY
   m_MinThreshold: 0
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
-  m_BlendType: 0
+  m_BlendType: 1
 --- !u!1101 &-1560535202695632981
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -266,7 +266,7 @@ AnimatorStateTransition:
     m_ConditionEvent: State
     m_EventTreshold: 1
   - m_ConditionMode: 4
-    m_ConditionEvent: Speed
+    m_ConditionEvent: SpeedX
     m_EventTreshold: 0.001
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -424114866565918189}
@@ -326,14 +326,20 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Speed
+  - m_Name: AttackAnimation
+    m_Type: 3
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: SpeedX
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: AttackAnimation
-    m_Type: 3
+  - m_Name: SpeedY
+    m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -455,7 +461,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: Speed
+    m_ConditionEvent: SpeedX
     m_EventTreshold: 0.001
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7301899480649523818}
