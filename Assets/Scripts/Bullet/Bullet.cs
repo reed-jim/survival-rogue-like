@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId, ICol
     [Header("CUSTOMIZE")]
     [SerializeField] protected float forceMultiplier;
     [SerializeField] private float maxExistingTime;
+    [SerializeField] private bool isTest;
 
     #region PRIVATE FIELD
     [SerializeField] protected TrailRenderer bulletTrail;

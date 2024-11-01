@@ -22,7 +22,7 @@ public class CharacterVision : BaseCharacterVision, ICharacterVision
 
         _tweens = new List<Tween>();
     }
-
+    
     private void Update()
     {
         FindEnemy();
@@ -54,6 +54,16 @@ public class CharacterVision : BaseCharacterVision, ICharacterVision
 
             _lastNearestTarget = colliders[0].transform;
         }
+    }
+
+    private Transform GetTarget(int instanceId)
+    {
+        if (instanceId == gameObject.GetInstanceID() && _lastNearestTarget != null)
+        {
+            return _lastNearestTarget;
+        }
+
+        return null;
     }
 
     private Vector3 GetTargetPosition(int instanceId)

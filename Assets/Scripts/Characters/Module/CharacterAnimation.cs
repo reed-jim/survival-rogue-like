@@ -49,7 +49,7 @@ public class CharacterAnimation : MonoBehaviour
 
     private void SetFloatPropertyAnimation(int instanceId, string name, float value)
     {
-        if (gameObject.GetInstanceID() == instanceId)
+        if (instanceId == gameObject.GetInstanceID())
         {
             _animator.SetFloat(name, value);
         }
