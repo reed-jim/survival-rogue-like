@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ReedJim.RPG.Stat;
 using Saferio.Util.SaferioTween;
 using UnityEngine;
 using static CustomDelegate;
@@ -16,7 +17,7 @@ public class ProjectileActiveSkill : BaseActiveSkill, IActiveSkill
     #endregion
 
     #region ACTION
-    public static event Action<ActiveSkillIdentifer> activateActiveSkillEvent;
+    public static event Action<ActiveSkillIdentifer, CharacterStat> activateActiveSkillEvent;
     public static event Action<ActiveSkillIdentifer> castActiveSkillEvent;
     #endregion
 
@@ -44,7 +45,7 @@ public class ProjectileActiveSkill : BaseActiveSkill, IActiveSkill
     public override void AddSkill()
     {
         InvokeAddActiveSkillEvent(_casterInstanceId);
-        activateActiveSkillEvent?.Invoke(activeSkillIdentifer);
+        activateActiveSkillEvent?.Invoke(activeSkillIdentifer, Stat);
 
         IsCountdown = false;
 

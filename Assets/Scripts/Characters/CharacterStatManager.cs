@@ -54,6 +54,7 @@ public class CharacterStatManager : MonoBehaviour
         Bullet.applyDamageEvent += TakeDamage;
         EnergyExplosion.applyDamageEvent += TakeDamage;
         RotateBlade.applyDamageEvent += TakeDamage;
+        ChainLightningComponent.applyDamageEvent += TakeDamage;
         CharacterStatusEffectObserver.applyDamageEvent += TakeDamage;
         EnemySpawnManager.spawnEnemyEvent += OnEnemySpawnEvent;
     }
@@ -66,6 +67,7 @@ public class CharacterStatManager : MonoBehaviour
         Bullet.applyDamageEvent -= TakeDamage;
         EnergyExplosion.applyDamageEvent -= TakeDamage;
         RotateBlade.applyDamageEvent -= TakeDamage;
+        ChainLightningComponent.applyDamageEvent -= TakeDamage;
         CharacterStatusEffectObserver.applyDamageEvent -= TakeDamage;
         EnemySpawnManager.spawnEnemyEvent -= OnEnemySpawnEvent;
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using ReedJim.RPG.Stat;
 using UnityEngine;
 
 public enum ActiveSkillIdentifer
@@ -19,6 +20,7 @@ public class ProjectiveActiveSkillBehaviour : MonoBehaviour
 
     #region PRIVATE FIELD
     private bool _isActivated;
+    private CharacterStat _stat;
     #endregion
 
     private void Awake()
@@ -37,11 +39,12 @@ public class ProjectiveActiveSkillBehaviour : MonoBehaviour
         CharacterVision.setTargetEvent -= SetTarget;
     }
 
-    private void ActivateSkill(ActiveSkillIdentifer activeSkillIdentifer)
+    private void ActivateSkill(ActiveSkillIdentifer activeSkillIdentifer, CharacterStat stat)
     {
         if (activeSkillIdentifer == this.activeSkillIdentifer)
         {
-            ;
+            _stat = stat;
+
             _isActivated = true;
         }
     }
@@ -57,7 +60,7 @@ public class ProjectiveActiveSkillBehaviour : MonoBehaviour
         {
             return;
         }
-        
+
         if (!_isActivated)
         {
             return;
