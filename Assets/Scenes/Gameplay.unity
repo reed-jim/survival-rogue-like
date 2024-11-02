@@ -2338,7 +2338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeSkillIdentifer: 2
   caster: {fileID: 5131665861406774102}
-  radiusCheck: 15
+  radiusCheck: 20
   layerMaskCheck:
     serializedVersion: 2
     m_Bits: 128

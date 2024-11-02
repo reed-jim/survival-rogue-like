@@ -31,8 +31,11 @@ public class ChainLighning : MonoBehaviour
     {
         ProjectileActiveSkill.activateActiveSkillEvent += ActivateSkill;
         ProjectileActiveSkill.castActiveSkillEvent += Cast;
+        ChainLightningComponent.targetReachedEvent += OnTargetReached;
 
         _checkedInstaceIds = new List<int>();
+
+        _casterInstanceId = caster.GetInstanceID();
 
         // gameObject.SetActive(false);
     }
@@ -41,6 +44,7 @@ public class ChainLighning : MonoBehaviour
     {
         ProjectileActiveSkill.activateActiveSkillEvent -= ActivateSkill;
         ProjectileActiveSkill.castActiveSkillEvent -= Cast;
+        ChainLightningComponent.targetReachedEvent -= OnTargetReached;
     }
 
     private void ActivateSkill(ActiveSkillIdentifer activeSkillIdentifer, CharacterStat stat)
@@ -48,7 +52,7 @@ public class ChainLighning : MonoBehaviour
         if (activeSkillIdentifer == this.activeSkillIdentifer)
         {
             _stat = stat;
-            
+
             _isActivated = true;
         }
     }
@@ -70,13 +74,19 @@ public class ChainLighning : MonoBehaviour
             return;
         }
 
-        _chainLightningComponent = ObjectPoolingEverything.GetFromPool("Chain Lightning").GetComponent<ChainLightningComponent>();
+        if (_chainLightningComponent == null)
+        {
+            _chainLightningComponent = ObjectPoolingEverything.GetFromPool("Chain Lightning").GetComponent<ChainLightningComponent>();
 
-        _chainLightningComponent.SetStat(_stat);
+            _chainLightningComponent.Setup(gameObject.GetInstanceID(), _stat);
+        }
 
-        _chainLightningComponent.SetActive(true);
+        if (!_chainLightningComponent.gameObject.activeSelf)
+        {
+            _chainLightningComponent.SetActive(true);
 
-        transform.position = caster.transform.position;
+            transform.position = caster.transform.position;
+        }
 
         _isChaining = true;
 
@@ -95,8 +105,6 @@ public class ChainLighning : MonoBehaviour
 
             if (!_checkedInstaceIds.Contains(instanceId))
             {
-                // MoveToNextTarget(collider.transform);
-
                 _chainLightningComponent.ChainTo(collider.transform.position);
 
                 _checkedInstaceIds.Add(instanceId);
@@ -106,6 +114,29 @@ public class ChainLighning : MonoBehaviour
         }
 
         if (colliders.Length == 0)
+        {
+            _chainLightningComponent.SetActive(false);
+
+            _numTargetHit = 0;
+
+            _isChaining = false;
+        }
+    }
+
+    private void OnTargetReached(int casterInstanceId)
+    {
+        if (casterInstanceId == _casterInstanceId)
+        {
+            return;
+        }
+        Debug.Log(_numTargetHit);
+        if (_numTargetHit < 3)
+        {
+            _numTargetHit++;
+
+            FindEnemy();
+        }
+        else
         {
             _chainLightningComponent.SetActive(false);
 

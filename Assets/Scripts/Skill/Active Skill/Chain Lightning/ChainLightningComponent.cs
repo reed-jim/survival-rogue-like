@@ -11,12 +11,14 @@ public class ChainLightningComponent : MonoBehaviour, ICollide
     [SerializeField] private float speedMultiplier;
 
     #region STAT
+    private int _casterInstanceId;
     private CharacterStat _stat;
     #endregion
 
     #region ACTION
     public static event Action<int, CharacterStat> applyDamageEvent;
     public static event Action<int> characterHitEvent;
+    public static event Action<int> targetReachedEvent;
     #endregion
 
     private void Awake()
@@ -24,8 +26,9 @@ public class ChainLightningComponent : MonoBehaviour, ICollide
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void SetStat(CharacterStat stat)
+    public void Setup(int casterInstanceId, CharacterStat stat)
     {
+        _casterInstanceId = casterInstanceId;
         _stat = stat;
     }
 
@@ -38,11 +41,13 @@ public class ChainLightningComponent : MonoBehaviour, ICollide
 
     public void HandleOnCollide(GameObject other)
     {
+        _rigidbody.velocity = Vector3.zero;
+
         applyDamageEvent?.Invoke(other.GetInstanceID(), _stat);
 
         characterHitEvent?.Invoke(other.GetInstanceID());
 
-        _rigidbody.velocity = Vector3.zero;
+        targetReachedEvent?.Invoke(_casterInstanceId);
     }
 
     public void SetActive(bool isActive)
