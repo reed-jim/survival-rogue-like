@@ -5,7 +5,8 @@ using UnityEngine;
 public enum ActiveSkillIdentifer
 {
     RedEnergyExplosion,
-    EnergySlashProjectile
+    EnergySlashProjectile,
+    ChainLighning
 }
 
 public class ProjectiveActiveSkillBehaviour : MonoBehaviour
