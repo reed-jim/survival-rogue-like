@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Saferio.Util.SaferioTween;
 using UnityEngine;
 using static CustomDelegate;
 
@@ -16,9 +17,18 @@ public class ProjectileActiveSkill : BaseActiveSkill, IActiveSkill
 
     #region ACTION
     public static event Action<ActiveSkillIdentifer> activateActiveSkillEvent;
+    public static event Action<ActiveSkillIdentifer> castActiveSkillEvent;
     #endregion
 
     #region IActiveSkill Implement
+    public override void Cast()
+    {
+        castActiveSkillEvent?.Invoke(activeSkillIdentifer);
+
+        IsCountdown = true;
+
+        SaferioTween.Delay(2f, onCompletedAction:() => IsCountdown = false);
+    }
 
     public override bool IsUnlocked()
     {
@@ -33,7 +43,7 @@ public class ProjectileActiveSkill : BaseActiveSkill, IActiveSkill
 
     public override void AddSkill()
     {
-        // InvokeAddActiveSkillEvent(_casterInstanceId);
+        InvokeAddActiveSkillEvent(_casterInstanceId);
         activateActiveSkillEvent?.Invoke(activeSkillIdentifer);
 
         IsCountdown = false;

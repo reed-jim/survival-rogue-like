@@ -52,7 +52,7 @@ public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId, ICol
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
 
         // if (collision.gameObject.tag != Constants.PLAYER_TAG)
         // {
@@ -74,6 +74,8 @@ public class Bullet : MonoBehaviour, IProjectile, IContainParentInstanceId, ICol
         Vector3 direction = (target.position - shotPosition).normalized;
 
         direction.y = 0;
+
+        transform.rotation = Quaternion.LookRotation(direction);
 
         _rigidBody.AddForce(forceMultiplier * direction, ForceMode.Impulse);
 

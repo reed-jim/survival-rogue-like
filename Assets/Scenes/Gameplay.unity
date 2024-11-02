@@ -7494,6 +7494,9 @@ MonoBehaviour:
   - prefab: {fileID: 9186255450445041793, guid: 46f034a5c5cc2874a8f0102e474964da,
       type: 3}
     identifier: Rotate Blade Skill
+  - prefab: {fileID: 6214406989297618250, guid: e35ef93152b072241a71c4c854d6ad26,
+      type: 3}
+    identifier: Thunder Slash Projectile
 --- !u!4 &1948032649
 Transform:
   m_ObjectHideFlags: 0
@@ -8688,6 +8691,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 593489138973819483, guid: c1b1051f955e0754ca0e4e122f5682b3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5835626946922000538, guid: c1b1051f955e0754ca0e4e122f5682b3,
         type: 3}
       propertyPath: sceneViewId

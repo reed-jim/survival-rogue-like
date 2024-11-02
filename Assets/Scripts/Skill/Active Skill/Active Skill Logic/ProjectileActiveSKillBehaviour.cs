@@ -23,6 +23,8 @@ public class ProjectiveActiveSkillBehaviour : MonoBehaviour
     private void Awake()
     {
         ProjectileActiveSkill.activateActiveSkillEvent += ActivateSkill;
+        ProjectileActiveSkill.castActiveSkillEvent += Cast;
+        CharacterVision.setTargetEvent += SetTarget;
 
         _casterInstanceId = caster.GetInstanceID();
     }
@@ -30,19 +32,31 @@ public class ProjectiveActiveSkillBehaviour : MonoBehaviour
     private void OnDestroy()
     {
         ProjectileActiveSkill.activateActiveSkillEvent -= ActivateSkill;
+        ProjectileActiveSkill.castActiveSkillEvent -= Cast;
+        CharacterVision.setTargetEvent -= SetTarget;
     }
 
     private void ActivateSkill(ActiveSkillIdentifer activeSkillIdentifer)
     {
         if (activeSkillIdentifer == this.activeSkillIdentifer)
         {
-            Debug.Log(activeSkillIdentifer);
+            ;
             _isActivated = true;
         }
     }
 
-    private void Cast()
+    private void Cast(ActiveSkillIdentifer activeSkillIdentifer)
     {
+        if (_target == null)
+        {
+            return;
+        }
+
+        if (activeSkillIdentifer != this.activeSkillIdentifer)
+        {
+            return;
+        }
+        
         if (!_isActivated)
         {
             return;
@@ -54,6 +68,14 @@ public class ProjectiveActiveSkillBehaviour : MonoBehaviour
 
         projectile.gameObject.SetActive(true);
 
-        projectile.Shoot(_target, caster.transform.position, _casterInstanceId);
+        projectile.Shoot(_target, caster.transform.position + 2 * caster.transform.forward, _casterInstanceId);
+    }
+
+    private void SetTarget(int instanceId, Transform target)
+    {
+        if (instanceId == caster.GetInstanceID())
+        {
+            _target = target;
+        }
     }
 }

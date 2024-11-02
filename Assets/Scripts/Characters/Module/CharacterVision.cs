@@ -16,13 +16,17 @@ public class CharacterVision : BaseCharacterVision, ICharacterVision
     private Transform _lastNearestTarget;
     #endregion  
 
+    #region ACTION
+    public static event Action<int, Transform> setTargetEvent;
+    #endregion
+
     private void Awake()
     {
         ExplosionActiveSkill.getEnemyPositionEvent += GetTargetPosition;
 
         _tweens = new List<Tween>();
     }
-    
+
     private void Update()
     {
         FindEnemy();
@@ -53,6 +57,8 @@ public class CharacterVision : BaseCharacterVision, ICharacterVision
             );
 
             _lastNearestTarget = colliders[0].transform;
+
+            setTargetEvent?.Invoke(gameObject.GetInstanceID(), _lastNearestTarget);
         }
     }
 
