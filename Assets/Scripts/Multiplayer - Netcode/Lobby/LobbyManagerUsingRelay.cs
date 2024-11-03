@@ -29,9 +29,11 @@ public class LobbyManagerUsingRelay : MonoBehaviour
     private void Awake()
     {
         LobbyDetailScreen.startGameForLobbyEvent += StartGameForLobby;
+        LobbyNetworkManager.startGameEvent += StartClientWithRelay;
 
         networkManager.OnClientConnectedCallback += HandleOnClientConnected;
         networkManager.OnServerStarted += OnHostStarted;
+        networkManager.OnClientStarted += OnClientStarted;
 
         lobbyIdWithJoinCodeDictionary = new Dictionary<string, string>();
     }
@@ -39,9 +41,11 @@ public class LobbyManagerUsingRelay : MonoBehaviour
     private void OnDestroy()
     {
         LobbyDetailScreen.startGameForLobbyEvent -= StartGameForLobby;
+        LobbyNetworkManager.startGameEvent -= StartClientWithRelay;
 
         networkManager.OnClientConnectedCallback -= HandleOnClientConnected;
         networkManager.OnServerStarted -= OnHostStarted;
+        networkManager.OnClientStarted -= OnClientStarted;
     }
 
     private void StartGameForLobby(string lobbyId)
@@ -71,7 +75,7 @@ public class LobbyManagerUsingRelay : MonoBehaviour
         networkManager.StartHost();
     }
 
-    public async Task<bool> StartClientWithRelay(string joinCode)
+    public async void StartClientWithRelay(string joinCode)
     {
         await UnityServices.InitializeAsync();
 
@@ -82,9 +86,11 @@ public class LobbyManagerUsingRelay : MonoBehaviour
 
         var joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode: joinCode);
 
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
+        networkManager.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
 
-        return !string.IsNullOrEmpty(joinCode) && NetworkManager.Singleton.StartClient();
+        networkManager.StartClient();
+
+        // return !string.IsNullOrEmpty(joinCode) && NetworkManager.Singleton.StartClient();
     }
 
     private void HandleOnClientConnected(ulong clientId)
@@ -93,6 +99,11 @@ public class LobbyManagerUsingRelay : MonoBehaviour
     }
 
     private void OnHostStarted()
+    {
+        toGameplayEvent?.Invoke();
+    }
+
+    private void OnClientStarted()
     {
         toGameplayEvent?.Invoke();
     }

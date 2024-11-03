@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,14 +18,13 @@ public class LobbyRoomUI : MonoBehaviour, ISaferioPageViewSlot
     private string _joinCode;
 
     #region ACTION
-    public static event Action<string> joinLobbyEvent;
+    public static event Action<string, string> joinLobbyEvent;
     #endregion
 
     private void Awake()
     {
         // LobbyScreen.updateLobbyRoomEvent += OnRoomCreated;
         LobbyNetworkManager.updateLobbyRoomItemEvent += OnLobbyCreated;
-        LobbyManagerUsingRelay.setJoinCodeEvent += SetJoinCode;
 
         joinButton.onClick.AddListener(JoinLobby);
     }
@@ -33,7 +33,6 @@ public class LobbyRoomUI : MonoBehaviour, ISaferioPageViewSlot
     {
         // LobbyScreen.updateLobbyRoomEvent -= OnRoomCreated;
         LobbyNetworkManager.updateLobbyRoomItemEvent -= OnLobbyCreated;
-        LobbyManagerUsingRelay.setJoinCodeEvent -= SetJoinCode;
     }
 
     public void Setup(int slotIndex)
@@ -55,18 +54,8 @@ public class LobbyRoomUI : MonoBehaviour, ISaferioPageViewSlot
         }
     }
 
-    private void SetJoinCode(string lobbyId, string joinCode)
-    {
-        if (lobbyId == _lobbyId)
-        {
-            _joinCode = joinCode;
-
-            joinCodeText.text = $"{joinCode}";
-        }
-    }
-
     private void JoinLobby()
     {
-        joinLobbyEvent?.Invoke(_lobbyId);
+        joinLobbyEvent?.Invoke(_lobbyId, _joinCode);
     }
 }

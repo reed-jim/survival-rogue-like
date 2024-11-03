@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LobbyDetailScreen : UIScreen
 {
+    [SerializeField] private RectTransform startGameButtonRT;
+
     [SerializeField] private TMP_Text lobbyIdText;
     [SerializeField] private TMP_Text joinCodeText;
     [SerializeField] private Button startGameButton;
@@ -34,6 +37,12 @@ public class LobbyDetailScreen : UIScreen
 
         LobbyNetworkManager.setLobbyId -= SetLobbyId;
         LobbyManagerUsingRelay.setJoinCodeEvent -= SetJoinCode;
+    }
+
+    protected override void GenerateUI()
+    {
+        UIUtil.SetSizeKeepRatioX(startGameButtonRT, 0.1f * _canvasSize.y);
+        UIUtil.SetLocalPositionY(startGameButtonRT, -0.3f * _canvasSize.y);
     }
 
     private void SetLobbyId(string lobbyId)

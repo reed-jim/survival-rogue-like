@@ -8,8 +8,13 @@ public class LobbyScreen : UIScreen
 {
     [SerializeField] private LobbyNetworkManager lobbyNetworkManager;
 
+    [SerializeField] private RectTransform createRoomButtonRT;
+    [SerializeField] private RectTransform joinRoomButtonRT;
+    [SerializeField] private RectTransform refreshLobbyButtonRT;
+
     [SerializeField] private Button createRoomButton;
     [SerializeField] private Button joinRoomButton;
+    [SerializeField] private Button refreshLobbyButton;
 
     #region PRIVATE FIELD
     private int _currentRoomIndex;
@@ -17,6 +22,7 @@ public class LobbyScreen : UIScreen
 
     #region ACTION
     public static event Action<int, string> updateLobbyRoomEvent;
+    public static event Action refreshLobbyListEvent;
     #endregion
 
     public override void RegisterEvent()
@@ -25,11 +31,23 @@ public class LobbyScreen : UIScreen
 
         createRoomButton.onClick.AddListener(CreateRoom);
         joinRoomButton.onClick.AddListener(JoinRoom);
+        refreshLobbyButton.onClick.AddListener(RefreshLobbyList);
     }
 
     public override void UnregisterEvent()
     {
 
+    }
+
+    protected override void GenerateUI()
+    {
+        UIUtil.SetSizeKeepRatioX(createRoomButtonRT, 0.05f * _canvasSize.y);
+        UIUtil.SetSize(joinRoomButtonRT, createRoomButtonRT.sizeDelta);
+        UIUtil.SetSizeKeepRatioX(refreshLobbyButtonRT, createRoomButtonRT.sizeDelta.y);
+
+        UIUtil.SetLocalPosition(joinRoomButtonRT, 0.3f * _canvasSize.x, 0.3f * _canvasSize.y);
+        UIUtil.SetLocalPositionOfRectToAnotherRectHorizontally(createRoomButtonRT, joinRoomButtonRT, -0.55f, -0.55f);
+        UIUtil.SetLocalPositionOfRectToAnotherRectHorizontally(refreshLobbyButtonRT, createRoomButtonRT, -0.55f, -0.55f);
     }
 
     private void CreateRoom()
@@ -48,4 +66,9 @@ public class LobbyScreen : UIScreen
 
     //     _currentRoomIndex++;
     // }
+
+    private void RefreshLobbyList()
+    {
+        refreshLobbyListEvent?.Invoke();
+    }
 }

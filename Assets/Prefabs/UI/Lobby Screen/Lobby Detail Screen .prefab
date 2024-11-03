@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -446,7 +446,7 @@ MonoBehaviour:
   container: {fileID: 6195912319994270608}
   isDisableScreenFromStart: 1
   routeName: LobbyDetail
-  lobbyManagerUsingRelay: {fileID: 0}
+  startGameButtonRT: {fileID: 4928799701632560592}
   lobbyIdText: {fileID: 6269786048559087346}
   joinCodeText: {fileID: 999605325079256788}
   startGameButton: {fileID: 5643730237371831106}
@@ -543,8 +543,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
