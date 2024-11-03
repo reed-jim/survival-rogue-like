@@ -982,6 +982,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061782523}
   m_CullTransparentMesh: 1
+--- !u!1 &1083611872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1083611874}
+  - component: {fileID: 1083611873}
+  m_Layer: 0
+  m_Name: Network Manager With Replay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1083611873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083611872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a8fe84c6e73cf4cbbd80598b5bfe03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkManager: {fileID: 1402436937}
+--- !u!4 &1083611874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083611872}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1216974223
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,7 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6960e84d07fb87f47956e7a81d71c4e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ProtocolType: 0
+  m_ProtocolType: 1
   m_MaxPacketQueueSize: 128
   m_MaxPayloadSize: 6144
   m_HeartbeatTimeoutMS: 500
@@ -1434,7 +1479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ec73f055ff03c48a8713e364d62753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkManager: {fileID: 1402436937}
 --- !u!4 &2082951890
 Transform:
   m_ObjectHideFlags: 0
@@ -1835,6 +1879,11 @@ PrefabInstance:
       propertyPath: lobbyNetworkManager
       value: 
       objectReference: {fileID: 2082951889}
+    - target: {fileID: 8201062015530144968, guid: 714f2bf8651fc424998008a4ff5f9e1a,
+        type: 3}
+      propertyPath: lobbyManagerUsingRelay
+      value: 
+      objectReference: {fileID: 1083611873}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2438,3 +2487,4 @@ SceneRoots:
   - {fileID: 41424668}
   - {fileID: 2082951890}
   - {fileID: 1402436938}
+  - {fileID: 1083611874}

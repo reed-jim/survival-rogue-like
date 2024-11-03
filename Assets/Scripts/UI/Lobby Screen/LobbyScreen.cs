@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class LobbyScreen : UIScreen
 {
-    [SerializeField] private LobbyNetworkManager lobbyNetworkManager;
+    [SerializeField] private LobbyManagerUsingRelay lobbyManagerUsingRelay;
 
     [SerializeField] private Button createRoomButton;
     [SerializeField] private Button joinRoomButton;
@@ -20,7 +20,7 @@ public class LobbyScreen : UIScreen
 
     private void CreateRoom()
     {
-        lobbyNetworkManager.CreatePublicLobbyAsync();
+        lobbyManagerUsingRelay.StartHostWithRelay();
     }
 
     private void JoinRoom()
