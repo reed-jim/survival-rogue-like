@@ -17,6 +17,10 @@ public class LobbyManagerUsingRelay : MonoBehaviour
 {
     [SerializeField] private NetworkManager networkManager;
 
+    #region ACTION
+    public static event Action<string> hostStartedEvent;
+    #endregion
+
     private void Awake()
     {
         networkManager.OnClientConnectedCallback += HandleOnClientConnected;
@@ -27,7 +31,7 @@ public class LobbyManagerUsingRelay : MonoBehaviour
         networkManager.OnClientConnectedCallback -= HandleOnClientConnected;
     }
 
-    public async Task<string> StartHostWithRelay(int maxConnections = 5)
+    public async void StartHostWithRelay(int maxConnections = 5)
     {
         await UnityServices.InitializeAsync();
 
@@ -40,11 +44,14 @@ public class LobbyManagerUsingRelay : MonoBehaviour
 
         networkManager.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
 
-        var joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+        string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
-        DebugUtil.DistinctLog(joinCode);
+        bool isHostStarted = networkManager.StartHost();
 
-        return networkManager.StartHost() ? joinCode : null;
+        if (isHostStarted)
+        {
+            hostStartedEvent?.Invoke(joinCode);
+        }
     }
 
     public async Task<bool> StartClientWithRelay(string joinCode)
@@ -59,7 +66,7 @@ public class LobbyManagerUsingRelay : MonoBehaviour
         var joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode: joinCode);
 
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
-        
+
         return !string.IsNullOrEmpty(joinCode) && NetworkManager.Singleton.StartClient();
     }
 

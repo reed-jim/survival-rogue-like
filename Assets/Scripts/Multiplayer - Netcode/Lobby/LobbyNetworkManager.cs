@@ -37,19 +37,6 @@ public class LobbyNetworkManager : MonoBehaviour
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
-    public async Task<string> StartHostWithRelay(int maxConnections = 5)
-    {
-        await UnityServices.InitializeAsync();
-        if (!AuthenticationService.Instance.IsSignedIn)
-        {
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        }
-        Allocation allocation = await RelayService.Instance.CreateAllocationAsync(maxConnections);
-        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
-        var joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-        return NetworkManager.Singleton.StartHost() ? joinCode : null;
-    }
-
     public async void CreatePublicLobbyAsync()
     {
         if (UnityServices.State != ServicesInitializationState.Initialized || !AuthenticationService.Instance.IsAuthorized)
@@ -111,11 +98,29 @@ public class LobbyNetworkManager : MonoBehaviour
         }
     }
 
+    private async Task JoinLobbyByIdAsync(string lobbyId)
+    {
+        try
+        {
+            Lobby joinedLobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyId);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
 
-
-
-
-
+    private async Task JoinLobbyByCodeAysnc(string lobbyCode)
+    {
+        try
+        {
+            Lobby joinedLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode);
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
 
     // [SerializeField] private NetworkManager networkManager;
 
