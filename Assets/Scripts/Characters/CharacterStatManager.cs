@@ -81,12 +81,16 @@ public class CharacterStatManager : MonoBehaviour
         //     Damage = 10
         // };
 
-        Tween.Delay(0.5f).OnComplete(() =>
-        {
-            _stat = CharacterStat.Load(gameObject.name, baseStat.GetBaseCharacterStat());
+        _stat = CharacterStat.Load(gameObject.name, baseStat.GetBaseCharacterStat());
 
-            addCharacterStatToListEvent?.Invoke(gameObject.GetInstanceID(), Stat);
-        });
+        addCharacterStatToListEvent?.Invoke(gameObject.GetInstanceID(), Stat);
+
+        // Tween.Delay(0.5f).OnComplete(() =>
+        // {
+        //     _stat = CharacterStat.Load(gameObject.name, baseStat.GetBaseCharacterStat());
+
+        //     addCharacterStatToListEvent?.Invoke(gameObject.GetInstanceID(), Stat);
+        // });
     }
 
     private void TakeDamage(int instanceId, CharacterStat attackerStat)

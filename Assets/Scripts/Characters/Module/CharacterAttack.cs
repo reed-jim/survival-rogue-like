@@ -85,6 +85,14 @@ public class CharacterAttack : MonoBehaviour
             weaponTrailFx.Stop();
         });
 
+        Debug.Log(_characterStatManager);
+        Debug.Log(_characterStatManager.Stat);
+
+        if (_characterStatManager.Stat == null)
+        {
+            return;
+        }
+
         _tweens.Add(Tween.Delay(_characterStatManager.Stat.GetStatValue(StatComponentNameConstant.AttackSpeed)).OnComplete(() =>
         {
             setCharacterState?.Invoke(gameObject.GetInstanceID(), CharacterState.IDLE);

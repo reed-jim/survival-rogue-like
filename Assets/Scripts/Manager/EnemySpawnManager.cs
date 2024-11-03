@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
 public class EnemySpawnManager : MonoBehaviour
@@ -25,16 +26,27 @@ public class EnemySpawnManager : MonoBehaviour
 
     private void Awake()
     {
-        enemies = new GameObject[maxEnemy];
-
-        for (int i = 0; i < enemies.Length; i++)
+        if (NetworkManager.Singleton.IsServer)
         {
-            enemies[i] = Instantiate(GetRandomEnemyPrefab(), enemyContainer);
-            enemies[i].name = $"Enemy {i}";
-            enemies[i].SetActive(false);
-        }
+            enemies = new GameObject[maxEnemy];
 
-        StartCoroutine(Spawn());
+            // foreach (var enemyPrefab in enemyPrefabs)
+            // {
+            //     NetworkManager.Singleton.AddNetworkPrefab(enemyPrefab);
+            // }
+
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                enemies[i] = Instantiate(GetRandomEnemyPrefab(), enemyContainer);
+
+                enemies[i].GetComponent<NetworkObject>().Spawn();
+
+                enemies[i].name = $"Enemy {i}";
+                enemies[i].SetActive(false);
+            }
+
+            StartCoroutine(Spawn());
+        }
     }
 
     private IEnumerator Spawn()
@@ -98,15 +110,17 @@ public class EnemySpawnManager : MonoBehaviour
 
     private GameObject GetRandomEnemyPrefab()
     {
-        int randomNumber = UnityEngine.Random.Range(0, 10);
+        int randomIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);
 
-        if (randomNumber < 5)
-        {
-            return enemyPrefabs[1];
-        }
-        else
-        {
-            return enemyPrefabs[0];
-        }
+        return enemyPrefabs[randomIndex];
+
+        // if (randomNumber < 5)
+        // {
+        //     return enemyPrefabs[1];
+        // }
+        // else
+        // {
+        //     return enemyPrefabs[0];
+        // }
     }
 }

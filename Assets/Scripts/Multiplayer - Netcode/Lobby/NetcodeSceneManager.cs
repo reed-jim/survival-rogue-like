@@ -34,6 +34,7 @@ public class NetcodeSceneManager : MonoBehaviour
 
     public void LoadGameplayScene()
     {
+        Debug.Log("load " + networkManager.IsServer);
         if (networkManager.IsServer)
         {
             var status = networkManager.SceneManager.LoadScene(Constants.GAMEPLAY_SCENE, LoadSceneMode.Single);

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using ReedJim.RPG.Stat;
 using Saferio.Util.SaferioTween;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.VFX;
 using static CustomDelegate;
@@ -92,9 +93,17 @@ public class CollisionHandler : MonoBehaviour
 
             if (collidable != null)
             {
-                collidable.HandleOnCollide(gameObject);
+                // collidable.HandleOnCollide(gameObject);
+
+                HandleOnCollideWrapperRpc(collidable, gameObject);
             }
         }
+    }
+
+    [ClientRpc]
+    private void HandleOnCollideWrapperRpc(ICollide icollide, GameObject other)
+    {
+        icollide.HandleOnCollide(other);
     }
 
     private void OnCollisionEnter(Collision other)

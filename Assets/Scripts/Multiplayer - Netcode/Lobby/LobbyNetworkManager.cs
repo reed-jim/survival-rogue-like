@@ -134,8 +134,6 @@ public class LobbyNetworkManager : MonoBehaviour
 
             QueryResponse lobbies = await LobbyService.Instance.QueryLobbiesAsync(options);
 
-            Debug.Log(lobbies.Results.Count);
-
             for (int i = 0; i < lobbies.Results.Count; i++)
             {
                 updateLobbyRoomItemEvent?.Invoke(i, lobbies.Results[i].Id);
@@ -153,17 +151,9 @@ public class LobbyNetworkManager : MonoBehaviour
         {
             Lobby joinedLobby = await LobbyService.Instance.JoinLobbyByIdAsync(lobbyId);
 
-            Debug.Log(joinedLobby);
-            Debug.Log(joinedLobby.Players.Count);
-
             if (joinedLobby.Data != null)
             {
                 joinCode = joinedLobby.Data["join_code"].Value;
-                Debug.Log(joinedLobby.Data["join_code"]);
-                foreach (var item in joinedLobby.Data.Values)
-                {
-                    Debug.Log(item.Value);
-                }
 
                 startGameEvent?.Invoke(joinCode);
             }
@@ -171,18 +161,6 @@ public class LobbyNetworkManager : MonoBehaviour
             var callbacks = new LobbyEventCallbacks();
 
             callbacks.DataChanged += HandleOnJoinCodeReceived;
-
-            // Debug.Log(joinedLobby);
-            // Debug.Log(joinedLobby.Data);
-
-            // if (joinedLobby.Data.TryGetValue("join_code", out DataObject customData))
-            // {
-            //     string receivedString = customData.Value;
-
-            //     Debug.Log(receivedString);
-            // }
-
-            // startGameEvent?.Invoke(joinCode);
         }
         catch (LobbyServiceException e)
         {

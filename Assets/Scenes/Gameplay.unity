@@ -432,7 +432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &40226466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,11 +448,10 @@ MonoBehaviour:
   enemyContainer: {fileID: 958509770}
   enemyPrefabs:
   - {fileID: 6898723522597223981, guid: 6c86ad04607869e458f5c4fce2f8b1ea, type: 3}
-  - {fileID: 6898723522597223981, guid: 6c86ad04607869e458f5c4fce2f8b1ea, type: 3}
   enemies: []
   player: {fileID: 2478445494248917083}
   maxEnemy: 100
-  maxEnemySpawnConcurrently: 5
+  maxEnemySpawnConcurrently: 2
   minDistanceSpawn: 5
   maxDistanceSpawn: 15
 --- !u!4 &40226467
@@ -8779,7 +8778,7 @@ PrefabInstance:
     - target: {fileID: 593489138973819483, guid: c1b1051f955e0754ca0e4e122f5682b3,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5835626946922000538, guid: c1b1051f955e0754ca0e4e122f5682b3,
         type: 3}
