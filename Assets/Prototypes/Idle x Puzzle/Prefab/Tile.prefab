@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0, g: 0, b: 0, a: 0}
+  colorReference: 
 --- !u!33 &2119789283735270620
 MeshFilter:
   m_ObjectHideFlags: 0
