@@ -30,4 +30,8 @@ public static class Constants
     public static string OWNED_EQUIPMENTS = "owned_equipments";
     public static string EQUIPPED_ITEM_INDEXES_IN_CONTAINER_DATA = "equipped_item_indexes_in_container_data";
     #endregion
+
+    #region SCENE
+    public static string GAMEPLAY_SCENE = "Gameplay";
+    #endregion
 }

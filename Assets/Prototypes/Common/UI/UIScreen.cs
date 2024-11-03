@@ -92,11 +92,13 @@ public class UIScreen : MonoBehaviour, IUIScreen, ISubcriber
     public virtual void RegisterEvent()
     {
         NavBarSlot.switchRoute += OnRouteSwitched;
+        LobbyNetworkManager.switchRoute += OnRouteSwitched;
     }
 
     public virtual void UnregisterEvent()
     {
         NavBarSlot.switchRoute -= OnRouteSwitched;
+        LobbyNetworkManager.switchRoute -= OnRouteSwitched;
     }
     #endregion
 }

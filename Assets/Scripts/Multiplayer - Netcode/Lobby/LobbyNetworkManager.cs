@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Saferio.Util.SaferioTween;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
@@ -15,9 +16,38 @@ using UnityEngine;
 
 public class LobbyNetworkManager : MonoBehaviour
 {
+    #region ACTION
+    public static event Action<int, string> updateLobbyRoomItemEvent;
+    public static event Action<string> setLobbyId;
+    public static event Action<string> switchRoute;
+    #endregion
+
     private void Awake()
     {
+        LobbyRoomUI.joinLobbyEvent += JoinLobbyByIdAsync;
+
         Init();
+
+        SaferioTween.DelayAsync(1, onCompletedAction: () => QueryLobbyAsync());
+    }
+
+    private void OnDestroy()
+    {
+        LobbyRoomUI.joinLobbyEvent -= JoinLobbyByIdAsync;
+    }
+
+    public string GenerateString(int length = 10, string chars = "abcdefghijklmnopqrstuvwxyz")
+    {
+        char[] stringChars = new char[length];
+        System.Random random = new System.Random();
+
+        for (int i = 0; i < length; i++)
+        {
+            int index = random.Next(chars.Length);
+            stringChars[i] = chars[index];
+        }
+
+        return new string(stringChars);
     }
 
     private async void Init()
@@ -44,21 +74,23 @@ public class LobbyNetworkManager : MonoBehaviour
             return;
         }
 
-        string lobbyName = "new lobby";
+        string lobbyName = GenerateString();
         int maxPlayers = 4;
         CreateLobbyOptions options = new CreateLobbyOptions();
         options.IsPrivate = false;
 
         Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
 
-        Debug.Log(lobby);
+        setLobbyId?.Invoke(lobby.Id);
 
         OnLobbyCreated();
     }
 
     private async void OnLobbyCreated()
     {
-        await QueryLobbyAsync();
+        switchRoute?.Invoke("LobbyDetail");
+
+        // await QueryLobbyAsync();
     }
 
     private async Task QueryLobbyAsync()
@@ -68,28 +100,28 @@ public class LobbyNetworkManager : MonoBehaviour
             QueryLobbiesOptions options = new QueryLobbiesOptions();
             options.Count = 25;
 
-            // Filter for open lobbies only
-            options.Filters = new List<QueryFilter>()
-            {
-                new QueryFilter(
-                    field: QueryFilter.FieldOptions.AvailableSlots,
-                    op: QueryFilter.OpOptions.GT,
-                    value: "0")
-            };
+            // // Filter for open lobbies only
+            // options.Filters = new List<QueryFilter>()
+            // {
+            //     new QueryFilter(
+            //         field: QueryFilter.FieldOptions.AvailableSlots,
+            //         op: QueryFilter.OpOptions.GT,
+            //         value: "0")
+            // };
 
-            // Order by newest lobbies first
-            options.Order = new List<QueryOrder>()
-            {
-                new QueryOrder(
-                    asc: false,
-                    field: QueryOrder.FieldOptions.Created)
-            };
+            // // Order by newest lobbies first
+            // options.Order = new List<QueryOrder>()
+            // {
+            //     new QueryOrder(
+            //         asc: false,
+            //         field: QueryOrder.FieldOptions.Created)
+            // };
 
             QueryResponse lobbies = await LobbyService.Instance.QueryLobbiesAsync(options);
 
-            foreach (var lobby in lobbies.Results)
+            for (int i = 0; i < lobbies.Results.Count; i++)
             {
-                DebugUtil.DistinctLog(lobby);
+                updateLobbyRoomItemEvent?.Invoke(i, lobbies.Results[i].Id);
             }
         }
         catch (LobbyServiceException e)
@@ -98,7 +130,7 @@ public class LobbyNetworkManager : MonoBehaviour
         }
     }
 
-    private async Task JoinLobbyByIdAsync(string lobbyId)
+    private async void JoinLobbyByIdAsync(string lobbyId)
     {
         try
         {

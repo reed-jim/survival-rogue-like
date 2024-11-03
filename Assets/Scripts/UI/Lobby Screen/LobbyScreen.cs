@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LobbyScreen : UIScreen
 {
-    [SerializeField] private LobbyManagerUsingRelay lobbyManagerUsingRelay;
+    [SerializeField] private LobbyNetworkManager lobbyNetworkManager;
 
     [SerializeField] private Button createRoomButton;
     [SerializeField] private Button joinRoomButton;
@@ -23,20 +23,18 @@ public class LobbyScreen : UIScreen
     {
         base.RegisterEvent();
 
-        LobbyManagerUsingRelay.hostStartedEvent += OnHostStarted;
-
         createRoomButton.onClick.AddListener(CreateRoom);
         joinRoomButton.onClick.AddListener(JoinRoom);
     }
 
-    private void OnDestroy()
+    public override void UnregisterEvent()
     {
-        LobbyManagerUsingRelay.hostStartedEvent -= OnHostStarted;
+
     }
 
     private void CreateRoom()
     {
-        lobbyManagerUsingRelay.StartHostWithRelay();
+        lobbyNetworkManager.CreatePublicLobbyAsync();
     }
 
     private void JoinRoom()
@@ -44,10 +42,10 @@ public class LobbyScreen : UIScreen
         // lobbyNetworkManager.JoinRoom();
     }
 
-    private void OnHostStarted(string joinCode)
-    {
-        updateLobbyRoomEvent?.Invoke(_currentRoomIndex, joinCode);
+    // private void OnHostStarted(string joinCode)
+    // {
+    //     updateLobbyRoomEvent?.Invoke(_currentRoomIndex, joinCode);
 
-        _currentRoomIndex++;
-    }
+    //     _currentRoomIndex++;
+    // }
 }

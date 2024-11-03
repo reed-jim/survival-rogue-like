@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
+using Unity.Mathematics;
 using UnityEngine;
 using static Saferio.Util.SaferioTween.SaferioCustomDelegate;
 
@@ -159,6 +162,57 @@ namespace Saferio.Util.SaferioTween
 
             onCompletedAction?.Invoke();
         }
+        #region POSITION - ASYNC
+        public static async void PositionAsync
+        (
+            Transform target,
+            Vector3 end,
+            float duration,
+            Action onCompletedAction = null
+        )
+        {
+            await PositionAsync(SaferioTweenManager.CancellationTokenSourceOnDestroyed.Token, target, end, duration, onCompletedAction);
+        }
+
+        public static async Task PositionAsync
+        (
+            CancellationToken cancellationToken,
+            Transform target,
+            Vector3 end,
+            float duration,
+            Action onCompletedAction = null
+        )
+        {
+            try
+            {
+                float updateDuration = Time.deltaTime;
+
+                int delayTimeEachStepMilliSecond = (int)(updateDuration * 1000);
+
+                Vector3 deltaPosition = (end - target.position) / (duration / updateDuration);
+
+                int totalStep = (int)((end - target.position).magnitude / deltaPosition.magnitude);
+                int stepPassed = 0;
+
+                while (stepPassed < totalStep)
+                {
+                    target.position += deltaPosition;
+
+                    stepPassed++;
+
+                    await Task.Delay(delayTimeEachStepMilliSecond, cancellationToken);
+                }
+
+                target.position = end;
+
+                onCompletedAction?.Invoke();
+            }
+            catch (TaskCanceledException)
+            {
+
+            }
+        }
+        #endregion
         #endregion
 
         #region SCALE
@@ -215,9 +269,9 @@ namespace Saferio.Util.SaferioTween
         #endregion
 
         #region TIME
-        public static void Delay(float time, Action onCompletedAction)
+        public static int Delay(float time, Action onCompletedAction)
         {
-            SaferioTweenManager.RunCoroutine(DelayCoroutine(time, onCompletedAction));
+            return SaferioTweenManager.RunCoroutine(DelayCoroutine(time, onCompletedAction));
         }
 
         public static IEnumerator DelayCoroutine(float time, Action onCompletedAction)
@@ -225,6 +279,30 @@ namespace Saferio.Util.SaferioTween
             yield return new WaitForSeconds(time);
 
             onCompletedAction?.Invoke();
+        }
+
+        public async static void DelayAsync(float second, Action onCompletedAction)
+        {
+            await DelayAsync(SaferioTweenManager.CancellationTokenSourceOnDestroyed.Token, second, onCompletedAction);
+        }
+
+        private async static Task DelayAsync
+        (
+            CancellationToken cancellationToken,
+            float second,
+            Action onCompletedAction
+        )
+        {
+            try
+            {
+                await Task.Delay(ToMillisecond(second), cancellationToken);
+
+                onCompletedAction?.Invoke();
+            }
+            catch (TaskCanceledException e)
+            {
+                DebugUtil.DistinctLog(e);
+            }
         }
         #endregion
 
@@ -239,14 +317,26 @@ namespace Saferio.Util.SaferioTween
         //     }
         // }
         #endregion
+
+        #region STOP
+        public static void Stop(int id)
+        {
+            SaferioTweenManager.StopCoroutine(id);
+        }
+        #endregion
+
+        #region UTIL
+        private static int ToMillisecond(float second)
+        {
+            return (int)(second * 1000);
+        }
+        #endregion
     }
 
     public static class SaferioVector3Extension
     {
         public static Vector3 ChangeX(this Vector3 currentValue, float value)
         {
-            currentValue = new Vector3(value, currentValue.y, currentValue.z);
-            
             return new Vector3(value, currentValue.y, currentValue.z);
         }
 

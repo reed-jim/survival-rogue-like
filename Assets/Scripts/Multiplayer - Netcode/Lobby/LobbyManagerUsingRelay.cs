@@ -17,21 +17,39 @@ public class LobbyManagerUsingRelay : MonoBehaviour
 {
     [SerializeField] private NetworkManager networkManager;
 
+    #region PRIVATE FIELD
+    private Dictionary<string, string> lobbyIdWithJoinCodeDictionary;
+    #endregion
+
     #region ACTION
-    public static event Action<string> hostStartedEvent;
+    public static event Action<string, string> setJoinCodeEvent;
+    public static event Action toGameplayEvent;
     #endregion
 
     private void Awake()
     {
+        LobbyDetailScreen.startGameForLobbyEvent += StartGameForLobby;
+
         networkManager.OnClientConnectedCallback += HandleOnClientConnected;
+        networkManager.OnServerStarted += OnHostStarted;
+
+        lobbyIdWithJoinCodeDictionary = new Dictionary<string, string>();
     }
 
     private void OnDestroy()
     {
+        LobbyDetailScreen.startGameForLobbyEvent -= StartGameForLobby;
+
         networkManager.OnClientConnectedCallback -= HandleOnClientConnected;
+        networkManager.OnServerStarted -= OnHostStarted;
     }
 
-    public async void StartHostWithRelay(int maxConnections = 5)
+    private void StartGameForLobby(string lobbyId)
+    {
+        StartHostWithRelay(lobbyId);
+    }
+
+    public async void StartHostWithRelay(string lobbyId, int maxConnections = 5)
     {
         await UnityServices.InitializeAsync();
 
@@ -46,12 +64,11 @@ public class LobbyManagerUsingRelay : MonoBehaviour
 
         string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
-        bool isHostStarted = networkManager.StartHost();
+        lobbyIdWithJoinCodeDictionary.Add(lobbyId, joinCode);
 
-        if (isHostStarted)
-        {
-            hostStartedEvent?.Invoke(joinCode);
-        }
+        setJoinCodeEvent?.Invoke(lobbyId, joinCode);
+
+        networkManager.StartHost();
     }
 
     public async Task<bool> StartClientWithRelay(string joinCode)
@@ -73,5 +90,10 @@ public class LobbyManagerUsingRelay : MonoBehaviour
     private void HandleOnClientConnected(ulong clientId)
     {
 
+    }
+
+    private void OnHostStarted()
+    {
+        toGameplayEvent?.Invoke();
     }
 }

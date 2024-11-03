@@ -28,6 +28,7 @@ public class BottomNavBarMenu : MonoBehaviour
         _canvasSize = canvas.sizeDelta;
 
         NavBarSlot.switchRoute += AnimationOnSwitchRoute;
+        LobbyNetworkManager.switchRoute += AnimationOnSwitchRoute;
 
         GenerateUI();
     }
@@ -35,6 +36,7 @@ public class BottomNavBarMenu : MonoBehaviour
     private void OnDestroy()
     {
         NavBarSlot.switchRoute -= AnimationOnSwitchRoute;
+        LobbyNetworkManager.switchRoute -= AnimationOnSwitchRoute;
     }
 
     private void GenerateUI()
