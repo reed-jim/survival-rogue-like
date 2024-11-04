@@ -1,13 +1,12 @@
 using System;
+using Saferio.Util.SaferioTween;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private PlayerRuntime playerRuntime;
-
-    [Header("MANAGEMENT")]
-    private bool _isAllowRotating = true;
 
     // #region ACTION
     // public static CustomDelegate.GetCharacterStatAction getStatEvent;
@@ -19,6 +18,20 @@ public class PlayerController : MonoBehaviour
     {
         playerRuntime.player = transform;
         playerRuntime.PlayerInstanceId = gameObject.GetInstanceID();
+
+        SaferioTween.DelayAsync(2f, onCompletedAction: () =>
+        {
+            if (!IsServer && IsSpawned)
+            {
+                TestRpc();
+            }
+        });
     }
     #endregion
+
+    [Rpc(SendTo.Server)]
+    private void TestRpc()
+    {
+        DebugUtil.DistinctLog("rpppccc");
+    }
 }

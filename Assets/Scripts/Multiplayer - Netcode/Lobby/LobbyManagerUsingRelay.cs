@@ -11,9 +11,10 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class LobbyManagerUsingRelay : MonoBehaviour
+public class LobbyManagerUsingRelay : NetworkBehaviour
 {
     [SerializeField] private NetworkManager networkManager;
 

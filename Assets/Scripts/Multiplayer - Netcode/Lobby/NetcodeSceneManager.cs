@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NetcodeSceneManager : MonoBehaviour
+public class NetcodeSceneManager : NetworkBehaviour
 {
     [SerializeField] private NetworkManager networkManager;
 
@@ -13,8 +13,10 @@ public class NetcodeSceneManager : MonoBehaviour
         LobbyManagerUsingRelay.toGameplayEvent += LoadGameplayScene;
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
+        base.OnDestroy();
+
         LobbyManagerUsingRelay.toGameplayEvent -= LoadGameplayScene;
     }
 
@@ -34,7 +36,6 @@ public class NetcodeSceneManager : MonoBehaviour
 
     public void LoadGameplayScene()
     {
-        Debug.Log("load " + networkManager.IsServer);
         if (networkManager.IsServer)
         {
             var status = networkManager.SceneManager.LoadScene(Constants.GAMEPLAY_SCENE, LoadSceneMode.Single);

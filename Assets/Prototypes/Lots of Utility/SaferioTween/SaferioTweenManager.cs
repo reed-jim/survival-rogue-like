@@ -33,6 +33,8 @@ namespace Saferio.Util.SaferioTween
 
             lists = new List<string>();
             _listCoroutineWithId = new Dictionary<int, Coroutine>();
+
+            DontDestroyOnLoad(gameObject);
         }
 
         private void OnDestroy()

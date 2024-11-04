@@ -25,6 +25,7 @@ public class LevelingUI : MonoBehaviour
 
     [Header("CUSTOMIZE")]
     [SerializeField] private int numSkillSlot;
+    [SerializeField] private bool isShowDebugUpgrade;
 
     [Header("SCRIPTABLE OBJECT")]
     [SerializeField] private SkillContainer skillContainer;
@@ -58,7 +59,10 @@ public class LevelingUI : MonoBehaviour
 
     private void Start()
     {
-        SaferioTween.Delay(1f, onCompletedAction: () => ShowUpgradePanel());
+        if (isShowDebugUpgrade)
+        {
+            SaferioTween.Delay(1f, onCompletedAction: () => ShowUpgradePanel());
+        }
     }
 
     private void OnDestroy()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FollowPlayerCamera : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    [SerializeField] private PlayerRuntime playerRuntime;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private Vector3 offset;
@@ -21,16 +21,21 @@ public class FollowPlayerCamera : MonoBehaviour
 
     void Update()
     {
+        if (playerRuntime.player == null)
+        {
+            return;
+        }
+
         Vector3 position = transform.position;
 
-        position.x = player.transform.position.x + offset.x;
-        position.z = player.transform.position.z + offset.z;
+        position.x = playerRuntime.player.position.x + offset.x;
+        position.z = playerRuntime.player.position.z + offset.z;
 
         transform.position = position;
     }
 
     private void FollowPlayer(Transform followedPlayer)
     {
-        player = followedPlayer;
+        // player = followedPlayer;
     }
 }
