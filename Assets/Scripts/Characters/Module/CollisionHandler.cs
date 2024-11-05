@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 using static CustomDelegate;
 
-public class CollisionHandler : MonoBehaviour
+public class CollisionHandler : NetworkBehaviour
 {
     private IExplodable _explodableObject;
     private IHitByMeleeAttack _hitByMeleeAttackObject;
@@ -95,15 +95,26 @@ public class CollisionHandler : MonoBehaviour
             {
                 // collidable.HandleOnCollide(gameObject);
 
-                HandleOnCollideWrapperRpc(collidable, gameObject);
+                DebugUtil.DistinctLog(otherGameObject.GetComponent<NetworkObject>().NetworkObjectId + " / " + NetworkObjectId);
+
+                HandleOnCollideWrapperRpc(otherGameObject.GetComponent<NetworkObject>().NetworkObjectId, NetworkObjectId);
             }
         }
     }
 
-    [ClientRpc]
-    private void HandleOnCollideWrapperRpc(ICollide icollide, GameObject other)
+    [Rpc(SendTo.Server)]
+    private void HandleOnCollideWrapperRpc(ulong icollideNetworkObjectId, ulong networkObjectId)
     {
-        icollide.HandleOnCollide(other);
+        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject networkObject))
+        {
+            if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(icollideNetworkObjectId, out NetworkObject icollideNetwork))
+            {
+                if (IsClient && IsOwner)
+                {
+                    icollideNetwork.GetComponent<ICollide>().HandleOnCollide(networkObject.gameObject);
+                }
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision other)

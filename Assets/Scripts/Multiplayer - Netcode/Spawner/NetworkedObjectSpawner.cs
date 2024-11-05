@@ -50,7 +50,7 @@ public class NetworkedObjectSpawner : MonoBehaviour
                 SpawnJoystickController(clientId);
             }
 
-            // Instantiate(enemySpawner).GetComponent<NetworkObject>().Spawn();
+            Instantiate(enemySpawner).GetComponent<NetworkObject>().Spawn();
         }
     }
 

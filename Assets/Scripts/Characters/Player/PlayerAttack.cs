@@ -149,6 +149,8 @@ public class PlayerAttack : NetworkBehaviour
             //     MeleeAttack();
             // }
 
+            if(IsServer) yield break;
+
             MeleeAttackRpc();
 
             yield return waitForSeconds;
