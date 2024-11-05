@@ -3606,7 +3606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &875742421
 Transform:
   m_ObjectHideFlags: 0
@@ -5049,6 +5049,7 @@ MonoBehaviour:
   rerollSkillButton: {fileID: 202893506}
   fadeBackground: {fileID: 1504402736}
   numSkillSlot: 3
+  isShowDebugUpgrade: 0
   skillContainer: {fileID: 11400000, guid: 63adb602eef772447b4018d5bf5757d0, type: 2}
 --- !u!4 &1184937020
 Transform:

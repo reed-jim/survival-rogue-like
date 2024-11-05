@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using Dreamteck.Splines;
 using PrimeTween;
 using Saferio.Util.SaferioTween;
+using Unity.Netcode;
+
 
 #if UNITY_EDITOR
 using UnityEditor.Animations;
 #endif
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttack : NetworkBehaviour
 {
     [Header("FAKE WHIRL WIND")]
     [SerializeField] private Rigidbody fakeWhirlwindAttackRigidBody;
@@ -73,7 +75,7 @@ public class PlayerAttack : MonoBehaviour
         attackFx.transform.eulerAngles = _initialAttackFxAngle;
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
         LevelingUI.enableInput -= EnableInput;
 
@@ -140,9 +142,25 @@ public class PlayerAttack : MonoBehaviour
 
         while (true)
         {
-            MeleeAttack();
+            yield return new WaitUntil(() => IsSpawned);
+
+            // if (IsOwner)
+            // {
+            //     MeleeAttack();
+            // }
+
+            MeleeAttackRpc();
 
             yield return waitForSeconds;
+        }
+    }
+
+    [Rpc(SendTo.NotOwner)]
+    private void MeleeAttackRpc()
+    {
+        if (!IsOwner)
+        {
+            MeleeAttack();
         }
     }
 

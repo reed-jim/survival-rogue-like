@@ -33,10 +33,8 @@ public class NetworkedObjectSpawner : MonoBehaviour
 
     private void SpawnPlayers()
     {
-        Debug.Log("client");
         if (NetworkManager.Singleton.IsServer)
         {
-            Debug.Log(NetworkManager.Singleton.ConnectedClientsIds.Count);
             foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
             {
                 GameObject player = Instantiate(playerPrefab);
@@ -45,17 +43,10 @@ public class NetworkedObjectSpawner : MonoBehaviour
 
                 player.transform.position = _spawnPosition;
 
-                _spawnPosition += new Vector3(3, 0, 0);
+                _spawnPosition += new Vector3(4, 0, 0);
             }
 
             Instantiate(enemySpawner).GetComponent<NetworkObject>().Spawn();
-
-            // if (!_isEnemySpawnerSpawned)
-            // {
-            //     Instantiate(enemySpawner).GetComponent<NetworkObject>().Spawn();
-
-            //     _isEnemySpawnerSpawned = true;
-            // }
         }
     }
 }
