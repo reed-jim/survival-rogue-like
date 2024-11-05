@@ -114,27 +114,27 @@ public class EnemySpawnManager : NetworkBehaviour
                 yield return null;
             }
 
-            // yield return new WaitUntil(() => IsSpawned);
+            yield return new WaitUntil(() => IsSpawned);
 
-            // SpawnEnemyRpc();
+            SpawnEnemyRpc();
 
-            for (int i = 0; i < maxEnemySpawnConcurrently; i++)
-            {
-                if (!networkEnemies[_currentEnemyIndex].gameObject.activeSelf)
-                {
-                    networkEnemies[_currentEnemyIndex].transform.position = GetRandomPositionCircular(networkEnemies[_currentEnemyIndex].transform.position);
-                    networkEnemies[_currentEnemyIndex].gameObject.SetActive(true);
+            // for (int i = 0; i < maxEnemySpawnConcurrently; i++)
+            // {
+            //     if (!networkEnemies[_currentEnemyIndex].gameObject.activeSelf)
+            //     {
+            //         networkEnemies[_currentEnemyIndex].transform.position = GetRandomPositionCircular(networkEnemies[_currentEnemyIndex].transform.position);
+            //         networkEnemies[_currentEnemyIndex].gameObject.SetActive(true);
 
-                    spawnEnemyEvent?.Invoke(networkEnemies[_currentEnemyIndex].gameObject.GetInstanceID());
+            //         spawnEnemyEvent?.Invoke(networkEnemies[_currentEnemyIndex].gameObject.GetInstanceID());
 
-                    _currentEnemyIndex++;
+            //         _currentEnemyIndex++;
 
-                    if (_currentEnemyIndex >= networkEnemies.Length)
-                    {
-                        _currentEnemyIndex = 0;
-                    }
-                }
-            }
+            //         if (_currentEnemyIndex >= networkEnemies.Length)
+            //         {
+            //             _currentEnemyIndex = 0;
+            //         }
+            //     }
+            // }
 
             yield return new WaitForSeconds(5);
         }
@@ -145,16 +145,16 @@ public class EnemySpawnManager : NetworkBehaviour
     {
         for (int i = 0; i < maxEnemySpawnConcurrently; i++)
         {
-            if (!enemies[_currentEnemyIndex].activeSelf)
+            if (!networkEnemies[_currentEnemyIndex].gameObject.activeSelf)
             {
-                enemies[_currentEnemyIndex].transform.position = GetRandomPositionCircular(enemies[_currentEnemyIndex].transform.position);
-                enemies[_currentEnemyIndex].SetActive(true);
+                networkEnemies[_currentEnemyIndex].transform.position = GetRandomPositionCircular(networkEnemies[_currentEnemyIndex].transform.position);
+                networkEnemies[_currentEnemyIndex].gameObject.SetActive(true);
 
-                spawnEnemyEvent?.Invoke(enemies[_currentEnemyIndex].GetInstanceID());
+                spawnEnemyEvent?.Invoke(networkEnemies[_currentEnemyIndex].gameObject.GetInstanceID());
 
                 _currentEnemyIndex++;
 
-                if (_currentEnemyIndex >= enemies.Length)
+                if (_currentEnemyIndex >= networkEnemies.Length)
                 {
                     _currentEnemyIndex = 0;
                 }
