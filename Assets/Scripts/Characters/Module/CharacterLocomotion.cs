@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
-public class CharacterLocomotion : MonoBehaviour
+public class CharacterLocomotion : NetworkBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody characterRigidbody;
@@ -25,14 +27,41 @@ public class CharacterLocomotion : MonoBehaviour
         StartCoroutine(AutoRotate());
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
         JoystickController.controlPlayerEvent -= ControlPlayer;
     }
 
+    [Rpc(SendTo.Server)]
+    private void SyncVelocityWithServerRpc(Vector3 velocity)
+    {
+        if (IsServer && !IsOwner)
+        {
+            // _speedMagnitude = 0.01f * _moveDirection.y;
+
+            // _speedMagnitude = Mathf.Min(_speedMagnitude, 1);
+
+            // characterRigidbody.velocity = speedMultiplier * _speedMagnitude * _moveDirection;
+
+            Vector3 predictedPosition = transform.position + velocity * Time.fixedDeltaTime;
+
+            transform.position = predictedPosition;
+        }
+    }
+
     private void Update()
     {
+        if (!IsOwner)
+        {
+            return;
+        }
+
         characterRigidbody.velocity = speedMultiplier * _speedMagnitude * _moveDirection;
+
+        if (!IsServer)
+        {
+            SyncVelocityWithServerRpc(characterRigidbody.velocity);
+        }
 
         if (!Input.GetMouseButton(0))
         {
@@ -55,11 +84,27 @@ public class CharacterLocomotion : MonoBehaviour
         }
     }
 
+    // [Rpc(SendTo.NotOwner)]
+    // private void ControlPlayerRpc(Vector2 joystickDirection)
+    // {
+    //     if (!IsOwner)
+    //     {
+    //         ControlPlayer(joystickDirection);
+    //     }
+    // }
+
     private void ControlPlayer(Vector2 joystickDirection)
     {
+        if (!IsOwner)
+        {
+            return;
+        }
+
         _speedMagnitude += deltaSpeedMultiplier;
 
         _speedMagnitude = Mathf.Min(_speedMagnitude, 1);
+
+        Debug.Log(_speedMagnitude);
 
         _moveDirection = new Vector3(joystickDirection.x, 0, joystickDirection.y).normalized;
         _moveDirection.y = 0;

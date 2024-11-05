@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PrimeTween;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JoystickController : MonoBehaviour
+public class JoystickController : NetworkBehaviour
 {
     [Header("UI")]
     [SerializeField] private RectTransform joystickContainer;
@@ -58,6 +59,13 @@ public class JoystickController : MonoBehaviour
     private IEnumerator ControlJoystick()
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
+
+        yield return new WaitUntil(() => IsSpawned);
+        
+        if (!IsOwner)
+        {
+            yield break;
+        }
 
         while (true)
         {
@@ -162,7 +170,7 @@ public class JoystickController : MonoBehaviour
                 normalizedDifference.y *= -1;
             }
         }
-
+        
         controlPlayerEvent?.Invoke(normalizedDifference);
 
         joystick.localPosition = normalizedDifference;

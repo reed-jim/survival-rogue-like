@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3683617037984071249}
+  - component: {fileID: 7535857256023448615}
   - component: {fileID: 2742951823817773591}
-  - component: {fileID: 6409909034585522527}
-  - component: {fileID: 7133767690860679702}
   - component: {fileID: 7152023323678609950}
   - component: {fileID: 4682797765073910371}
   m_Layer: 5
@@ -41,6 +40,27 @@ RectTransform:
   m_AnchoredPosition: {x: -300, y: 300}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7535857256023448615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894363483050496306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1748822520
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!114 &2742951823817773591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,36 +76,6 @@ MonoBehaviour:
   joystickContainer: {fileID: 3683617037984071249}
   joystick: {fileID: 8165957251971844272}
   newInputThreshold: 0
---- !u!114 &6409909034585522527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894363483050496306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c85a0bb9f401fa45981c376813494bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
-  target: {fileID: 3683617037984071249}
-  transitionDuration: 1
---- !u!114 &7133767690860679702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1894363483050496306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa16e0ad719e5b14d981881dfa7b7336, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
-  target: {fileID: 3683617037984071249}
-  transitionDuration: 1
 --- !u!222 &7152023323678609950
 CanvasRenderer:
   m_ObjectHideFlags: 0

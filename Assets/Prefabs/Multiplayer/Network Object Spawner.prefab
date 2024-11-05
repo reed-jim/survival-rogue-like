@@ -46,5 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8616145897208353314, guid: c1b1051f955e0754ca0e4e122f5682b3,
     type: 3}
+  joystickController: {fileID: 2742951823817773591, guid: bd592fc650b1cfb499a8f018f40c4d5d,
+    type: 3}
+  joystickControllerContainer: {fileID: 0}
   enemySpawner: {fileID: 1263173274159704810, guid: a5071f0dec41a884fbe12b45bffc93ce,
     type: 3}
