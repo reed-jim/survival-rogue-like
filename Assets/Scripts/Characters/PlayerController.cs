@@ -18,20 +18,6 @@ public class PlayerController : NetworkBehaviour
     {
         playerRuntime.player = transform;
         playerRuntime.PlayerInstanceId = gameObject.GetInstanceID();
-
-        SaferioTween.DelayAsync(2f, onCompletedAction: () =>
-        {
-            if (!IsServer && IsSpawned)
-            {
-                TestRpc();
-            }
-        });
     }
     #endregion
-
-    [Rpc(SendTo.Server)]
-    private void TestRpc()
-    {
-        DebugUtil.DistinctLog("rpppccc");
-    }
 }

@@ -2627,6 +2627,7 @@ GameObject:
   - component: {fileID: 2790370566111353263}
   - component: {fileID: 1186590409469569204}
   - component: {fileID: 2854299558874857390}
+  - component: {fileID: 816728543498501129}
   - component: {fileID: 6196028578684969257}
   - component: {fileID: 5864310367609275896}
   - component: {fileID: 5262570559539068651}
@@ -2642,7 +2643,6 @@ GameObject:
   - component: {fileID: 1230600974406349393}
   - component: {fileID: 4442071305876251691}
   - component: {fileID: 1108312009106331457}
-  - component: {fileID: 816728543498501129}
   - component: {fileID: 4283425929591323102}
   - component: {fileID: 2115745228430267013}
   m_Layer: 7
@@ -2755,6 +2755,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183bfafba7edd6d4eb0304954ae07de2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &816728543498501129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6898723522597223981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 825429509
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!114 &6196028578684969257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2994,27 +3015,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &816728543498501129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6898723522597223981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 0
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!114 &4283425929591323102
 MonoBehaviour:
   m_ObjectHideFlags: 0

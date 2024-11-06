@@ -86,18 +86,23 @@ public class CollisionHandler : NetworkBehaviour
 
             ICollide collidable = otherGameObject.GetComponent<ICollide>();
 
+            NetworkObject icollideNetworkObject = otherGameObject.GetComponent<NetworkObject>();
+
             if (collidable == null)
             {
                 collidable = otherGameObject.transform.parent.GetComponent<ICollide>();
+                icollideNetworkObject = otherGameObject.transform.parent.GetComponent<NetworkObject>();
             }
-
+            
             if (collidable != null)
             {
                 // collidable.HandleOnCollide(gameObject);
 
-                DebugUtil.DistinctLog(otherGameObject.GetComponent<NetworkObject>().NetworkObjectId + " / " + NetworkObjectId);
-
-                HandleOnCollideWrapperRpc(otherGameObject.GetComponent<NetworkObject>().NetworkObjectId, NetworkObjectId);
+                if (icollideNetworkObject != null)
+                {
+                    DebugUtil.DistinctLog(otherGameObject.name);
+                    HandleOnCollideWrapperRpc(icollideNetworkObject.NetworkObjectId, NetworkObjectId);
+                }
             }
         }
     }
@@ -107,12 +112,17 @@ public class CollisionHandler : NetworkBehaviour
     {
         if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject networkObject))
         {
+            DebugUtil.DistinctLog(networkObject.name);
+            NetworkLog.LogInfoServer("NETWORK - " + networkObject.name);
             if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(icollideNetworkObjectId, out NetworkObject icollideNetwork))
             {
-                if (IsClient && IsOwner)
-                {
-                    icollideNetwork.GetComponent<ICollide>().HandleOnCollide(networkObject.gameObject);
-                }
+                DebugUtil.DistinctLog(icollideNetwork.name);
+                NetworkLog.LogInfoServer("NETWORK - " + icollideNetwork.name);
+                icollideNetwork.GetComponent<ICollide>().HandleOnCollide(networkObject.gameObject);
+                // if (IsClient)
+                // {
+                //     icollideNetwork.GetComponent<ICollide>().HandleOnCollide(networkObject.gameObject);
+                // }
             }
         }
     }

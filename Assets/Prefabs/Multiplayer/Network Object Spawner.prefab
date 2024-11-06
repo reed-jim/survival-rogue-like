@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5514914547267826860}
+  - component: {fileID: 258073673752803598}
   - component: {fileID: 3231359507622531461}
   m_Layer: 0
   m_Name: Network Object Spawner
@@ -32,6 +33,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &258073673752803598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7070189469214660057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 878115652
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!114 &3231359507622531461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,6 +67,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 8616145897208353314, guid: c1b1051f955e0754ca0e4e122f5682b3,
+    type: 3}
+  playerWeaponPrefab: {fileID: 9130943771318412322, guid: b4d4704c0919ab44d9911993574a430c,
     type: 3}
   joystickController: {fileID: 2742951823817773591, guid: bd592fc650b1cfb499a8f018f40c4d5d,
     type: 3}

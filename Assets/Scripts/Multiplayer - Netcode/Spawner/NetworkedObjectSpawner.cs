@@ -4,9 +4,10 @@ using Saferio.Util.SaferioTween;
 using Unity.Netcode;
 using UnityEngine;
 
-public class NetworkedObjectSpawner : MonoBehaviour
+public class NetworkedObjectSpawner : NetworkBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject playerWeaponPrefab;
     [SerializeField] private JoystickController joystickController;
     [SerializeField] private RectTransform joystickControllerContainer;
     [SerializeField] private GameObject enemySpawner;
@@ -16,9 +17,8 @@ public class NetworkedObjectSpawner : MonoBehaviour
 
     private void Awake()
     {
-        SaferioTween.DelayAsync(5, onCompletedAction: () => SpawnPlayers());
-
-        // NetworkManager.Singleton.OnClientStarted += SpawnPlayer;
+        StartCoroutine(SpawnPlayers());
+        // SaferioTween.DelayAsync(5, onCompletedAction: () => SpawnPlayers());
     }
 
     private void Spawn()
@@ -33,15 +33,40 @@ public class NetworkedObjectSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnPlayers()
+    private IEnumerator SpawnPlayers()
     {
+        yield return new WaitForSeconds(5);
+
+        yield return new WaitUntil(() => IsSpawned);
+
         if (NetworkManager.Singleton.IsServer)
         {
             foreach (var clientId in NetworkManager.Singleton.ConnectedClientsIds)
             {
                 GameObject player = Instantiate(playerPrefab);
 
-                player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
+                NetworkObject playerNetworkObject = player.GetComponent<NetworkObject>();
+
+                playerNetworkObject.Spawn();
+                playerNetworkObject.ChangeOwnership(clientId);
+
+                GameObject playerWeapon = Instantiate(playerWeaponPrefab);
+
+                NetworkObject playerWeaponNetworkObject = playerWeapon.GetComponent<NetworkObject>();
+
+                playerWeaponNetworkObject.Spawn();
+                playerWeaponNetworkObject.ChangeOwnership(clientId);
+
+                playerWeaponNetworkObject.TrySetParent(playerNetworkObject);
+
+                playerWeaponNetworkObject.transform.localPosition = new Vector3(0, 5, 0);
+                playerWeaponNetworkObject.transform.localScale = new Vector3(5, 5, 50);
+
+                player.GetComponent<PlayerAttack>().SwordCollider = playerWeapon.GetComponent<Collider>();
+                player.GetComponent<PlayerAttack>().FakeWhirlwindAttackRigidBody = playerWeapon.GetComponent<Rigidbody>();
+                playerWeapon.GetComponent<MeleeWeapon>().WeaponHolder = player;
+
+                SetupPlayerAttackAndWeaponRpc(playerNetworkObject.NetworkObjectId, playerWeaponNetworkObject.NetworkObjectId);
 
                 player.transform.position = _spawnPosition;
 
@@ -51,6 +76,20 @@ public class NetworkedObjectSpawner : MonoBehaviour
             }
 
             Instantiate(enemySpawner).GetComponent<NetworkObject>().Spawn();
+        }
+    }
+
+    [Rpc(SendTo.NotServer)]
+    private void SetupPlayerAttackAndWeaponRpc(ulong playerNetworkObjectId, ulong playerWeaponNetworkObjectId)
+    {
+        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(playerNetworkObjectId, out NetworkObject player))
+        {
+            if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(playerWeaponNetworkObjectId, out NetworkObject playerWeapon))
+            {
+                player.GetComponent<PlayerAttack>().SwordCollider = playerWeapon.GetComponent<Collider>();
+                player.GetComponent<PlayerAttack>().FakeWhirlwindAttackRigidBody = playerWeapon.GetComponent<Rigidbody>();
+                playerWeapon.GetComponent<MeleeWeapon>().WeaponHolder = player.gameObject;
+            }
         }
     }
 

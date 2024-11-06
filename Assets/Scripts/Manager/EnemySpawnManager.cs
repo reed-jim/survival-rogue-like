@@ -74,13 +74,6 @@ public class EnemySpawnManager : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void SetActiveRpc(ulong networkObjectId, bool isActive)
     {
-        DebugUtil.DistinctLog(networkObjectId);
-
-        foreach (var item in NetworkManager.Singleton.SpawnManager.SpawnedObjects)
-        {
-            Debug.Log(item.Key);
-        }
-
         if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject networkObject))
         {
             networkObject.gameObject.SetActive(isActive);

@@ -22,13 +22,21 @@ public class MeleeWeapon : MonoBehaviour, ICollide
     public static GetVisualEffectAction getVisualEffectEvent;
     #endregion
 
-    private void Awake()
+    public GameObject WeaponHolder
     {
-        _attackerInstanceId = weaponHolder.GetInstanceID();
+        get => weaponHolder;
+        set => weaponHolder = value;
     }
+
+    // private void Awake()
+    // {
+    //     _attackerInstanceId = weaponHolder.GetInstanceID();
+    // }
 
     protected CharacterStat GetAttackerStat()
     {
+        _attackerInstanceId = weaponHolder.GetInstanceID();
+
         return getAttackerStatAction.Invoke(_attackerInstanceId);
     }
 

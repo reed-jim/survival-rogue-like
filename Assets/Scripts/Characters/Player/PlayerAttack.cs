@@ -46,6 +46,18 @@ public class PlayerAttack : NetworkBehaviour
     private Vector3 _initialAttackFxAngle;
     #endregion
 
+    #region PROPERTY
+    public Rigidbody FakeWhirlwindAttackRigidBody
+    {
+        get => fakeWhirlwindAttackRigidBody; set => fakeWhirlwindAttackRigidBody = value;
+    }
+
+    public Collider SwordCollider
+    {
+        get => swordCollider; set => swordCollider = value;
+    }
+    #endregion
+
     #region ACTION
     public static event Action<int, bool> enableRotatingEvent;
     public static event Action<int> playAttackSFXEvent;
@@ -67,7 +79,7 @@ public class PlayerAttack : NetworkBehaviour
 
     private void Update()
     {
-        if (!_isTest)
+        if (!_isTest && swordCollider != null)
         {
             swordCollider.transform.eulerAngles = _lastAngle;
         }
@@ -144,14 +156,14 @@ public class PlayerAttack : NetworkBehaviour
         {
             yield return new WaitUntil(() => IsSpawned);
 
-            // if (IsOwner)
-            // {
-            //     MeleeAttack();
-            // }
+            // if (IsServer) yield break;
 
-            if(IsServer) yield break;
+            if (IsOwner)
+            {
+                MeleeAttack();
+            }
 
-            MeleeAttackRpc();
+            // MeleeAttackRpc();
 
             yield return waitForSeconds;
         }
@@ -206,6 +218,8 @@ public class PlayerAttack : NetworkBehaviour
 
         float angleRotated = 0;
         float deltaAngle = 12;
+
+        yield return new WaitUntil(() => swordCollider != null);
 
         swordCollider.enabled = true;
 
