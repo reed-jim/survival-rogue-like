@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99513db7495574147a9785d16a6920e4, type: 3}
-  m_Name: Route Lobby
+  m_Script: {fileID: 11500000, guid: 12f20f9585474d2498b5156108d90878, type: 3}
+  m_Name: Theme 2
   m_EditorClassIdentifier: 
-  routeName: Lobby
-  iconSprite: {fileID: 21300000, guid: 82e5a4d9b6b108d49b57d7ba82a0bcec, type: 3}
-  isSelectedFromStart: 0
+  backgroundColor: {r: 0.8627451, g: 0.8627451, b: 0.8627451, a: 1}
+  textColor: {r: 1, g: 0.078431375, b: 0.19607843, a: 1}
