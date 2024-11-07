@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.11764706, g: 0.5647059, b: 1, a: 1}
+  m_Color: {r: 0.87058824, g: 0.9764706, b: 0.76862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5411765, g: 0.16862746, b: 0.8862745, a: 1}
+  m_Color: {r: 0.87058824, g: 0.9764706, b: 0.76862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.11764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -514,7 +514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.11764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -591,7 +591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.11764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -673,7 +673,16 @@ MonoBehaviour:
   rareChestOpenButtonRT: {fileID: 8164987853448083355}
   commonChestOpenButtonRT: {fileID: 2977436516194147708}
   rareChestOpenButton: {fileID: 2481239534295020468}
+  titleTexts:
+  - {fileID: 4164944050987739219}
+  - {fileID: 9066489868231855223}
+  - {fileID: 1399954796980202678}
+  buttonTexts:
+  - {fileID: 8605210319733028637}
+  - {fileID: 1724808230285614582}
+  - {fileID: 8234218305412587592}
   chestRevealScreen: {fileID: 0}
+  saferioTheme: {fileID: 11400000, guid: 9c1e464b1384c59449d17236d21380f5, type: 2}
 --- !u!1 &7074154910365491498
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,7 +1283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.85490197, b: 0.26666668, a: 1}
+  m_Color: {r: 0.87058824, g: 0.9764706, b: 0.76862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

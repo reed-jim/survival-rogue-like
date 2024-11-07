@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,9 +19,14 @@ public class ChestOpeningScreen : UIScreen
     [SerializeField] private RectTransform commonChestOpenButtonRT;
 
     [SerializeField] private Button rareChestOpenButton;
+    [SerializeField] private TMP_Text[] titleTexts;
+    [SerializeField] private TMP_Text[] buttonTexts;
 
     [Header("DETAIL CHEST OPENNING")]
     [SerializeField] private ChestRevealScreen chestRevealScreen;
+
+    [Header("SCRIPTABLE OBJECT")]
+    [SerializeField] private SaferioTheme saferioTheme;
 
     public override void RegisterEvent()
     {
@@ -31,10 +37,10 @@ public class ChestOpeningScreen : UIScreen
 
     protected override void GenerateUI()
     {
-        float padding = 0.05f * _canvasSize.y;
+        float padding = 0.02f * _canvasSize.y;
 
         UIUtil.SetSize(sGradeChestContainer, _canvasSize.x - 2 * padding, 0.3f * _canvasSize.y);
-        UIUtil.SetLocalPositionY(sGradeChestContainer, 0.5f * (_canvasSize.y - sGradeChestContainer.sizeDelta.y) - padding);
+        UIUtil.SetLocalPositionY(sGradeChestContainer, 0.3f * (_canvasSize.y - sGradeChestContainer.sizeDelta.y) - padding);
 
         UIUtil.SetSize(rareChestContainer, (_canvasSize.x - 3 * padding) / 2, 0.3f * _canvasSize.y);
         UIUtil.SetLocalPositionX(rareChestContainer, -0.5f * (_canvasSize.x - rareChestContainer.sizeDelta.x) + padding);
@@ -58,6 +64,15 @@ public class ChestOpeningScreen : UIScreen
         UIUtil.SetSizeX(sGradeChestTitleRT, 0.8f * sGradeChestContainer.sizeDelta.x);
         UIUtil.SetSizeX(rareChestTitleRT, 0.8f * rareChestContainer.sizeDelta.x);
         UIUtil.SetSizeX(commonChestTitleRT, 0.8f * commonChestContainer.sizeDelta.x);
+
+        for (int i = 0; i < titleTexts.Length; i++)
+        {
+            UIUtil.SetFontSize(titleTexts[i], 0.03f * _canvasSize.y);
+            UIUtil.SetFontSize(buttonTexts[i], 0.03f * _canvasSize.y);
+
+            titleTexts[i].color = saferioTheme.TitleColor;
+            buttonTexts[i].color = saferioTheme.SecondaryTextColor;
+        }
     }
 
     private void OpenRareChest()

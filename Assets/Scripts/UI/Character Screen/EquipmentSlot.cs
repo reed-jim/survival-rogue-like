@@ -34,6 +34,11 @@ public class EquipmentSlot : MonoBehaviour, ISaferioPageViewSlot
 
     public void ResetState(int slotIndex)
     {
+        if (equipmentSkillObserver.OwnedItemDatum == null)
+        {
+            equipmentSkillObserver.OwnedItemDatum = new List<OwnedEquipmentData>();
+        }
+        
         if (slotIndex < equipmentSkillObserver.OwnedItemDatum.Count)
         {
             gameObject.SetActive(true);

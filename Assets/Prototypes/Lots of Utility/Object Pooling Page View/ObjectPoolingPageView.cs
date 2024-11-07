@@ -104,14 +104,14 @@ public class ObjectPoolingPageView : MonoBehaviour
             (containerSize.y - (2 * padding + (rowNumber - 1) * itemDistance)) / rowNumber
         );
 
-        if (slotSize.x > slotSize.y)
-        {
-            slotSize.x = slotSize.y;
-        }
-        else
-        {
-            slotSize.y = slotSize.x;
-        }
+        // if (slotSize.x > slotSize.y)
+        // {
+        //     slotSize.x = slotSize.y;
+        // }
+        // else
+        // {
+        //     slotSize.y = slotSize.x;
+        // }
 
         for (int i = 0; i < rowNumber; i++)
         {
@@ -181,21 +181,14 @@ public class ObjectPoolingPageView : MonoBehaviour
     #region PAGE
     private void SetUpPage()
     {
-        try
-        {
-            int currentStartSlotIndex = _currentPage * _poolSize;
-            int currentSlotIndex = currentStartSlotIndex;
+        int currentStartSlotIndex = _currentPage * _poolSize;
+        int currentSlotIndex = currentStartSlotIndex;
 
-            for (int i = 0; i < _saferioPageViewSlots.Length; i++)
-            {
-                currentSlotIndex = currentStartSlotIndex + i;
-
-                _saferioPageViewSlots[i].Setup(currentSlotIndex);
-            }
-        }
-        catch (Exception e)
+        for (int i = 0; i < _saferioPageViewSlots.Length; i++)
         {
-            
+            currentSlotIndex = currentStartSlotIndex + i;
+
+            _saferioPageViewSlots[i].Setup(currentSlotIndex);
         }
     }
 

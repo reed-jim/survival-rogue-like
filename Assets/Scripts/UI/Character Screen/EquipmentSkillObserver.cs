@@ -17,6 +17,7 @@ public class EquipmentSkillObserver : ScriptableObject
     public List<OwnedEquipmentData> OwnedItemDatum
     {
         get => ownedItemDatum;
+        set => ownedItemDatum = value;
     }
 
     // public List<OwnedEquipmentData> EquippedItemDatum

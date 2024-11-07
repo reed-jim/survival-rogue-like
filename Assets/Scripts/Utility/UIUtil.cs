@@ -123,6 +123,17 @@ public static class UIUtil
         target.rectTransform.sizeDelta = new Vector2(target.preferredWidth, target.preferredHeight);
     }
 
+    public static void SetFontSize(TMP_Text target, float size)
+    {
+        target.fontSize = size;
+        target.rectTransform.sizeDelta = new Vector2(target.preferredWidth, target.preferredHeight);
+    }
+
+    public static void SetFontSizeOnly(TMP_Text target, float size)
+    {
+        target.fontSize = size;
+    }
+
     public static void EnableTextAutoSize(TextMeshProUGUI text)
     {
         text.autoSizeTextContainer = true;
