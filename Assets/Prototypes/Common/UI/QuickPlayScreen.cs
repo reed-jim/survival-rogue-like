@@ -14,7 +14,7 @@ public class QuickPlayScreen : UIScreen
 
     protected override void GenerateUI()
     {
-        UIUtil.SetLocalPositionY(gameName, 0.35f * _canvasSize.y);
+        UIUtil.SetLocalPositionY(gameName, 0.3f * _canvasSize.y);
 
         UIUtil.SetSize(playButtonRT, 0.4f * _canvasSize.x, 0.15f * _canvasSize.x);
         UIUtil.SetLocalPositionY(playButtonRT, -0.2f * _canvasSize.y);

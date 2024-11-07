@@ -412,7 +412,7 @@ PrefabInstance:
     - target: {fileID: 7378898446898390891, guid: a2ce9b4638d99f141a2004cb3dbae3c0,
         type: 3}
       propertyPath: padding
-      value: 24
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 7378898446898390891, guid: a2ce9b4638d99f141a2004cb3dbae3c0,
         type: 3}
@@ -438,12 +438,22 @@ PrefabInstance:
     - target: {fileID: 7378898446898390891, guid: a2ce9b4638d99f141a2004cb3dbae3c0,
         type: 3}
       propertyPath: itemDistance
-      value: 4
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 7394486668685000229, guid: a2ce9b4638d99f141a2004cb3dbae3c0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7887669196209508764, guid: a2ce9b4638d99f141a2004cb3dbae3c0,
         type: 3}
       propertyPath: m_Name
       value: Object Pooling Page View
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999986628609834482, guid: a2ce9b4638d99f141a2004cb3dbae3c0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -493,7 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.11764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
