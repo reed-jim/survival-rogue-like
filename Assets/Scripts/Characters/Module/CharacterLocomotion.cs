@@ -104,8 +104,6 @@ public class CharacterLocomotion : NetworkBehaviour
 
         _speedMagnitude = Mathf.Min(_speedMagnitude, 1);
 
-        Debug.Log(_speedMagnitude);
-
         _moveDirection = new Vector3(joystickDirection.x, 0, joystickDirection.y).normalized;
         _moveDirection.y = 0;
 
