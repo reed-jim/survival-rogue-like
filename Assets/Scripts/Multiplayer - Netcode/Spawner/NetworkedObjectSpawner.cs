@@ -35,7 +35,7 @@ public class NetworkedObjectSpawner : NetworkBehaviour
 
     private IEnumerator SpawnPlayers()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
 
         yield return new WaitUntil(() => IsSpawned);
 

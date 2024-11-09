@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -11,6 +12,10 @@ public class QuickPlayScreen : UIScreen
     [SerializeField] private Button playButton;
     [SerializeField] private TMP_Text gameNameText;
     [SerializeField] private TMP_Text playText;
+
+    #region ACTION
+    public static event Action startSingleplayEvent;
+    #endregion
 
     protected override void GenerateUI()
     {
@@ -27,11 +32,16 @@ public class QuickPlayScreen : UIScreen
 
     private void RegisterButton()
     {
-        playButton.onClick.AddListener(GoToGameplay);
+        playButton.onClick.AddListener(StartSingleplay);
     }
 
     private void GoToGameplay()
     {
         Addressables.LoadSceneAsync("Gameplay");
+    }
+
+    private void StartSingleplay()
+    {
+        startSingleplayEvent?.Invoke();
     }
 }

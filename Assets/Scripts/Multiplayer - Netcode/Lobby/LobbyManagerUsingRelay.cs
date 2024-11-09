@@ -31,6 +31,7 @@ public class LobbyManagerUsingRelay : NetworkBehaviour
     {
         LobbyDetailScreen.startGameForLobbyEvent += StartGameForLobby;
         LobbyNetworkManager.startGameEvent += StartClientWithRelay;
+        QuickPlayScreen.startSingleplayEvent += StartSingleplayer;
 
         networkManager.OnClientConnectedCallback += HandleOnClientConnected;
         networkManager.OnServerStarted += OnHostStarted;
@@ -43,10 +44,16 @@ public class LobbyManagerUsingRelay : NetworkBehaviour
     {
         LobbyDetailScreen.startGameForLobbyEvent -= StartGameForLobby;
         LobbyNetworkManager.startGameEvent -= StartClientWithRelay;
+        QuickPlayScreen.startSingleplayEvent -= StartSingleplayer;
 
         networkManager.OnClientConnectedCallback -= HandleOnClientConnected;
         networkManager.OnServerStarted -= OnHostStarted;
         networkManager.OnClientStarted -= OnClientStarted;
+    }
+
+    private void StartSingleplayer()
+    {
+        StartHostWithRelay("Singleplay");
     }
 
     private void StartGameForLobby(string lobbyId)
