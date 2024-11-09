@@ -14,13 +14,12 @@ public class CharacterHeadIKController : MonoBehaviour
 
             mouseScreenPosition.z = Camera.main.nearClipPlane;
 
-            Debug.Log(mouseScreenPosition);
-
             Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
 
             mouseWorldPosition.z = source.position.z;
 
             source.position = mouseWorldPosition;
         }
+        // useGUILayout render texture to render mesh on canvas
     }
 }
