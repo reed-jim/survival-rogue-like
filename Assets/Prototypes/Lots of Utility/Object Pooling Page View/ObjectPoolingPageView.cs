@@ -70,7 +70,10 @@ public class ObjectPoolingPageView : MonoBehaviour
         await Task.Delay(2);
         GenerateUI();
         RegisterButton();
+    }
 
+    private void OnEnable()
+    {
         SetUpPage();
     }
 
