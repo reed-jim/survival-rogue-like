@@ -32,15 +32,16 @@ public class StatDisplaySlot : MonoBehaviour
 
     private void GenerateUI(RectTransform parentContainer, int slotIndex)
     {
-        UIUtil.SetSize(container, 0.4f * parentContainer.sizeDelta.x, 0.8f * parentContainer.sizeDelta.y);
-        UIUtil.SetLocalPositionOfRectToAnotherRectHorizontally(container, parentContainer, -0.6f * (1 - 2 * slotIndex), 0);
+        // UIUtil.SetSize(container, 0.3f * parentContainer.sizeDelta.x, 0.9f * parentContainer.sizeDelta.y);
+        // UIUtil.SetLocalPositionOfRectToAnotherRectHorizontally(container, parentContainer, -0.5f * (1 - 2 * slotIndex), 0);
 
         UIUtil.SetSizeKeepRatioX(iconBackground, 1.3f * container.sizeDelta.y);
-        UIUtil.SetLocalPositionOfRectToAnotherRectHorizontally(iconBackground, container, 0, -0.5f);
+        UIUtil.SetLocalPositionX(iconBackground, -0.15f * container.sizeDelta.x);
 
         UIUtil.SetSizeKeepRatioX(icon, 0.5f * container.sizeDelta.y);
 
         UIUtil.SetSize(valueTextRT, 0.5f * container.sizeDelta.x, 0.8f * container.sizeDelta.y);
+        UIUtil.SetLocalPositionX(valueTextRT, 0.15f * container.sizeDelta.x);
         // UIUtil.SetLocalPositionOfRectToAnotherRectHorizontally(valueText, container, -0.4f, 0.4f);
     }
 

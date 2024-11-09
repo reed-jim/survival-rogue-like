@@ -10,7 +10,7 @@ public class EquipmentSkillObserver : ScriptableObject
 {
     [SerializeField] private List<OwnedEquipmentData> equippedItemDatum;
     [SerializeField] private List<OwnedEquipmentData> ownedItemDatum;
-    [SerializeField] private List<BaseSkill> _skillFromEquipments;
+    private List<BaseSkill> _skillFromEquipments;
 
     [SerializeField] private EquipmentSlotDataContainer equipmentSlotDataContainer;
 
