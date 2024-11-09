@@ -10,6 +10,7 @@ TagManager:
   - FxTemporaire
   - Melee Attack
   - Enemy Bullet
+  - ExperienceShard
   layers:
   - Default
   - TransparentFX
