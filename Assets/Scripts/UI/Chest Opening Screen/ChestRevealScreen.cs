@@ -22,6 +22,7 @@ public class ChestRevealScreen : MonoBehaviour
     [SerializeField] private EquipmentPool equipmentPool;
     [SerializeField] private EquipmentVisualProvider equipmentVisualProvider;
     [SerializeField] private EquipmentSkillObserver equipmentSkillObserver;
+    [SerializeField] private SkillContainer skillContainer;
 
     private Vector2 _canvasSize;
 
@@ -67,7 +68,7 @@ public class ChestRevealScreen : MonoBehaviour
 
         ownedEquipmentData.Name = randomEquipment.EquipmentName;
         ownedEquipmentData.IconIndex = randomEquipment.IconIndex;
-        ownedEquipmentData.Skill = randomEquipment.Skill;
+        ownedEquipmentData.SkillIndexInContainer = skillContainer.GetSkillIndex(randomEquipment.Skill);
         ownedEquipmentData.Rarity = Random.Range(0, 5);
 
         UpdateUI(ownedEquipmentData);

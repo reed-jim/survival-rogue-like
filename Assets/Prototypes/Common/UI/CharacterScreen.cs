@@ -39,11 +39,14 @@ public class CharacterScreen : UIScreen
 
         UIUtil.SetSize(equipmentContainer, _canvasSize.x - 2 * padding, 0.35f * _canvasSize.y);
         UIUtil.SetSize(statDisplayContainer, equipmentContainer.sizeDelta.x, 0.05f * _canvasSize.y);
-        UIUtil.SetSize(inventoryContainer, equipmentContainer.sizeDelta);
+        UIUtil.SetSize(inventoryContainer, _canvasSize.x, 0.4f * _canvasSize.y);
 
-        UIUtil.SetLocalPositionY(equipmentContainer, 0.5f * (_canvasSize.y - equipmentContainer.sizeDelta.y) - padding);
-        UIUtil.SetLocalPositionY(statDisplayContainer, equipmentContainer.localPosition.y - 0.5f * (statDisplayContainer.sizeDelta.y + equipmentContainer.sizeDelta.y) - padding);
-        UIUtil.SetLocalPositionY(inventoryContainer, statDisplayContainer.localPosition.y - 0.5f * (inventoryContainer.sizeDelta.y + statDisplayContainer.sizeDelta.y) - padding);
+        // UIUtil.SetLocalPositionY(equipmentContainer, 0.5f * (_canvasSize.y - equipmentContainer.sizeDelta.y) - padding);
+        // UIUtil.SetLocalPositionY(statDisplayContainer, equipmentContainer.localPosition.y - 0.5f * (statDisplayContainer.sizeDelta.y + equipmentContainer.sizeDelta.y) - padding);
+        // UIUtil.SetLocalPositionY(inventoryContainer, statDisplayContainer.localPosition.y - 0.5f * (inventoryContainer.sizeDelta.y + statDisplayContainer.sizeDelta.y) - padding);
+        UIUtil.SetLocalPositionOfRectToAnotherRectVertically(inventoryContainer, canvas, 0.5f, -0.5f);
+        UIUtil.SetLocalPositionY(statDisplayContainer, inventoryContainer.localPosition.y + 0.5f * (inventoryContainer.sizeDelta.y + statDisplayContainer.sizeDelta.y) + padding);
+        UIUtil.SetLocalPositionY(equipmentContainer, statDisplayContainer.localPosition.y + 0.5f * (statDisplayContainer.sizeDelta.y + equipmentContainer.sizeDelta.y) + padding);
 
         UIUtil.SetSize(attackDisplaySlotRT, 0.3f * statDisplayContainer.sizeDelta.x, statDisplayContainer.sizeDelta.y);
         UIUtil.SetSize(hpDisplaySlotRT, 0.3f * statDisplayContainer.sizeDelta.x, statDisplayContainer.sizeDelta.y);

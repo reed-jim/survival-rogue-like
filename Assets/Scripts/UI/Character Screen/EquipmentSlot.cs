@@ -50,6 +50,8 @@ public class EquipmentSlot : MonoBehaviour, ISaferioPageViewSlot
             icon.sprite = iconSprite;
 
             UIUtil.SetSizeKeepRatioX(iconRT, 0.5f * container.sizeDelta.y);
+
+            _equipmentSlotData = equipmentSkillObserver.OwnedItemDatum[slotIndex];
         }
         else
         {

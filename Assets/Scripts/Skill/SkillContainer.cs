@@ -22,6 +22,19 @@ public class SkillContainer : ScriptableObject
         allSkills = new List<BaseSkill>();
     }
 
+    public int GetSkillIndex(BaseSkill skill)
+    {
+        for (int i = 0; i < allSkills.Count; i++)
+        {
+            if (skill == allSkills[i])
+            {
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
     private void OnValidate()
     {
         // if (allSkills != null)

@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cb5ef8585873749924177dc101632e, type: 3}
   m_Name: Equipment Skill Observer
   m_EditorClassIdentifier: 
-  equippedItemDatum: []
-  _skillFromEquipments: []
   equipmentSlotDataContainer: {fileID: 11400000, guid: dc59502b4bd02974fbe3d8aa86d64bac,
     type: 2}
+  skillContainer: {fileID: 11400000, guid: 63adb602eef772447b4018d5bf5757d0, type: 2}

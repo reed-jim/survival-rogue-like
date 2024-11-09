@@ -536,6 +536,7 @@ MonoBehaviour:
     type: 2}
   equipmentSkillObserver: {fileID: 11400000, guid: bc2515bc63270964590fbb1626b8e4f2,
     type: 2}
+  skillContainer: {fileID: 11400000, guid: 63adb602eef772447b4018d5bf5757d0, type: 2}
 --- !u!222 &1602447809870268328
 CanvasRenderer:
   m_ObjectHideFlags: 0

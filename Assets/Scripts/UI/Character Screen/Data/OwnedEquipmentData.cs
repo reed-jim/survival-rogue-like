@@ -6,8 +6,15 @@ public class OwnedEquipmentData
 {
     private string _name;
     private int iconIndex;
-    private BaseSkill skill;
+    // save index because JSON can't serialize interface ISkill, save as BaseSkill is not work too because when loaded from JSON, child class
+    // will be casted to BaseSkill
+    private int skillIndexInContainer;
     private int _rarity;
+
+    public BaseSkill GetSkill(SkillContainer skillContainer)
+    {
+        return skillContainer.AllSkills[skillIndexInContainer];
+    }
 
     public string Name
     {
@@ -21,10 +28,10 @@ public class OwnedEquipmentData
         set => iconIndex = value;
     }
 
-    public BaseSkill Skill
+    public int SkillIndexInContainer
     {
-        get => skill;
-        set => skill = value;
+        get => skillIndexInContainer;
+        set => skillIndexInContainer = value;
     }
 
     public int Rarity

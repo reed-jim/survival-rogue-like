@@ -13,6 +13,7 @@ public class EquipmentSkillObserver : ScriptableObject
     private List<BaseSkill> _skillFromEquipments;
 
     [SerializeField] private EquipmentSlotDataContainer equipmentSlotDataContainer;
+    [SerializeField] private SkillContainer skillContainer;
 
     public List<OwnedEquipmentData> OwnedItemDatum
     {
@@ -44,7 +45,7 @@ public class EquipmentSkillObserver : ScriptableObject
 
         equippedItemDatum.Add(ownedEquipmentData);
 
-        _skillFromEquipments = equippedItemDatum.Select(e => e.Skill).ToList();
+        _skillFromEquipments = equippedItemDatum.Select(e => e.GetSkill(skillContainer)).ToList();
 
         SaveEquippedItems();
 
@@ -60,7 +61,7 @@ public class EquipmentSkillObserver : ScriptableObject
 
         ownedItemDatum.Add(ownedEquipmentData);
 
-        _skillFromEquipments = ownedItemDatum.Select(e => e.Skill).ToList();
+        _skillFromEquipments = ownedItemDatum.Select(e => e.GetSkill(skillContainer)).ToList();
 
         SaveEquippedItems();
 

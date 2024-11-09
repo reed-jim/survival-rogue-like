@@ -28,6 +28,7 @@ public class EquipmentDetail : MonoBehaviour
     [Header("SCRIPTABLE OBJECTS")]
     [SerializeField] private EquipmentSkillObserver equipmentSkillObserver;
     [SerializeField] private EquipmentVisualProvider equipmentVisualProvider;
+    [SerializeField] private SkillContainer skillContainer;
 
     #region PRIVATE FIELD
     private Vector2 _canvasSize;
@@ -95,11 +96,11 @@ public class EquipmentDetail : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        icon.sprite = equipmentVisualProvider.EquipmentSprites[data.IconIndex];;
+        icon.sprite = equipmentVisualProvider.EquipmentSprites[data.IconIndex]; ;
 
         equipmentName.text = data.Name;
 
-        description.text = data.Skill.GetDescription();
+        description.text = data.GetSkill(skillContainer).GetDescription();
 
         _data = data;
     }

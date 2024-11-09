@@ -3757,7 +3757,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 104559007}
-  - {fileID: 1484273440}
   - {fileID: 2095671998}
   - {fileID: 2018422610}
   - {fileID: 7530598963524198945}
@@ -3767,6 +3766,7 @@ RectTransform:
   - {fileID: 2121034144}
   - {fileID: 2085211}
   - {fileID: 1841214865}
+  - {fileID: 1484273440}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4805,16 +4805,6 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1714769233}
-    - target: {fileID: 6603499460869104890, guid: 9cc912236bab240488608f8ca087c3da,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7263178555657408619, guid: 9cc912236bab240488608f8ca087c3da,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

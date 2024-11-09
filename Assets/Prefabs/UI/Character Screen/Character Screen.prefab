@@ -180,7 +180,9 @@ MonoBehaviour:
   equipButton: {fileID: 547951737508990441}
   equipmentSkillObserver: {fileID: 11400000, guid: bc2515bc63270964590fbb1626b8e4f2,
     type: 2}
-  equipmentVisualProvider: {fileID: 0}
+  equipmentVisualProvider: {fileID: 11400000, guid: b497387059a08ec46a2a7d94c593bd39,
+    type: 2}
+  skillContainer: {fileID: 11400000, guid: 63adb602eef772447b4018d5bf5757d0, type: 2}
 --- !u!222 &4462576812729982773
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1927,7 +1929,7 @@ PrefabInstance:
     - target: {fileID: 2081290249869995744, guid: a2ce9b4638d99f141a2004cb3dbae3c0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2235543652142150874, guid: a2ce9b4638d99f141a2004cb3dbae3c0,
         type: 3}
@@ -1952,7 +1954,7 @@ PrefabInstance:
     - target: {fileID: 2561866332930562673, guid: a2ce9b4638d99f141a2004cb3dbae3c0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4677496760179272242, guid: a2ce9b4638d99f141a2004cb3dbae3c0,
         type: 3}
