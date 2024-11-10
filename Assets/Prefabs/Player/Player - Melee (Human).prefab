@@ -15226,7 +15226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2052767426
+  GlobalObjectIdHash: 1820231004
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -15289,6 +15289,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStat: {fileID: 11400000, guid: 251d8705557e51a4f9b85ca8f88a7aa4, type: 2}
+  equipmentSkillObserver: {fileID: 11400000, guid: bc2515bc63270964590fbb1626b8e4f2,
+    type: 2}
 --- !u!114 &3534123214689109001
 MonoBehaviour:
   m_ObjectHideFlags: 0

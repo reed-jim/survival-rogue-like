@@ -11,6 +11,9 @@ public class PlayerStatManager : CharacterStatManager
 
     public override CharacterStat Stat { get => _playerStat; }
 
+    [Header("SCRIPTABLE OBJECT")]
+    [SerializeField] private EquipmentSkillObserver equipmentSkillObserver;
+
     #region ACTION
     public static event Action<int, PlayerStat> addPlayerStatToListEvent;
     public static event Action<float, float> setPlayerHpEvent;
@@ -34,6 +37,8 @@ public class PlayerStatManager : CharacterStatManager
 
         _playerStat = new PlayerStat(characterStat);
 
+        AddSkillFromEquipments();
+
         Tween.Delay(0.5f).OnComplete(() =>
         {
             addPlayerStatToListEvent?.Invoke(gameObject.GetInstanceID(), _playerStat);
@@ -42,6 +47,19 @@ public class PlayerStatManager : CharacterStatManager
 
             InvokeUpdateHPBarEvent(health.BaseValue);
         });
+    }
+
+    private void AddSkillFromEquipments()
+    {
+        foreach (var skill in equipmentSkillObserver.SkillFromEquipments)
+        {
+            if (skill is IModifierSkill modifierSkill)
+            {
+                Debug.Log(skill);
+
+                _playerStat += modifierSkill.GetBonusStat();
+            }
+        }
     }
 
     protected override void MinusHP(int damage)
