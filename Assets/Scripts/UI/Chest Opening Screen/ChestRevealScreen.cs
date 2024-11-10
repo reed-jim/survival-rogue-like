@@ -70,6 +70,7 @@ public class ChestRevealScreen : MonoBehaviour
         ownedEquipmentData.IconIndex = randomEquipment.IconIndex;
         ownedEquipmentData.SkillIndexInContainer = skillContainer.GetSkillIndex(randomEquipment.Skill);
         ownedEquipmentData.Rarity = Random.Range(0, 5);
+        ownedEquipmentData.Level = 1;
 
         UpdateUI(ownedEquipmentData);
 

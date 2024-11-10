@@ -29,6 +29,35 @@ public class CharacterScreen : UIScreen
     private RectTransform[] _slot;
     #endregion
 
+    public override void RegisterEvent()
+    {
+        base.RegisterEvent();
+
+        EquipmentDetail.refreshCharacterScreenEvent += UpdateState;
+    }
+
+    public override void UnregisterEvent()
+    {
+        base.UnregisterEvent();
+
+        EquipmentDetail.refreshCharacterScreenEvent -= UpdateState;
+    }
+
+    public override void UpdateState()
+    {
+        if (equipmentSkillObserver.EquippedItemDatum == null)
+        {
+            return;
+        }
+
+        List<OwnedEquipmentData> equipmentItemDatum = equipmentSkillObserver.EquippedItemDatum;
+
+        for (int i = 0; i < equipmentItemDatum.Count; i++)
+        {
+            _slot[i].GetComponent<EquippedItemSlot>().Setup(equipmentItemDatum[i]);
+        }
+    }
+
     protected override void GenerateUI()
     {
         base.GenerateUI();
@@ -81,19 +110,7 @@ public class CharacterScreen : UIScreen
             }
         }
 
-        // List<OwnedEquipmentData> ownedEquipmentsData = equipmentSkillObserver.OwnedItemDatum;
-
-        // for (int i = 0; i < ownedEquipmentsData.Count; i++)
-        // {
-        //     _slot[i].GetComponent<EquippedItemSlot>().Setup(ownedEquipmentsData[i]);
-        // }
-
         attackDisplaySlot.Setup(statDisplayContainer, 0);
         hpDisplaySlot.Setup(statDisplayContainer, 1);
-    }
-
-    private void Reset()
-    {
-
     }
 }

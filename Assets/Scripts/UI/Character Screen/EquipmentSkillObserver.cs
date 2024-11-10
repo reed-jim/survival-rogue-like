@@ -176,7 +176,7 @@ public class EquipmentSkillObserver : ScriptableObject
             }
             catch (Exception e)
             {
-
+                
             }
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using ReedJim.RPG.Stat;
@@ -36,6 +37,10 @@ public class EquipmentDetail : MonoBehaviour
     #region PRIVATE FIELD
     private Vector2 _canvasSize;
     private OwnedEquipmentData _data;
+    #endregion
+
+    #region ACTION
+    public static event Action refreshCharacterScreenEvent;
     #endregion
 
     private void Awake()
@@ -129,5 +134,7 @@ public class EquipmentDetail : MonoBehaviour
     private void Equip()
     {
         equipmentSkillObserver.AddEquippedItem(_data);
+
+        refreshCharacterScreenEvent?.Invoke();
     }
 }

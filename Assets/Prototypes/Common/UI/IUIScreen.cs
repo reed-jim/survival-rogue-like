@@ -6,4 +6,5 @@ public interface IUIScreen
 {
     public void Show();
     public void Hide();
+    public void UpdateState();
 }

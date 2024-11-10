@@ -6,10 +6,13 @@ public class OwnedEquipmentData
 {
     private string _name;
     private int iconIndex;
+    private int _rarity;
+    private int _level;
+
     // save index because JSON can't serialize interface ISkill, save as BaseSkill is not work too because when loaded from JSON, child class
     // will be casted to BaseSkill
     private int skillIndexInContainer;
-    private int _rarity;
+
 
     public BaseSkill GetSkill(SkillContainer skillContainer)
     {
@@ -38,5 +41,11 @@ public class OwnedEquipmentData
     {
         get => _rarity;
         set => _rarity = value;
+    }
+
+    public int Level
+    {
+        get => _level;
+        set => _level = value;
     }
 }

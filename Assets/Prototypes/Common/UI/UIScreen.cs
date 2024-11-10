@@ -36,10 +36,10 @@ public class UIScreen : MonoBehaviour, IUIScreen, ISubcriber
         }
     }
 
-    // private void OnEnable()
-    // {
-    //     Show();
-    // }
+    private void OnEnable()
+    {
+        UpdateState();
+    }
 
     private void OnDestroy()
     {
@@ -67,6 +67,11 @@ public class UIScreen : MonoBehaviour, IUIScreen, ISubcriber
     public virtual void Show()
     {
         new UISlideHorizontal().SlideIn(container, container.localPosition.x, _canvasSize.x);
+    }
+
+    public virtual void UpdateState()
+    {
+
     }
     #endregion
 
