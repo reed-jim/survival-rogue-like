@@ -15,3 +15,5 @@ MonoBehaviour:
   equipmentSlotDataContainer: {fileID: 11400000, guid: dc59502b4bd02974fbe3d8aa86d64bac,
     type: 2}
   skillContainer: {fileID: 11400000, guid: 63adb602eef772447b4018d5bf5757d0, type: 2}
+  defaultCharacterStat: {fileID: 11400000, guid: 251d8705557e51a4f9b85ca8f88a7aa4,
+    type: 2}

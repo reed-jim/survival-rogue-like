@@ -15,22 +15,30 @@ public class EquipmentSkillObserver : ScriptableObject
     [SerializeField] private EquipmentSlotDataContainer equipmentSlotDataContainer;
     [SerializeField] private SkillContainer skillContainer;
 
+    #region CHARACTER STAT
+    [Header("CHARACTER STAT")]
+    [SerializeField] private PredifinedCharacterStat defaultCharacterStat;
+    private CharacterStat _playerStat;
+    #endregion
+
+    #region PROPERTY
     public List<OwnedEquipmentData> OwnedItemDatum
     {
         get => ownedItemDatum;
         set => ownedItemDatum = value;
     }
 
-    // public List<OwnedEquipmentData> EquippedItemDatum
-    // {
-    //     get => LoadEquippedItems();
-    //     // set => equippedItemDatum = value;
-    // }
+    public List<OwnedEquipmentData> EquippedItemDatum
+    {
+        get => equippedItemDatum;
+        set => equippedItemDatum = value;
+    }
 
     public List<BaseSkill> SkillFromEquipments
     {
         get => _skillFromEquipments; set => _skillFromEquipments = value;
     }
+    #endregion
 
     #region ACTION
     public static event Action<string, float> updateCharacterStatDisplayEvent;
@@ -49,7 +57,7 @@ public class EquipmentSkillObserver : ScriptableObject
 
         SaveEquippedItems();
 
-        UpdateCharacterStat();
+        UpdateCharacterStat(_skillFromEquipments);
     }
 
     public void AddOwnedItem(OwnedEquipmentData ownedEquipmentData)
@@ -63,9 +71,7 @@ public class EquipmentSkillObserver : ScriptableObject
 
         _skillFromEquipments = ownedItemDatum.Select(e => e.GetSkill(skillContainer)).ToList();
 
-        SaveEquippedItems();
-
-        UpdateCharacterStat();
+        SaveOwnedItems();
     }
 
     // public List<EquipmentData> LoadEquippedItems()
@@ -82,16 +88,54 @@ public class EquipmentSkillObserver : ScriptableObject
     //     return equippedItems;
     // }
 
+    public void Load()
+    {
+        _playerStat = DataUtility.Load(Constants.STAT_DATA_FILE_NAME, Constants.PLAYER_TAG, defaultCharacterStat.GetBaseCharacterStat());
+
+        LoadOwnedItems();
+        LoadEquippedItems();
+    }
+
     public List<OwnedEquipmentData> LoadOwnedItems()
     {
         ownedItemDatum = DataUtility.Load<List<OwnedEquipmentData>>(Constants.STAT_DATA_FILE_NAME, Constants.OWNED_EQUIPMENTS, null);
 
+        if (ownedItemDatum == null)
+        {
+            return null;
+        }
+
+        _skillFromEquipments = ownedItemDatum.Select(e => e.GetSkill(skillContainer)).ToList();
+
+        UpdateCharacterStat(_skillFromEquipments);
+
         return ownedItemDatum;
+    }
+
+    public List<OwnedEquipmentData> LoadEquippedItems()
+    {
+        equippedItemDatum = DataUtility.Load<List<OwnedEquipmentData>>(Constants.STAT_DATA_FILE_NAME, Constants.EQUIPPED_EQUIPMENTS, null);
+
+        if (equippedItemDatum == null)
+        {
+            return null;
+        }
+
+        _skillFromEquipments = equippedItemDatum.Select(e => e.GetSkill(skillContainer)).ToList();
+
+        UpdateCharacterStat(_skillFromEquipments);
+
+        return equippedItemDatum;
+    }
+
+    private void SaveOwnedItems()
+    {
+        DataUtility.Save(Constants.STAT_DATA_FILE_NAME, Constants.OWNED_EQUIPMENTS, ownedItemDatum.ToArray());
     }
 
     private void SaveEquippedItems()
     {
-        DataUtility.Save(Constants.STAT_DATA_FILE_NAME, Constants.OWNED_EQUIPMENTS, ownedItemDatum.ToArray());
+        DataUtility.Save(Constants.STAT_DATA_FILE_NAME, Constants.EQUIPPED_EQUIPMENTS, equippedItemDatum.ToArray());
     }
 
     // public void Add(BaseSkill skill)
@@ -106,11 +150,11 @@ public class EquipmentSkillObserver : ScriptableObject
     //     UpdateCharacterStat();
     // }
 
-    private void UpdateCharacterStat()
+    private void UpdateCharacterStat(List<BaseSkill> skillFromEquipments)
     {
-        CharacterStat characterStat = new CharacterStat();
+        CharacterStat characterStat = _playerStat;
 
-        foreach (var skill in _skillFromEquipments)
+        foreach (var skill in skillFromEquipments)
         {
             try
             {

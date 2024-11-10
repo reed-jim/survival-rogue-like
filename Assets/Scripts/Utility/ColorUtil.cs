@@ -53,20 +53,22 @@ public static class ColorUtil
 
     public static Color GetColorFromHex(string hex)
     {
-        if (hex.Length < 6)
+        string validatedHex = hex.Replace("#", "");
+
+        if (validatedHex.Length < 6)
         {
             throw new System.FormatException("Needs a string with a length of at least 6");
         }
 
-        var r = hex.Substring(0, 2);
-        var g = hex.Substring(2, 2);
-        var b = hex.Substring(4, 2);
+        var r = validatedHex.Substring(0, 2);
+        var g = validatedHex.Substring(2, 2);
+        var b = validatedHex.Substring(4, 2);
 
         string alpha;
 
-        if (hex.Length >= 8)
+        if (validatedHex.Length >= 8)
         {
-            alpha = hex.Substring(6, 2);
+            alpha = validatedHex.Substring(6, 2);
         }
         else
         {
@@ -82,4 +84,15 @@ public static class ColorUtil
             int.Parse(alpha, NumberStyles.HexNumber) / 255f
         );
     }
+
+    #region MATH
+    public static Color Multiply(this Color color, float multiplier)
+    {
+        Color finalColor = color * multiplier;
+
+        finalColor.a = color.a;
+
+        return finalColor;
+    }
+    #endregion
 }

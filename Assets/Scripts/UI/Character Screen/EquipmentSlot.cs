@@ -9,6 +9,7 @@ public class EquipmentSlot : MonoBehaviour, ISaferioPageViewSlot
     [SerializeField] private RectTransform container;
     [SerializeField] private RectTransform iconRT;
 
+    [SerializeField] private Image containerImage;
     [SerializeField] private Image icon;
     [SerializeField] private Button selectButton;
 
@@ -38,16 +39,13 @@ public class EquipmentSlot : MonoBehaviour, ISaferioPageViewSlot
         {
             equipmentSkillObserver.OwnedItemDatum = new List<OwnedEquipmentData>();
         }
-        
+
         if (slotIndex < equipmentSkillObserver.OwnedItemDatum.Count)
         {
             gameObject.SetActive(true);
 
-            int iconIndex = equipmentSkillObserver.OwnedItemDatum[slotIndex].IconIndex;
-
-            Sprite iconSprite = equipmentVisualProvider.EquipmentSprites[iconIndex];
-
-            icon.sprite = iconSprite;
+            containerImage.color = ColorUtil.GetColorFromHex(SurvivoriumTheme.RARITY_COLORs[equipmentSkillObserver.OwnedItemDatum[slotIndex].Rarity]);
+            icon.sprite = GetIconSprite(slotIndex);
 
             UIUtil.SetSizeKeepRatioX(iconRT, 0.5f * container.sizeDelta.y);
 
@@ -57,6 +55,13 @@ public class EquipmentSlot : MonoBehaviour, ISaferioPageViewSlot
         {
             gameObject.SetActive(false);
         }
+    }
+
+    private Sprite GetIconSprite(int slotIndex)
+    {
+        int iconIndex = equipmentSkillObserver.OwnedItemDatum[slotIndex].IconIndex;
+
+        return equipmentVisualProvider.EquipmentSprites[iconIndex];
     }
 
     private void RegisterButton()

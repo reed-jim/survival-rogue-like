@@ -8,6 +8,6 @@ public class DataLoader : MonoBehaviour
 
     private void Awake()
     {
-        equipmentSkillObserver.LoadOwnedItems();
+        equipmentSkillObserver.Load();
     }
 }

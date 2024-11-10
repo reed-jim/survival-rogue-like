@@ -14,6 +14,7 @@ public class EquipmentDetail : MonoBehaviour
     [SerializeField] private RectTransform iconBackgroundRT;
     [SerializeField] private RectTransform iconRT;
     [SerializeField] private RectTransform equipmentNameRT;
+    [SerializeField] private RectTransform tagRarityRT;
     [SerializeField] private RectTransform descriptionBackground;
     [SerializeField] private RectTransform descriptionRT;
     [SerializeField] private RectTransform closeButtonRT;
@@ -21,6 +22,8 @@ public class EquipmentDetail : MonoBehaviour
 
     [SerializeField] private Image icon;
     [SerializeField] private TMP_Text equipmentName;
+    [SerializeField] private Image rarirtyTag;
+    [SerializeField] private TMP_Text rarirtyText;
     [SerializeField] private TMP_Text description;
     [SerializeField] private Button closeButton;
     [SerializeField] private Button equipButton;
@@ -66,7 +69,7 @@ public class EquipmentDetail : MonoBehaviour
 
     private void GenerateUI()
     {
-        UIUtil.SetSize(container, 0.75f * _canvasSize.x, 0.6f * _canvasSize.y);
+        UIUtil.SetSize(container, 0.8f * _canvasSize.x, 0.7f * _canvasSize.y);
 
         UIUtil.SetSize(fadeBackground, _canvasSize);
 
@@ -79,6 +82,10 @@ public class EquipmentDetail : MonoBehaviour
         UIUtil.SetLocalPositionOfRectToAnotherRect(equipmentNameRT, container, new Vector2(-0.5f, -0.5f), new Vector2(0.45f, 0.4f));
         UIUtil.SetLocalPositionY(equipmentNameRT, iconBackgroundRT.localPosition.y);
 
+        UIUtil.SetSize(tagRarityRT, iconBackgroundRT.sizeDelta.x, 0.25f * iconBackgroundRT.sizeDelta.y);
+        UIUtil.SetLocalPositionOfRectToAnotherRectVertically(tagRarityRT, iconBackgroundRT, 0.5f, -0.5f);
+        UIUtil.SetLocalPositionX(tagRarityRT, equipmentNameRT.localPosition.x);
+
         UIUtil.SetSize(descriptionBackground, 0.9f * container.sizeDelta.x, 0.6f * container.sizeDelta.y);
         UIUtil.SetLocalPositionOfRectToAnotherRectVertically(descriptionBackground, container, 0.5f, -0.45f);
         UIUtil.SetLocalPositionX(descriptionBackground, 0);
@@ -90,6 +97,10 @@ public class EquipmentDetail : MonoBehaviour
 
         UIUtil.SetSize(equipButtonRT, 0.5f * container.sizeDelta.x, 0.2f * container.sizeDelta.x);
         UIUtil.SetLocalPositionOfRectToAnotherRectVertically(equipButtonRT, container, 0, -0.5f);
+
+        UIUtil.SetFontSizeOnly(equipmentName, 0.025f * _canvasSize.y);
+        UIUtil.SetFontSizeOnly(rarirtyText, 0.02f * _canvasSize.y);
+        UIUtil.SetFontSizeOnly(description, 0.02f * _canvasSize.y);
     }
 
     private void Show(OwnedEquipmentData data)
@@ -99,8 +110,13 @@ public class EquipmentDetail : MonoBehaviour
         icon.sprite = equipmentVisualProvider.EquipmentSprites[data.IconIndex]; ;
 
         equipmentName.text = data.Name;
-
+        rarirtyText.text = $"{(RarityTier)(data.Rarity)}";
         description.text = data.GetSkill(skillContainer).GetDescription();
+
+        Color rarityColor = ColorUtil.GetColorFromHex(SurvivoriumTheme.RARITY_COLORs[data.Rarity]);
+
+        rarirtyText.color = rarityColor;
+        rarirtyTag.color = rarityColor.Multiply(0.3f);
 
         _data = data;
     }

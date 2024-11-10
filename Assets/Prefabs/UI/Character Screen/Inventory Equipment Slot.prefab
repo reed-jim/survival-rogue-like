@@ -55,6 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 8505946110332760973}
   iconRT: {fileID: 3767080326735430145}
+  containerImage: {fileID: 9012858257517636961}
   icon: {fileID: 2035871412450372160}
   selectButton: {fileID: 7277476479660161558}
   equipmentPool: {fileID: 11400000, guid: 4d1b30a3dd7ba9846b6b51ffbc917c46, type: 2}
