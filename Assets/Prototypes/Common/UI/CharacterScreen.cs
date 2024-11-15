@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +28,7 @@ public class CharacterScreen : UIScreen
 
     #region PRIVATE FIELD
     private RectTransform[] _slot;
+    private EquippedItemSlot[] _equippedItemSlots;
     #endregion
 
     public override void RegisterEvent()
@@ -54,7 +56,7 @@ public class CharacterScreen : UIScreen
 
         for (int i = 0; i < equipmentItemDatum.Count; i++)
         {
-            _slot[i].GetComponent<EquippedItemSlot>().Setup(equipmentItemDatum[i]);
+            _equippedItemSlots[i].Setup(equipmentItemDatum[i]);
         }
     }
 
@@ -63,6 +65,7 @@ public class CharacterScreen : UIScreen
         base.GenerateUI();
 
         _slot = new RectTransform[numSlot];
+        _equippedItemSlots = new EquippedItemSlot[numSlot];
 
         float padding = SurvivoriumUIConstant.PADDING;
 
@@ -88,6 +91,7 @@ public class CharacterScreen : UIScreen
         for (int i = 0; i < numSlot; i++)
         {
             _slot[i] = Instantiate(slotPrefab, slotContainer);
+            _equippedItemSlots[i] = _slot[i].GetComponent<EquippedItemSlot>();
 
             UIUtil.SetSize(_slot[i], slotSize * Vector3.one);
 

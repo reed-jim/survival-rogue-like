@@ -6,15 +6,25 @@ public class CharacterHeadIKController : MonoBehaviour
 {
     [SerializeField] private Transform source;
 
+    private Camera _mainCamera;
+
+    private void Awake()
+    {
+        _mainCamera = Camera.main;
+    }
+
     private void Update()
     {
         if (Input.GetMouseButton(0))
         {
             Vector3 mouseScreenPosition = Input.mousePosition;
 
-            mouseScreenPosition.z = Camera.main.nearClipPlane;
+            mouseScreenPosition.z = -_mainCamera.transform.position.z;
 
-            Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+            Vector3 mouseWorldPosition = _mainCamera.ScreenToWorldPoint(mouseScreenPosition);
+
+            // camera offset, because the camera is not at (0, 0, 0)
+            mouseWorldPosition -= _mainCamera.transform.position;
 
             mouseWorldPosition.z = source.position.z;
 
