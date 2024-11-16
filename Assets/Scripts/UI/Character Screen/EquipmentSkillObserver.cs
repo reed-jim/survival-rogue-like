@@ -185,7 +185,6 @@ public class EquipmentSkillObserver : ScriptableObject
                 {
                     if (characterStat.StatComponents.ContainsKey(statComponent.Key))
                     {
-                        DebugUtil.DistinctLog(statComponent.Key + "/" + statComponent.Value.BaseValue + "/" + characterStat.GetStatBaseValue(statComponent.Key));
                         characterStat.ModifyStat(statComponent.Key, flatStatModifier, statComponent.Value.BaseValue);
                     }
                     else

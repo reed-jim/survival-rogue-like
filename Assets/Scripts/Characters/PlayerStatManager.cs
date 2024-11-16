@@ -55,8 +55,6 @@ public class PlayerStatManager : CharacterStatManager
         {
             if (skill is IModifierSkill modifierSkill)
             {
-                Debug.Log(skill);
-
                 _playerStat += modifierSkill.GetBonusStat();
             }
         }

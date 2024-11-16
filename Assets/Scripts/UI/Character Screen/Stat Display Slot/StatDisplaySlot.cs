@@ -49,7 +49,7 @@ public class StatDisplaySlot : MonoBehaviour
     {
         if (statKey == this.statKey)
         {
-            valueText.text = $"{value}";
+            valueText.text = $"{(int)value}";
         }
     }
 }
