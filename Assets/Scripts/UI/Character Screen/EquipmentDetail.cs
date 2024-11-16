@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipmentDetail : MonoBehaviour
+public class EquipmentDetail : SaferioPopup
 {
     [SerializeField] private RectTransform canvas;
     [SerializeField] private RectTransform container;
@@ -26,6 +26,7 @@ public class EquipmentDetail : MonoBehaviour
     [SerializeField] private Image rarirtyTag;
     [SerializeField] private TMP_Text rarirtyText;
     [SerializeField] private TMP_Text description;
+    [SerializeField] private TMP_Text equipButtonText;
     [SerializeField] private Button closeButton;
     [SerializeField] private Button equipButton;
 
@@ -45,7 +46,8 @@ public class EquipmentDetail : MonoBehaviour
 
     private void Awake()
     {
-        EquipmentSlot.openEquipmentDetailEvent += Show;
+        EquipmentSlot.openEquipmentDetailEvent += ShowAndRefresh;
+        EquippedItemSlot.openEquipmentDetailEvent += ShowAndRefresh;
 
         _canvasSize = canvas.sizeDelta;
 
@@ -58,7 +60,8 @@ public class EquipmentDetail : MonoBehaviour
 
     private void OnDestroy()
     {
-        EquipmentSlot.openEquipmentDetailEvent -= Show;
+        EquipmentSlot.openEquipmentDetailEvent -= ShowAndRefresh;
+        EquippedItemSlot.openEquipmentDetailEvent -= ShowAndRefresh;
     }
 
     public void Setup(OwnedEquipmentData data)
@@ -69,12 +72,11 @@ public class EquipmentDetail : MonoBehaviour
     private void RegisterButton()
     {
         closeButton.onClick.AddListener(Close);
-        equipButton.onClick.AddListener(Equip);
     }
 
     private void GenerateUI()
     {
-        UIUtil.SetSize(container, 0.8f * _canvasSize.x, 0.7f * _canvasSize.y);
+        UIUtil.SetSize(container, 0.8f * _canvasSize.x, 0.5f * _canvasSize.y);
 
         UIUtil.SetSize(fadeBackground, _canvasSize);
 
@@ -92,8 +94,8 @@ public class EquipmentDetail : MonoBehaviour
         UIUtil.SetLocalPositionX(tagRarityRT, equipmentNameRT.localPosition.x);
 
         UIUtil.SetSize(descriptionBackground, 0.9f * container.sizeDelta.x, 0.6f * container.sizeDelta.y);
-        UIUtil.SetLocalPositionOfRectToAnotherRectVertically(descriptionBackground, container, 0.5f, -0.45f);
-        UIUtil.SetLocalPositionX(descriptionBackground, 0);
+        UIUtil.SetLocalPositionY(descriptionBackground,
+            -0.5f * (container.sizeDelta.y - descriptionBackground.sizeDelta.y) + 0.05f * container.sizeDelta.x);
 
         UIUtil.SetSizeX(descriptionRT, 0.8f * container.sizeDelta.x);
 
@@ -101,16 +103,17 @@ public class EquipmentDetail : MonoBehaviour
         UIUtil.SetLocalPositionOfRectToAnotherRect(closeButtonRT, container, -new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f));
 
         UIUtil.SetSize(equipButtonRT, 0.5f * container.sizeDelta.x, 0.2f * container.sizeDelta.x);
-        UIUtil.SetLocalPositionOfRectToAnotherRectVertically(equipButtonRT, container, 0, -0.5f);
+        UIUtil.SetLocalPositionOfRectToAnotherRectVertically(equipButtonRT, container, -0.5f, -0.55f);
 
         UIUtil.SetFontSizeOnly(equipmentName, 0.025f * _canvasSize.y);
         UIUtil.SetFontSizeOnly(rarirtyText, 0.02f * _canvasSize.y);
         UIUtil.SetFontSizeOnly(description, 0.02f * _canvasSize.y);
+        UIUtil.SetFontSizeOnly(equipButtonText, 0.02f * _canvasSize.y);
     }
 
-    private void Show(OwnedEquipmentData data)
+    private void ShowAndRefresh(OwnedEquipmentData data, bool isEquip)
     {
-        gameObject.SetActive(true);
+        base.Show();
 
         icon.sprite = equipmentVisualProvider.EquipmentSprites[data.IconIndex]; ;
 
@@ -124,6 +127,19 @@ public class EquipmentDetail : MonoBehaviour
         rarirtyTag.color = rarityColor.Multiply(0.3f);
 
         _data = data;
+
+        equipButton.onClick.RemoveAllListeners();
+
+        if (isEquip)
+        {
+            equipButtonText.text = $"Equip";
+            equipButton.onClick.AddListener(Equip);
+        }
+        else
+        {
+            equipButtonText.text = $"Unequip";
+            equipButton.onClick.AddListener(Unequip);
+        }
     }
 
     private void Close()
@@ -136,5 +152,16 @@ public class EquipmentDetail : MonoBehaviour
         equipmentSkillObserver.AddEquippedItem(_data);
 
         refreshCharacterScreenEvent?.Invoke();
+
+        Close();
+    }
+
+    private void Unequip()
+    {
+        equipmentSkillObserver.UnequippedItem(_data);
+
+        refreshCharacterScreenEvent?.Invoke();
+
+        Close();
     }
 }

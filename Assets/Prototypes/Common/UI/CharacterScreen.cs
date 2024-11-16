@@ -58,6 +58,14 @@ public class CharacterScreen : UIScreen
         {
             _equippedItemSlots[i].Setup(equipmentItemDatum[i]);
         }
+
+        for (int i = 0; i < numSlot; i++)
+        {
+            if (i >= equipmentItemDatum.Count)
+            {
+                _equippedItemSlots[i].Unequip();
+            }
+        }
     }
 
     protected override void GenerateUI()

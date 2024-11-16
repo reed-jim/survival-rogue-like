@@ -22,11 +22,11 @@ public class EquippedItemSlot : MonoBehaviour
     [SerializeField] private EquipmentVisualProvider equipmentVisualProvider;
 
     #region PRIVATE FIELD
-    private EquipmentSlotData _equipmentSlotData;
+    private OwnedEquipmentData _ownedEquipmentData;
     #endregion
 
     #region ACTION
-    public static event Action<EquipmentSlotData> openEquipmentDetailEvent;
+    public static event Action<OwnedEquipmentData, bool> openEquipmentDetailEvent;
     #endregion
 
     private void Awake()
@@ -48,6 +48,17 @@ public class EquippedItemSlot : MonoBehaviour
         levelText.text = $"Lv {equipmentData.Level}";
 
         levelTextRT.gameObject.SetActive(true);
+
+        _ownedEquipmentData = equipmentData;
+    }
+
+    public void Unequip()
+    {
+        icon.gameObject.SetActive(false);
+
+        containerBackground.color = ColorUtil.GetColorFromHex(SurvivoriumTheme.DEFAULT_EQUIPMENT_SLOT_COLOR);
+
+        levelTextRT.gameObject.SetActive(false);
     }
 
     private void RegisterButton()
@@ -60,12 +71,12 @@ public class EquippedItemSlot : MonoBehaviour
         float padding = 0.2f * container.sizeDelta.y;
 
         UIUtil.SetLocalPosition(levelTextRT, 0.5f * container.sizeDelta - padding * Vector2.one);
-        
+
         levelTextRT.gameObject.SetActive(false);
     }
 
     private void Select()
     {
-        openEquipmentDetailEvent?.Invoke(_equipmentSlotData);
+        openEquipmentDetailEvent?.Invoke(_ownedEquipmentData, false);
     }
 }

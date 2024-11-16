@@ -60,6 +60,25 @@ public class EquipmentSkillObserver : ScriptableObject
         UpdateCharacterStat(_skillFromEquipments);
     }
 
+    public void UnequippedItem(OwnedEquipmentData ownedEquipmentData)
+    {
+        foreach (var item in equippedItemDatum)
+        {
+            if (item == ownedEquipmentData)
+            {
+                equippedItemDatum.Remove(item);
+
+                break;
+            }
+        }
+
+        _skillFromEquipments = equippedItemDatum.Select(e => e.GetSkill(skillContainer)).ToList();
+
+        SaveEquippedItems();
+
+        UpdateCharacterStat(_skillFromEquipments);
+    }
+
     public void AddOwnedItem(OwnedEquipmentData ownedEquipmentData)
     {
         if (ownedItemDatum == null)
@@ -166,6 +185,7 @@ public class EquipmentSkillObserver : ScriptableObject
                 {
                     if (characterStat.StatComponents.ContainsKey(statComponent.Key))
                     {
+                        DebugUtil.DistinctLog(statComponent.Key + "/" + statComponent.Value.BaseValue + "/" + characterStat.GetStatBaseValue(statComponent.Key));
                         characterStat.ModifyStat(statComponent.Key, flatStatModifier, statComponent.Value.BaseValue);
                     }
                     else
@@ -176,7 +196,7 @@ public class EquipmentSkillObserver : ScriptableObject
             }
             catch (Exception e)
             {
-                
+
             }
         }
 

@@ -40,12 +40,12 @@ public struct UISlideHorizontal : IUISlide
 
         target.localPosition = UIUtil.WithLocalPositionX(target, invisiblePosition);
 
-        Tween.LocalPositionX(target, visiblePosition, duration: 0.5f);
+        Tween.LocalPositionX(target, visiblePosition, duration: 0.3f);
     }
 
     public void SlideOut(RectTransform target, float visiblePosition, float invisiblePosition)
     {
-        Tween.LocalPositionX(target, invisiblePosition, duration: 0.5f)
+        Tween.LocalPositionX(target, invisiblePosition, duration: 0.3f)
         .OnComplete(() =>
         {
             target.localPosition = UIUtil.WithLocalPositionX(target, visiblePosition);

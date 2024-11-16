@@ -449,6 +449,7 @@ MonoBehaviour:
   upgradeButtonRT: {fileID: 1807004906301024088}
   statNameText: {fileID: 8915007127466997286}
   statValueText: {fileID: 2095093837780904475}
+  costText: {fileID: 4225912404729647737}
   upgradeButton: {fileID: 2981796402815598543}
   permanentUpgradeStatObserver: {fileID: 11400000, guid: c647131c4843b524d946f8e450982340,
     type: 2}

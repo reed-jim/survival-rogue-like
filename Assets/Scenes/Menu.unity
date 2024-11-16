@@ -292,7 +292,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &104559007
 RectTransform:
   m_ObjectHideFlags: 0
@@ -889,7 +889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &334124843
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1364,6 +1364,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 116474022}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &612631716 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1828098487006566712, guid: 9cc912236bab240488608f8ca087c3da,
+    type: 3}
+  m_PrefabInstance: {fileID: 323828623050409829}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &615566711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1883,7 +1895,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -2530,6 +2542,12 @@ MonoBehaviour:
   - m_Rig: {fileID: 1852975474}
     m_Active: 1
   m_Effectors: []
+--- !u!224 &1178029411 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7328586000836966132, guid: 9cc912236bab240488608f8ca087c3da,
+    type: 3}
+  m_PrefabInstance: {fileID: 323828623050409829}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1201292630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6061983877138398293, guid: b8a7488d12adc39498433d60811eab1a,
@@ -3789,7 +3807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1722410569
 Transform:
   m_ObjectHideFlags: 0
@@ -4800,11 +4818,196 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1714769233}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[-2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: transitionAnimationS.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: transitionAnimations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: transitionAnimationS.Array.data[0]
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: transitionAnimationS.Array.data[1]
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: transitionAnimationS.Array.data[2]
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: transitionAnimationS.Array.data[3]
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: transitionAnimationS.Array.data[4]
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: transitionAnimations.Array.data[0]
+      value: 8741647771200913499
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: transitionAnimations.Array.data[1]
+      value: 8741647771200913500
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: transitionAnimations.Array.data[2]
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913437]
+      value: Assembly-CSharp SaferioSlideAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913438]
+      value: Assembly-CSharp SaferioSlideAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913439]
+      value: Assembly-CSharp SaferioSlideAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913452]
+      value: Assembly-CSharp SaferioSlideAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913453]
+      value: Assembly-CSharp SaferioSlideAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913454]
+      value: Assembly-CSharp SaferioFadeAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913455]
+      value: Assembly-CSharp SaferioFadeAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913456]
+      value: Assembly-CSharp SaferioFadeAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913457]
+      value: Assembly-CSharp SaferioSlideAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913499]
+      value: Assembly-CSharp SaferioSlideAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913500]
+      value: Assembly-CSharp SaferioFadeAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913437].test
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913438].test
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913439].test
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913437].target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913438].target
+      value: 
+      objectReference: {fileID: 5151545403771138498}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913439].target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913452].target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913453].target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913454].target
+      value: 
+      objectReference: {fileID: 612631716}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913455].target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913456].target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913457].target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913499].target
+      value: 
+      objectReference: {fileID: 1178029411}
+    - target: {fileID: 4512210767179103475, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: managedReferences[8741647771200913500].target
+      value: 
+      objectReference: {fileID: 612631716}
     - target: {fileID: 5676310961571991862, guid: 9cc912236bab240488608f8ca087c3da,
         type: 3}
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1714769233}
+    - target: {fileID: 6685809027515243635, guid: 9cc912236bab240488608f8ca087c3da,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

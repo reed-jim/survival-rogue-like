@@ -23,7 +23,7 @@ public class EquipmentSlot : MonoBehaviour, ISaferioPageViewSlot
     #endregion
 
     #region ACTION
-    public static event Action<OwnedEquipmentData> openEquipmentDetailEvent;
+    public static event Action<OwnedEquipmentData, bool> openEquipmentDetailEvent;
     #endregion
 
     public void Setup(int slotIndex)
@@ -76,6 +76,6 @@ public class EquipmentSlot : MonoBehaviour, ISaferioPageViewSlot
 
     private void Select()
     {
-        openEquipmentDetailEvent?.Invoke(_equipmentSlotData);
+        openEquipmentDetailEvent?.Invoke(_equipmentSlotData, true);
     }
 }

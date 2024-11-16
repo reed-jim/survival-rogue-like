@@ -162,6 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d6390674f3828d4fb73026ef3d03dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transitionAnimation:
+    rid: 8741647771200913451
   canvas: {fileID: 0}
   container: {fileID: 7328586000836966132}
   fadeBackground: {fileID: 1917940460434962568}
@@ -178,6 +180,7 @@ MonoBehaviour:
   rarirtyTag: {fileID: 558801452253175879}
   rarirtyText: {fileID: 1421560481022896809}
   description: {fileID: 1279432164011799313}
+  equipButtonText: {fileID: 1596155224987876823}
   closeButton: {fileID: 2980358405362050623}
   equipButton: {fileID: 547951737508990441}
   equipmentSkillObserver: {fileID: 11400000, guid: bc2515bc63270964590fbb1626b8e4f2,
@@ -185,6 +188,13 @@ MonoBehaviour:
   equipmentVisualProvider: {fileID: 11400000, guid: b497387059a08ec46a2a7d94c593bd39,
     type: 2}
   skillContainer: {fileID: 11400000, guid: 63adb602eef772447b4018d5bf5757d0, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8741647771200913451
+      type: {class: SaferioSlideAnimation, ns: , asm: Assembly-CSharp}
+      data:
+        target: {fileID: 7328586000836966132}
 --- !u!222 &4462576812729982773
 CanvasRenderer:
   m_ObjectHideFlags: 0

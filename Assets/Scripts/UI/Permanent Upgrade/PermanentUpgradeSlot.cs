@@ -13,6 +13,7 @@ public class PermanentUpgradeSlot : MonoBehaviour, ISaferioPageViewSlot
 
     [SerializeField] private TMP_Text statNameText;
     [SerializeField] private TMP_Text statValueText;
+    [SerializeField] private TMP_Text costText;
     [SerializeField] private Button upgradeButton;
 
     [Header("SCRIPTABLE OBJECT")]
@@ -77,8 +78,9 @@ public class PermanentUpgradeSlot : MonoBehaviour, ISaferioPageViewSlot
         UIUtil.SetSize(statNameText.rectTransform, 0.9f * container.sizeDelta);
         UIUtil.SetLocalPositionY(statNameText.rectTransform, 0.3f * container.sizeDelta.y);
 
-        UIUtil.SetFontSizeOnly(statNameText, 0.16f * container.sizeDelta.y);
-        UIUtil.SetFontSizeOnly(statValueText, 0.24f * container.sizeDelta.y);
+        UIUtil.SetFontSizeOnly(statNameText, 0.1f * container.sizeDelta.y);
+        UIUtil.SetFontSizeOnly(statValueText, 0.2f * container.sizeDelta.y);
+        UIUtil.SetFontSizeOnly(costText, 0.1f * container.sizeDelta.y);
 
         UIUtil.SetSize(upgradeButtonRT, 1.1f * container.sizeDelta.x, 0.3f * container.sizeDelta.y);
         UIUtil.SetLocalPositionOfRectToAnotherRectVertically(upgradeButtonRT, container, 0.5f, -0.55f);

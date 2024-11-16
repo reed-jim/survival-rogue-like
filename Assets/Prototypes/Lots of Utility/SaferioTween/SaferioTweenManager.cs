@@ -28,7 +28,7 @@ namespace Saferio.Util.SaferioTween
             }
             else
             {
-
+                Destroy(gameObject);
             }
 
             lists = new List<string>();
@@ -39,8 +39,11 @@ namespace Saferio.Util.SaferioTween
 
         private void OnDestroy()
         {
-            CancellationTokenSourceOnDestroyed.Cancel();
-            CancellationTokenSourceOnDestroyed.Dispose();
+            if (!CancellationTokenSourceOnDestroyed.IsCancellationRequested)
+            {
+                CancellationTokenSourceOnDestroyed.Cancel();
+                CancellationTokenSourceOnDestroyed.Dispose();
+            }
         }
 
         public static int RunCoroutine(IEnumerator tween, object target)
