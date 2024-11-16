@@ -138,6 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2420679412369378621}
   - component: {fileID: 9055802780002718600}
+  - component: {fileID: 3756086065520258815}
   - component: {fileID: 9199941724494017564}
   - component: {fileID: 4696150215339861246}
   - component: {fileID: 6425589936370460179}
@@ -180,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2052767426
+  GlobalObjectIdHash: 947520999
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -189,6 +190,22 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &3756086065520258815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9130943771318412322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34473858bae782947b8cd112e986aab0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fakeWhirlwindAttackRigidBody: {fileID: 684592445616286871}
+  weaponCollider: {fileID: 7941818768212520322}
+  attackFx: {fileID: 0}
+  rotationSpeedY: 720
 --- !u!114 &9199941724494017564
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,60 +1,36 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Dreamteck.Splines;
 using PrimeTween;
 using Saferio.Util.SaferioTween;
 using Unity.Netcode;
 
-
 #if UNITY_EDITOR
 using UnityEditor.Animations;
 #endif
+
 using UnityEngine;
 
 public class PlayerAttack : NetworkBehaviour
 {
-    [Header("FAKE WHIRL WIND")]
-    [SerializeField] private Rigidbody fakeWhirlwindAttackRigidBody;
-
-    [Header("ANIMATION")]
-    private float _actualAttackAnimationDuration;
-
-    // [Header("TEMP")]
-    // [SerializeField] private Transform hammer;
-    // [SerializeField] private Material sworldSlashMaterial;
-    // [SerializeField] private GameObject swordSlashTemp;
-
-    [Header("COLLIDER")]
-    [SerializeField] private Collider swordCollider;
+    [Header("WEAPON")]
+    private IWeapon weapon;
 
     [Header("FX")]
     [SerializeField] private ParticleSystem attackFx;
-
-    [Header("CUSTOMIZE")]
-    [SerializeField] private float delayTimeAttackHit;
 
     #region PRIVATE FIELD
     private Animator _animator;
     private bool _isAttacking;
     private bool _isEnableInput = true;
-
-
-
-    private bool _isTest;
-    private Vector3 _lastAngle;
-    private Vector3 _initialAttackFxAngle;
     #endregion
 
     #region PROPERTY
-    public Rigidbody FakeWhirlwindAttackRigidBody
+    public IWeapon Weapon
     {
-        get => fakeWhirlwindAttackRigidBody; set => fakeWhirlwindAttackRigidBody = value;
-    }
-
-    public Collider SwordCollider
-    {
-        get => swordCollider; set => swordCollider = value;
+        get => weapon; set => weapon = value;
     }
     #endregion
 
@@ -69,27 +45,17 @@ public class PlayerAttack : NetworkBehaviour
         _animator = GetComponent<Animator>();
 
         LevelingUI.enableInput += EnableInput;
+        VikingWhirlwing.playAttackFxEvent += PlayAttackFx;
 
         // _actualAttackAnimationDuration = GetActualAttackAnimationDuration();
 
         StartCoroutine(AutoMeleeAttack());
-
-        _initialAttackFxAngle = attackFx.transform.eulerAngles;
-    }
-
-    private void Update()
-    {
-        if (!_isTest && swordCollider != null)
-        {
-            swordCollider.transform.eulerAngles = _lastAngle;
-        }
-
-        attackFx.transform.eulerAngles = _initialAttackFxAngle;
     }
 
     public override void OnDestroy()
     {
         LevelingUI.enableInput -= EnableInput;
+        VikingWhirlwing.playAttackFxEvent -= PlayAttackFx;
 
         // _waitForEndAttackAnimationTween.Stop();
     }
@@ -99,52 +65,6 @@ public class PlayerAttack : NetworkBehaviour
     {
         _isEnableInput = isEnable;
     }
-
-    // private void Attack()
-    // {
-    //     if (_isAttacking)
-    //     {
-    //         return;
-    //     }
-    //     else
-    //     {
-    //         _isAttacking = true;
-    //     }
-
-    //     if (_animator.GetInteger("State") != 1)
-    //     {
-    //         _animator.SetInteger("State", 1);
-    //     }
-
-    //     // _animator.SetInteger("AttackAnimation", _attackAnimation);
-
-    //     PlaySwordSlash();
-
-    //     if (_waitForEndAttackAnimationTween.isAlive)
-    //     {
-    //         _waitForEndAttackAnimationTween.Stop();
-    //     }
-
-    //     // _waitForEndAttackAnimationTween = Tween.Delay(attackAnimation.length).OnComplete(() =>
-    //     // {
-    //     //     SetState(0);
-
-    //     //     _tweens.Add(Tween.Delay(0.3f).OnComplete(() =>
-    //     //     {
-    //     //         _isAllowRotating = true;
-    //     //         _isAttacking = false;
-    //     //     }));
-    //     // });
-
-    //     _tweens.Add(Tween.Delay(delayTimeAttackHit).OnComplete(() =>
-    //     {
-    //         swordCollider.enabled = true;
-
-    //         _tweens.Add(Tween.Delay(0.05f).OnComplete(() => swordCollider.enabled = false));
-    //     }));
-
-    //     // _isAllowRotating = false;
-    // }
 
     private IEnumerator AutoMeleeAttack()
     {
@@ -195,7 +115,7 @@ public class PlayerAttack : NetworkBehaviour
 
         enableRotatingEvent?.Invoke(gameObject.GetInstanceID(), false);
 
-        SaferioTween.Delay(_actualAttackAnimationDuration, onCompletedAction: () =>
+        SaferioTween.Delay(1, onCompletedAction: () =>
         {
             _animator.SetInteger("State", 0);
 
@@ -204,47 +124,19 @@ public class PlayerAttack : NetworkBehaviour
             _isAttacking = false;
         });
 
-        FakeWhirlWideAttack();
+        weapon.Attack();
     }
 
-    private void FakeWhirlWideAttack()
+    private void PlayAttackFx(bool isPlay)
     {
-        StartCoroutine(FakeWhirlWideAttacking());
-    }
-
-    private IEnumerator FakeWhirlWideAttacking()
-    {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(Time.deltaTime);
-
-        float angleRotated = 0;
-        float deltaAngle = 12;
-
-        yield return new WaitUntil(() => swordCollider != null);
-
-        swordCollider.enabled = true;
-
-        attackFx.Play();
-
-        _isTest = true;
-
-        fakeWhirlwindAttackRigidBody.AddTorque(new Vector3(0, 100, 0), ForceMode.Impulse);
-
-        while (angleRotated < 360)
+        if (isPlay)
         {
-            angleRotated += deltaAngle;
-
-            yield return waitForSeconds;
+            attackFx.Play();
         }
-
-        fakeWhirlwindAttackRigidBody.angularVelocity = Vector3.zero;
-
-        _lastAngle = fakeWhirlwindAttackRigidBody.transform.eulerAngles;
-
-        swordCollider.enabled = false;
-
-        attackFx.Stop();
-
-        _isTest = false;
+        else
+        {
+            attackFx.Stop();
+        }
     }
 
     private float GetActualAttackAnimationDuration()

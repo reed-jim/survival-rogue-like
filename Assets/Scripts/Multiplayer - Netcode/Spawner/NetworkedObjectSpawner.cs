@@ -62,8 +62,7 @@ public class NetworkedObjectSpawner : NetworkBehaviour
                 playerWeaponNetworkObject.transform.localPosition = new Vector3(0, 5, 0);
                 playerWeaponNetworkObject.transform.localScale = new Vector3(5, 5, 50);
 
-                player.GetComponent<PlayerAttack>().SwordCollider = playerWeapon.GetComponent<Collider>();
-                player.GetComponent<PlayerAttack>().FakeWhirlwindAttackRigidBody = playerWeapon.GetComponent<Rigidbody>();
+                player.GetComponent<PlayerAttack>().Weapon = playerWeapon.GetComponent<IWeapon>();
                 playerWeapon.GetComponent<MeleeWeapon>().WeaponHolder = player;
 
                 SetupPlayerAttackAndWeaponRpc(playerNetworkObject.NetworkObjectId, playerWeaponNetworkObject.NetworkObjectId);
@@ -86,8 +85,7 @@ public class NetworkedObjectSpawner : NetworkBehaviour
         {
             if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(playerWeaponNetworkObjectId, out NetworkObject playerWeapon))
             {
-                player.GetComponent<PlayerAttack>().SwordCollider = playerWeapon.GetComponent<Collider>();
-                player.GetComponent<PlayerAttack>().FakeWhirlwindAttackRigidBody = playerWeapon.GetComponent<Rigidbody>();
+                player.GetComponent<PlayerAttack>().Weapon = playerWeapon.GetComponent<IWeapon>();
                 playerWeapon.GetComponent<MeleeWeapon>().WeaponHolder = player.gameObject;
             }
         }

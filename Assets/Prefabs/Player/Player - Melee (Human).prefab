@@ -15319,10 +15319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1520f31a95519e43917320ee365f245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fakeWhirlwindAttackRigidBody: {fileID: 0}
-  swordCollider: {fileID: 0}
   attackFx: {fileID: 1386975582927685234}
-  delayTimeAttackHit: 0.5
 --- !u!114 &6804083724395020305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17519,7 +17516,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1171201465392465800, guid: 4aa9f30a28a77224ba84b2a2c334c71b,
+        type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 6389222347824049020}
   m_SourcePrefab: {fileID: 100100000, guid: 4aa9f30a28a77224ba84b2a2c334c71b, type: 3}
 --- !u!198 &1386975582927685234 stripped
 ParticleSystem:
@@ -17533,6 +17534,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4294444277388354523}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3159310143461762131 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1171201465392465800, guid: 4aa9f30a28a77224ba84b2a2c334c71b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4294444277388354523}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6389222347824049020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3159310143461762131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b1f2fc136ed7f4583eca577c30c730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5943570833162261167
 PrefabInstance:
   m_ObjectHideFlags: 0
