@@ -4,6 +4,7 @@ public class CharacterRagdoll : MonoBehaviour
 {
     [Header("RAGDOLL")]
     [SerializeField] private Collider[] ragdollColliders;
+    [SerializeField] private Collider[] notRagdollColliders;
     private Rigidbody[] _ragdollRigibodies;
 
     #region PRIVATE FIELD
@@ -52,6 +53,14 @@ public class CharacterRagdoll : MonoBehaviour
         {
             ragdollRigidBody.useGravity = enableRagdoll;
             ragdollRigidBody.isKinematic = !enableRagdoll;
+        }
+
+        if (enableRagdoll)
+        {
+            foreach (var notRagdollCollider in notRagdollColliders)
+            {
+                notRagdollCollider.enabled = false;
+            }
         }
 
         _rigidBody.velocity = Vector3.zero;

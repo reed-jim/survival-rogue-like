@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour
 {
     protected Transform player;
 
+    [Header("TEMP")]
+    [SerializeField] private SpriteRenderer characterHighlightCircle;
+
     [Header("STAT")]
     private EnemyStat stat;
     [SerializeField] private PredifinedCharacterStat baseStat;
@@ -96,6 +99,8 @@ public class Enemy : MonoBehaviour
         _characterUI.Reset();
 
         _characterStateManager.State = CharacterState.NONE;
+
+        characterHighlightCircle.color = ColorUtil.WithAlpha(characterHighlightCircle.color, 1);
     }
 
     private void Dissolve()
@@ -131,6 +136,8 @@ public class Enemy : MonoBehaviour
         setCharacterAnimationFloatProperty?.Invoke(gameObject.GetInstanceID(), "Speed", 0);
 
         SaferioTween.Delay(2f, onCompletedAction: () => Dissolve());
+
+        _tweens.Add(Tween.Alpha(characterHighlightCircle, 0, duration: 1));
 
         // DisableAllColliders();
 

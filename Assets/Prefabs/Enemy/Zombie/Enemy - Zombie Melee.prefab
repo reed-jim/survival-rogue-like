@@ -1183,7 +1183,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 953de0a59c3f3c7498ecb7496a450d69, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e591329e698e4e44ba21c518c9695c45, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1192,7 +1192,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 750
+  m_PixelsPerUnitMultiplier: 200
 --- !u!1 &4076323446296238753
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,7 +1420,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 953de0a59c3f3c7498ecb7496a450d69, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e591329e698e4e44ba21c518c9695c45, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1429,7 +1429,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 750
+  m_PixelsPerUnitMultiplier: 200
 --- !u!1 &4330197967924662245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,7 +1441,7 @@ GameObject:
   - component: {fileID: 6348715832829987481}
   - component: {fileID: 4075334239553643957}
   m_Layer: 7
-  m_Name: circle
+  m_Name: Highlight Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1504,7 +1504,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 35e55f322656ee04eac0cf9aafaf04c2, type: 3}
-  m_Color: {r: 1, g: 0.39215687, b: 0.39215687, a: 1}
+  m_Color: {r: 1, g: 0.50980395, b: 0.50980395, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1870,7 +1870,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2, y: 0.6}
+  m_SizeDelta: {x: 2, y: 0.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8705651700609612196
 MonoBehaviour:
@@ -2578,7 +2578,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2, y: 0.6}
+  m_SizeDelta: {x: 2, y: 0.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &209010944700197893
 MonoBehaviour:
@@ -2769,6 +2769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775414057d8e4c94dbcdeb3f2b18d7ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterHighlightCircle: {fileID: 4075334239553643957}
   baseStat: {fileID: 11400000, guid: f56f3d5add2dd0f4ab2ffacaa7cdf8ad, type: 2}
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
   speedMultiplier: 2
@@ -2815,6 +2816,10 @@ MonoBehaviour:
   - {fileID: 6422446602483960901}
   - {fileID: 4129086459603264990}
   - {fileID: 4437694347929399520}
+  notRagdollColliders:
+  - {fileID: 8275205128286905401}
+  - {fileID: 6410149728619485344}
+  - {fileID: 1550528190759088932}
 --- !u!114 &1186590409469569204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3613,7 +3618,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 953de0a59c3f3c7498ecb7496a450d69, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e591329e698e4e44ba21c518c9695c45, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3622,7 +3627,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 750
+  m_PixelsPerUnitMultiplier: 200
 --- !u!1 &7704176001600999949
 GameObject:
   m_ObjectHideFlags: 0
@@ -4700,7 +4705,7 @@ PrefabInstance:
     - target: {fileID: 8942654212733614179, guid: b98f55e5f40c42249abba4036351fb78,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

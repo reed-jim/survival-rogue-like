@@ -93,14 +93,13 @@ public class CollisionHandler : NetworkBehaviour
                 collidable = otherGameObject.transform.parent.GetComponent<ICollide>();
                 icollideNetworkObject = otherGameObject.transform.parent.GetComponent<NetworkObject>();
             }
-            
+
             if (collidable != null)
             {
                 // collidable.HandleOnCollide(gameObject);
 
                 if (icollideNetworkObject != null)
                 {
-                    DebugUtil.DistinctLog(otherGameObject.name);
                     HandleOnCollideWrapperRpc(icollideNetworkObject.NetworkObjectId, NetworkObjectId);
                 }
             }
@@ -112,12 +111,8 @@ public class CollisionHandler : NetworkBehaviour
     {
         if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject networkObject))
         {
-            DebugUtil.DistinctLog(networkObject.name);
-            NetworkLog.LogInfoServer("NETWORK - " + networkObject.name);
             if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(icollideNetworkObjectId, out NetworkObject icollideNetwork))
             {
-                DebugUtil.DistinctLog(icollideNetwork.name);
-                NetworkLog.LogInfoServer("NETWORK - " + icollideNetwork.name);
                 icollideNetwork.GetComponent<ICollide>().HandleOnCollide(networkObject.gameObject);
                 // if (IsClient)
                 // {

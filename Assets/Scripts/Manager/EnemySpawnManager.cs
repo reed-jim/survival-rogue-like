@@ -13,6 +13,9 @@ public class EnemySpawnManager : NetworkBehaviour
     [SerializeField] private GameObject[] enemies;
     [SerializeField] private NetworkObject[] networkEnemies;
 
+    [Header("CIRCLE SPAWNER")]
+    private CircleSpawner _circleSpawner;
+
     [Header("PLAYER")]
     [SerializeField] private PlayerRuntime playerRuntime;
 
@@ -29,7 +32,10 @@ public class EnemySpawnManager : NetworkBehaviour
 
     private void Awake()
     {
-        // enemies = new GameObject[maxEnemy];
+        // enemies = new GameObject[maxEnemy];  
+
+        _circleSpawner = new CircleSpawner();
+        _circleSpawner.Setup(radius: 8, deltaPercent: 0.2f);
 
         networkEnemies = new NetworkObject[maxEnemy];
 
@@ -140,7 +146,11 @@ public class EnemySpawnManager : NetworkBehaviour
         {
             if (!networkEnemies[_currentEnemyIndex].gameObject.activeSelf)
             {
-                networkEnemies[_currentEnemyIndex].transform.position = GetRandomPositionCircular(networkEnemies[_currentEnemyIndex].transform.position);
+                networkEnemies[_currentEnemyIndex].transform.position = _circleSpawner.GetSpawnPosition(
+                    networkEnemies[_currentEnemyIndex].transform.position.y,
+                    playerRuntime.player.position
+                );
+                // networkEnemies[_currentEnemyIndex].transform.position = GetRandomPositionCircular(networkEnemies[_currentEnemyIndex].transform.position);
                 networkEnemies[_currentEnemyIndex].gameObject.SetActive(true);
 
                 spawnEnemyEvent?.Invoke(networkEnemies[_currentEnemyIndex].gameObject.GetInstanceID());
