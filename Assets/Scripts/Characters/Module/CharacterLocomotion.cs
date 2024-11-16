@@ -100,6 +100,15 @@ public class CharacterLocomotion : NetworkBehaviour
             return;
         }
 
+        if (joystickDirection.y > 0)
+        {
+            transform.eulerAngles = Vector3.zero;
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+
         _speedMagnitude += deltaSpeedMultiplier;
 
         _speedMagnitude = Mathf.Min(_speedMagnitude, 1);
