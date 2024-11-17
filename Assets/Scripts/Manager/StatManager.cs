@@ -24,7 +24,7 @@ public class StatManager : MonoBehaviour
 
         CharacterStatManager.addCharacterStatToListEvent += AddCharacterStat;
         PlayerStatManager.addPlayerStatToListEvent += AddPlayerStat;
-        MeleeWeapon.getAttackerStatAction += GetStat;
+        MeleeWeaponCollider.getAttackerStatAction += GetStat;
         Bullet.getAttackerStatAction += GetStat;
         CollectibleExperienceShard.earnPlayerExperienceEvent += EarnPlayerExpKillingEnemy;
         OffensiveSkill.updatePlayerStat += UpdatePlayerStat;
@@ -36,7 +36,7 @@ public class StatManager : MonoBehaviour
     {
         CharacterStatManager.addCharacterStatToListEvent -= AddCharacterStat;
         PlayerStatManager.addPlayerStatToListEvent -= AddPlayerStat;
-        MeleeWeapon.getAttackerStatAction -= GetStat;
+        MeleeWeaponCollider.getAttackerStatAction -= GetStat;
         Bullet.getAttackerStatAction -= GetStat;
         CollectibleExperienceShard.earnPlayerExperienceEvent -= EarnPlayerExpKillingEnemy;
         OffensiveSkill.updatePlayerStat -= UpdatePlayerStat;

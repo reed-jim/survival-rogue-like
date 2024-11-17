@@ -15,7 +15,7 @@ public class CharacterMaterialPropertyBlock : MonoBehaviour
 
     private void Awake()
     {
-        MeleeWeapon.characterHitEvent += ColorEffectOnHit;
+        MeleeWeaponCollider.characterHitEvent += ColorEffectOnHit;
         Bullet.characterHitEvent += ColorEffectOnHit;
 
         Init();
@@ -23,7 +23,7 @@ public class CharacterMaterialPropertyBlock : MonoBehaviour
 
     private void OnDestroy()
     {
-        MeleeWeapon.characterHitEvent += ColorEffectOnHit;
+        MeleeWeaponCollider.characterHitEvent += ColorEffectOnHit;
         Bullet.characterHitEvent -= ColorEffectOnHit;
     }
 

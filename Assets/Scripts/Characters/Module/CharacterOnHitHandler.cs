@@ -8,12 +8,12 @@ public class CharacterOnHitHandler : MonoBehaviour
 
     private void Awake()
     {
-        MeleeWeapon.characterHitEvent += OnHit;
+        MeleeWeaponCollider.characterHitEvent += OnHit;
     }
 
     private void OnDestroy()
     {
-        MeleeWeapon.characterHitEvent -= OnHit;
+        MeleeWeaponCollider.characterHitEvent -= OnHit;
     }
 
     private void OnHit(int instanceId)

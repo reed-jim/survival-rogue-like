@@ -9,6 +9,8 @@ using UnityEngine.UI;
 public class EquippedItemSlot : MonoBehaviour
 {
     [SerializeField] private RectTransform container;
+    [SerializeField] private RectTransform iconRT;
+    [SerializeField] private RectTransform levelTextBackground;
     [SerializeField] private RectTransform levelTextRT;
 
     [SerializeField] private Image containerBackground;
@@ -34,8 +36,6 @@ public class EquippedItemSlot : MonoBehaviour
         icon.gameObject.SetActive(false);
 
         RegisterButton();
-
-        GenerateUI();
     }
 
     public void Setup(OwnedEquipmentData equipmentData)
@@ -43,11 +43,13 @@ public class EquippedItemSlot : MonoBehaviour
         icon.gameObject.SetActive(true);
         icon.sprite = equipmentVisualProvider.EquipmentSprites[equipmentData.IconIndex];
 
+        UIUtil.SetSizeKeepRatioX(iconRT, 0.6f * container.sizeDelta.y);
+
         containerBackground.color = ColorUtil.GetColorFromHex(SurvivoriumTheme.RARITY_COLORs[equipmentData.Rarity]);
 
         levelText.text = $"Lv {equipmentData.Level}";
 
-        levelTextRT.gameObject.SetActive(true);
+        levelTextBackground.gameObject.SetActive(true);
 
         _ownedEquipmentData = equipmentData;
     }
@@ -66,13 +68,17 @@ public class EquippedItemSlot : MonoBehaviour
         selectButton.onClick.AddListener(Select);
     }
 
-    private void GenerateUI()
+    public void GenerateUI()
     {
-        float padding = 0.2f * container.sizeDelta.y;
+        float padding = 0.15f * container.sizeDelta.y;
 
-        UIUtil.SetLocalPosition(levelTextRT, 0.5f * container.sizeDelta - padding * Vector2.one);
+        // UIUtil.SetLocalPosition(levelTextRT, 0.5f * container.sizeDelta - padding * Vector2.one);
+        UIUtil.SetSize(levelTextBackground, 0.7f * container.sizeDelta.x, 0.25f * container.sizeDelta.x);
+        UIUtil.SetLocalPositionY(levelTextBackground, 0.5f * container.sizeDelta.y);
 
-        levelTextRT.gameObject.SetActive(false);
+        UIUtil.SetFontSizeOnly(levelText, 0.2f * container.sizeDelta.y);
+
+        levelTextBackground.gameObject.SetActive(false);
     }
 
     private void Select()

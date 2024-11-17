@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 using static CustomDelegate;
 
-public class MeleeWeapon : MonoBehaviour, ICollide
+public class MeleeWeaponCollider : MonoBehaviour, ICollide
 {
     [Header("WEAPON HOLDER")]
     [SerializeField] private GameObject weaponHolder;

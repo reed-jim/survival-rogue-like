@@ -93,7 +93,7 @@ public class CharacterScreen : UIScreen
         UIUtil.SetLocalPositionOfRectToAnotherRectHorizontally(attackDisplaySlotRT, statDisplayContainer, 0.5f, -0.5f);
         UIUtil.SetLocalPositionOfRectToAnotherRectHorizontally(hpDisplaySlotRT, statDisplayContainer, -0.5f, 0.5f);
 
-        float distanceBetweenSlot = 0.05f * equipmentContainer.sizeDelta.y;
+        float distanceBetweenSlot = 0.08f * equipmentContainer.sizeDelta.y;
         float slotSize = (equipmentContainer.sizeDelta.y - (numRow - 1) * distanceBetweenSlot - 2 * SurvivoriumUIConstant.PADDING) / numRow;
 
         for (int i = 0; i < numSlot; i++)
@@ -120,6 +120,8 @@ public class CharacterScreen : UIScreen
 
                 _UISlide.SlideIn(_slot[i], _slot[i].localPosition.x, -0.5f * (_canvasSize.x + slotSize));
             }
+
+            _equippedItemSlots[i].GenerateUI();
         }
 
         attackDisplaySlot.Setup(statDisplayContainer, 0);

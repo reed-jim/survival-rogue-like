@@ -49,7 +49,7 @@ public class CharacterStatManager : MonoBehaviour
     private void RegisterEvent()
     {
         // CharacterDamageObserver.applyDamageEvent += TakeDamage;
-        MeleeWeapon.applyDamageEvent += TakeDamage;
+        MeleeWeaponCollider.applyDamageEvent += TakeDamage;
         Meteor.applyDamageEvent += TakeDamage;
         Bullet.applyDamageEvent += TakeDamage;
         EnergyExplosion.applyDamageEvent += TakeDamage;
@@ -62,7 +62,7 @@ public class CharacterStatManager : MonoBehaviour
     private void UnregisterEvent()
     {
         // CharacterDamageObserver.applyDamageEvent -= TakeDamage;
-        MeleeWeapon.applyDamageEvent -= TakeDamage;
+        MeleeWeaponCollider.applyDamageEvent -= TakeDamage;
         Meteor.applyDamageEvent -= TakeDamage;
         Bullet.applyDamageEvent -= TakeDamage;
         EnergyExplosion.applyDamageEvent -= TakeDamage;
