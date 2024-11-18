@@ -73,7 +73,7 @@ public class StatManager : MonoBehaviour
 
         _playerStat.SetStatValue(StatComponentNameConstant.Experience, 0);
 
-        float currentExp = 0;
+        float currentExp = _playerStat.GetStatValue(StatComponentNameConstant.Experience);
         float requiredExp = _playerStat.GetRequiredExpForNextLevel();
 
         updateExpProgressBarEvent?.Invoke(currentExp, requiredExp);

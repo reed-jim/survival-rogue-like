@@ -78,14 +78,18 @@ public class VikingWhirlwing : MonoBehaviour, IWeapon
         {
             angleRotated += deltaAngle;
 
+            // to match with fx attack, replace this hard coded later
+            if (angleRotated > 216 && weaponCollider.enabled)
+            {
+                weaponCollider.enabled = false;
+            }
+
             yield return waitForSeconds;
         }
 
         fakeWhirlwindAttackRigidBody.angularVelocity = Vector3.zero;
 
         _lastAngle = fakeWhirlwindAttackRigidBody.transform.eulerAngles;
-
-        weaponCollider.enabled = false;
 
         playAttackFxEvent?.Invoke(false);
 

@@ -10,6 +10,8 @@ public class DefenseSkill : BaseSkill, IModifierSkill
     [SerializeField] private int armor;
     [SerializeField] private float blockChance;
 
+    private int _currentTier = -1;
+
     #region ACTION
     public static event Action<CharacterStat> updatePlayerStat;
     #endregion
@@ -18,9 +20,9 @@ public class DefenseSkill : BaseSkill, IModifierSkill
     {
         CharacterStat bonusStat = new CharacterStat();
 
-        bonusStat.SetStatBaseValue(StatComponentNameConstant.Health, hp);
-        bonusStat.SetStatBaseValue(StatComponentNameConstant.Armor, armor);
-        bonusStat.SetStatBaseValue(StatComponentNameConstant.BlockChance, blockChance);
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.Health, hp * (_currentTier + 1));
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.Armor, armor * (_currentTier + 1));
+        bonusStat.SetStatBaseValue(StatComponentNameConstant.BlockChance, blockChance * (_currentTier + 1));
 
         return bonusStat;
     }
@@ -30,19 +32,21 @@ public class DefenseSkill : BaseSkill, IModifierSkill
     {
         StringBuilder description = new StringBuilder();
 
+        string colorStringByTier = SurvivoriumTheme.RARITY_COLORs[_currentTier];
+
         if (hp > 0)
         {
-            description.Append($"Increase {hp} HP. ");
+            description.Append($"Increase <color={colorStringByTier}>{hp * (_currentTier + 1)}</color> HP. ");
         }
 
         if (armor > 0)
         {
-            description.Append($"Increase {armor} Armor. ");
+            description.Append($"Increase <color={colorStringByTier}>{armor * (_currentTier + 1)}</color> Armor. ");
         }
 
         if (blockChance > 0)
         {
-            description.Append($"Increase {blockChance * 100}% Block Chance.");
+            description.Append($"Increase <color={colorStringByTier}>{blockChance * 100 * (_currentTier + 1)}%</color> Block Chance.");
         }
 
         return description.ToString();
@@ -62,6 +66,11 @@ public class DefenseSkill : BaseSkill, IModifierSkill
 
     public override int GetTier()
     {
-        return 1;
+        if (_currentTier == -1)
+        {
+            _currentTier = UnityEngine.Random.Range(0, 5);
+        }
+
+        return _currentTier;
     }
 }

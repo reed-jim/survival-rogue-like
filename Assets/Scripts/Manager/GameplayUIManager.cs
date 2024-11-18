@@ -103,7 +103,8 @@ public class GameplayUIManager : MonoBehaviour
 
         _updateExpBarTween = Tween.Custom(expProgressBar.value, currentExp / maxExp, duration: 0.3f, onValueChange: newVal => expProgressBar.value = newVal);
 
-        playerLevelText.text = $"Level ??? ({(int)currentExp}/{(int)maxExp})";
+        playerLevelText.text = $"{(int)currentExp}/{(int)maxExp}";
+        // playerLevelText.text = $"Level ??? ({(int)currentExp}/{(int)maxExp})";
     }
 
     private void UpdateLevelText(int level, float currentExp, float requiredExp)

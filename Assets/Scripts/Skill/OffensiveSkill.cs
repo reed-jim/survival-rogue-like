@@ -33,33 +33,33 @@ public class OffensiveSkill : BaseSkill, IModifierSkill
 
     public override string GetDescription()
     {
-        _currentTier = GetTier();
-
         StringBuilder description = new StringBuilder();
+
+        string colorStringByTier = SurvivoriumTheme.RARITY_COLORs[_currentTier];
 
         if (damageMultiplier > 0)
         {
-            description.Append($"Increases your damage modifier by an additional <color=#FF8282>{damageMultiplier * 100 * (_currentTier + 1)}%</color>. ");
+            description.Append($"Increases your damage modifier by an additional <color={colorStringByTier}>{damageMultiplier * 100 * (_currentTier + 1)}%</color>. ");
         }
 
         if (criticalChance > 0)
         {
-            description.Append($"Increases your critical damage chance by an additional <color=#FF8282>{criticalChance * 100 * (_currentTier + 1)}%</color>. ");
+            description.Append($"Increases your critical damage chance by an additional <color={colorStringByTier}>{criticalChance * 100 * (_currentTier + 1)}%</color>. ");
         }
 
         if (criticalDamageMultiplier > 0)
         {
-            description.Append($"Increases your critical damage modifier by an additional {criticalDamageMultiplier * 100 * (_currentTier + 1)}%.");
+            description.Append($"Increases your critical damage modifier by an additional <color={colorStringByTier}>{criticalDamageMultiplier * 100 * (_currentTier + 1)}%</color>.");
         }
 
         if (percentDirectDamage > 0)
         {
-            description.Append($"{percentDirectDamage * 100 * (_currentTier + 1)}% of your damage will be direct damage.");
+            description.Append($"<color={colorStringByTier}>{percentDirectDamage * 100 * (_currentTier + 1)}%</color> of your damage will be direct damage.");
         }
 
         if (percentHealthExecuted > 0)
         {
-            description.Append($"if enemies health are under {percentHealthExecuted * 100 * (_currentTier + 1)}% then executed them immediately");
+            description.Append($"if enemies health are under <color={colorStringByTier}>{percentHealthExecuted * 100 * (_currentTier + 1)}%</color> then executed them immediately");
         }
 
         return description.ToString();
@@ -72,7 +72,12 @@ public class OffensiveSkill : BaseSkill, IModifierSkill
 
     public override int GetTier()
     {
-        return UnityEngine.Random.Range(0, 5);
+        if (_currentTier == -1)
+        {
+            _currentTier = UnityEngine.Random.Range(0, 5);
+        }
+
+        return _currentTier;
     }
 
     public override void AddSkill()

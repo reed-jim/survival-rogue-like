@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class SceneTransition : MonoBehaviour
 {
     [SerializeField] private RectTransform canvas;
+    [SerializeField] private RectTransform container;
     [SerializeField] private RectTransform loadingTextRT;
     [SerializeField] private Image fadeBackground;
     [SerializeField] private TMP_Text loadingText;
@@ -30,6 +31,8 @@ public class SceneTransition : MonoBehaviour
 
     private void GenerateUI()
     {
+        UIUtil.SetSize(fadeBackground.rectTransform, _canvasSize);
+
         UIUtil.SetLocalPositionY(loadingTextRT, -0.35f * _canvasSize.y);
 
         UIUtil.SetSizeX(loadingTextRT, _canvasSize.x);
@@ -40,8 +43,11 @@ public class SceneTransition : MonoBehaviour
     {
         SaferioTween.Delay(startDelay, onCompletedAction: (() =>
         {
-            SaferioTween.AlphaAsync(fadeBackground, 0, duration: fadeOutDuration);
             SaferioTween.LocalPositionAsync(loadingTextRT, new Vector3(0, -_canvasSize.y), duration: fadeOutDuration);
+            SaferioTween.AlphaAsync(fadeBackground, 0, duration: fadeOutDuration, onCompletedAction: () =>
+            {
+                container.gameObject.SetActive(false);
+            });
         }));
     }
 }
