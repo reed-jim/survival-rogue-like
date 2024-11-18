@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 using static Saferio.Util.SaferioTween.SaferioCustomDelegate;
 
 namespace Saferio.Util.SaferioTween
@@ -212,6 +213,56 @@ namespace Saferio.Util.SaferioTween
 
             }
         }
+
+        public static async void LocalPositionAsync
+        (
+            RectTransform target,
+            Vector3 end,
+            float duration,
+            Action onCompletedAction = null
+        )
+        {
+            await LocalPositionAsync(SaferioTweenManager.CancellationTokenSourceOnDestroyed.Token, target, end, duration, onCompletedAction);
+        }
+
+        public static async Task LocalPositionAsync
+        (
+            CancellationToken cancellationToken,
+            RectTransform target,
+            Vector3 end,
+            float duration,
+            Action onCompletedAction = null
+        )
+        {
+            try
+            {
+                float updateDuration = Time.deltaTime;
+
+                int delayTimeEachStepMilliSecond = (int)(updateDuration * 1000);
+
+                Vector3 deltaPosition = (end - target.localPosition) / (duration / updateDuration);
+
+                int totalStep = (int)((end - target.localPosition).magnitude / deltaPosition.magnitude);
+                int stepPassed = 0;
+
+                while (stepPassed < totalStep)
+                {
+                    target.localPosition += deltaPosition;
+
+                    stepPassed++;
+
+                    await Task.Delay(delayTimeEachStepMilliSecond, cancellationToken);
+                }
+
+                target.localPosition = end;
+
+                onCompletedAction?.Invoke();
+            }
+            catch (TaskCanceledException)
+            {
+
+            }
+        }
         #endregion
         #endregion
 
@@ -296,6 +347,52 @@ namespace Saferio.Util.SaferioTween
             try
             {
                 await Task.Delay(ToMillisecond(second), cancellationToken);
+
+                onCompletedAction?.Invoke();
+            }
+            catch (TaskCanceledException e)
+            {
+                DebugUtil.DistinctLog(e);
+            }
+        }
+        #endregion
+
+        #region COLOR
+        public async static void AlphaAsync(Image image, float endAlpha, float duration, Action onCompletedAction = null)
+        {
+            await AlphaAsync(SaferioTweenManager.CancellationTokenSourceOnDestroyed.Token, image, endAlpha, duration, onCompletedAction);
+        }
+
+        private async static Task AlphaAsync
+        (
+            CancellationToken cancellationToken,
+            Image image,
+            float endAlpha,
+            float duration,
+            Action onCompletedAction = null
+        )
+        {
+            try
+            {
+                float updateDuration = Time.deltaTime;
+
+                int delayTimeEachStepMilliSecond = (int)(updateDuration * 1000);
+
+                float deltaAlpha = (endAlpha - image.color.a) / (duration / updateDuration);
+
+                int totalStep = (int)((endAlpha - image.color.a) / deltaAlpha);
+                int stepPassed = 0;
+
+                while (stepPassed < totalStep)
+                {
+                    image.color += new Color(0, 0, 0, deltaAlpha);
+
+                    stepPassed++;
+
+                    await Task.Delay(delayTimeEachStepMilliSecond, cancellationToken);
+                }
+
+                image.color = ColorUtil.WithAlpha(image.color, endAlpha);
 
                 onCompletedAction?.Invoke();
             }
