@@ -51,6 +51,11 @@ public class PlayerStatManager : CharacterStatManager
 
     private void AddSkillFromEquipments()
     {
+        if (equipmentSkillObserver.SkillFromEquipments == null)
+        {
+            return;
+        }
+
         foreach (var skill in equipmentSkillObserver.SkillFromEquipments)
         {
             if (skill is IModifierSkill modifierSkill)
