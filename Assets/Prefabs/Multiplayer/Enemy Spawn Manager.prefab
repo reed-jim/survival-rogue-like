@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 309671311
+  GlobalObjectIdHash: 598258586
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyContainer: {fileID: 0}
   enemyPrefabs:
-  - {fileID: 6898723522597223981, guid: 6c86ad04607869e458f5c4fce2f8b1ea, type: 3}
+  - {fileID: 2785032519790202651, guid: 651a0b395a0990c4a92370323c00ae9f, type: 3}
   enemies: []
   networkEnemies: []
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
