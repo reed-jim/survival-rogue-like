@@ -67,7 +67,7 @@ public class CharacterLocomotion : NetworkBehaviour
         {
             if (_speedMagnitude > 0)
             {
-                _speedMagnitude -= 0.3f * deltaSpeedMultiplier;
+                _speedMagnitude -= 0.4f * deltaSpeedMultiplier;
             }
             else
             {
