@@ -10,6 +10,8 @@ public class CircleSpawner
     [SerializeField] private float radius;
     [SerializeField] private float deltaPercent;
 
+    private List<Vector3> _spawnPositionPool;
+
     private float _currentX;
     private float _currentY;
     private int _currentDirection;
@@ -30,6 +32,10 @@ public class CircleSpawner
     {
         this.radius = radius;
         this.deltaPercent = deltaPercent;
+
+        _spawnPositionPool = new List<Vector3>();
+
+        FillSpawnPositionPool();
 
         _currentDirection = -1;
         _currentX = _currentDirection * radius;
@@ -66,5 +72,49 @@ public class CircleSpawner
         _currentX = Mathf.Clamp(_currentX, -radius, radius);
 
         return position + offset;
+    }
+
+    private void FillSpawnPositionPool()
+    {
+        for (float i = -radius; i < radius; i += deltaPercent * radius)
+        {
+            Vector3 position;
+
+            position.x = i;
+            position.y = 0;
+            position.z = Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(i, 2));
+
+            _spawnPositionPool.Add(position);
+        }
+
+        for (float i = -radius; i < radius; i += deltaPercent * radius)
+        {
+            Vector3 position;
+
+            position.x = i;
+            position.y = 0;
+            position.z = -Mathf.Sqrt(Mathf.Pow(radius, 2) - Mathf.Pow(i, 2));
+
+            _spawnPositionPool.Add(position);
+        }
+    }
+
+    public Vector3 GetRandomSpawnPositionFromPool(float initialPositionY, Vector3 offset)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, _spawnPositionPool.Count);
+
+        Vector3 position = _spawnPositionPool[randomIndex];
+
+        _spawnPositionPool.RemoveAt(randomIndex);
+
+        if (_spawnPositionPool.Count == 0)
+        {
+            FillSpawnPositionPool();
+        }
+
+        position += new Vector3(0, initialPositionY, 0);
+        position += offset;
+
+        return position;
     }
 }

@@ -146,7 +146,7 @@ public class EnemySpawnManager : NetworkBehaviour
         {
             if (!networkEnemies[_currentEnemyIndex].gameObject.activeSelf)
             {
-                networkEnemies[_currentEnemyIndex].transform.position = _circleSpawner.GetSpawnPosition(
+                networkEnemies[_currentEnemyIndex].transform.position = _circleSpawner.GetRandomSpawnPositionFromPool(
                     networkEnemies[_currentEnemyIndex].transform.position.y,
                     playerRuntime.player.position
                 );

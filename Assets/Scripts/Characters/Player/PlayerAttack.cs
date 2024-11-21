@@ -115,7 +115,7 @@ public class PlayerAttack : NetworkBehaviour
 
         enableRotatingEvent?.Invoke(gameObject.GetInstanceID(), false);
 
-        SaferioTween.Delay(1, onCompletedAction: () =>
+        SaferioTween.Delay(2, onCompletedAction: () =>
         {
             _animator.SetInteger("State", 0);
 
