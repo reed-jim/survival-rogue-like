@@ -69,6 +69,7 @@ MonoBehaviour:
   enemyContainer: {fileID: 0}
   enemyPrefabs:
   - {fileID: 2785032519790202651, guid: 651a0b395a0990c4a92370323c00ae9f, type: 3}
+  - {fileID: 2924739667535503221, guid: 28d4b227f729b5d43bdeeb982b5262be, type: 3}
   enemies: []
   networkEnemies: []
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
