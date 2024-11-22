@@ -12,6 +12,8 @@ public class CollisionHandler : NetworkBehaviour
     private IExplodable _explodableObject;
     private IHitByMeleeAttack _hitByMeleeAttackObject;
 
+    [SerializeField] private ChildColliderObserver bodyCollider;
+
     [Header("CUSTOMIZE")]
     [SerializeField] private string[] collideTags;
 
@@ -31,6 +33,7 @@ public class CollisionHandler : NetworkBehaviour
     private void Awake()
     {
         CharacterStatManager.characterDieEvent += SetIsCharacterDie;
+        bodyCollider.RegisterOnTriggerEvent(HandleOnTriggerEnterBodyCollider);
 
         _explodableObject = GetComponent<IExplodable>();
         _hitByMeleeAttackObject = GetComponent<IHitByMeleeAttack>();
@@ -43,23 +46,84 @@ public class CollisionHandler : NetworkBehaviour
         CharacterStatManager.characterDieEvent -= SetIsCharacterDie;
     }
 
-    private void OnTriggerEnter(Collider other)
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (_isCharacterDied)
+    //     {
+    //         return;
+    //     }
+
+    //     if (_isJustCollided)
+    //     {
+    //         return;
+    //     }
+    //     else
+    //     {
+    //         // SaferioTween.Delay(0.2f, onCompletedAction: () => _isJustCollided = false);
+
+    //         _isJustCollided = true;
+    //     }
+
+    //     GameObject otherGameObject = other.gameObject;
+
+    //     if (collideTags.Contains(otherGameObject.tag))
+    //     {
+    //         disableNavMeshEvent?.Invoke(GetInstanceID());
+
+    //         Rigidbody rbA = GetComponent<Rigidbody>();
+
+    //         rbA.velocity = Vector3.zero;
+
+    //         Vector3 force = 75 * (transform.position - otherGameObject.transform.position);
+
+    //         force.y = 0;
+
+    //         rbA.AddForce(force, ForceMode.Impulse);
+
+
+
+
+
+
+    //         ICollide collidable = otherGameObject.GetComponent<ICollide>();
+
+    //         NetworkObject icollideNetworkObject = otherGameObject.GetComponent<NetworkObject>();
+
+    //         if (collidable == null)
+    //         {
+    //             collidable = otherGameObject.transform.parent.GetComponent<ICollide>();
+    //             icollideNetworkObject = otherGameObject.transform.parent.GetComponent<NetworkObject>();
+    //         }
+
+    //         if (collidable != null)
+    //         {
+    //             // collidable.HandleOnCollide(gameObject);
+
+    //             if (icollideNetworkObject != null)
+    //             {
+    //                 HandleOnCollideWrapperRpc(icollideNetworkObject.NetworkObjectId, NetworkObjectId);
+    //             }
+    //         }
+    //     }
+    // }
+
+    private void HandleOnTriggerEnterBodyCollider(Collider other)
     {
-        if (_isCharacterDied)
-        {
-            return;
-        }
+        // if (_isCharacterDied)
+        // {
+        //     return;
+        // }
 
-        if (_isJustCollided)
-        {
-            return;
-        }
-        else
-        {
-            SaferioTween.Delay(0.5f, onCompletedAction: () => _isJustCollided = false);
+        // if (_isJustCollided)
+        // {
+        //     return;
+        // }
+        // else
+        // {
+        //     SaferioTween.Delay(0.2f, onCompletedAction: () => _isJustCollided = false);
 
-            _isJustCollided = true;
-        }
+        //     _isJustCollided = true;
+        // }
 
         GameObject otherGameObject = other.gameObject;
 
@@ -82,8 +146,6 @@ public class CollisionHandler : NetworkBehaviour
 
 
 
-
-
             ICollide collidable = otherGameObject.GetComponent<ICollide>();
 
             NetworkObject icollideNetworkObject = otherGameObject.GetComponent<NetworkObject>();
@@ -96,12 +158,12 @@ public class CollisionHandler : NetworkBehaviour
 
             if (collidable != null)
             {
-                // collidable.HandleOnCollide(gameObject);
+                collidable.HandleOnCollide(gameObject);
 
-                if (icollideNetworkObject != null)
-                {
-                    HandleOnCollideWrapperRpc(icollideNetworkObject.NetworkObjectId, NetworkObjectId);
-                }
+                // if (icollideNetworkObject != null)
+                // {
+                //     HandleOnCollideWrapperRpc(icollideNetworkObject.NetworkObjectId, NetworkObjectId);
+                // }
             }
         }
     }

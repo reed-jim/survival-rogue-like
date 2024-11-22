@@ -42,7 +42,7 @@ MonoBehaviour:
       baseValue: 0.3
   - key: CriticalMultiplier
     baseStatComponent:
-      baseValue: 2
+      baseValue: 1.75
   - key: AttackRange
     baseStatComponent:
       baseValue: 0

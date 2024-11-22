@@ -53,6 +53,7 @@ public class DamageCalculator : IDamageCalculator
         }
 
         finalDamage *= attackerDamageMultiplier;
+
         // finalDamage *= (1 + increasedDamagePercent);
 
         // DAMAGE REDUCED

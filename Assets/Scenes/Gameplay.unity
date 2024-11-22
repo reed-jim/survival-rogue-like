@@ -1713,6 +1713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerRuntime: {fileID: 11400000, guid: 4cd4174f5d8599a4f905fb24aab41b2c, type: 2}
   offset: {x: 0, y: 25, z: -25}
+  lerpPercent: 0.1
 --- !u!1 &376193338
 GameObject:
   m_ObjectHideFlags: 0

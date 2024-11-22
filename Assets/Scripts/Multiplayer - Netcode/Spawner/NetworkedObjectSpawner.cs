@@ -60,7 +60,7 @@ public class NetworkedObjectSpawner : NetworkBehaviour
                 playerWeaponNetworkObject.TrySetParent(playerNetworkObject);
 
                 playerWeaponNetworkObject.transform.localPosition = new Vector3(0, 5, 0);
-                playerWeaponNetworkObject.transform.localScale = new Vector3(5, 5, 50);
+                playerWeaponNetworkObject.transform.localScale = new Vector3(0.1f, 0.1f, 50);
 
                 player.GetComponent<PlayerAttack>().Weapon = playerWeapon.GetComponent<IWeapon>();
                 playerWeapon.GetComponent<MeleeWeaponCollider>().WeaponHolder = player;
