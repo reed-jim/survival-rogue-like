@@ -68,7 +68,7 @@ public class VikingWhirlwing : MonoBehaviour, IWeapon
 
         weaponCollider.enabled = true;
 
-        playAttackFxEvent?.Invoke(true);
+        // playAttackFxEvent?.Invoke(true);
 
         _isAttacking = true;
 
