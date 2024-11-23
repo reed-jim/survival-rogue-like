@@ -18,17 +18,12 @@ public class CharacterUI : MonoBehaviour
     [SerializeField] private TMP_Text damageText;
     [SerializeField] private RectTransform criticalDamageIcon;
 
-    [Header("CUSTOMIZE")]
-    [SerializeField] private float scaleDownDuration;
-
     [Header("MANAGEMENT")]
     private List<Tween> _tweens;
     private Tween colorTween;
     private bool _isInAnimation;
     private float _cumulativeDamage;
     private Vector3 _initialDamageTextScale;
-
-    private Coroutine _scaleCoroutine;
 
     private void Awake()
     {
@@ -79,8 +74,6 @@ public class CharacterUI : MonoBehaviour
 
     public void SetHP(float prevValue, float value, float maxHp)
     {
-        // _tweens.Add(Tween.Custom(prevValue / maxHp, value / maxHp, duration: 0.3f, onValueChange: newVal => hpBar.value = newVal));
-
         if (!lazyHpBar.gameObject.activeSelf)
         {
             ShowHpBar();
@@ -138,19 +131,6 @@ public class CharacterUI : MonoBehaviour
         damageText.text = $"{damage}";
         damageText.gameObject.SetActive(true);
 
-        // if (_isInAnimation)
-        // {
-        //     _cumulativeDamage += damage;
-
-        //     damageText.text = $"{_cumulativeDamage}";
-
-        //     return;
-        // }
-        // else
-        // {
-        //     _cumulativeDamage = damage;
-        // }
-
         _cumulativeDamage += damage;
 
         damageText.text = $"{_cumulativeDamage}";
@@ -178,63 +158,6 @@ public class CharacterUI : MonoBehaviour
 
             _isInAnimation = true;
         });
-
-        // if (!_isInAnimation)
-        // {
-        //     damageText.color = damageText.color.WithAlpha(1);
-
-        //     _tweens.Add(Tween.Alpha(damageText, 0, duration: 0.5f).OnComplete(() =>
-        //     {
-        //         damageText.gameObject.SetActive(false);
-        //         damageText.color = damageText.color.WithAlpha(1);
-
-        //         _isInAnimation = false;
-        //     }));
-        //     // _scaleCoroutine = StartCoroutine(SpringAnimation.SpringScaleAnimation(damageText.rectTransform, 0.2f * Vector3.one, 0.1f, 4, 0.1f,
-        //     //     onCompletedAction: () => _isInAnimation = false));
-
-        //     _isInAnimation = true;
-        // }
-        // else
-        // {
-        //     CommonUtil.StopAllTweens(_tweens);
-
-        //     damageText.gameObject.SetActive(true);
-        //     damageText.color = damageText.color.WithAlpha(1);
-
-        //     _isInAnimation = false;
-        // }
-
-
-        // Vector3 currentDamageTextPosition = damageText.rectTransform.localPosition;
-
-        // _tweens.Add(Tween.LocalPositionY(damageText.rectTransform, currentDamageTextPosition.y + 0.5f, duration: 0.3f));
-
-        // _tweens.Add(Tween.Delay(1f).OnComplete(() =>
-        // {
-        //     _tweens.Add(
-        //         Tween.Custom(1, 0, duration: 0.3f, onValueChange: newVal =>
-        //         {
-        //             Color color = damageText.color;
-
-        //             color.a = newVal;
-
-        //             damageText.color = color;
-        //         }
-        //         ).OnComplete(() =>
-        //     {
-        //         damageText.gameObject.SetActive(false);
-
-        //         damageText.rectTransform.localPosition = currentDamageTextPosition;
-        //         damageText.color = ColorUtil.WithAlpha(damageText.color, 1);
-
-        //         criticalDamageIcon.gameObject.SetActive(false);
-
-        //         _isInAnimation = false;
-        //     }));
-        // }));
-
-        // _isInAnimation = true;
     }
 
     private void HideDamageText(int instanceId)
@@ -256,14 +179,6 @@ public class CharacterUI : MonoBehaviour
         if (instanceId == gameObject.GetInstanceID())
         {
             Tween.Scale(damageText.rectTransform, 1.5f * _initialDamageTextScale, duration: 0.2f);
-            // if (_scaleCoroutine != null)
-            // {
-            //     StopCoroutine(_scaleCoroutine);
-
-            //     Tween.Scale(damageText.rectTransform, 1.2f * damageText.rectTransform.localScale, duration: 0.2f);
-            // }
-
-            // criticalDamageIcon.gameObject.SetActive(true);
         }
     }
 }
