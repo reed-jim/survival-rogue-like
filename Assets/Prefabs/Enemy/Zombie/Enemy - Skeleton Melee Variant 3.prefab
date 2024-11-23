@@ -2341,7 +2341,6 @@ MonoBehaviour:
   hpBar: {fileID: 4948508380690360155}
   damageText: {fileID: 4461327642330444402}
   criticalDamageIcon: {fileID: 7706610501911474533}
-  scaleDownDuration: 0.5
 --- !u!114 &4416078291498467236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6950,8 +6949,8 @@ Transform:
   m_GameObject: {fileID: 8660971185272600512}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06, y: 0.06, z: 0.06}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2817108078063540076}
@@ -6997,7 +6996,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 35e55f322656ee04eac0cf9aafaf04c2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 88bd4997252456043ac5d78cb487e200, type: 3}
   m_Color: {r: 1, g: 0.50980395, b: 0.50980395, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -72,6 +72,12 @@ namespace ReedJim.RPG.Stat
             statComponents[statComponentName].BaseValue = amount;
         }
 
+        public void SetZero(string statComponentName)
+        {
+            statComponents[statComponentName].BaseValue = 0;
+            statComponents[statComponentName].Value = 0;
+        }
+
         public void SetStatBaseValue(string statComponentName, float amount)
         {
             if (statComponents.ContainsKey(statComponentName))

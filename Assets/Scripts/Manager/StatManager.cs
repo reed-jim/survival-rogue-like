@@ -58,6 +58,8 @@ public class StatManager : MonoBehaviour
         _playerStat = stat;
 
         AddCharacterStat(instanceId, stat);
+
+        RefreshPlayerLevelState();
     }
 
     private CharacterStat GetStat(int instanceId)
@@ -65,13 +67,19 @@ public class StatManager : MonoBehaviour
         return _characterStats[instanceId];
     }
 
+    private void RefreshPlayerLevelState()
+    {
+        float currentExp = _playerStat.GetStatValue(StatComponentNameConstant.Experience);
+        float requiredExp = _playerStat.GetRequiredExpForNextLevel();
+
+        updatePlayerLevelTextEvent?.Invoke((int)_playerStat.GetStatValue(StatComponentNameConstant.Level), currentExp, requiredExp);
+    }
+
     private void EarnPlayerExpKillingEnemy(int enemyLevel)
     {
         bool isLeveledUp;
 
         _playerStat.EarnExp(_playerStat.GetExpFromKillEnemy(enemyLevel), out isLeveledUp);
-
-        _playerStat.SetStatValue(StatComponentNameConstant.Experience, 0);
 
         float currentExp = _playerStat.GetStatValue(StatComponentNameConstant.Experience);
         float requiredExp = _playerStat.GetRequiredExpForNextLevel();

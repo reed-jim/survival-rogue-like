@@ -1,5 +1,6 @@
 using System;
 using ReedJim.RPG.Stat;
+using UnityEngine;
 
 [Serializable]
 public class PlayerStat : CharacterStat
@@ -21,7 +22,9 @@ public class PlayerStat : CharacterStat
         {
             ModifyStat(StatComponentNameConstant.Level, new FlatStatModifier(), 1);
 
-            ResetStat(StatComponentNameConstant.Experience);
+            SetZero(StatComponentNameConstant.Experience);
+
+            // ResetStat(StatComponentNameConstant.Experience);
 
             isLeveledUp = true;
         }

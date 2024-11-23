@@ -16,6 +16,7 @@ public class GameplayUIManager : MonoBehaviour
     [SerializeField] private Slider expProgressBar;
     [SerializeField] private TMP_Text playerHP;
     [SerializeField] private TMP_Text playerLevelText;
+    [SerializeField] private TMP_Text numberEnemyKillText;
 
     [Header("CUSTOMIZE")]
     [SerializeField] private float playerHpBarDuration;
@@ -26,6 +27,7 @@ public class GameplayUIManager : MonoBehaviour
     private Tween _playerHpBarTween;
     private Tween _lazyPlayerHpBarTween;
     private Tween _updateExpBarTween;
+    private int _numberEnemyKill;
     #endregion
 
     private void Awake()
@@ -34,6 +36,7 @@ public class GameplayUIManager : MonoBehaviour
         PlayerStatManager.setPlayerHpEvent += UpdatePlayerHpBar;
         StatManager.setPlayerHpEvent += UpdatePlayerHpBar;
         StatManager.updatePlayerLevelTextEvent += UpdateLevelText;
+        CharacterStatManager.characterDieEvent += CountEnemyDeath;
 
         _canvasSize = canvas.sizeDelta;
 
@@ -46,6 +49,7 @@ public class GameplayUIManager : MonoBehaviour
         PlayerStatManager.setPlayerHpEvent -= UpdatePlayerHpBar;
         StatManager.setPlayerHpEvent -= UpdatePlayerHpBar;
         StatManager.updatePlayerLevelTextEvent -= UpdateLevelText;
+        CharacterStatManager.characterDieEvent -= CountEnemyDeath;
 
         _playerHpBarTween.Stop();
         _lazyPlayerHpBarTween.Stop();
@@ -54,7 +58,7 @@ public class GameplayUIManager : MonoBehaviour
 
     private void GenerateUI()
     {
-        UIUtil.SetSize(expProgressBarRT, 0.8f * _canvasSize.x, 0.025f * _canvasSize.y);
+        UIUtil.SetSize(expProgressBarRT, 0.65f * _canvasSize.x, 0.025f * _canvasSize.y);
         UIUtil.SetLocalPositionY(expProgressBarRT, 0.4f * _canvasSize.y);
 
         UIUtil.SetSize(playerHpProgressBarRT, expProgressBarRT.sizeDelta.x, 0.025f * _canvasSize.y);
@@ -109,6 +113,14 @@ public class GameplayUIManager : MonoBehaviour
 
     private void UpdateLevelText(int level, float currentExp, float requiredExp)
     {
-        playerLevelText.text = $"Level {level} ({(int)currentExp}/{(int)requiredExp})";
+        playerLevelText.text = $"Level {level}";
+        // playerLevelText.text = $"Level {level} ({(int)currentExp}/{(int)requiredExp})";
+    }
+
+    private void CountEnemyDeath(int instanceId)
+    {
+        _numberEnemyKill++;
+
+        numberEnemyKillText.text = $"{_numberEnemyKill}";
     }
 }
